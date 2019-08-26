@@ -1,0 +1,18 @@
+<ul class='list-group'>
+    <li class=list-group-item *ngFor="let lot of hourly" >
+        <div>
+            <h4>Date: {{lot.date}}</h4>
+            <h4>Job #: {{lot.job}}</h4>
+            <h4>Shift: {{lot.time}}</h4>
+            <h4>Quantity: {{lot.hard_quantity}}</h4>
+            <h4 *ngIf="lot.counter_quantity">Counter Quantity: {{lot.counter_quantity}}</h4>
+            <h4>Machine: {{lot.machine}}</h4>
+            <br>
+            <button class='btn btn-primary' routerLink="/hourly/edit/{{lot.id}}">Edit This Lot</button>
+            <button class='btn btn-primary pull-right' routerLink="/hourly/find/job={{lot.job}}">Show Job Production</button>
+        </div>
+    </li>
+</ul>
+<div *ngIf='hourly.length == 0'>
+    <h2> No production lots for this Day! </h2>
+</div>

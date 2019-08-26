@@ -1,0 +1,43 @@
+<h2>{{model}}</h2>
+  <ul class='list-group'>
+    <li class=list-group-item *ngFor="let log of set">
+      <h5>Changed ID: <strong>{{log.id}}</strong></h5>
+      <h5>Type of Change: <br><strong>{{log.type}}</strong></h5>
+      <h5>Time of Change: <br><strong>{{log.timestamp[1]}} on {{log.timestamp[0]}}</strong></h5>
+      <div *ngIf="model == 'Machine'">
+        <h5>Machine: <br><strong>{{log.old.machine}}</strong></h5>
+        <h5>Job: <br>
+          <strong *ngIf="log.old.current_job">{{log.old.current_job}}</strong>
+          <strong *ngIf="!log.old.current_job">None</strong>
+        </h5>
+      </div>
+      <div *ngIf="model == 'Part'">
+        <h5>Part: <br><strong>{{log.old.part}}</strong></h5>
+        <h5 *ngIf="log.old.job">Current Job: <br><strong>{{log.old.job}}</strong></h5>
+        <h5 *ngIf="log.old.machine">Current Machine: <br><strong>{{log.old.machine}}</strong></h5>
+        <h5 *ngIf="log.old.cycle_time">Cycle Time: <br><strong>{{log.old.cycle_time}}</strong></h5>
+        <h5 *ngIf="log.old.order_quantity">Order Quantity: <br><strong>{{log.old.order_quantity}}</strong></h5>
+        <h5 *ngIf="log.old.weight_recieved">Weight Recieved: <br><strong>{{log.old.weight_recieved}}</strong></h5>
+        <h5 *ngIf="log.old.weight_quantity">Potential Quantity by Weight: <br><strong>{{log.old.weight_quantity}}</strong></h5>
+        <h5 *ngIf="log.old.weight_length">Total Length of Bars by Weight: <br><strong>{{log.old.weight_length}}</strong></h5>
+        <h5 *ngIf="log.old.possible_quantity">Possible Quantity by Bars: <br><strong>{{log.old.possible_quantity}}</strong></h5>
+        <h5 *ngIf="log.old.remaining_quantity">Remaining Quantity: <br><strong>{{log.old.remaining_quantity}}</strong></h5>
+        <h5 *ngIf="log.old.heat_lot">Heat Lot#: <br><strong>{{log.old.heat_lot}}</strong></h5>
+      </div>
+      <div *ngIf="model == 'Hourly'">
+        <h5>Time: <br><strong>{{log.old.time}}</strong></h5>
+        <h5>Job #: <br><strong>{{log.old.job}}</strong></h5>
+        <h5>Quantity: <br><strong>{{log.old.hard_quantity}}</strong></h5>
+        <h5>Counter: <br>
+          <strong *ngIf="log.old.counter_quantity">{{log.old.counter_quantity}}</strong>
+          <strong *ngIf="!log.old.counter_quantity">None</strong>
+        </h5>
+      </div>
+      <div *ngIf="model == 'Production'">
+        <h5>Job #: <br><strong>{{log.old.job}}</strong></h5>
+        <h5>Shift: <br><strong>{{log.old.shift}}</strong></h5>
+        <h5>Quantity: <br><strong>{{log.old.quantity}}</strong></h5>
+        <h5>Machine: <br><strong>{{log.old.machine}}</strong></h5>
+      </div>
+    </li>
+  </ul>

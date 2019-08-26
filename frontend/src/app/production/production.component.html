@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1">         
+            <button 
+                *ngIf="!auth.buttonHidden[0]"
+                class='btn btn-primary'
+                (click)="onNew()"
+            >
+                Add New Production
+            </button>
+            <button 
+                *ngIf="!auth.buttonHidden[1]"
+                class='btn btn-primary pull-right' 
+                routerLink="find"
+            >
+                Find Production By Job
+            </button>          
+            <br><br>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

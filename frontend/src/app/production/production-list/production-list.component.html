@@ -1,0 +1,40 @@
+<ul class='list-group'>
+    <li class=list-group-item *ngFor="let lot of productionLots; let i = index" >
+        <div *ngIf="lot.in_question" class="inQuestion">   
+            <button class="btn btn-success" (click)="lotIsGood(lot.id)">Set Lot Good</button>
+            <div routerLink="single/{{lot.id}}">
+                <h4>Date: <strong>{{lot.date}}</strong></h4>
+                <h4>Job #: <strong>{{lot.job}}</strong></h4>
+                <h4>Shift: <strong>{{lot.shift}}</strong></h4>
+                <h4>Quantity: <strong>{{lot.quantity}}</strong></h4>
+                <h4>Machine: <strong>{{lot.machine}}</strong></h4>
+                <br>
+            </div>
+            <div class='grid'>
+                <button class='btn btn-primary' routerLink="single/{{lot.id}}/edit">Edit This Lot</button>
+                <div></div>
+                <button class='btn btn-info pull-right' [routerLink]="[lot.job]">Show Job Production</button>
+                <div></div>
+                <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Show Day Production</button>
+            </div>
+        </div>
+        <div *ngIf="!lot.in_question">   
+            <button class="btn btn-danger" (click)="lotInQuestion(lot.id)">Set Lot In Question</button>
+            <div routerLink="single/{{lot.id}}">
+                <h4>Date: <strong>{{lot.date}}</strong></h4>
+                <h4>Job #: <strong>{{lot.job}}</strong></h4>
+                <h4>Shift: <strong>{{lot.shift}}</strong></h4>
+                <h4>Quantity: <strong>{{lot.quantity}}</strong></h4>
+                <h4>Machine: <strong>{{lot.machine}}</strong></h4>
+            </div>
+            <br>
+            <div class='grid'>
+                <button class='btn btn-primary' routerLink="single/{{lot.id}}/edit">Edit This Lot</button>
+                <div></div>
+                <button class='btn btn-info pull-right' [routerLink]="[lot.job]">Show Job Production</button>
+                <div></div>
+                <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Show Day Production</button>
+            </div>
+        </div>
+    </li>
+</ul>

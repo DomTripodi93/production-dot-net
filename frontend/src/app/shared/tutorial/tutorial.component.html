@@ -1,0 +1,53 @@
+<br>
+<h2 class="centered">Lets Get Started!</h2>
+<br>
+<h4 *ngIf="!machines" class="centered">
+  Start by adding a <a routerLink="/machine/new">Machine</a>. It's not 
+  going to give you any options for the job field, but that is perfectly 
+  normal. 
+<br>
+</h4>
+<h4 *ngIf="!machines" class="centered">
+  You will need to have at least 1 machine to be able to add a <a routerLink="/parts/new">Part</a>.
+  Each  <a routerLink="/parts/new">Part</a> needs to be assigned a "job number," which will give you the 
+  ability to asign a job to a machine later.
+<br>
+</h4>
+<h4 *ngIf="machines && !parts" class="centered">
+  Now that you have created a machine, you can add your first part! 
+  A <a routerLink="/parts/new">Part</a> needs to have a "part number," "job number," and "machine." 
+  all other fields are optional. The same <a routerLink="/parts/new">Part</a> can be used more than once,
+  where it is ok to have <strong>either</strong> the same "job number" or "machine." 
+  <strong>However</strong> the same combination of "job number" and "machine" cannot repeat.
+<br>
+</h4>
+<h4  *ngIf="parts && !hourly" class="centered">
+  Now that you have created your first part, you will be able to use the production
+  calculators, and production tracking features for that part.
+<br>
+</h4>
+<h4 *ngIf="parts && !hourly" class="centered">
+  Lets start by using the <a routerLink="/hourly">Hourly Tracking</a> where you will see a button that allows 
+  you to asign a job to you machine if you have not already done so. Once a job is assigned, you can add a 
+  production count by clicking on "<strong>quick input</strong>."
+<br>
+</h4>
+<h4 *ngIf="hourly && !production" class="centered">
+  Now lets try adding a <a routerLink="/production/new">Production Lot</a>. 
+  Your production lots will be used to track how many parts have been made to the job so far.
+<br>
+</h4>
+<h4 *ngIf="production" class="centered">
+  After adding <a routerLink="/production/new">Multiple Production Lots</a> for one job, the 
+  <a routerLink="/production/{{job}}">Production By Job</a> page will show total parts to 
+  date for the job.
+<br>
+</h4>
+<br>
+<div class="center-grid">
+  <div></div>
+  <button 
+  (click)="notNew()"
+  class="btn btn-warning"><strong>Hide Tutorial Messages</strong></button><br>
+  <div></div>
+</div>

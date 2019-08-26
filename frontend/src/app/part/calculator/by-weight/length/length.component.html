@@ -1,0 +1,49 @@
+<form (ngSubmit)='calc.onSubmitLengthByWeight()' [formGroup]="calc.latheForm">
+  <div class='form-group'>
+    <div class='form-group'>
+      <label for='material'>Material</label>
+      <select 
+        formControlName='material'
+        id="material" 
+        class="form-control">
+        <option *ngFor = "let mat of calc.densities">{{mat.material}}</option>
+      </select>
+    </div>
+    <div class='form-group'>
+      <label for='type'>Bar Shape</label>
+      <select 
+        formControlName='type'
+        id="type" 
+        class="form-control">
+        <option *ngFor = "let shape of type">{{shape}}</option>
+      </select>     
+    </div>
+    <div class='form-group'>
+      <label *ngIf="calc.latheForm.value.type == 'Hex'" for='barEnd'>Hex Size</label><label *ngIf="calc.latheForm.value.type != 'Hex'" for='barEnd'>Diameter</label>
+      <input 
+        type='number' 
+        id='dia' 
+        class='form-control'
+        formControlName="dia">       
+    </div>
+    <div class='form-group'>
+      <label for='weight'>Weight Recieved</label>
+      <input 
+        type='number' 
+        id='weight' 
+        class='form-control'
+        formControlName="weight">       
+    </div>
+  <button 
+    class="btn btn-primary" 
+    type="submit"
+    [disabled]="!calc.latheForm.valid"
+    >Calculate</button>
+</div>
+<hr>
+<div class="row" *ngIf="calc.submitted">
+<div class='col-xs-12'>
+  <h3> Feet of Material by Weight: {{calc.feet}}"</h3>
+  <div class='row'>
+</div>
+</div>

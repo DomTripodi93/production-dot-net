@@ -1,0 +1,8 @@
+.grid { 
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }

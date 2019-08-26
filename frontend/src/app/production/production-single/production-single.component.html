@@ -1,0 +1,24 @@
+<ul class='list-group'>
+    <li *ngIf="production.in_question" class='inQuestion list-group-item'>
+        <div *ngIf="production" >
+            <h4>Date: {{production.date}}</h4>
+            <h4>Job #: {{production.job}}</h4>
+            <h4>Shift: {{production.shift}}</h4>
+            <h4>Quantity: {{production.quantity}}</h4>
+            <h4>Machine: {{production.machine}}</h4>
+            <button class='btn btn-primary' routerLink="edit">Edit This Lot</button>
+            <button class='btn btn-primary pull-right' routerLink="../../{{production.job}}">Show Job Production</button>
+        </div>
+    </li>
+    <li *ngIf="!production.in_question" class='list-group-item'>
+        <div *ngIf="production" >
+            <h4>Date: {{production.date}}</h4>
+            <h4>Job #: {{production.job}}</h4>
+            <h4>Shift: {{production.shift}}</h4>
+            <h4>Quantity: {{production.quantity}}</h4>
+            <h4>Machine: {{production.machine}}</h4>
+            <button class='btn btn-primary' routerLink="edit">Edit This Lot</button>
+            <button class='btn btn-primary pull-right' routerLink="../../{{production.job}}">Show Job Production</button>
+        </div>
+    </li>
+</ul>

@@ -1,0 +1,46 @@
+.grid { 
+    display: grid;
+    grid-template-columns: 14.285714286% 14.285714286% 14.285714286% 14.285714286% 14.285714286% 14.285714286% 14.285714286%;
+}
+
+.grid2 { 
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+}
+
+
+input{
+    text-align: center;
+}
+
+
+.today-border{
+    border-style: solid;
+    border-color: black;
+    background-color: rgb(255, 255, 175);
+}
+
+.white-text{
+    color: rgb(235, 235, 235);
+}
+
+
+h1 {
+    text-align: center;
+}
+
+h5, h2{
+    font-weight: bold;
+    font-style: Helvetica;
+}
+
+
+.padded{
+    padding-left: 10px;
+    padding-bottom: 50px;
+}
+
+
+.centered{
+    text-align: center;
+}

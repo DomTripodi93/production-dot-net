@@ -1,0 +1,34 @@
+h5 {
+    text-align: center;
+}
+
+h4 {
+    text-align: center;
+}
+
+h2{
+    text-align: center;
+}
+
+h1{
+    text-align: center;
+}
+
+li {
+    border: solid;
+    border-color: black;
+}
+.grid { 
+    display: grid;
+    grid-template-columns: 20% 15% 30% 5% 30%;
+}
+
+.mach-grid{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+
+.btn-grid{
+    display: grid;
+    grid-template-columns: 100%;
+}

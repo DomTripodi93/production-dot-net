@@ -1,0 +1,41 @@
+<div *ngIf="!canInput">
+  <h1>You must be logged in to add a machine lot!</h1>
+  </div>
+    <form *ngIf="canInput && machineForm" [formGroup]="machineForm" (ngSubmit)='onSubmit()' >
+    <div class="form-group">
+      <label for="current_job">Job</label>
+      <select
+        formControlName='current_job'
+        type="text" 
+        id="current_job" 
+        class="form-control">
+        <option *ngFor = "let job of jobs">{{job}}</option>
+      </select>        
+    </div>
+      <div class="form-group">
+        <label for="machine">Machine</label>
+        <input 
+          formControlName='machine'
+          id="machine" 
+          class="form-control"
+        >
+      </div>
+      <br><br>
+      <button 
+        class="btn btn-success" 
+        type="submit"
+        [disabled]="!machineForm.valid"
+      >
+        Add Machine
+      </button>
+      <button 
+        type='button' 
+        class='btn btn-danger pull-right' 
+        (click)='onCancel()'
+      >
+        Cancel
+      </button>
+      <br><br>
+      <div *ngIf="isError">
+        <h3 class="danger">{{error}}</h3>
+      </div>

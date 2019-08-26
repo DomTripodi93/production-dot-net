@@ -1,0 +1,30 @@
+<form *ngIf="hourlyForm" [formGroup]="hourlyForm" (ngSubmit)='onSubmit()' >
+<div class="form-group">
+    <label for="hard_quantity">Hard Quantity</label>
+    <input 
+        formControlName='hard_quantity'
+        type="number" 
+        id="hard_quantity" 
+        class="form-control">
+</div>
+<div class="form-group">
+    <label for="counter_quantity">Counter Quantity</label>
+    <input 
+        formControlName='counter_quantity'
+        type="number" 
+        id="counter_quantity" 
+        class="form-control">
+</div>
+<button 
+  class="btn btn-success" 
+  type="submit"
+  [disabled]="!hourlyForm.valid"
+>
+Add Hourly</button>
+<button 
+  type='button' 
+  class='btn btn-danger pull-right' 
+  (click)='onCancel()'
+>
+Cancel</button>
+<br>

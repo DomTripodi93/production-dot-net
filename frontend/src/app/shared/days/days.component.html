@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row">
+        <ul class='list-group'>
+          <li class="list-group-item">
+            <h2 class="center"> 
+              Production for {{days[dayServ.day]}}, {{months[dayServ.month-1]}} {{dayServ.today}}
+            </h2>
+          </li>
+        </ul>
+        <div class="col-xs-12 col-sm-10 col-md-12 col-sm-offset-1 col-md-offset-0">
+            <ul class='list-group'>
+                <button 
+                    *ngIf="!auth.buttonHidden[0]"
+                    class='btn btn-primary'
+                    routerLink="/production/new"
+                >
+                    Add New Production
+                </button>
+                <button 
+                    *ngIf="auth.buttonHidden[0]"
+                    class='btn btn-primary'
+                    routerLink="/hourly/new"
+                >
+                    Add Hourly Production
+                </button>
+                <button 
+                    *ngIf="!auth.buttonHidden[0]"
+                    class='btn btn-primary pull-right'
+                    routerLink="hourly"
+                >
+                    Show Hourly
+                </button>
+                <button 
+                    *ngIf="auth.buttonHidden[0]"
+                    class='btn btn-primary pull-right'
+                    routerLink="./"
+                >
+                    Show Daily
+                </button>
+                <br><br>
+                <router-outlet></router-outlet>
+            </ul>
+        </div>
+    </div>
+</div>

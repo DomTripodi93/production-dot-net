@@ -1,0 +1,78 @@
+<div *ngIf="!canInput">
+  <h1>You can only edit your own hourly lots!</h1>
+</div>
+<form *ngIf="canInput && editHourlyForm" [formGroup]="editHourlyForm" (ngSubmit)='onSubmit()'>
+  <div class='form-group'>
+    <div class="form-group">
+      <label for="hard_quantity">Hard Quantity</label>
+      <input 
+        formControlName='hard_quantity'
+        type="number" 
+        id="hard_quantity" 
+        class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="counter_quantity">Counter Quantity</label>
+      <input 
+        formControlName='counter_quantity'
+        id="counter_quantity" 
+        class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="job">Job</label>
+      <input 
+        formControlName='job'
+        type="text" 
+        id="job" 
+        class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="date">Date</label>
+      <input 
+        type="date" 
+        id="date" 
+        class="form-control"
+        formControlName='date'>
+    </div>
+    <div class="form-group">
+      <label for="time">Time</label>
+      <input 
+        type="time" 
+        id="time" 
+        class="form-control"
+        formControlName='time'>
+    </div>
+    <div class="form-group">
+      <label for="machine">Machine</label>
+      <select 
+        formControlName='machine'
+        id="machine" 
+        class="form-control">
+        <option *ngFor = "let machine of machines">{{machine.machine}}</option>
+      </select>
+    </div>
+    <br>
+    <div class="grid">
+      <button 
+        class="btn btn-success" 
+        type="submit"
+        [disabled]="!editHourlyForm.valid"
+      >
+      Edit Hourly</button>
+      <div></div>
+      <button 
+        type='button' 
+        class="btn btn-danger" 
+        (click)='onDelete()'
+      >
+        Delete
+      </button>
+      <div></div>
+      <button 
+        type='button' 
+        class='btn btn-danger pull-right' 
+        (click)='onCancel()'
+      >
+      Cancel</button>
+    </div>
+  </div>

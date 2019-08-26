@@ -1,0 +1,14 @@
+.full-grid{
+    display: grid;
+    grid-template-columns: 100%;
+}
+
+.center-grid{
+    display: grid;
+    grid-template-columns: 30% 40% 30%;
+}
+
+.centered{
+    margin: 5px 50px 5px 50px;
+    text-align: center;
+}

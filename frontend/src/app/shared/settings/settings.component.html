@@ -1,0 +1,15 @@
+<div class="border">
+  <br>
+  <h4>
+    Toggle Tutorials: {{tutorialStatus}}
+    <button
+    *ngIf="auth.isNew" 
+    (click)="changeTutorial()"
+    class="btn btn-primary float-right"><strong>Hide Tutorial Messages</strong></button>
+    <button
+    *ngIf="!auth.isNew" 
+    (click)="changeTutorial()"
+    class="btn btn-primary float-right"><strong>Show Tutorial Messages</strong></button><br>
+  </h4>
+  <br>
+</div>

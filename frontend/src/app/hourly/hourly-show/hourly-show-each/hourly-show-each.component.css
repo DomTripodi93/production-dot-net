@@ -1,0 +1,8 @@
+.grid { 
+    display: grid;
+    grid-template-columns: 100%;
+}
+
+h5{
+    text-align: center;
+}

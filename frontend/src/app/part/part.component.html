@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-12 col-sm-offset-1 col-md-offset-0">
+            <div class="grid">
+
+                <button 
+                    *ngIf="!auth.buttonHidden[0]"
+                    class='btn btn-primary'
+                    routerLink="new"
+                >
+                    Add New Part
+                </button>
+                <div
+                    *ngIf="auth.buttonHidden[0]"
+                >
+                </div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <button 
+                    *ngIf="!auth.buttonHidden[1]"
+                    class='btn btn-primary' 
+                    routerLink="find"
+                >
+                    Find Part
+                </button>   
+                <div
+                    *ngIf="auth.buttonHidden[1]"
+                >
+                </div>      
+            </div> 
+            <br><br>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

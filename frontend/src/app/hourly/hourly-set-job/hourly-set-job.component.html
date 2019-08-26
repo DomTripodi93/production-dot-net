@@ -1,0 +1,28 @@
+<div *ngIf="jobs.length < 2">
+  <h4>Add a Part with an associated Job to Set a Current Job on this Machine</h4>
+  <button class="btn btn-success" routerLink="/parts/new">Add Part</button>
+</div>
+<form *ngIf="setJobForm && jobs.length > 1" [formGroup]="setJobForm" (ngSubmit)="onSetJob()">
+<div class="form-group">
+  <label for="current_job">Job</label>
+  <select
+    formControlName='current_job'
+    type="text" 
+    id="current_job" 
+    class="form-control">
+    <option *ngFor = "let job of jobs">{{job}}</option>
+  </select>        
+</div>
+<button 
+  class="btn btn-success" 
+  type="submit"
+  [disabled]="!setJobForm.valid"
+>
+Set Job</button>
+<button 
+  type='button' 
+  class='btn btn-danger pull-right' 
+  (click)='onCancel()'
+>
+Cancel</button>
+<br>

@@ -1,0 +1,32 @@
+<div *ngIf='production.length > 0'>
+    <ul class='list-group'>
+        <li class="list-group-item">
+            <h4>Job Total: {{total}}</h4>
+        </li>
+        <div class="grid">
+            <li class='border' *ngFor="let lot of production; let i = index" >
+                <div *ngIf="lot.in_question" class="inQuestion">
+                    <h4>Date: <strong>{{lot.date}}</strong></h4>
+                    <h4>Job #: <strong>{{lot.job}}</strong></h4>
+                    <h4>Shift: <strong>{{lot.shift}}</strong></h4>
+                    <h4>Quantity: <strong>{{lot.quantity}}</strong></h4>
+                    <h4>Machine: <strong>{{lot.machine}}</strong></h4>
+                    <button class='btn btn-primary' routerLink="../single/{{lot.id}}/edit">Edit</button>
+                    <button class='btn btn-info pull-right' routerLink="/day/{{dayServ.dates[i]}}">Show Day Production</button>
+                </div>
+                <div *ngIf="!lot.in_question">
+                    <h4>Date: <strong>{{lot.date}}</strong></h4>
+                    <h4>Job #: <strong>{{lot.job}}</strong></h4>
+                    <h4>Shift: <strong>{{lot.shift}}</strong></h4>
+                    <h4>Quantity: <strong>{{lot.quantity}}</strong></h4>
+                    <h4>Machine: <strong>{{lot.machine}}</strong></h4>
+                    <button class='btn btn-primary' routerLink="../single/{{lot.id}}/edit">Edit</button>
+                    <button class='btn btn-info pull-right' routerLink="/day/{{dayServ.dates[i]}}">Show Day Production</button>
+                </div>
+            </li>
+        </div>
+    </ul>
+</div>
+<div *ngIf='production.length == 0'>
+    <h2> No production for this Job # </h2>
+</div>

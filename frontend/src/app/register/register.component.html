@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+    <div *ngIf="isError" class="danger"><h2>{{error}}</h2></div>
+      <form (ngSubmit)='onSubmit()' #data='ngForm'>
+        <div class='form-group'>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input 
+              type="email" 
+              id="email" 
+              class="form-control"
+              ngModel
+              name='email'
+              required
+              email
+              #email='ngModel'>
+              <span class='help-block' *ngIf="!email.valid && email.touched">Please Enter a Valid Email!</span>
+          </div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input 
+              type="name" 
+              id="name" 
+              class="form-control"
+              ngModel
+              name='name'
+              required
+              #name='ngModel'>
+              <span class='help-block' *ngIf="!name.valid && name.touched">Please Enter Your Name!</span>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input 
+              type="password" 
+              id="password" 
+              class="form-control"
+              ngModel
+              name='password'
+              required
+              #password='ngModel'>
+              <span class='help-block' *ngIf="!password.valid && password.touched">Please Enter a Valid Email!</span>
+          </div>
+        </div>
+        <button 
+          class="btn btn-primary" 
+          type="submit"
+          [disabled]="!data.valid"
+          >Submit</button>
+  </form>
+</div>

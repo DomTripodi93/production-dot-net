@@ -1,0 +1,28 @@
+.grid { 
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+}
+
+.grid2 { 
+    display: grid;
+    grid-template-columns: 50% 50%;
+    font-size: 20vw;
+}
+
+.border{
+    border: solid;
+}
+
+.white-text{
+    color: white;
+}
+
+
+h3{
+    text-align: center;
+    text-decoration: underline;
+}
+
+h4{
+    text-align: center;
+}

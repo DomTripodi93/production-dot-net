@@ -1,0 +1,60 @@
+
+<nav class='navbar navbar-default'>
+  <div class='container-fluid'>
+      <div class='navbar-header'>
+      </div>
+      <div class='navbar-default'><strong>
+        <ul class = 'nav navbar-nav'>
+          <li
+            routerLinkActive="!active">
+            <div routerLink='/'  class="logo">
+              <img src="../../assets/favicon.png" width="50px">
+            </div>
+          </li>
+          <li routerLinkActive="!active"><a routerLink='/'>Home</a></li>
+          <li
+            *ngIf="!id" 
+            routerLinkActive="active">
+            <a routerLink='/register'>Signup</a></li>
+          <li
+            *ngIf="!id" 
+            routerLinkActive="active">
+            <a routerLink='/login'>Signin</a></li>
+          <li
+            *ngIf="id" 
+            routerLinkActive="active">
+            <a routerLink='/logout'>Signout</a></li>
+          <li class="dropdown" *ngIf="id" appDropdown>
+            <a
+            style ='cursor: pointer;'
+            class="dropdown-toggle"  
+            data-toggle="dropdown" 
+            type="button">
+              Lathe
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a routerLink='/machine'>Machines</a></li>
+              <li><a routerLink='/parts'>Parts</a></li>
+              <li><a routerLink='/production'>Production</a></li>
+              <li><a routerLink='/hourly'>Hourly</a></li>
+              <li><a routerLink='/parts/calculator'>Length From Weight</a></li>
+            </ul>
+          </li> 
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li 
+            *ngIf="id" 
+            routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink='/changes'>Change Log</a></li>
+          <li 
+            *ngIf="id" 
+            routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink='/settings'>Settings</a></li>
+        </ul>
+      </strong>
+    </div>
+  </div>
+</nav>

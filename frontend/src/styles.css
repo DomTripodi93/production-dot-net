@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+button{
+    white-space: normal;
+    word-wrap: break-word;
+    height: 100%;
+    overflow-wrap: break-word;
+}
+
+h1, h2, h3, h4, h5, h6{
+    line-height: 1.5;
+}
+
+
+.border{
+    border-style: solid;
+    border-color: black;
+    background-color: rgb(235, 235, 235);
+}
