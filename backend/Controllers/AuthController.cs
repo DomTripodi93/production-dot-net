@@ -3,7 +3,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using backend.Models;
+using AutoMapper;
+using backend.Dtos;
 using BackEnd.Data;
 using BackEnd.Dtos;
 using BackEnd.Models;
@@ -15,26 +16,23 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace BackEnd.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
-        private readonly DataContext _context;
-        public AuthController(IAuthRepository repo, IConfiguration config, DataContext context)
+        private readonly IMapper _mapper;
+        public AuthController(IAuthRepository repo, IMapper mapper, IConfiguration config)
         {
-            _context = context;
+            _mapper = mapper;
             _repo = repo;
             _config = config;
         }
 
-        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            // validate request
             userForRegisterDto.Email = userForRegisterDto.Email.ToLower();
 
             if (await _repo.UserExists(userForRegisterDto.Email))
@@ -52,7 +50,7 @@ namespace BackEnd.Controllers
 
         }
 
-        [AllowAnonymous]
+
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
@@ -60,7 +58,7 @@ namespace BackEnd.Controllers
 
             if (userFromRepo == null)
                 return Unauthorized();
-            
+
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
@@ -83,21 +81,10 @@ namespace BackEnd.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok(new {
+            return Ok(new
+            {
                 token = tokenHandler.WriteToken(token)
             });
-
-        }
-
-        [HttpGet("{email}")]
-        public async Task<IActionResult> GetUser(string email)
-        {
-            var value = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
-            var safeReturn = new UserInfo {
-                Id = value.Id,
-                Name = value.Name
-            };
-            return Ok(safeReturn);
         }
 
     }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/dominic/Code/Showcase/Full/calender4/backend/backend.csproj": {}
+    "/home/dominic/Code/Showcase/Full/productiondotnet/backend/backend.csproj": {}
   },
   "projects": {
-    "/home/dominic/Code/Showcase/Full/calender4/backend/backend.csproj": {
+    "/home/dominic/Code/Showcase/Full/productiondotnet/backend/backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/dominic/Code/Showcase/Full/calender4/backend/backend.csproj",
+        "projectUniqueName": "/home/dominic/Code/Showcase/Full/productiondotnet/backend/backend.csproj",
         "projectName": "backend",
-        "projectPath": "/home/dominic/Code/Showcase/Full/calender4/backend/backend.csproj",
+        "projectPath": "/home/dominic/Code/Showcase/Full/productiondotnet/backend/backend.csproj",
         "packagesPath": "/home/dominic/.nuget/packages/",
-        "outputPath": "/home/dominic/Code/Showcase/Full/calender4/backend/obj/",
+        "outputPath": "/home/dominic/Code/Showcase/Full/productiondotnet/backend/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/share/dotnet/sdk/NuGetFallbackFolder"
@@ -39,16 +39,15 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
-            },
-            "Microsoft.AspNetCore.Razor.Design": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.2.0, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",

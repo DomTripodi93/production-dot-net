@@ -13,7 +13,7 @@ namespace BackEnd.Models
         public ICollection<Part> Part { get; set; }
         public ICollection<Hourly> Hourly { get; set; }
         public ICollection<Production> Production { get; set; }
-        public ICollection<Settings> Settings { get; set; }
         public ICollection<ChangeLog> ChangeLog { get; set; }
+        public Settings Settings { get; set; }
     }
 }

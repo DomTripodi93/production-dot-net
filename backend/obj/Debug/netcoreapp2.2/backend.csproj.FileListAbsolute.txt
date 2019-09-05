@@ -12,3 +12,17 @@
 /home/dominic/Code/Showcase/Full/calender4/backend/obj/Debug/netcoreapp2.2/backend.RazorTargetAssemblyInfo.cache
 /home/dominic/Code/Showcase/Full/calender4/backend/obj/Debug/netcoreapp2.2/backend.dll
 /home/dominic/Code/Showcase/Full/calender4/backend/obj/Debug/netcoreapp2.2/backend.pdb
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/obj/Debug/netcoreapp2.2/backend.csprojAssemblyReference.cache
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/obj/Debug/netcoreapp2.2/backend.csproj.CoreCompileInputs.cache
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/obj/Debug/netcoreapp2.2/backend.RazorAssemblyInfo.cache
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/obj/Debug/netcoreapp2.2/backend.RazorAssemblyInfo.cs
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/obj/Debug/netcoreapp2.2/backend.AssemblyInfoInputs.cache
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/obj/Debug/netcoreapp2.2/backend.AssemblyInfo.cs
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/obj/Debug/netcoreapp2.2/backend.dll
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/obj/Debug/netcoreapp2.2/backend.pdb
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/bin/Debug/netcoreapp2.2/backend.deps.json
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/bin/Debug/netcoreapp2.2/backend.runtimeconfig.json
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/bin/Debug/netcoreapp2.2/backend.runtimeconfig.dev.json
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/bin/Debug/netcoreapp2.2/backend.dll
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/bin/Debug/netcoreapp2.2/backend.pdb
+/home/dominic/Code/Showcase/Full/productiondotnet/backend/obj/Debug/netcoreapp2.2/backend.RazorTargetAssemblyInfo.cache

@@ -1,5 +1,7 @@
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
+using backend.Dtos;
 using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,9 +10,12 @@ namespace BackEnd.Data
     public class AuthRepository : IAuthRepository
     {
         private readonly DataContext _context;
-        public AuthRepository(DataContext context)
+        private readonly IMapper _mapper;
+
+        public AuthRepository(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         public async Task<User> Login(string email, string password)
         {
@@ -67,5 +72,6 @@ namespace BackEnd.Data
                 return true;
             return false;
         }
+
     }
 }

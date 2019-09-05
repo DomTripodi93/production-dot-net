@@ -1,6 +1,6 @@
-namespace backend.Models
+namespace backend.Dtos
 {
-    public class UserInfo
+    public class UserForReturnDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
