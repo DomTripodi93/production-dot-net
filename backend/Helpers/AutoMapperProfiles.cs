@@ -11,6 +11,8 @@ namespace backend.Helpers
             CreateMap<User, UserForReturnDto>();
             CreateMap<Mach, MachForReturnDto>();
             CreateMap<MachForCreationDto, Mach>().ReverseMap();
+            CreateMap<Production, ProdForReturnDto>();
+            CreateMap<ProdForCreationDto, Production>().ReverseMap();
         }
     }
 }

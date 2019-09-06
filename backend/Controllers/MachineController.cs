@@ -49,6 +49,22 @@ namespace backend.Controllers
             throw new Exception("Creation of machine failed on save");
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateMachine(int id, MachForCreationDto machForUpdateDto)
+        {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var machFromRepo = await _repo.GetMachine(id);
+
+            _mapper.Map(machForUpdateDto, machFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetMach", new {id = machFromRepo.Id}, machForUpdateDto);
+
+            throw new Exception($"Updating machien {id} failed on save");
+        }
+
         [HttpGet("{id}", Name = "GetMach")]
         public async Task<IActionResult> GetMachine(int id, int userId)
         {
@@ -56,7 +72,8 @@ namespace backend.Controllers
                 return Unauthorized();
 
             Mach machine = await _repo.GetMachine(id);
-            return Ok(machine);
+            MachForReturnDto machForReturn = _mapper.Map<MachForReturnDto>(machine);
+            return Ok(machForReturn);
         }
 
 

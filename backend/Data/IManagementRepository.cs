@@ -13,5 +13,9 @@ namespace backend.Data
          Task<User> GetUser(int id);
          Task<Mach> GetMachine(int id);
          Task<IEnumerable<Mach>> GetMachines(int userId);
+         Task<Production> GetProduction(int id);
+         Task<IEnumerable<Production>> GetProductionSet(int userId);
+         Task<IEnumerable<Production>> GetProductionSetByMachine(int userId, string mach);
+         Task<IEnumerable<Production>> GetProductionSetByJob(int userId, string job);
     }
 }

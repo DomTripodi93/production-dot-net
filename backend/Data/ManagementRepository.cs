@@ -42,7 +42,7 @@ namespace backend.Data
 
         public async Task<Mach> GetMachine(int id)
         {
-            var machine = await _context.Machines.FirstOrDefaultAsync(u => u.Id == id);
+            var machine = await _context.Machines.FirstOrDefaultAsync(m => m.Id == id);
             return machine;
         }
 
@@ -55,5 +55,37 @@ namespace backend.Data
             return user.Machine.Where(m => m.userId == userId);
         }
 
+        public async Task<Production> GetProduction(int id)
+        {
+            var production = await _context.Production.FirstOrDefaultAsync(p => p.Id == id);
+            return production;
+        }
+
+        public async Task<IEnumerable<Production>> GetProductionSet(int userId)
+        {
+            var user = await _context.Users
+                .Include(x => x.Production)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+                
+            return user.Production.Where(p => p.userId == userId);
+        }
+
+        public async Task<IEnumerable<Production>> GetProductionSetByMachine(int userId, string mach)
+        {
+            var user = await _context.Users
+                .Include(x => x.Production)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+                
+            return user.Production.Where(p => p.userId == userId).Where(p => p.Machine == mach);
+        }
+
+        public async Task<IEnumerable<Production>> GetProductionSetByJob(int userId, string job)
+        {
+            var user = await _context.Users
+                .Include(x => x.Production)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+                
+            return user.Production.Where(p => p.userId == userId).Where(p => p.Job == job);
+        }
     }
 }
