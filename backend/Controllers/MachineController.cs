@@ -62,7 +62,7 @@ namespace backend.Controllers
             if (await _repo.SaveAll())
                 return CreatedAtRoute("GetMach", new {id = machFromRepo.Id}, machForUpdateDto);
 
-            throw new Exception($"Updating machien {id} failed on save");
+            throw new Exception($"Updating machine {id} failed on save");
         }
 
         [HttpGet("{id}", Name = "GetMach")]
@@ -88,6 +88,23 @@ namespace backend.Controllers
             var machines = _mapper.Map<IEnumerable<MachForReturnDto>>(directMachines);
 
             return Ok(machines);
+        }
+
+        [HttpDelete("{id}")]
+
+        public async Task<IActionResult> DeleteMachine(int userId, int id)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+            
+            var machToDelete = await _repo.GetMachine(id);
+            
+            if (userId == int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                _repo.Delete(machToDelete);
+                await _repo.SaveAll();
+                return Ok(machToDelete.Machine +" was deleted!");
+            
+
         }
         
     }

@@ -13,6 +13,8 @@ namespace backend.Helpers
             CreateMap<MachForCreationDto, Mach>().ReverseMap();
             CreateMap<Production, ProdForReturnDto>();
             CreateMap<ProdForCreationDto, Production>().ReverseMap();
+            CreateMap<Part, PartForReturnDto>();
+            CreateMap<PartForCreationDto, Part>().ReverseMap();
         }
     }
 }

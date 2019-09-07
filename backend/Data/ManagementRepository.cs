@@ -70,6 +70,24 @@ namespace backend.Data
             return user.Production.Where(p => p.userId == userId);
         }
 
+        public async Task<IEnumerable<Production>> GetProductionSetByJob(int userId, string job)
+        {
+            var user = await _context.Users
+                .Include(x => x.Production)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+                
+            return user.Production.Where(p => p.userId == userId).Where(p => p.Job == job);
+        }
+
+        public async Task<IEnumerable<Production>> GetProductionSetByJobAndMachine(int userId, string job, string mach)
+        {
+            var user = await _context.Users
+                .Include(x => x.Production)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+                
+            return user.Production.Where(p => p.userId == userId).Where(p => p.Job == job).Where(p => p.Machine == mach);
+        }
+
         public async Task<IEnumerable<Production>> GetProductionSetByMachine(int userId, string mach)
         {
             var user = await _context.Users
@@ -79,13 +97,71 @@ namespace backend.Data
             return user.Production.Where(p => p.userId == userId).Where(p => p.Machine == mach);
         }
 
-        public async Task<IEnumerable<Production>> GetProductionSetByJob(int userId, string job)
+        public async Task<Part> GetPart(int id)
+        {
+            var machine = await _context.Parts.FirstOrDefaultAsync(p => p.Id == id);
+            return machine;
+        }
+
+        public  async Task<IEnumerable<Part>> GetParts(int userId)
         {
             var user = await _context.Users
-                .Include(x => x.Production)
+                .Include(x => x.Part)
                 .FirstOrDefaultAsync(u => u.Id == userId);
                 
-            return user.Production.Where(p => p.userId == userId).Where(p => p.Job == job);
+            return user.Part.Where(p => p.userId == userId);
+        }
+
+        public async Task<IEnumerable<Part>> GetPartsByJob(int userId, string job)
+        {
+            var user = await _context.Users
+                .Include(x => x.Part)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+                
+            return user.Part.Where(p => p.userId == userId).Where(p => p.Job == job);
+        }
+
+        public async Task<IEnumerable<Part>> GetPartsByPart(int userId, string part)
+        {
+            var user = await _context.Users
+                .Include(x => x.Part)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+                
+            return user.Part.Where(p => p.userId == userId).Where(p => p.PartNumber == part);
+        }
+
+        public async Task<IEnumerable<Part>> GetPartsByMachine(int userId, string mach)
+        {
+            var user = await _context.Users
+                .Include(x => x.Part)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+                
+            return user.Part.Where(p => p.userId == userId).Where(p => p.Machine == mach);
+        }
+
+        public Task<Production> GetHourly(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<Production>> GetHourlySet(int userId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<Production>> GetHourlySetByDate(int userId, string date)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<Production>> GetHourlySetByJob(int userId, string job)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<Production>> GetHourlySetByJobAndMachine(int userId, string job, string mach)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
