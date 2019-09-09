@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using backend.Data;
-using backend.Dtos;
+using BackEnd.Data;
+using BackEnd.Dtos;
 using BackEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Controllers
+namespace BackEnd.Controllers
 {
     [Authorize]
     [Route("api/{userId}/[controller]")]
@@ -27,17 +27,17 @@ namespace backend.Controllers
         
 
 
-        [HttpPost]
-        public async Task<IActionResult> AddProduction(int userId, ProdForCreationDto prodForCreationDto)
+        [HttpPost("{jobNum}")]
+        public async Task<IActionResult> AddProduction(int userId, string jobNum, ProdForCreationDto prodForCreationDto)
         {
-            var creater = await _repo.GetUser(userId);
-
-            if (creater.Id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             var production = _mapper.Map<Production>(prodForCreationDto);
 
-            production.userId = userId;
+            var partSet = await _repo.GetJobByNumberAndOp(userId, jobNum, production.Operation);
+
+            production.JobNumber = jobNum;
 
             _repo.Add(production);
 
@@ -115,6 +115,29 @@ namespace backend.Controllers
             var productionSet = _mapper.Map<IEnumerable<ProdForReturnDto>>(directProductions);
 
             return Ok(productionSet);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduction(int userId, int id)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+            
+            var prodToDelete = await _repo.GetProduction(id);
+            
+            if (userId == int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                _repo.Delete(prodToDelete);
+                await _repo.SaveAll();
+                return Ok(
+                            prodToDelete.Date.ToString("MM/dd/yyyy")
+                            + " "
+                            + prodToDelete.Shift
+                            + " shift production for Job# " 
+                            + prodToDelete.Job 
+                            +" running on the " 
+                            + prodToDelete.Machine 
+                            +" was deleted!"
+                        );
         }
     }
 }

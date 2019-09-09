@@ -1,10 +1,12 @@
+using System;
+
 namespace BackEnd.Dtos
 {
-    public class MachForReturnDto
+    public class StartTimeForReturnDto
     {
         public int Id { get; set; }
         public string Machine { get; set; }
-        public string CurrentJob { get; set; }
+        public DateTime Date { get; set; }
         
     }
 }

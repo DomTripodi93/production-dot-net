@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using backend.Data;
-using backend.Dtos;
 using BackEnd.Data;
+using BackEnd.Dtos;
 using BackEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Controllers
+namespace BackEnd.Controllers
 {
     [Authorize]
     [Route("api/{userId}/[controller]")]
@@ -29,9 +28,7 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddMachine(int userId, MachForCreationDto machForCreationDto)
         {
-            var creater = await _repo.GetUser(userId);
-
-            if (creater.Id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             var mach = _mapper.Map<Mach>(machForCreationDto);
@@ -91,7 +88,6 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{id}")]
-
         public async Task<IActionResult> DeleteMachine(int userId, int id)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))

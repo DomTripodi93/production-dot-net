@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace backend.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,19 +24,6 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Values",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Values", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ChangeLogs",
                 columns: table => new
                 {
@@ -54,30 +41,6 @@ namespace backend.Migrations
                     table.PrimaryKey("PK_ChangeLogs", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ChangeLogs_Users_userId",
-                        column: x => x.userId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Hourlys",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    userId = table.Column<int>(nullable: false),
-                    Machine = table.Column<string>(nullable: true),
-                    Job = table.Column<string>(nullable: true),
-                    Quantity = table.Column<string>(nullable: true),
-                    CounterQuantity = table.Column<string>(nullable: true),
-                    Time = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Hourlys", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Hourlys_Users_userId",
                         column: x => x.userId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -112,9 +75,78 @@ namespace backend.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
-                    PartNumber = table.Column<string>(nullable: true),
-                    Machine = table.Column<string>(nullable: true),
-                    Job = table.Column<string>(nullable: true),
+                    PartNumber = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Parts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Parts_Users_userId",
+                        column: x => x.userId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Settings",
+                columns: table => new
+                {
+                    userId = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false),
+                    IsNew = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Settings", x => x.userId);
+                    table.ForeignKey(
+                        name: "FK_Settings_Users_userId",
+                        column: x => x.userId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StartTimes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    userId = table.Column<int>(nullable: false),
+                    MachId = table.Column<int>(nullable: false),
+                    Shift = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StartTimes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StartTimes_Machines_MachId",
+                        column: x => x.MachId,
+                        principalTable: "Machines",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StartTimes_Users_userId",
+                        column: x => x.userId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Jobs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    userId = table.Column<int>(nullable: false),
+                    PartId = table.Column<int>(nullable: true),
+                    PartNum = table.Column<string>(nullable: true),
+                    JobNumber = table.Column<string>(nullable: true),
+                    PartsToDate = table.Column<string>(nullable: true),
+                    Operation = table.Column<string>(nullable: true),
                     OrderQuantity = table.Column<string>(nullable: true),
                     PossibleQuantity = table.Column<string>(nullable: true),
                     RemainingQuantity = table.Column<string>(nullable: true),
@@ -131,9 +163,47 @@ namespace backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Parts", x => x.Id);
+                    table.PrimaryKey("PK_Jobs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Parts_Users_userId",
+                        name: "FK_Jobs_Parts_PartId",
+                        column: x => x.PartId,
+                        principalTable: "Parts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Jobs_Users_userId",
+                        column: x => x.userId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Hourlys",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    userId = table.Column<int>(nullable: false),
+                    JobId = table.Column<int>(nullable: true),
+                    Operation = table.Column<string>(nullable: true),
+                    JobNumber = table.Column<string>(nullable: true),
+                    Machine = table.Column<string>(nullable: true),
+                    Quantity = table.Column<string>(nullable: true),
+                    CounterQuantity = table.Column<string>(nullable: true),
+                    Time = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hourlys", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Hourlys_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Hourlys_Users_userId",
                         column: x => x.userId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -147,9 +217,11 @@ namespace backend.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
+                    JobId = table.Column<int>(nullable: true),
+                    JobNumber = table.Column<string>(nullable: true),
+                    Operation = table.Column<string>(nullable: true),
                     PartNumber = table.Column<string>(nullable: true),
                     Machine = table.Column<string>(nullable: true),
-                    Job = table.Column<string>(nullable: true),
                     Shift = table.Column<string>(nullable: true),
                     Quantity = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
@@ -159,55 +231,13 @@ namespace backend.Migrations
                 {
                     table.PrimaryKey("PK_Production", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Production_Users_userId",
-                        column: x => x.userId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Settings",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    userId = table.Column<int>(nullable: false),
-                    IsNew = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Settings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Settings_Users_userId",
-                        column: x => x.userId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StartTimes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    userId = table.Column<int>(nullable: false),
-                    Machine = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    MachId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StartTimes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_StartTimes_Machines_MachId",
-                        column: x => x.MachId,
-                        principalTable: "Machines",
+                        name: "FK_Production_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StartTimes_Users_userId",
+                        name: "FK_Production_Users_userId",
                         column: x => x.userId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -220,8 +250,23 @@ namespace backend.Migrations
                 column: "userId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Hourlys_JobId",
+                table: "Hourlys",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Hourlys_userId",
                 table: "Hourlys",
+                column: "userId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Jobs_PartId",
+                table: "Jobs",
+                column: "PartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Jobs_userId",
+                table: "Jobs",
                 column: "userId");
 
             migrationBuilder.CreateIndex(
@@ -235,15 +280,14 @@ namespace backend.Migrations
                 column: "userId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Production_JobId",
+                table: "Production",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Production_userId",
                 table: "Production",
                 column: "userId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Settings_userId",
-                table: "Settings",
-                column: "userId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_StartTimes_MachId",
@@ -265,9 +309,6 @@ namespace backend.Migrations
                 name: "Hourlys");
 
             migrationBuilder.DropTable(
-                name: "Parts");
-
-            migrationBuilder.DropTable(
                 name: "Production");
 
             migrationBuilder.DropTable(
@@ -277,10 +318,13 @@ namespace backend.Migrations
                 name: "StartTimes");
 
             migrationBuilder.DropTable(
-                name: "Values");
+                name: "Jobs");
 
             migrationBuilder.DropTable(
                 name: "Machines");
+
+            migrationBuilder.DropTable(
+                name: "Parts");
 
             migrationBuilder.DropTable(
                 name: "Users");

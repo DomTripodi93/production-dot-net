@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using backend.Dtos;
+using BackEnd.Dtos;
 using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -51,6 +51,13 @@ namespace BackEnd.Data
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
+            SettingsForCreationDto settingsForCreation = new SettingsForCreationDto{
+                IsNew = true
+            };
+
+            Settings settings = _mapper.Map<Settings>(settingsForCreation);
+
+            user.Settings = settings;
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 

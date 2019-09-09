@@ -11,8 +11,6 @@ namespace BackEnd.Models
         public byte[] PasswordSalt { get; set; }
         public ICollection<Mach> Machine { get; set; }
         public ICollection<Part> Part { get; set; }
-        public ICollection<Hourly> Hourly { get; set; }
-        public ICollection<Production> Production { get; set; }
         public ICollection<ChangeLog> ChangeLog { get; set; }
         public Settings Settings { get; set; }
     }

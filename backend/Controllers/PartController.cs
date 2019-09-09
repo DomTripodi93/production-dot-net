@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using backend.Data;
-using backend.Dtos;
+using BackEnd.Data;
+using BackEnd.Dtos;
 using BackEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Controllers
+namespace BackEnd.Controllers
 {
     [Authorize]
     [Route("api/{userId}/[controller]")]
@@ -30,9 +30,7 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPart(int userId, PartForCreationDto partForCreationDto)
         {
-            var creater = await _repo.GetUser(userId);
-
-            if (creater.Id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             var part = _mapper.Map<Part>(partForCreationDto);
@@ -91,43 +89,22 @@ namespace backend.Controllers
             return Ok(parts);
         }
 
-        [HttpGet("machine={mach}")]
-        public async Task<IActionResult> GetPartsByMachine(int userId, string mach)
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePart(int userId, int id)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
-
-            IEnumerable<Part> directParts = await _repo.GetPartsByMachine(userId, mach);
-
-            var parts = _mapper.Map<IEnumerable<PartForReturnDto>>(directParts);
-
-            return Ok(parts);
-        }
-
-        [HttpGet("job={job}")]
-        public async Task<IActionResult> GetPartsByJob(int userId, string job)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            IEnumerable<Part> directParts = await _repo.GetPartsByJob(userId, job);
-
-            var parts = _mapper.Map<IEnumerable<PartForReturnDto>>(directParts);
-
-            return Ok(parts);
-        }
-
-        [HttpGet("part={part}")]
-        public async Task<IActionResult> GetPartsByPart(int userId, string part)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            IEnumerable<Part> directParts = await _repo.GetPartsByPart(userId, part);
-
-            var parts = _mapper.Map<IEnumerable<PartForReturnDto>>(directParts);
-
-            return Ok(parts);
+            
+            var partToDelete = await _repo.GetPart(id);
+            
+            if (userId == int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                _repo.Delete(partToDelete);
+                await _repo.SaveAll();
+                return Ok(
+                            partToDelete.PartNumber
+                            +" and any associated Jobs, Production, and Hourly Tracking was deleted!"
+                        );
         }
     }
 }

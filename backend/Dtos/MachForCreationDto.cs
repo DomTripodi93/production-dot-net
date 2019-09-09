@@ -1,4 +1,4 @@
-namespace backend.Dtos
+namespace BackEnd.Dtos
 {
     public class MachForCreationDto
     {
