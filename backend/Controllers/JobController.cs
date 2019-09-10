@@ -35,13 +35,16 @@ namespace BackEnd.Controllers
 
             var job = _mapper.Map<Job>(jobForCreationDto);
 
+            var partInfo = await _repo.GetPart(jobForCreationDto.PartId);
+
+            job.PartNum = partInfo.PartNumber;
             job.userId = userId;
 
             _repo.Add(job);
 
             if (await _repo.SaveAll())
             {
-                var jobToReturn = _mapper.Map<JobForCreationDto>(job);
+                var jobToReturn = _mapper.Map<JobForReturnDto>(job);
                 return CreatedAtRoute("GetJob", new {id = job.Id}, jobToReturn);
             }
                 

@@ -142,7 +142,7 @@ namespace backend.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
-                    PartId = table.Column<int>(nullable: true),
+                    partId = table.Column<int>(nullable: false),
                     PartNum = table.Column<string>(nullable: true),
                     JobNumber = table.Column<string>(nullable: true),
                     PartsToDate = table.Column<string>(nullable: true),
@@ -165,11 +165,11 @@ namespace backend.Migrations
                 {
                     table.PrimaryKey("PK_Jobs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Jobs_Parts_PartId",
-                        column: x => x.PartId,
+                        name: "FK_Jobs_Parts_partId",
+                        column: x => x.partId,
                         principalTable: "Parts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Jobs_Users_userId",
                         column: x => x.userId,
@@ -185,7 +185,7 @@ namespace backend.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
-                    JobId = table.Column<int>(nullable: true),
+                    JobId = table.Column<int>(nullable: false),
                     Operation = table.Column<string>(nullable: true),
                     JobNumber = table.Column<string>(nullable: true),
                     Machine = table.Column<string>(nullable: true),
@@ -201,7 +201,7 @@ namespace backend.Migrations
                         column: x => x.JobId,
                         principalTable: "Jobs",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Hourlys_Users_userId",
                         column: x => x.userId,
@@ -217,7 +217,7 @@ namespace backend.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
-                    JobId = table.Column<int>(nullable: true),
+                    JobId = table.Column<int>(nullable: false),
                     JobNumber = table.Column<string>(nullable: true),
                     Operation = table.Column<string>(nullable: true),
                     PartNumber = table.Column<string>(nullable: true),
@@ -235,7 +235,7 @@ namespace backend.Migrations
                         column: x => x.JobId,
                         principalTable: "Jobs",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Production_Users_userId",
                         column: x => x.userId,
@@ -260,9 +260,9 @@ namespace backend.Migrations
                 column: "userId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jobs_PartId",
+                name: "IX_Jobs_partId",
                 table: "Jobs",
-                column: "PartId");
+                column: "partId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Jobs_userId",

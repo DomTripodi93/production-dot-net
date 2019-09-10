@@ -9,6 +9,7 @@ namespace BackEnd.Models
         public User User { get; set; }
         public int userId { get; set; }
         public Job Job { get; set; }
+        public int JobId { get; set; }
         public string Operation { get; set; }
         public string JobNumber { get; set; }
         public string Machine { get; set; }

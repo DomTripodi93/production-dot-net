@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190909011249_Initial")]
+    [Migration("20190909025015_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,7 @@ namespace backend.Migrations
 
                     b.Property<string>("CounterQuantity");
 
-                    b.Property<int?>("JobId");
+                    b.Property<int>("JobId");
 
                     b.Property<string>("JobNumber");
 
@@ -95,8 +95,6 @@ namespace backend.Migrations
 
                     b.Property<string>("OrderQuantity");
 
-                    b.Property<int?>("PartId");
-
                     b.Property<string>("PartNum");
 
                     b.Property<string>("PartsToDate");
@@ -113,11 +111,13 @@ namespace backend.Migrations
 
                     b.Property<string>("WeightRecieved");
 
+                    b.Property<int>("partId");
+
                     b.Property<int>("userId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PartId");
+                    b.HasIndex("partId");
 
                     b.HasIndex("userId");
 
@@ -167,7 +167,7 @@ namespace backend.Migrations
 
                     b.Property<bool>("InQuestion");
 
-                    b.Property<int?>("JobId");
+                    b.Property<int>("JobId");
 
                     b.Property<string>("JobNumber");
 
@@ -257,7 +257,8 @@ namespace backend.Migrations
                 {
                     b.HasOne("BackEnd.Models.Job", "Job")
                         .WithMany("Hourly")
-                        .HasForeignKey("JobId");
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BackEnd.Models.User", "User")
                         .WithMany()
@@ -269,7 +270,8 @@ namespace backend.Migrations
                 {
                     b.HasOne("BackEnd.Models.Part", "Part")
                         .WithMany("Jobs")
-                        .HasForeignKey("PartId");
+                        .HasForeignKey("partId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BackEnd.Models.User", "User")
                         .WithMany()
@@ -297,7 +299,8 @@ namespace backend.Migrations
                 {
                     b.HasOne("BackEnd.Models.Job", "Job")
                         .WithMany("Production")
-                        .HasForeignKey("JobId");
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BackEnd.Models.User", "User")
                         .WithMany()

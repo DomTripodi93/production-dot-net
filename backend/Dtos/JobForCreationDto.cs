@@ -1,10 +1,18 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace BackEnd.Dtos
 {
     public class JobForCreationDto
     {
-        public string PartNumber { get; set; }
+        [Required]
+        public int PartId { get; set; }
         public string Machine { get; set; }
-        public string Job { get; set; }
+        
+        [Required]
+        public string JobNumber { get; set; }
+        
+        [Required]
+        public string Operation { get; set; }
         public string OrderQuantity { get; set; }
         public string PossibleQuantity { get; set; }
         public string RemainingQuantity { get; set; }

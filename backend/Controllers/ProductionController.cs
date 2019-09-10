@@ -27,23 +27,26 @@ namespace BackEnd.Controllers
         
 
 
-        [HttpPost("{jobNum}")]
-        public async Task<IActionResult> AddProduction(int userId, string jobNum, ProdForCreationDto prodForCreationDto)
+        [HttpPost]
+        public async Task<IActionResult> AddProduction(int userId, ProdForCreationDto prodForCreationDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             var production = _mapper.Map<Production>(prodForCreationDto);
 
-            var partSet = await _repo.GetJobByNumberAndOp(userId, jobNum, production.Operation);
+            var jobInfo = await _repo.GetJob(production.JobId);
 
-            production.JobNumber = jobNum;
+            production.userId = userId;
+            production.InQuestion = false;
+            production.JobNumber = jobInfo.JobNumber;
+            production.Operation = jobInfo.Operation;
 
             _repo.Add(production);
 
             if (await _repo.SaveAll())
             {
-                var prodToReturn = _mapper.Map<ProdForCreationDto>(production);
+                var prodToReturn = _mapper.Map<ProdForReturnDto>(production);
                 return CreatedAtRoute("GetProd", new {id = production.Id}, prodToReturn);
             }
                 

@@ -8,6 +8,7 @@ namespace BackEnd.Dtos
         public string PartNumber { get; set; }
         public string Machine { get; set; }
         public string JobNumber { get; set; }
+        public int JobId { get; set; }
         public string Operation { get; set; }
         public string Shift { get; set; }
         public string Quantity { get; set; }

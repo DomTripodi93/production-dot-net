@@ -3,9 +3,10 @@ namespace BackEnd.Dtos
     public class JobForReturnDto
     {
         public int Id { get; set; }
-        public string PartNumber { get; set; }
-        public string Machine { get; set; }
-        public string Job { get; set; }
+        public string PartNum { get; set; }
+        public string JobNumber { get; set; }
+        public string PartsToDate { get; set; }
+        public string Operation { get; set; }
         public string OrderQuantity { get; set; }
         public string PossibleQuantity { get; set; }
         public string RemainingQuantity { get; set; }
