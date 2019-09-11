@@ -17,11 +17,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscriptions.push(
-        this.auth.checkNew(this.auth.user).subscribe(()=>{this.checkStatus()})
+        this.auth.checkNew().subscribe(()=>{this.checkStatus()})
     );
     this.subscriptions.push(
       this.auth.authChanged.subscribe(()=>{
-        setTimeout(()=>{this.auth.checkNew(this.auth.user).subscribe(()=>{this.checkStatus()})}, 50);
+        setTimeout(()=>{this.auth.checkNew().subscribe(()=>{this.checkStatus()})}, 50);
       })
     );
   }
@@ -37,7 +37,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   changeTutorial() {
     if (confirm("Are you sure you want to hide these tutorials?")){
-      this.auth.changeNew(this.auth.user).subscribe(()=>{
+      this.auth.changeNew().subscribe(()=>{
         this.auth.authChanged.next();
       })
     }

@@ -13,13 +13,14 @@ export class AuthService {
     name = '';
     isNew = false;
     isAuthenticated = false;
-    apiUrl = 'http://localhost:5000/api';
+    authApiUrl = 'http://localhost:5000/api'
+    apiUrl = 'http://localhost:5000/api/' + localStorage.getItem('id');
     public authChanged = new Subject();
     makeOld = {
-      is_new: false
+      isNew: false
     }
     makeNew = {
-      is_new: true
+      isNew: true
     }
 
     constructor(
@@ -38,14 +39,14 @@ export class AuthService {
 
     registerUser(data: User){
       return this.http.post(
-        this.apiUrl + '/auth/register/',
+        this.authApiUrl + '/auth/register',
         data
       )
     }
 
     signinUser(data: Signin){
         return this.http.post(
-          this.apiUrl + '/auth/login/',
+          this.authApiUrl + '/auth/login',
           data,
           {
             observe: 'response'
@@ -53,35 +54,35 @@ export class AuthService {
         )
     }
 
-    getUserDetails(email){
+    getUserDetails(id){
       return this.http.get(
-        this.apiUrl + "/auth/" + email,
+        this.authApiUrl + "/user/" + id,
         {
           observe: "response"
         }
       )
     }
 
-    checkNew(id){
+    checkNew(){
       return this.http.get(
-        this.apiUrl + "/usersettings/" +id,
+        this.apiUrl + "/settings/",
       )
       .pipe(
         map((responseData: User) => {
-          this.isNew = responseData.is_new;
+          this.isNew = responseData.isNew;
         return responseData;
         })
       )
     }
 
-    changeNew(id){
+    changeNew(){
       if (this.isNew == true){
-        return this.http.patch(
-          this.apiUrl + "/usersettings/" + id + "/", this.makeOld      
+        return this.http.put(
+          this.apiUrl + "/settings", this.makeOld      
         );
       } else {
-        return this.http.patch(
-          this.apiUrl + "/usersettings/" + id + "/", this.makeNew
+        return this.http.put(
+          this.apiUrl + "/settings", this.makeNew
         );
       }
     }
@@ -94,7 +95,7 @@ export class AuthService {
         'changed_model': model
       }
       return this.http.post(
-        this.apiUrl + '/changelog/', data
+        this.authApiUrl + '/changelog/', data
       );
     }
 

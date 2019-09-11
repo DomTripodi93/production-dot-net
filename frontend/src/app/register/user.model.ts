@@ -3,5 +3,5 @@ export interface User {
     name: string;
     password: string;
     id?: string;
-    is_new: boolean;
+    isNew: boolean;
 }

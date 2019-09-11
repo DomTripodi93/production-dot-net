@@ -50,29 +50,29 @@ namespace BackEnd.Controllers
             throw new Exception("Creation of settings count failed on save");
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSettings(int id, SettingsForCreationDto settingsForUpdateDto)
+        [HttpPut]
+        public async Task<IActionResult> UpdateSettings(int userId, SettingsForCreationDto settingsForUpdateDto)
         {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var settingsFromRepo = await _repo.GetSettings(id);
+            var settingsFromRepo = await _repo.GetSettings(userId);
 
             _mapper.Map(settingsForUpdateDto, settingsFromRepo);
 
             if (await _repo.SaveAll())
                 return CreatedAtRoute("GetSettings", new {id = settingsFromRepo.Id}, settingsForUpdateDto);
 
-            throw new Exception($"Updating settings count {id} failed on save");
+            throw new Exception($"Updating settings for {userId} failed on save");
         }
 
-        [HttpGet("{id}", Name = "GetSettings")]
+        [HttpGet(Name = "GetSettings")]
         public async Task<IActionResult> GetSettings(int id, int userId)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            Settings settings = await _repo.GetSettings(id);
+            Settings settings = await _repo.GetSettings(userId);
             SettingsForReturnDto settingsForReturn = _mapper.Map<SettingsForReturnDto>(settings);
             return Ok(settingsForReturn);
         }

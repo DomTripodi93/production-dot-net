@@ -30,20 +30,14 @@ export class SigninComponent {
         (responseData) => {
           this.auth.token = responseData.body['token'];
           localStorage.setItem('token', responseData.body['token']);
-          this.auth.getUserDetails(this.user.email)
-            .subscribe(
-              (responseData) => {
-                this.auth.user = responseData.body['id'];
-                this.auth.name = responseData.body['name'];
-                if (this.auth.user) {
-                  this.auth.isAuthenticated = true;
-                  // this.auth.checkNew(this.auth.user).subscribe();
-                }
-                localStorage.setItem('id', responseData.body['id']);
-                console.log(this.auth.user + " " +this.auth.name)
-                this.auth.authChanged.next();
-              }
-            )
+          let id = responseData.body["id"]
+          localStorage.setItem('id', id);
+          this.auth.user = id;
+          this.auth.authChanged.next();
+          if (this.auth.user) {
+            this.auth.isAuthenticated = true;
+            // this.auth.checkNew(this.auth.user).subscribe();
+          }
         },() => {
           this.isError = true
           this.error = "This Email and Password combination is invalid!";
