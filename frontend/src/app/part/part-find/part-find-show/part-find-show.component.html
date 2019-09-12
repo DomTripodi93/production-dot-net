@@ -4,25 +4,25 @@
       <h3>Part #: {{part.part}}</h3>
       <h4 *ngIf="part.job">Current Job: {{part.job}}</h4>
       <h4 *ngIf="part.machine">Current Machine: {{part.machine}}</h4>
-      <h4 *ngIf="part.cycle_time">Cycle Time: {{part.cycle_time}}</h4>
-      <h4 *ngIf="part.order_quantity">Order Quantity: {{part.order_quantity}}</h4>
-      <h4 *ngIf="part.weight_recieved">Weight Recieved: {{part.weight_recieved}}</h4>
-      <h4 *ngIf="part.weight_quantity">Potential Quantity by Weight: {{part.weight_quantity}}</h4>
-      <h4 *ngIf="part.weight_length">Total Length of Bars by Weight: {{part.weight_length}}</h4>
-      <h4 *ngIf="part.possible_quantity">Possible Quantity by Bars: {{part.possible_quantity}}</h4>
-      <h4 *ngIf="part.remaining_quantity">Remaining Quantity: {{part.remaining_quantity}}</h4>
-      <h4 *ngIf="part.heat_lot">Heat Lot#: {{part.heat_lot}}</h4>        
-      <h4 *ngIf="!part.possible_quantity && !part.weight_quantity && part.order_quantity">Most Reliable Possible Quantity: {{part.weight_quantity}}
-        <h4 *ngIf="part.cycle_time"> Total Machine Hours: {{((part.order_quantity*part.cycle_time)/3600).toFixed(2)}}</h4>
+      <h4 *ngIf="part.cycleTime">Cycle Time: {{part.cycleTime}}</h4>
+      <h4 *ngIf="part.orderQuantity">Order Quantity: {{part.orderQuantity}}</h4>
+      <h4 *ngIf="part.weightRecieved">Weight Recieved: {{part.weightRecieved}}</h4>
+      <h4 *ngIf="part.weightQuantity">Potential Quantity by Weight: {{part.weightQuantity}}</h4>
+      <h4 *ngIf="part.weightLength">Total Length of Bars by Weight: {{part.weightLength}}</h4>
+      <h4 *ngIf="part.possibleQuantity">Possible Quantity by Bars: {{part.possibleQuantity}}</h4>
+      <h4 *ngIf="part.remainingQuantity">Remaining Quantity: {{part.remainingQuantity}}</h4>
+      <h4 *ngIf="part.heatLot">Heat Lot#: {{part.heatLot}}</h4>        
+      <h4 *ngIf="!part.possibleQuantity && !part.weightQuantity && part.orderQuantity">Most Reliable Possible Quantity: {{part.weightQuantity}}
+        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.orderQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
         </h4>
-        <h4 *ngIf="!part.possible_quantity && part.weight_quantity">Most Reliable Possible Quantity: {{part.weight_quantity}}
-        <h4 *ngIf="part.cycle_time"> Total Machine Hours: {{((part.weight_quantity*part.cycle_time)/3600).toFixed(2)}}</h4>
+        <h4 *ngIf="!part.possibleQuantity && part.weightQuantity">Most Reliable Possible Quantity: {{part.weightQuantity}}
+        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.weightQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
         </h4>
-        <h4 *ngIf="part.possible_quantity">Most Reliable Possible Quantity: {{part.possible_quantity}}
-        <h4 *ngIf="part.cycle_time"> Total Machine Hours: {{((part.possible_quantity*part.cycle_time)/3600).toFixed(2)}}</h4>
+        <h4 *ngIf="part.possibleQuantity">Most Reliable Possible Quantity: {{part.possibleQuantity}}
+        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.possibleQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
         </h4>
-        <h4 *ngIf="part.remaining_quantity">Remaining Quantity: {{part.remaining_quantity}}</h4>
-        <h4 *ngIf="part.cycle_time"> Remaining Machine Hours: {{((part.remaining_quantity*part.cycle_time)/3600).toFixed(2)}}</h4> <br><br>
+        <h4 *ngIf="part.remainingQuantity">Remaining Quantity: {{part.remainingQuantity}}</h4>
+        <h4 *ngIf="part.cycleTime"> Remaining Machine Hours: {{((part.remainingQuantity*part.cycleTime)/3600).toFixed(2)}}</h4> <br><br>
           <br><br>
           <div class="grid">
             <button class='btn btn-primary' routerLink="../edit/{{part.id}}">Edit Part</button>
@@ -37,25 +37,25 @@
       <h3>Part #: {{part.part}}</h3>
       <h4 *ngIf="part.job">Current Job: {{part.job}}</h4>
       <h4 *ngIf="part.machine">Current Machine: {{part.machine}}</h4>
-      <h4 *ngIf="part.cycle_time">Cycle Time: {{part.cycle_time}}</h4>
-      <h4 *ngIf="part.order_quantity">Order Quantity: {{part.order_quantity}}</h4>
-      <h4 *ngIf="part.weight_recieved">Weight Recieved: {{part.weight_recieved}}</h4>
-      <h4 *ngIf="part.weight_quantity">Potential Quantity by Weight: {{part.weight_quantity}}</h4>
-      <h4 *ngIf="part.weight_length">Total Length of Bars by Weight: {{part.weight_length}}</h4>
-      <h4 *ngIf="part.possible_quantity">Possible Quantity by Bars: {{part.possible_quantity}}</h4>
-      <h4 *ngIf="part.remaining_quantity">Remaining Quantity: {{part.remaining_quantity}}</h4>
-      <h4 *ngIf="part.heat_lot">Heat Lot#: {{part.heat_lot}}</h4>
-              <h4 *ngIf="!part.possible_quantity && !part.weight_quantity && part.order_quantity">Most Reliable Possible Quantity: {{part.weight_quantity}}
-        <h4 *ngIf="part.cycle_time"> Total Machine Hours: {{((part.order_quantity*part.cycle_time)/3600).toFixed(2)}}</h4>
+      <h4 *ngIf="part.cycleTime">Cycle Time: {{part.cycleTime}}</h4>
+      <h4 *ngIf="part.orderQuantity">Order Quantity: {{part.orderQuantity}}</h4>
+      <h4 *ngIf="part.weightRecieved">Weight Recieved: {{part.weightRecieved}}</h4>
+      <h4 *ngIf="part.weightQuantity">Potential Quantity by Weight: {{part.weightQuantity}}</h4>
+      <h4 *ngIf="part.weightLength">Total Length of Bars by Weight: {{part.weightLength}}</h4>
+      <h4 *ngIf="part.possibleQuantity">Possible Quantity by Bars: {{part.possibleQuantity}}</h4>
+      <h4 *ngIf="part.remainingQuantity">Remaining Quantity: {{part.remainingQuantity}}</h4>
+      <h4 *ngIf="part.heatLot">Heat Lot#: {{part.heatLot}}</h4>
+              <h4 *ngIf="!part.possibleQuantity && !part.weightQuantity && part.orderQuantity">Most Reliable Possible Quantity: {{part.weightQuantity}}
+        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.orderQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
         </h4>
-        <h4 *ngIf="!part.possible_quantity && part.weight_quantity">Most Reliable Possible Quantity: {{part.weight_quantity}}
-        <h4 *ngIf="part.cycle_time"> Total Machine Hours: {{((part.weight_quantity*part.cycle_time)/3600).toFixed(2)}}</h4>
+        <h4 *ngIf="!part.possibleQuantity && part.weightQuantity">Most Reliable Possible Quantity: {{part.weightQuantity}}
+        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.weightQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
         </h4>
-        <h4 *ngIf="part.possible_quantity">Most Reliable Possible Quantity: {{part.possible_quantity}}
-        <h4 *ngIf="part.cycle_time"> Total Machine Hours: {{((part.possible_quantity*part.cycle_time)/3600).toFixed(2)}}</h4>
+        <h4 *ngIf="part.possibleQuantity">Most Reliable Possible Quantity: {{part.possibleQuantity}}
+        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.possibleQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
         </h4>
-        <h4 *ngIf="part.remaining_quantity">Remaining Quantity: {{part.remaining_quantity}}</h4>
-        <h4 *ngIf="part.cycle_time"> Remaining Machine Hours: {{((part.remaining_quantity*part.cycle_time)/3600).toFixed(2)}}</h4> <br><br>
+        <h4 *ngIf="part.remainingQuantity">Remaining Quantity: {{part.remainingQuantity}}</h4>
+        <h4 *ngIf="part.cycleTime"> Remaining Machine Hours: {{((part.remainingQuantity*part.cycleTime)/3600).toFixed(2)}}</h4> <br><br>
       <div class="grid">
         <button class='btn btn-primary' routerLink="../edit/{{part.id}}">Edit Part</button>
         <button class='btn btn-danger' (click)="onDelete(part.part, part.id)">Delete Part</button>

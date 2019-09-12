@@ -9,15 +9,15 @@ import { AuthService } from '../auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription;
-  id = "";
+  id = false;
 
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
-    this.id = this.auth.user;
+    this.id = this.auth.isAuthenticated;
     this.subscription = this.auth.authChanged.subscribe(
       ()=>{
-        this.id = this.auth.user;
+        this.id = this.auth.isAuthenticated;
       }
     )
   }

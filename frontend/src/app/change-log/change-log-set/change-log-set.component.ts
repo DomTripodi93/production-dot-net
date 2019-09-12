@@ -17,10 +17,10 @@ export class ChangeLogSetComponent implements OnInit {
     this.fetchChanges().subscribe((logs)=>{
       logs.forEach((log)=>{
           let mod ={
-            old: JSON.parse(log.old_values),
+            old: JSON.parse(log.oldValues),
             timestamp: log.timestamp.split("T"),
-            type: log.change_type,
-            id: log.changed_id
+            type: log.changeType,
+            id: log.changedId
           }
 
         if (+mod.timestamp[1].substring(0,2)>12){
@@ -45,7 +45,7 @@ export class ChangeLogSetComponent implements OnInit {
 
   fetchChanges() {
       return this.http.get(
-        this.auth.apiUrl + '/changelog/?changed_model=' + this.model
+        this.auth.apiUrl + '/changelog/?changedModel=' + this.model
       )
       .pipe(
         map((responseData: Change[] = []) => {

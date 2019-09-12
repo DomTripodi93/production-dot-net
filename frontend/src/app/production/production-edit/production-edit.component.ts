@@ -51,9 +51,9 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
       this.mach.fetchMachineJobs()
       .subscribe(machines => {
         machines.forEach((mach)=>{
-          if (!this.jobs.includes(mach.current_job)){
-            if (mach.current_job !== "None"){
-              this.jobs.push(mach.current_job)
+          if (!this.jobs.includes(mach.currentJob)){
+            if (mach.currentJob !== "None"){
+              this.jobs.push(mach.currentJob)
             }
           }
           this.machines.push(mach.machine)

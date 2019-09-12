@@ -1,6 +1,6 @@
 <ul class='list-group'>
     <li class=list-group-item *ngFor="let lot of productionLots; let i = index" >
-        <div *ngIf="lot.in_question" class="inQuestion">   
+        <div *ngIf="lot.inQuestion" class="inQuestion">   
             <button class="btn btn-success" (click)="lotIsGood(lot.id)">Set Lot Good</button>
             <div routerLink="single/{{lot.id}}">
                 <h4>Date: <strong>{{lot.date}}</strong></h4>
@@ -18,7 +18,7 @@
                 <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Show Day Production</button>
             </div>
         </div>
-        <div *ngIf="!lot.in_question">   
+        <div *ngIf="!lot.inQuestion">   
             <button class="btn btn-danger" (click)="lotInQuestion(lot.id)">Set Lot In Question</button>
             <div routerLink="single/{{lot.id}}">
                 <h4>Date: <strong>{{lot.date}}</strong></h4>

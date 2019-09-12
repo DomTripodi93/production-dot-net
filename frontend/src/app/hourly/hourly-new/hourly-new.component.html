@@ -9,18 +9,18 @@
 <form *ngIf="canInput && hourlyForm && machines.length > 0" [formGroup]="hourlyForm" (ngSubmit)='onSubmit()' >
   <div class='form-group'>
     <div class="form-group">
-      <label for="hard_quantity">Hard Quantity</label>
+      <label for="quantity">Hard Quantity</label>
       <input 
-        formControlName='hard_quantity'
+        formControlName='quantity'
         type="number" 
-        id="hard_quantity" 
+        id="quantity" 
         class="form-control">
     </div>
     <div class="form-group">
-      <label for="counter_quantity">Counter Quantity</label>
+      <label for="counterQuantity">Counter Quantity</label>
       <input 
-        formControlName='counter_quantity'
-        id="counter_quantity" 
+        formControlName='counterQuantity'
+        id="counterQuantity" 
         class="form-control">
     </div>
     <div class="form-group">

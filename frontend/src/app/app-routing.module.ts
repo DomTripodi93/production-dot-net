@@ -37,52 +37,56 @@ import { ChangeLogComponent } from './change-log/change-log.component';
 import { CalculatorComponent } from './part/calculator/calculator.component';
 import { LengthComponent } from './part/calculator/by-weight/length/length.component';
 import { SettingsComponent } from './shared/settings/settings.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const appRoutes: Routes = [
     {path: '', component: CalenderComponent, pathMatch: 'full' },
-    {path: 'settings', component: SettingsComponent },
-    {path: 'day/:year/:month/:day', component: DaysComponent, children:[
-        {path: '', component: DaysFullComponent},
-        {path: 'hourly', component: DaysHourlyComponent}
-    ]},
     {path: 'register', component: RegisterComponent },
-    {path: 'production', component: ProductionComponent, children:[
-        {path: '', component: ProductionListComponent},
-        {path: 'new', component: ProductionNewComponent},
-        {path: 'find', component: ProductionByJobComponent},
-        {path: 'single/:id', component: ProductionSingleComponent},
-        {path: 'single/:id/edit', component: ProductionEditComponent},
-        {path: ":job", component: ProductionByJobSelectComponent},
-    ]},
-    {path: 'machine', component: MachineComponent, children:[
-        {path: '', component: MachineShowComponent},
-        {path: 'edit/:id', component: MachineEditComponent},
-        {path: 'new', component: MachineNewComponent}
-    ]},
-    {path: 'parts', component: PartComponent, children:[
-        {path: '', component: PartShowComponent},
-        {path: 'edit/:id', component: PartEditComponent},
-        {path: 'new', component: PartNewComponent},
-        {path: 'find', component: PartFindComponent},
-        {path: "calculator", component: CalculatorComponent, children:[
-            {path: "", component: LengthComponent},
-            {path: "weight/:id", component: ByWeightComponent},
-            {path: "job/:id", component: JobTotalComponent},
-            {path: ":id", component: RemainingComponent},
-
-        ]},
-        {path: ":part", component: PartFindShowComponent},
-    ]},
-    {path: 'hourly', component: HourlyComponent, children:[
-        {path: '', component: HourlyShowComponent},
-        {path: 'edit/:id', component: HourlyEditComponent},
-        {path: 'find', component: HourlyFindComponent},
-        {path: 'find/:search', component: HourlyFindShowComponent},
-        {path: 'new', component: HourlyNewComponent},
-    ]},
-    {path: 'changes', component: ChangeLogComponent},
     {path: 'login', component: SigninComponent},
-    {path: 'logout', component: SignoutComponent}
+    {path: "", runGuardsAndResolvers: "always", canActivate: [AuthGuard], children: [
+        {path: 'settings', component: SettingsComponent },
+        {path: 'day/:year/:month/:day', component: DaysComponent, children:[
+            {path: '', component: DaysFullComponent},
+            {path: 'hourly', component: DaysHourlyComponent}
+        ]},
+        {path: 'production', component: ProductionComponent, children:[
+            {path: '', component: ProductionListComponent},
+            {path: 'new', component: ProductionNewComponent},
+            {path: 'find', component: ProductionByJobComponent},
+            {path: 'single/:id', component: ProductionSingleComponent},
+            {path: 'single/:id/edit', component: ProductionEditComponent},
+            {path: ":job", component: ProductionByJobSelectComponent},
+        ]},
+        {path: 'machine', component: MachineComponent, children:[
+            {path: '', component: MachineShowComponent},
+            {path: 'edit/:id', component: MachineEditComponent},
+            {path: 'new', component: MachineNewComponent}
+        ]},
+        {path: 'parts', component: PartComponent, children:[
+            {path: '', component: PartShowComponent},
+            {path: 'edit/:id', component: PartEditComponent},
+            {path: 'new', component: PartNewComponent},
+            {path: 'find', component: PartFindComponent},
+            {path: "calculator", component: CalculatorComponent, children:[
+                {path: "", component: LengthComponent},
+                {path: "weight/:id", component: ByWeightComponent},
+                {path: "job/:id", component: JobTotalComponent},
+                {path: ":id", component: RemainingComponent},
+    
+            ]},
+            {path: ":part", component: PartFindShowComponent},
+        ]},
+        {path: 'hourly', component: HourlyComponent, children:[
+            {path: '', component: HourlyShowComponent},
+            {path: 'edit/:id', component: HourlyEditComponent},
+            {path: 'find', component: HourlyFindComponent},
+            {path: 'find/:search', component: HourlyFindShowComponent},
+            {path: 'new', component: HourlyNewComponent},
+        ]},
+        {path: 'changes', component: ChangeLogComponent},
+        {path: 'logout', component: SignoutComponent}
+    ]},
+    {path: "**", redirectTo:"/", pathMatch: "full"}
 ];
 
 @NgModule({

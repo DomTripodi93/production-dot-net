@@ -45,25 +45,25 @@ export class PartNewComponent implements OnInit {
     if (this.machines.length > 0){
       machine = this.machines[0].machine;
     }
-    let cycle_time: string;
-    let order_quantity: string;
-    let weight_recieved: string;
+    let cycleTime: string;
+    let orderQuantity: string;
+    let weightRecieved: string;
     let oal: string;
-    let cut_off: string;
-    let main_facing: string;
-    let sub_facing: string;
+    let cutOff: string;
+    let mainFacing: string;
+    let subFacing: string;
 
     this.partForm = new FormGroup({
       'job': new FormControl(job, Validators.required),
       'part': new FormControl(part, Validators.required),
-      'cycle_time': new FormControl(cycle_time),
+      'cycleTime': new FormControl(cycleTime),
       'machine': new FormControl(machine, Validators.required),
-      "order_quantity": new FormControl(order_quantity),
-      "weight_recieved": new FormControl(weight_recieved),
+      "orderQuantity": new FormControl(orderQuantity),
+      "weightRecieved": new FormControl(weightRecieved),
       "oal": new FormControl(oal),
-      "cut_off": new FormControl(cut_off),
-      "main_facing": new FormControl(main_facing),
-      "sub_facing": new FormControl(sub_facing)
+      "cutOff": new FormControl(cutOff),
+      "mainFacing": new FormControl(mainFacing),
+      "subFacing": new FormControl(subFacing)
     });
   }
 

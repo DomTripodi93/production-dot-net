@@ -46,7 +46,7 @@ export class MachineNewComponent implements OnInit {
 
     this.machineForm = new FormGroup({
       'machine': new FormControl(machine, Validators.required),
-      'current_job': new FormControl(this.jobs[0])
+      'currentJob': new FormControl(this.jobs[0])
     });
   }
   

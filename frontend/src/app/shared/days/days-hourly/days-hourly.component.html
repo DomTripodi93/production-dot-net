@@ -4,8 +4,8 @@
             <h4>Date: {{lot.date}}</h4>
             <h4>Job #: {{lot.job}}</h4>
             <h4>Shift: {{lot.time}}</h4>
-            <h4>Quantity: {{lot.hard_quantity}}</h4>
-            <h4 *ngIf="lot.counter_quantity">Counter Quantity: {{lot.counter_quantity}}</h4>
+            <h4>Quantity: {{lot.quantity}}</h4>
+            <h4 *ngIf="lot.counterQuantity">Counter Quantity: {{lot.counterQuantity}}</h4>
             <h4>Machine: {{lot.machine}}</h4>
             <br>
             <button class='btn btn-primary' routerLink="/hourly/edit/{{lot.id}}">Edit This Lot</button>

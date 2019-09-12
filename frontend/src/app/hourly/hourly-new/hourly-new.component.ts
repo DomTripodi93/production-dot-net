@@ -48,7 +48,7 @@ export class HourlyNewComponent implements OnInit {
       this.dayServe.stringMonth = "0"+this.dayServe.month;
     };
     let quantity: number;
-    let counter_quantity: number;
+    let counterQuantity: number;
     let date = this.dayServe.year +"-"+this.dayServe.stringMonth+"-"+this.dayServe.today;
     let hour = ""+this.dayServe.date.getHours();
     let minute = ""+this.dayServe.date.getMinutes();
@@ -66,8 +66,8 @@ export class HourlyNewComponent implements OnInit {
     let job ='';
 
     this.hourlyForm = new FormGroup({
-      'hard_quantity': new FormControl(quantity, Validators.required),
-      'counter_quantity': new FormControl(counter_quantity),
+      'quantity': new FormControl(quantity, Validators.required),
+      'counterQuantity': new FormControl(counterQuantity),
       'date': new FormControl(date, Validators.required),
       'time': new FormControl(time, Validators.required),
       'machine': new FormControl(machine, Validators.required),
@@ -76,8 +76,8 @@ export class HourlyNewComponent implements OnInit {
   }
   
   onSubmit(){
-    if (!this.hourlyForm.value.counter_quantity){
-      this.hourlyForm.value.counter_quantity = null;
+    if (!this.hourlyForm.value.counterQuantity){
+      this.hourlyForm.value.counterQuantity = null;
     }
     this.newHourly(this.hourlyForm.value);
   }

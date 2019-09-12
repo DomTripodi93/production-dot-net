@@ -37,8 +37,8 @@ export class ByWeightComponent implements OnInit, OnDestroy {
   private initForm() {
     let cutOff: number;
     if (this.partServ.partHold){
-      if (this.partServ.partHold.cut_off){
-       cutOff = +this.partServ.partHold.cut_off 
+      if (this.partServ.partHold.cutOff){
+       cutOff = +this.partServ.partHold.cutOff 
       }
     }
     let oal: number;
@@ -49,21 +49,21 @@ export class ByWeightComponent implements OnInit, OnDestroy {
     }
     let mainFacing: number;
     if (this.partServ.partHold){
-      if (this.partServ.partHold.main_facing){
-       mainFacing = +this.partServ.partHold.main_facing 
+      if (this.partServ.partHold.mainFacing){
+       mainFacing = +this.partServ.partHold.mainFacing 
       }
     }
     let subFacing: number;
     if (this.partServ.partHold){
-      if (this.partServ.partHold.sub_facing){
-       subFacing = +this.partServ.partHold.sub_facing
+      if (this.partServ.partHold.subFacing){
+       subFacing = +this.partServ.partHold.subFacing
       }
     }
     let barEnd = 3;
     let weight: number;
     if (this.partServ.partHold){
-      if (this.partServ.partHold.weight_recieved){
-      weight = +this.partServ.partHold.weight_recieved
+      if (this.partServ.partHold.weightRecieved){
+      weight = +this.partServ.partHold.weightRecieved
       }
     }
     let dia: number;

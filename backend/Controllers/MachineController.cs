@@ -87,6 +87,19 @@ namespace BackEnd.Controllers
             return Ok(machines);
         }
 
+        [HttpGet("jobs")]
+        public async Task<IActionResult> GetMachinesByJob(int userId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            IEnumerable<Mach> directMachines = await _repo.GetMachinesByJob(userId);
+
+            var machines = _mapper.Map<IEnumerable<MachForReturnDto>>(directMachines);
+
+            return Ok(machines);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMachine(int userId, int id)
         {

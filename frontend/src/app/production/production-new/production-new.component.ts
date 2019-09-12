@@ -44,7 +44,7 @@ export class ProductionNewComponent implements OnInit {
     .subscribe((machines: Machine[]) => {
       this.fullMach = machines;
       machines.forEach((mach)=>{
-        if (mach.current_job !== "None"){
+        if (mach.currentJob !== "None"){
           this.machines.push(mach.machine)
         } else {
           this.joblessMach.push(mach.machine)
@@ -70,14 +70,14 @@ export class ProductionNewComponent implements OnInit {
       'date': new FormControl(date, Validators.required),
       'shift': new FormControl(this.shifts[0], Validators.required),
       'machine': new FormControl(this.machines[0], Validators.required),
-      'job': new FormControl(this.fullMach[0].current_job, Validators.required)
+      'job': new FormControl(this.fullMach[0].currentJob, Validators.required)
     });
   }
   
   onSubmit(){
     this.fullMach.forEach((mach)=>{
       if (mach.machine ===this.productionForm.value.machine){
-        this.productionForm.value.job = mach.current_job;
+        this.productionForm.value.job = mach.currentJob;
       }
     })
     this.newProduction(this.productionForm.value);

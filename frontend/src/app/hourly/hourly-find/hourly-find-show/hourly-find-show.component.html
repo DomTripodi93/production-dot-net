@@ -16,8 +16,8 @@
                             <h5>Date: <strong>{{lot.date}}</strong></h5>
                             <h5>Time: <strong>{{lot.time}}</strong></h5>
                             <h5>Job #: <strong>{{lot.job}}</strong></h5>
-                            <h5>Quantity: <strong>{{lot.hard_quantity}}</strong></h5>
-                            <h5>Counter: <strong>{{lot.counter_quantity}}</strong></h5>
+                            <h5>Quantity: <strong>{{lot.quantity}}</strong></h5>
+                            <h5>Counter: <strong>{{lot.counterQuantity}}</strong></h5>
                             <div class="btn-grid">
                                 <button class='btn btn-primary' routerLink="../../edit/{{lot.id}}">Edit This Lot</button>
                             </div>
@@ -34,8 +34,8 @@
                         <div>
                             <h4>Date: {{lot.date}}</h4>
                             <h4>Job #: {{lot.job}}</h4>
-                            <h4>Quantity: {{lot.hard_quantity}}</h4>
-                            <h4>Counter Quantity: {{lot.counter_quantity}}</h4>
+                            <h4>Quantity: {{lot.quantity}}</h4>
+                            <h4>Counter Quantity: {{lot.counterQuantity}}</h4>
                             <h4>Machine: {{lot.machine}}</h4>
                             <button class='btn btn-primary' routerLink="../../edit/{{lot.id}}">Edit This Lot</button>
                         </div>
@@ -48,8 +48,8 @@
                 <div>
                     <h4>Date: {{lot.date}}</h4>
                     <h4>Job #: {{lot.job}}</h4>
-                    <h4>Quantity: {{lot.hard_quantity}}</h4>
-                    <h4>Counter Quantity: {{lot.counter_quantity}}</h4>
+                    <h4>Quantity: {{lot.quantity}}</h4>
+                    <h4>Counter Quantity: {{lot.counterQuantity}}</h4>
                     <h4>Machine: {{lot.machine}}</h4>
                     <button class='btn btn-primary' routerLink="../../edit/{{lot.id}}">Edit This Lot</button>
                     <button class='btn btn-info pull-right' routerLink="/day/{{dayServ.dates[i]}}/hourly">Show Day Hourly</button>

@@ -56,7 +56,7 @@ export class MachineService {
 
     fetchMachineJobs(){
         return this.http.get(
-          this.auth.apiUrl + '/machine/?ordering=-current_job'
+          this.auth.apiUrl + '/machine/jobs'
         )
         .pipe(
           map((responseData: Machine[]) => {
@@ -67,9 +67,6 @@ export class MachineService {
     }
 
     addMachine(data: Machine){
-      if (!data.current_job){
-          data.current_job=null
-      }
         return this.http.post(
           this.auth.apiUrl + '/machine/', data
         );
@@ -78,8 +75,8 @@ export class MachineService {
     setCurrentJob(job, id){
       this.fetchMachineById(id).subscribe((object)=>{
         console.log(job);
-        let old_values = ""+JSON.stringify(object);
-        this.auth.logChanges(old_values, this.model, "Change Job", id).subscribe();
+        let oldValues = ""+JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Change Job", id).subscribe();
       })
       return this.http.patch(
         this.auth.apiUrl + '/machine/' + id + "/", job
@@ -89,11 +86,11 @@ export class MachineService {
 
     changeMachine(data: Machine, id){
       this.fetchMachineById(id).subscribe((object)=>{
-        let old_values = ""+JSON.stringify(object);
-        this.auth.logChanges(old_values, this.model, "Update", id).subscribe();
+        let oldValues = ""+JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Update", id).subscribe();
       })
-      if (!data.current_job){
-          data.current_job=null
+      if (!data.currentJob){
+          data.currentJob=null
       }
         return this.http.put(
           this.auth.apiUrl + '/machine/' + id + "/", data
@@ -102,8 +99,8 @@ export class MachineService {
 
     deleteMachine(id){
       this.fetchMachineById(id).subscribe((object)=>{
-        let old_values = ""+JSON.stringify(object);
-        this.auth.logChanges(old_values, this.model, "Delete", id).subscribe();
+        let oldValues = ""+JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Delete", id).subscribe();
       })
       return this.http.delete(this.auth.apiUrl + "/machine/" + id + "/",
       {

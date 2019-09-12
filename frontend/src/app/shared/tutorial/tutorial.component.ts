@@ -43,7 +43,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
     ));
     this.subscriptions.push(
       this.auth.authChanged.subscribe(()=>{
-        setTimeout(()=>{this.auth.checkNew(this.auth.user).subscribe()}, 50);
+        setTimeout(()=>{this.auth.checkNew().subscribe()}, 50);
       })
     );
   }
@@ -98,7 +98,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
 
   notNew() {
     if (confirm("Are you sure you want to hide these tutorials?")){
-      this.auth.changeNew(this.auth.user).subscribe(()=>{
+      this.auth.changeNew().subscribe(()=>{
         this.auth.authChanged.next();
       })
     }

@@ -34,9 +34,9 @@ export class SigninComponent {
           localStorage.setItem('id', id);
           this.auth.user = id;
           this.auth.authChanged.next();
-          if (this.auth.user) {
+          if (this.auth.isAuthenticated) {
             this.auth.isAuthenticated = true;
-            // this.auth.checkNew(this.auth.user).subscribe();
+            // this.auth.checkNew().subscribe();
           }
         },() => {
           this.isError = true

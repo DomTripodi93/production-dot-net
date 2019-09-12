@@ -1,7 +1,7 @@
 export interface Change{
-    old_values: string;
-    change_type: string;
-    changed_id: string;
-    changed_model: string;
+    oldValues: string;
+    changeType: string;
+    changedId: string;
+    changedModel: string;
     timestamp: string;
 }

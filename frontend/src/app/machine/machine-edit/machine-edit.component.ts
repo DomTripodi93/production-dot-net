@@ -42,10 +42,10 @@ export class MachineEditComponent implements OnInit {
 
   private initForm() {
     let machine = this.machine.machine;
-    this.jobs = [this.machine.current_job];
+    this.jobs = [this.machine.currentJob];
     this.part.fetchAllParts().subscribe(response =>{
       response.forEach(part => {
-        if (part.job === this.machine.current_job){
+        if (part.job === this.machine.currentJob){
           this.jobs.push("None")
         } else {
           this.jobs.push(part.job)
@@ -54,7 +54,7 @@ export class MachineEditComponent implements OnInit {
     })
 
     this.editMachineForm = new FormGroup({
-      'current_job': new FormControl(this.jobs[0]),
+      'currentJob': new FormControl(this.jobs[0]),
       'machine': new FormControl(machine, Validators.required)
     });
   }

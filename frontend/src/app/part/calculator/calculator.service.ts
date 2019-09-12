@@ -91,32 +91,32 @@ export class CalculatorService {
     
 
     onSubmitRemaining(){
-        this.partServ.partHold.cut_off = this.latheForm.value.cutOff;
+        this.partServ.partHold.cutOff = this.latheForm.value.cutOff;
         this.partServ.partHold.oal = this.latheForm.value.oal;
         this.facing = this.latheForm.value.mainFacing + this.latheForm.value.subFacing;
         this.bars = this.latheForm.value.bars;
-        this.partServ.partHold.remaining_quantity = ""+this.calculateQuantity();
+        this.partServ.partHold.remainingQuantity = ""+this.calculateQuantity();
         this.partServ.changePart(this.partServ.partHold, this.partServ.partHold.id).subscribe();
         this.submitted = true;
     }
 
 
     onSubmitTotal(){
-        this.partServ.partHold.cut_off = this.latheForm.value.cutOff;
+        this.partServ.partHold.cutOff = this.latheForm.value.cutOff;
         this.partServ.partHold.oal = this.latheForm.value.oal;
-        this.partServ.partHold.sub_facing = this.latheForm.value.subFacing;
-        this.partServ.partHold.main_facing = this.latheForm.value.mainFacing
-        this.facing = +this.partServ.partHold.main_facing + +this.partServ.partHold.sub_facing;
+        this.partServ.partHold.subFacing = this.latheForm.value.subFacing;
+        this.partServ.partHold.mainFacing = this.latheForm.value.mainFacing
+        this.facing = +this.partServ.partHold.mainFacing + +this.partServ.partHold.subFacing;
         this.fullBars = this.latheForm.value.bars;
         this.findRunable();
         this.partsToMake = this.calculateQuantity()
-        this.partServ.partHold.possible_quantity = ""+this.calculateQuantity();
+        this.partServ.partHold.possibleQuantity = ""+this.calculateQuantity();
         this.pro.fetchProduction("job="+this.partServ.partHold.job).subscribe(production => {
             production.forEach(pro => {
                 this.total = +pro.quantity + this.total
             })
             let value = this.partsToMake - this.total;
-            this.partServ.partHold.remaining_quantity = "" + value; 
+            this.partServ.partHold.remainingQuantity = "" + value; 
             this.partServ.changePart(this.partServ.partHold, this.partServ.partHold.id).subscribe();
         })
         this.submitted = true;
@@ -125,26 +125,26 @@ export class CalculatorService {
 
 
     onSubmitByWeight(){
-        this.partServ.partHold.cut_off = this.latheForm.value.cutOff;
+        this.partServ.partHold.cutOff = this.latheForm.value.cutOff;
         this.partServ.partHold.oal = this.latheForm.value.oal;
-        this.partServ.partHold.sub_facing = this.latheForm.value.subFacing;
-        this.partServ.partHold.main_facing = this.latheForm.value.mainFacing
-        this.facing = +this.partServ.partHold.main_facing + +this.partServ.partHold.sub_facing;
+        this.partServ.partHold.subFacing = this.latheForm.value.subFacing;
+        this.partServ.partHold.mainFacing = this.latheForm.value.mainFacing
+        this.facing = +this.partServ.partHold.mainFacing + +this.partServ.partHold.subFacing;
         if (this.latheForm.value.type == "Hex"){
             this.findLengthFromHexWeight();
         } else {
             this.findLengthFromRoundWeight();
         }
-        this.partServ.partHold.weight_quantity = ""+this.partsToMake;
-        this.partServ.partHold.weight_recieved = ""+this.latheForm.value.weight
-        this.partServ.partHold.weight_length = ""+this.feet;
-        if (!this.partServ.partHold.remaining_quantity){
+        this.partServ.partHold.weightQuantity = ""+this.partsToMake;
+        this.partServ.partHold.weightRecieved = ""+this.latheForm.value.weight
+        this.partServ.partHold.weightLength = ""+this.feet;
+        if (!this.partServ.partHold.remainingQuantity){
             this.pro.fetchProduction("job="+this.partServ.partHold.job).subscribe(production => {
                 production.forEach(pro => {
                     this.total = +pro.quantity + this.total
                 })
                 let value = this.partsToMake - this.total;
-                this.partServ.partHold.remaining_quantity = "" + value; 
+                this.partServ.partHold.remainingQuantity = "" + value; 
                 this.partServ.changePart(this.partServ.partHold, this.partServ.partHold.id).subscribe(()=>{},(error)=>{console.log(error)});
             })
         } else {
@@ -251,7 +251,7 @@ export class CalculatorService {
 
     calculateQuantity(){
         this.partServ.partHold.bars = ""
-        let totalPartLength: number = +this.partServ.partHold.oal + +this.partServ.partHold.cut_off + this.facing;
+        let totalPartLength: number = +this.partServ.partHold.oal + +this.partServ.partHold.cutOff + this.facing;
         let totalPieces = 0;
         for (let i in this.bars){
             this.partServ.partHold.bars = this.partServ.partHold.bars + this.bars[i].noBars + " " + this.bars[i].barLength + " "

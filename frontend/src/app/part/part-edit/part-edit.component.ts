@@ -50,25 +50,25 @@ export class PartEditComponent implements OnInit {
     let job = this.part.job;
     let part = this.part.part;
     let machine = this.part.machine;
-    let cycle_time = this.part.cycle_time;
-    let order_quantity = this.part.order_quantity;
-    let weight_recieved = this.part.weight_recieved;
+    let cycleTime = this.part.cycleTime;
+    let orderQuantity = this.part.orderQuantity;
+    let weightRecieved = this.part.weightRecieved;
     let oal = this.part.oal;
-    let cut_off = this.part.cut_off;
-    let main_facing = this.part.main_facing;
-    let sub_facing = this.part.sub_facing;
+    let cutOff = this.part.cutOff;
+    let mainFacing = this.part.mainFacing;
+    let subFacing = this.part.subFacing;
 
     this.editPartForm = new FormGroup({
       'job': new FormControl(job, Validators.required),
       'part': new FormControl(part, Validators.required),
-      'cycle_time': new FormControl(cycle_time),
+      'cycleTime': new FormControl(cycleTime),
       'machine': new FormControl(machine, Validators.required),
-      "order_quantity": new FormControl(order_quantity),
-      "weight_recieved": new FormControl(weight_recieved),
+      "orderQuantity": new FormControl(orderQuantity),
+      "weightRecieved": new FormControl(weightRecieved),
       "oal": new FormControl(oal),
-      "cut_off": new FormControl(cut_off),
-      "main_facing": new FormControl(main_facing),
-      "sub_facing": new FormControl(sub_facing),
+      "cutOff": new FormControl(cutOff),
+      "mainFacing": new FormControl(mainFacing),
+      "subFacing": new FormControl(subFacing),
     });
   }
 

@@ -3,11 +3,11 @@
   </div>
     <form *ngIf="canInput && editMachineForm" [formGroup]="editMachineForm" (ngSubmit)='onSubmit()' >
     <div class="form-group">
-      <label for="current_job">Job</label>
+      <label for="currentJob">Job</label>
       <select
-        formControlName='current_job'
+        formControlName='currentJob'
         type="text" 
-        id="current_job" 
+        id="currentJob" 
         class="form-control">
         <option *ngFor = "let job of jobs">{{job}}</option>
       </select>        

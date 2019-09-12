@@ -1,7 +1,7 @@
 export interface Hourly{
     id: number;
-    hard_quantity: number;
-    counter_quantity: number;
+    quantity: number;
+    counterQuantity: number;
     job: string;
     date: Date;
     time: string;

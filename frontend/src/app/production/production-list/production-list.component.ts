@@ -16,7 +16,7 @@ export class ProductionListComponent implements OnInit {
   isError = false;
   error = '';
   inQuestion = {
-    in_question: "True"
+    inQuestion: "True"
   }
 
   constructor(
@@ -49,14 +49,14 @@ export class ProductionListComponent implements OnInit {
   }
 
   lotInQuestion(id){
-    this.inQuestion.in_question = "True"
+    this.inQuestion.inQuestion = "True"
     this.pro.setInQuestion(this.inQuestion, id).subscribe(()=>{
       this.pro.proChanged.next()
     })
   }
 
   lotIsGood(id){
-    this.inQuestion.in_question = "False"
+    this.inQuestion.inQuestion = "False"
     this.pro.setInQuestion(this.inQuestion, id).subscribe(()=>{
       this.pro.proChanged.next()
     })

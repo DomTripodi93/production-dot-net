@@ -66,22 +66,22 @@ export class ProductionService {
     addProduction(data: Production){
       this.partServ.fetchPart("job=" + data.job).subscribe((parts: Part[])=>{
         parts.forEach((part)=>{
-          if (+part.remaining_quantity > 0){
-            let value = +part.remaining_quantity - data.quantity;
+          if (+part.remainingQuantity > 0){
+            let value = +part.remainingQuantity - data.quantity;
             if (value >= 0){
-              part.remaining_quantity = "" + value;
+              part.remainingQuantity = "" + value;
             } else {
-              part.remaining_quantity = "0"
+              part.remainingQuantity = "0"
             }
-          } else if (!part.remaining_quantity && part.possible_quantity){
-            let value = +part.possible_quantity - data.quantity;
-            part.remaining_quantity = "" + value;
-          } else if (!part.remaining_quantity && part.order_quantity){
-            let value = +part.order_quantity - data.quantity;
-            part.remaining_quantity = "" + value;
-          } else if (!part.remaining_quantity && part.weight_quantity){
-            let value = +part.weight_quantity - data.quantity;
-            part.remaining_quantity = "" + value;
+          } else if (!part.remainingQuantity && part.possibleQuantity){
+            let value = +part.possibleQuantity - data.quantity;
+            part.remainingQuantity = "" + value;
+          } else if (!part.remainingQuantity && part.orderQuantity){
+            let value = +part.orderQuantity - data.quantity;
+            part.remainingQuantity = "" + value;
+          } else if (!part.remainingQuantity && part.weightQuantity){
+            let value = +part.weightQuantity - data.quantity;
+            part.remainingQuantity = "" + value;
           }
           this.partServ.changePart(part, part.id).subscribe()
         })
@@ -95,8 +95,8 @@ export class ProductionService {
 
     changeProduction(data: Production, id){
       this.fetchProductionById(id).subscribe((object)=>{
-        let old_values = ""+JSON.stringify(object);
-        this.auth.logChanges(old_values, this.model, "Update", id).subscribe();
+        let oldValues = ""+JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Update", id).subscribe();
       })
       data.machine = this.auth.splitJoin(data.machine)
         return this.http.put(
@@ -106,8 +106,8 @@ export class ProductionService {
 
     setInQuestion(data, id){
       this.fetchProductionById(id).subscribe((object)=>{
-        let old_values = JSON.stringify(object);
-        this.auth.logChanges(old_values, this.model, "In Question", id).subscribe();
+        let oldValues = JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "In Question", id).subscribe();
       })
         return this.http.patch(
           this.auth.apiUrl + '/production/' + id + "/", data
@@ -116,8 +116,8 @@ export class ProductionService {
 
     deleteProduction(id){
       this.fetchProductionById(id).subscribe((object)=>{
-        let old_values = JSON.stringify(object);
-        this.auth.logChanges(old_values, this.model, "Delete", id).subscribe();
+        let oldValues = JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Delete", id).subscribe();
       })
         return this.http.delete(this.auth.apiUrl + "/production/" + id + "/",{
           observe: 'events',

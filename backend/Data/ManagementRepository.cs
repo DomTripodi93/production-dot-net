@@ -55,6 +55,15 @@ namespace BackEnd.Data
             return user.Machine;
         }
 
+        public async Task<IEnumerable<Mach>> GetMachinesByJob(int userId)
+        {
+            var user = await _context.Users
+                .Include(x => x.Machine)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+                
+            return user.Machine.OrderByDescending(m => m.CurrentJob);
+        }
+
         public async Task<Part> GetPart(int id)
         {
             var part = await _context.Parts.FirstOrDefaultAsync(p => p.Id == id);

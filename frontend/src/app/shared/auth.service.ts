@@ -89,10 +89,10 @@ export class AuthService {
 
     logChanges(values, model, type, id){
       let data = {
-        'old_values': " "+values,
-        'change_type': type,
-        'changed_id': id,
-        'changed_model': model
+        'oldValues': " "+values,
+        'changeType': type,
+        'changedId': id,
+        'changedModel': model
       }
       return this.http.post(
         this.authApiUrl + '/changelog/', data

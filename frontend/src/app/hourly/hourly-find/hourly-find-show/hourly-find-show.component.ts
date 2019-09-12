@@ -137,7 +137,7 @@ export class HourlyFindShowComponent implements OnInit {
           this.oneDate = true;
           let hold = [];
           this.hourly.forEach((lot)=>{
-            hold.push(lot.hard_quantity)
+            hold.push(lot.quantity)
           })
           this.total = Math.max.apply(Math, hold)
         }

@@ -5,7 +5,7 @@
         </li>
         <div class="grid">
             <li class='border' *ngFor="let lot of production; let i = index" >
-                <div *ngIf="lot.in_question" class="inQuestion">
+                <div *ngIf="lot.inQuestion" class="inQuestion">
                     <h4>Date: <strong>{{lot.date}}</strong></h4>
                     <h4>Job #: <strong>{{lot.job}}</strong></h4>
                     <h4>Shift: <strong>{{lot.shift}}</strong></h4>
@@ -14,7 +14,7 @@
                     <button class='btn btn-primary' routerLink="../single/{{lot.id}}/edit">Edit</button>
                     <button class='btn btn-info pull-right' routerLink="/day/{{dayServ.dates[i]}}">Show Day Production</button>
                 </div>
-                <div *ngIf="!lot.in_question">
+                <div *ngIf="!lot.inQuestion">
                     <h4>Date: <strong>{{lot.date}}</strong></h4>
                     <h4>Job #: <strong>{{lot.job}}</strong></h4>
                     <h4>Shift: <strong>{{lot.shift}}</strong></h4>

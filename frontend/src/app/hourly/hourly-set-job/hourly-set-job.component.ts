@@ -33,7 +33,7 @@ export class HourlySetJobComponent implements OnInit {
     })
 
     this.setJobForm = new FormGroup({
-      "current_job": new FormControl(this.jobs[0], Validators.required)
+      "currentJob": new FormControl(this.jobs[0], Validators.required)
     });
   }
 

@@ -79,8 +79,8 @@ export class PartService {
 
       changePart(data: Part, id){
         this.fetchPartById(id).subscribe((object)=>{
-          let old_values = ""+JSON.stringify(object);
-          this.auth.logChanges(old_values, this.model, "Update", id).subscribe();
+          let oldValues = ""+JSON.stringify(object);
+          this.auth.logChanges(oldValues, this.model, "Update", id).subscribe();
         })
         Object.keys(data).forEach(value => {
           if (data[value] === ""){
@@ -95,8 +95,8 @@ export class PartService {
 
       deletePart(id){
         this.fetchPartById(id).subscribe((object)=>{
-          let old_values = ""+JSON.stringify(object);
-          this.auth.logChanges(old_values, this.model, "Delete", id).subscribe();
+          let oldValues = ""+JSON.stringify(object);
+          this.auth.logChanges(oldValues, this.model, "Delete", id).subscribe();
         })
           return this.http.delete(this.auth.apiUrl + "/part/" + id + "/",{
             observe: 'events',

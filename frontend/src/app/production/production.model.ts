@@ -5,5 +5,5 @@ export interface Production {
     date: Date;
     machine: string;
     shift: string;
-    in_question: boolean;
+    inQuestion: boolean;
 }

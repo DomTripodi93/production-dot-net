@@ -71,8 +71,8 @@ export class HourlyService {
 
     changeHourly(data: Hourly, id){
       this.fetchHourlyById(id).subscribe((object)=>{
-        let old_values = ""+JSON.stringify(object);
-        this.auth.logChanges(old_values, this.model, "Update", id).subscribe();
+        let oldValues = ""+JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Update", id).subscribe();
       })
       data.machine = this.auth.splitJoin(data.machine)
         return this.http.put(
@@ -82,8 +82,8 @@ export class HourlyService {
 
     deleteHourly(id){
       this.fetchHourlyById(id).subscribe((object)=>{
-        let old_values = ""+JSON.stringify(object);
-        this.auth.logChanges(old_values, this.model, "Delete", id).subscribe();
+        let oldValues = ""+JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Delete", id).subscribe();
       })
         return this.http.delete(this.auth.apiUrl + "/hourly/" + id + "/",{
           observe: 'events',

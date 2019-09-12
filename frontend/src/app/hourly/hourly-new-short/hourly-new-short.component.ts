@@ -25,7 +25,7 @@ export class HourlyNewShortComponent implements OnInit {
 
   private initForm() {
     let quantity: number;
-    let counter_quantity: number;
+    let counterQuantity: number;
     let date = this.dayServ.year +"-"+this.dayServ.stringMonth+"-"+this.dayServ.today;
     let hour = ""+this.dayServ.date.getHours();
     let minute = ""+this.dayServ.date.getMinutes();
@@ -38,8 +38,8 @@ export class HourlyNewShortComponent implements OnInit {
     let time = hour+":"+minute;
     
     this.hourlyForm = new FormGroup({
-      'hard_quantity': new FormControl(quantity),
-      'counter_quantity': new FormControl(counter_quantity),
+      'quantity': new FormControl(quantity),
+      'counterQuantity': new FormControl(counterQuantity),
       'date': new FormControl(date, Validators.required),
       'time': new FormControl(time, Validators.required),
       'machine': new FormControl(this.hourServ.machine.machine, Validators.required),
@@ -48,8 +48,8 @@ export class HourlyNewShortComponent implements OnInit {
   }
 
   onSubmit(){
-    if (!this.hourlyForm.value.counter_quantity){
-      this.hourlyForm.value.counter_quantity = null;
+    if (!this.hourlyForm.value.counterQuantity){
+      this.hourlyForm.value.counterQuantity = null;
     }
     this.hourServ.addHourly(this.hourlyForm.value).subscribe(()=>{
       this.hourServ.hourlyChanged.next()
