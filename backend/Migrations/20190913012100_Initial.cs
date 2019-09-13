@@ -144,22 +144,7 @@ namespace backend.Migrations
                     userId = table.Column<int>(nullable: false),
                     partId = table.Column<int>(nullable: false),
                     PartNum = table.Column<string>(nullable: true),
-                    JobNumber = table.Column<string>(nullable: true),
-                    PartsToDate = table.Column<string>(nullable: true),
-                    Operation = table.Column<string>(nullable: true),
-                    OrderQuantity = table.Column<string>(nullable: true),
-                    PossibleQuantity = table.Column<string>(nullable: true),
-                    RemainingQuantity = table.Column<string>(nullable: true),
-                    WeightQuantity = table.Column<string>(nullable: true),
-                    WeightLength = table.Column<string>(nullable: true),
-                    WeightRecieved = table.Column<string>(nullable: true),
-                    Oal = table.Column<string>(nullable: true),
-                    CutOff = table.Column<string>(nullable: true),
-                    MainFacing = table.Column<string>(nullable: true),
-                    SubFacing = table.Column<string>(nullable: true),
-                    HeatLot = table.Column<string>(nullable: true),
-                    CycleTime = table.Column<string>(nullable: true),
-                    Bars = table.Column<string>(nullable: true)
+                    JobNumber = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -179,14 +164,57 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Hourlys",
+                name: "Operations",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
                     JobId = table.Column<int>(nullable: false),
-                    Operation = table.Column<string>(nullable: true),
+                    JobNumber = table.Column<string>(nullable: true),
+                    PartsToDate = table.Column<string>(nullable: true),
+                    Op = table.Column<string>(nullable: true),
+                    OrderQuantity = table.Column<string>(nullable: true),
+                    PossibleQuantity = table.Column<string>(nullable: true),
+                    RemainingQuantity = table.Column<string>(nullable: true),
+                    WeightQuantity = table.Column<string>(nullable: true),
+                    WeightLength = table.Column<string>(nullable: true),
+                    WeightRecieved = table.Column<string>(nullable: true),
+                    Oal = table.Column<string>(nullable: true),
+                    CutOff = table.Column<string>(nullable: true),
+                    MainFacing = table.Column<string>(nullable: true),
+                    SubFacing = table.Column<string>(nullable: true),
+                    HeatLot = table.Column<string>(nullable: true),
+                    CycleTime = table.Column<string>(nullable: true),
+                    Bars = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Operations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Operations_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Operations_Users_userId",
+                        column: x => x.userId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Hourlys",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    userId = table.Column<int>(nullable: false),
+                    OperationId = table.Column<int>(nullable: true),
+                    OpId = table.Column<int>(nullable: false),
+                    OpNumber = table.Column<string>(nullable: true),
                     JobNumber = table.Column<string>(nullable: true),
                     Machine = table.Column<string>(nullable: true),
                     Quantity = table.Column<string>(nullable: true),
@@ -197,11 +225,11 @@ namespace backend.Migrations
                 {
                     table.PrimaryKey("PK_Hourlys", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Hourlys_Jobs_JobId",
-                        column: x => x.JobId,
-                        principalTable: "Jobs",
+                        name: "FK_Hourlys_Operations_OperationId",
+                        column: x => x.OperationId,
+                        principalTable: "Operations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Hourlys_Users_userId",
                         column: x => x.userId,
@@ -217,9 +245,10 @@ namespace backend.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
-                    JobId = table.Column<int>(nullable: false),
+                    OperationId = table.Column<int>(nullable: true),
+                    OpId = table.Column<int>(nullable: false),
+                    OpNumber = table.Column<string>(nullable: true),
                     JobNumber = table.Column<string>(nullable: true),
-                    Operation = table.Column<string>(nullable: true),
                     PartNumber = table.Column<string>(nullable: true),
                     Machine = table.Column<string>(nullable: true),
                     Shift = table.Column<string>(nullable: true),
@@ -231,11 +260,11 @@ namespace backend.Migrations
                 {
                     table.PrimaryKey("PK_Production", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Production_Jobs_JobId",
-                        column: x => x.JobId,
-                        principalTable: "Jobs",
+                        name: "FK_Production_Operations_OperationId",
+                        column: x => x.OperationId,
+                        principalTable: "Operations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Production_Users_userId",
                         column: x => x.userId,
@@ -250,9 +279,9 @@ namespace backend.Migrations
                 column: "userId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Hourlys_JobId",
+                name: "IX_Hourlys_OperationId",
                 table: "Hourlys",
-                column: "JobId");
+                column: "OperationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Hourlys_userId",
@@ -275,14 +304,24 @@ namespace backend.Migrations
                 column: "userId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Operations_JobId",
+                table: "Operations",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Operations_userId",
+                table: "Operations",
+                column: "userId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Parts_userId",
                 table: "Parts",
                 column: "userId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Production_JobId",
+                name: "IX_Production_OperationId",
                 table: "Production",
-                column: "JobId");
+                column: "OperationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Production_userId",
@@ -318,10 +357,13 @@ namespace backend.Migrations
                 name: "StartTimes");
 
             migrationBuilder.DropTable(
-                name: "Jobs");
+                name: "Operations");
 
             migrationBuilder.DropTable(
                 name: "Machines");
+
+            migrationBuilder.DropTable(
+                name: "Jobs");
 
             migrationBuilder.DropTable(
                 name: "Parts");

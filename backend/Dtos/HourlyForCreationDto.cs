@@ -10,7 +10,7 @@ namespace BackEnd.Dtos
         public string JobNumber { get; set; }
         
         [Required]
-        public int JobId { get; set; }
+        public int OpId { get; set; }
         public string Operation { get; set; }
         
         [Required]

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using BackEnd.Models;
 
 namespace BackEnd.Models

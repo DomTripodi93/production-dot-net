@@ -105,19 +105,6 @@ namespace BackEnd.Controllers
             return Ok(jobs);
         }
 
-        [HttpGet("job={jobNum}&op={op}")]
-        public async Task<IActionResult> GetJobsByJobAndOp(int userId, string jobNum, string op)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            Job directJob = await _repo.GetJobByNumberAndOp(userId, jobNum, op);
-
-            var job = _mapper.Map<JobForReturnDto>(directJob);
-
-            return Ok(job);
-        }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteJob(int userId, int id)
         {

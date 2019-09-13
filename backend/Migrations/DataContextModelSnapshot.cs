@@ -47,13 +47,15 @@ namespace backend.Migrations
 
                     b.Property<string>("CounterQuantity");
 
-                    b.Property<int>("JobId");
-
                     b.Property<string>("JobNumber");
 
                     b.Property<string>("Machine");
 
-                    b.Property<string>("Operation");
+                    b.Property<int>("OpId");
+
+                    b.Property<string>("OpNumber");
+
+                    b.Property<int?>("OperationId");
 
                     b.Property<string>("Quantity");
 
@@ -63,7 +65,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId");
+                    b.HasIndex("OperationId");
 
                     b.HasIndex("userId");
 
@@ -75,39 +77,9 @@ namespace backend.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Bars");
-
-                    b.Property<string>("CutOff");
-
-                    b.Property<string>("CycleTime");
-
-                    b.Property<string>("HeatLot");
-
                     b.Property<string>("JobNumber");
 
-                    b.Property<string>("MainFacing");
-
-                    b.Property<string>("Oal");
-
-                    b.Property<string>("Operation");
-
-                    b.Property<string>("OrderQuantity");
-
                     b.Property<string>("PartNum");
-
-                    b.Property<string>("PartsToDate");
-
-                    b.Property<string>("PossibleQuantity");
-
-                    b.Property<string>("RemainingQuantity");
-
-                    b.Property<string>("SubFacing");
-
-                    b.Property<string>("WeightLength");
-
-                    b.Property<string>("WeightQuantity");
-
-                    b.Property<string>("WeightRecieved");
 
                     b.Property<int>("partId");
 
@@ -140,6 +112,56 @@ namespace backend.Migrations
                     b.ToTable("Machines");
                 });
 
+            modelBuilder.Entity("BackEnd.Models.Operation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Bars");
+
+                    b.Property<string>("CutOff");
+
+                    b.Property<string>("CycleTime");
+
+                    b.Property<string>("HeatLot");
+
+                    b.Property<int>("JobId");
+
+                    b.Property<string>("JobNumber");
+
+                    b.Property<string>("MainFacing");
+
+                    b.Property<string>("Oal");
+
+                    b.Property<string>("Op");
+
+                    b.Property<string>("OrderQuantity");
+
+                    b.Property<string>("PartsToDate");
+
+                    b.Property<string>("PossibleQuantity");
+
+                    b.Property<string>("RemainingQuantity");
+
+                    b.Property<string>("SubFacing");
+
+                    b.Property<string>("WeightLength");
+
+                    b.Property<string>("WeightQuantity");
+
+                    b.Property<string>("WeightRecieved");
+
+                    b.Property<int>("userId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Operations");
+                });
+
             modelBuilder.Entity("BackEnd.Models.Part", b =>
                 {
                     b.Property<int>("Id")
@@ -165,13 +187,15 @@ namespace backend.Migrations
 
                     b.Property<bool>("InQuestion");
 
-                    b.Property<int>("JobId");
-
                     b.Property<string>("JobNumber");
 
                     b.Property<string>("Machine");
 
-                    b.Property<string>("Operation");
+                    b.Property<int>("OpId");
+
+                    b.Property<string>("OpNumber");
+
+                    b.Property<int?>("OperationId");
 
                     b.Property<string>("PartNumber");
 
@@ -183,7 +207,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId");
+                    b.HasIndex("OperationId");
 
                     b.HasIndex("userId");
 
@@ -253,10 +277,9 @@ namespace backend.Migrations
 
             modelBuilder.Entity("BackEnd.Models.Hourly", b =>
                 {
-                    b.HasOne("BackEnd.Models.Job", "Job")
+                    b.HasOne("BackEnd.Models.Operation", "Operation")
                         .WithMany("Hourly")
-                        .HasForeignKey("JobId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("OperationId");
 
                     b.HasOne("BackEnd.Models.User", "User")
                         .WithMany()
@@ -285,6 +308,19 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("BackEnd.Models.Operation", b =>
+                {
+                    b.HasOne("BackEnd.Models.Job", "Job")
+                        .WithMany("Operation")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BackEnd.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("BackEnd.Models.Part", b =>
                 {
                     b.HasOne("BackEnd.Models.User", "User")
@@ -295,10 +331,9 @@ namespace backend.Migrations
 
             modelBuilder.Entity("BackEnd.Models.Production", b =>
                 {
-                    b.HasOne("BackEnd.Models.Job", "Job")
+                    b.HasOne("BackEnd.Models.Operation", "Operation")
                         .WithMany("Production")
-                        .HasForeignKey("JobId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("OperationId");
 
                     b.HasOne("BackEnd.Models.User", "User")
                         .WithMany()

@@ -17,13 +17,15 @@ namespace BackEnd.Data
         Task<IEnumerable<Part>> GetParts(int userId);
         Task<Part> GetPartByJob(int userId, string job);
         Task<Job> GetJob(int id);
-        Task<IEnumerable<Job>> GetJobByNumber(int userId, string jobNum);
-        Task<Job> GetJobByNumberAndOp(int userId, string jobNum, string Op);
         Task<IEnumerable<Job>> GetJobs(int userId);
+        Task<IEnumerable<Job>> GetJobByNumber(int userId, string jobNum);
         Task<IEnumerable<Job>> GetJobsByPart(int userId, string partNum);
+        Task<Operation> GetOp(int id);
+        Task<IEnumerable<Operation>> GetOpsByJob(string jobNum);
         Task<Production> GetProduction(int id);
         Task<IEnumerable<Production>> GetProductionSet(int userId);
         Task<IEnumerable<Production>> GetProductionSetByJob(int userId, string job);
+        Task<IEnumerable<Production>> GetProductionSetByOp(int userId, string job, string Op);
         Task<IEnumerable<Production>> GetProductionSetByJobAndMachine(int userId, string job, string mach);
         Task<IEnumerable<Production>> GetProductionSetByMachine(int userId, string mach);
         Task<Hourly> GetHourly(int id);

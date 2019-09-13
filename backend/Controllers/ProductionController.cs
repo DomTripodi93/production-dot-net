@@ -35,12 +35,11 @@ namespace BackEnd.Controllers
 
             var production = _mapper.Map<Production>(prodForCreationDto);
 
-            var jobInfo = await _repo.GetJob(production.JobId);
+            var opInfo = await _repo.GetOp(production.OpId);
 
             production.userId = userId;
             production.InQuestion = false;
-            production.JobNumber = jobInfo.JobNumber;
-            production.Operation = jobInfo.Operation;
+            production.OpNumber = opInfo.Op;
 
             _repo.Add(production);
 
@@ -107,13 +106,26 @@ namespace BackEnd.Controllers
             return Ok(productionSet);
         }
 
-        [HttpGet("job={job}")]
+        [HttpGet("op={job}")]
         public async Task<IActionResult> GetProductionSetByJob(int userId, string job)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             IEnumerable<Production> directProductions = await _repo.GetProductionSetByJob(userId, job);
+
+            var productionSet = _mapper.Map<IEnumerable<ProdForReturnDto>>(directProductions);
+
+            return Ok(productionSet);
+        }
+
+        [HttpGet("job={job}&op={op}")]
+        public async Task<IActionResult> GetProductionSetByOp(int userId, string job, string op)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            IEnumerable<Production> directProductions = await _repo.GetProductionSetByOp(userId, job, op);
 
             var productionSet = _mapper.Map<IEnumerable<ProdForReturnDto>>(directProductions);
 
@@ -135,8 +147,8 @@ namespace BackEnd.Controllers
                             prodToDelete.Date.ToString("MM/dd/yyyy")
                             + " "
                             + prodToDelete.Shift
-                            + " shift production for Job# " 
-                            + prodToDelete.Job 
+                            + " shift production for Op# " 
+                            + prodToDelete.OpNumber 
                             +" running on the " 
                             + prodToDelete.Machine 
                             +" was deleted!"

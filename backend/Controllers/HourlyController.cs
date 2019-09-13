@@ -35,7 +35,7 @@ namespace BackEnd.Controllers
 
             var hourly = _mapper.Map<Hourly>(hourlyForCreationDto);
 
-            var jobInfo = await _repo.GetJob(hourly.JobId);
+            var opInfo = await _repo.GetOp(hourly.OpId);
 
             hourly.userId = userId;
 
@@ -144,7 +144,7 @@ namespace BackEnd.Controllers
                 return Ok(
                             hourlyToDelete.Time
                             + " hourly count for job# " 
-                            + hourlyToDelete.Job 
+                            + hourlyToDelete.JobNumber
                             +" running on the " 
                             + hourlyToDelete.Machine 
                             +" was deleted!"
