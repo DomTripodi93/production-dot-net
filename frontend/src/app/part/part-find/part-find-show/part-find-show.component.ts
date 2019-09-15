@@ -15,8 +15,8 @@ export class PartFindShowComponent implements OnInit {
   isFetching = false;
   isError = false;
   error = '';
-  parts: Part[] = [];
-  part = "";
+  part: Part;
+  partNum = "";
   id = '';
   subscription = new Subscription;
   subscription2 = new Subscription;
@@ -30,8 +30,9 @@ export class PartFindShowComponent implements OnInit {
 
   ngOnInit() {
     this.subscription2 = this.route.params.subscribe((params: Params) =>{
-      this.part = params['part'];
-      this.getOnePart();
+      this.partNum = params['part'];
+      console.log("this is working")
+      this.getPart();
     });
     this.subscription = this.auth.authChanged.subscribe(
       ()=>{
@@ -43,20 +44,23 @@ export class PartFindShowComponent implements OnInit {
   onDelete(part, id){
     if (confirm("Are you sure you want to delete " +part+ "?")){
       this.partServ.deletePart(id).subscribe(()=>{
-      setTimeout(()=>{this.getOnePart()},)}
+      setTimeout(()=>{this.getPart()},)}
       );
       this.partServ.partChanged.next();
     }
   }
 
-  getOnePart() {
+  getPart() {
     this.isFetching = true;
-    this.partServ.fetchPart(this.part)
+    this.partServ.fetchPart(this.partNum)
       .subscribe(part => {
-        this.parts = part;
+        console.log(this.part)
+        this.part = part;
+        console.log(this.part)
         this.dayServ.dates = [];
         this.isFetching = false;
       }, error => {
+        console.log(error)
         this.isFetching = false;
         this.isError = true;
         this.error = error.message

@@ -1,0 +1,132 @@
+<div *ngIf="!canInput">
+  <h1>You must be logged in to add a operation lot!</h1>
+  </div>
+    <form *ngIf="canInput && operationForm" [formGroup]="operationForm" (ngSubmit)='onSubmit()' >
+      <div class="form-group">
+        <label for="operation">Operation</label>
+        <input 
+          formControlName='operation'
+          id="operation" 
+          class="form-control"
+        >
+      </div>
+      <div *ngIf="machines" class="form-group">
+        <label for="machine">Machine</label>
+        <select 
+          formControlName='machine'
+          id="machine" 
+          class="form-control">
+          <option *ngFor = "let machine of machines">{{machine.machine}}</option>
+        </select>
+      </div>
+      <div *ngIf="!machines" class="form-group">
+        <label for="machine">Machine</label>
+        <input 
+          formControlName='machine'
+          id="machine" 
+          class="form-control">      
+      </div>
+      <div class="form-group">
+        <label for="cycleTime">Cycle Time (Seconds - Optional)</label>
+        <input 
+          formControlName='cycleTime'
+          id="cycleTime" 
+          class="form-control"
+          type="number" 
+        >
+      </div>
+      <div class="form-group">
+        <label for="job">Job#</label>
+        <input 
+          formControlName='job'
+          type="text" 
+          id="job" 
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="orderQuantity">Order Quantity (Optional)</label>
+        <input 
+          formControlName='orderQuantity'
+          type="number" 
+          id="orderQuantity" 
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="weightRecieved">Weight Recieved (Optional)</label>
+        <input 
+          formControlName='weightRecieved'
+          type="number" 
+          id="weightRecieved" 
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="oal">Overall Length of Operation (Optional)</label>
+        <input 
+          formControlName='oal'
+          type="number" 
+          id="oal" 
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="cutOff">Cut Off Size (Optional)</label>
+        <input 
+          formControlName='cutOff'
+          type="number" 
+          id="cutOff" 
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="mainFacing">Amount Faced on Main Spindle (Optional)</label>
+        <input 
+          formControlName='mainFacing'
+          type="number" 
+          id="mainFacing" 
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="subFacing">Amount Faced on Sub Spindle (Optional)</label>
+        <input 
+          formControlName='subFacing'
+          type="number" 
+          id="subFacing" 
+          class="form-control">
+      </div>
+      <br><br>
+      <div class='grid'>
+        <button 
+          class="btn btn-success" 
+          type="submit"
+          [disabled]="!operationForm.valid"
+        >
+          Add Operation
+        </button>
+        <button 
+          type='button' 
+          class='btn btn-danger pull-right' 
+          (click)='onCancel()'
+        >
+          Cancel
+        </button>
+        <br><br>
+        <button 
+          class="btn btn-success" 
+          type="button"
+          [disabled]="!operationForm.valid"
+          (click)='onAddThenCalcByLength()'
+        >
+          Add Operation and Calculate Production by Length
+        </button>
+        <br><br>
+        <button 
+          class="btn btn-success" 
+          type="button"
+          [disabled]="!operationForm.valid"
+          (click)='onAddThenCalcByWeight()'
+        >
+          Add Operation and Calculate Production by Weight
+        </button>
+      </div>
+      <br><br>
+      <div *ngIf="isError">
+        <h3 class="danger">{{error}}</h3>
+      </div>

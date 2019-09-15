@@ -27,18 +27,18 @@ namespace BackEnd.Controllers
         
 
 
-        [HttpPost("{machId}")]
-        public async Task<IActionResult> AddStartTime(int userId, int machId, StartTimeForCreationDto startTimeForCreationDto)
+        [HttpPost("{mach}")]
+        public async Task<IActionResult> AddStartTime(int userId, string mach, StartTimeForCreationDto startTimeForCreationDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             var startTime = _mapper.Map<StartTime>(startTimeForCreationDto);
 
-            var machToStart = await _repo.GetMachine(machId);
+            var machToStart = await _repo.GetMachine(userId, mach);
 
-            startTime.Machine = machToStart;
-            startTime.MachId = machToStart.Id;
+            startTime.Mach = machToStart;
+            startTime.Machine = machToStart.Machine;
 
             _repo.Add(startTime);
 
@@ -68,12 +68,12 @@ namespace BackEnd.Controllers
         }
 
         [HttpGet("machine={mach}&date={date}&shift={shift}")]
-        public async Task<IActionResult> GetStartTimeSetByMachine(int userId, int machId, string date, string shift)
+        public async Task<IActionResult> GetStartTimeSetByMachine(int userId, string mach, string date, string shift)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            StartTime directStartTime = await _repo.GetStartTime(userId, date, machId, shift);
+            StartTime directStartTime = await _repo.GetStartTime(userId, date, mach, shift);
 
             var startTimeSet = _mapper.Map<StartTimeForReturnDto>(directStartTime);
 

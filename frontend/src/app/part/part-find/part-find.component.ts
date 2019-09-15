@@ -15,29 +15,17 @@ export class PartFindComponent implements OnInit, OnDestroy{
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private partServe: PartService,
     private auth: AuthService
   ) {}
 
   onSubmit(){
-    let part = this.jobForm.value.part
-    let machine ="";
-    let job ="";
-    let searchHold = [];
+    let search = "";
     if (this.jobForm.value.job){
-      job = this.jobForm.value.job;
-      searchHold.push("job="+job);
+      search = "job=" + this.jobForm.value.job;
+    } else if (this.jobForm.value.part){
+      search = "" + this.jobForm.value.part;
     }
-    if (this.jobForm.value.part){
-      part = this.jobForm.value.part;
-      searchHold.push("part="+part);
-    }
-    if (this.jobForm.value.machine){
-      machine = this.jobForm.value.machine;
-      searchHold.push("machine="+this.auth.splitJoin(machine));
-    }
-    let search = searchHold.join("&");
-    let movement = "../"+search;
+    let movement = "../" + search;
     this.router.navigate([movement], {relativeTo: this.route});
   }
 

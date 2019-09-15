@@ -12,7 +12,7 @@ export class AuthService {
     user = '';
     name = '';
     isNew = false;
-    isAuthenticated = false;
+    isAuthenticated = true;
     authApiUrl = 'http://localhost:5000/api'
     apiUrl = 'http://localhost:5000/api/' + localStorage.getItem('id');
     public authChanged = new Subject();
@@ -32,6 +32,7 @@ export class AuthService {
         this.token = '';
         this.name = '';
         this.isAuthenticated = false;
+        this.isNew = false;
         localStorage.setItem('token', '');
         localStorage.setItem('id', '');
         this.authChanged.next();

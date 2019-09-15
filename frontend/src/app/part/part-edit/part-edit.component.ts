@@ -15,7 +15,7 @@ import { MachineService } from 'src/app/machine/machine.service';
 export class PartEditComponent implements OnInit {
   editPartForm: FormGroup;
   part: Part;
-  id: number;
+  partNum: string;
   canInput = false;
   isError = false;
   error = "";
@@ -32,14 +32,14 @@ export class PartEditComponent implements OnInit {
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
     this.route.params.subscribe((params: Params) =>{
-      this.id = +params['id'];
+      this.partNum = params['part'];
     });
     this.mach.fetchAllMachines()
     .subscribe(machines => {
       this.machines = machines;
-      this.partServ.fetchPartById(this.id)
+      this.partServ.fetchPart(this.partNum)
       .subscribe(part => {
-        this.part = part;
+        this.part = part[0];
         this.initForm();
       });
     });
@@ -47,28 +47,10 @@ export class PartEditComponent implements OnInit {
 
 
   private initForm() {
-    let job = this.part.job;
     let part = this.part.part;
-    let machine = this.part.machine;
-    let cycleTime = this.part.cycleTime;
-    let orderQuantity = this.part.orderQuantity;
-    let weightRecieved = this.part.weightRecieved;
-    let oal = this.part.oal;
-    let cutOff = this.part.cutOff;
-    let mainFacing = this.part.mainFacing;
-    let subFacing = this.part.subFacing;
 
     this.editPartForm = new FormGroup({
-      'job': new FormControl(job, Validators.required),
-      'part': new FormControl(part, Validators.required),
-      'cycleTime': new FormControl(cycleTime),
-      'machine': new FormControl(machine, Validators.required),
-      "orderQuantity": new FormControl(orderQuantity),
-      "weightRecieved": new FormControl(weightRecieved),
-      "oal": new FormControl(oal),
-      "cutOff": new FormControl(cutOff),
-      "mainFacing": new FormControl(mainFacing),
-      "subFacing": new FormControl(subFacing),
+      'partNumber': new FormControl(part, Validators.required)
     });
   }
 
@@ -79,12 +61,12 @@ export class PartEditComponent implements OnInit {
 
   editPart(data: Part) {
     this.isError = false;
-    this.partServ.changePart(data, this.id).subscribe(()=>{},
+    this.partServ.changePart(data, this.partNum).subscribe(()=>{},
     () =>{
       this.isError = true;
     });
     if (this.isError){
-      this.error = "That job already exsists on that machine!";
+      this.error = "That part already exists!";
     }else{
       setTimeout(
         ()=>{
@@ -101,7 +83,7 @@ export class PartEditComponent implements OnInit {
 
   onDelete(){
     if (confirm("Are you sure you want to delete " +this.part.part+ "?")){
-      this.partServ.deletePart(this.id).subscribe();
+      this.partServ.deletePart(this.partNum).subscribe();
       setTimeout(()=>{
       this.router.navigate(["../.."], {relativeTo: this.route})
       }, 50)

@@ -34,7 +34,7 @@ namespace BackEnd.Controllers
 
             var op = _mapper.Map<Operation>(opForCreationDto);
 
-            var jobInfo = await _repo.GetJob(opForCreationDto.JobId);
+            var jobInfo = await _repo.GetJob(userId, opForCreationDto.JobNumber);
 
             op.JobNumber = jobInfo.JobNumber;
             op.userId = userId;

@@ -4,7 +4,6 @@ namespace BackEnd.Models
 {
     public class Mach
     {
-        public int Id { get; set; }
         public User User { get; set; }
         public int userId { get; set; }
         public string Machine { get; set; }

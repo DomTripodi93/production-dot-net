@@ -64,9 +64,6 @@ export class CalenderComponent implements OnInit {
     }
     this.defaultMonth = this.year +"-"+ this.monthHold
     this.setDate()
-    this.auth.authChanged.subscribe(()=>{
-      setTimeout(()=>{this.auth.checkNew().subscribe()}, 50);
-    })
   }
 
 

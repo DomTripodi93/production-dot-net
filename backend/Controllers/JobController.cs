@@ -35,7 +35,7 @@ namespace BackEnd.Controllers
 
             var job = _mapper.Map<Job>(jobForCreationDto);
 
-            var partInfo = await _repo.GetPart(jobForCreationDto.PartId);
+            var partInfo = await _repo.GetPart(userId, jobForCreationDto.PartNum);
 
             job.PartNum = partInfo.PartNumber;
             job.userId = userId;
@@ -45,35 +45,35 @@ namespace BackEnd.Controllers
             if (await _repo.SaveAll())
             {
                 var jobToReturn = _mapper.Map<JobForReturnDto>(job);
-                return CreatedAtRoute("GetJob", new {id = job.Id}, jobToReturn);
+                return CreatedAtRoute("GetJob", new {num = job.JobNumber}, jobToReturn);
             }
                 
             throw new Exception("Creation of job lot failed on save");
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateJob(int id, JobForCreationDto jobForUpdateDto)
-        {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            var jobFromRepo = await _repo.GetJob(id);
-
-            _mapper.Map(jobForUpdateDto, jobFromRepo);
-
-            if (await _repo.SaveAll())
-                return CreatedAtRoute("GetJob", new {id = jobFromRepo.Id}, jobForUpdateDto);
-
-            throw new Exception($"Updating job lot {id} failed on save");
-        }
-
-        [HttpGet("{id}", Name = "GetJob")]
-        public async Task<IActionResult> GetJob(int id, int userId)
+        [HttpPut("{jobNum}")]
+        public async Task<IActionResult> UpdateJob(int userId, string jobNum, JobForCreationDto jobForUpdateDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            Job job = await _repo.GetJob(id);
+            var jobFromRepo = await _repo.GetJob(userId, jobNum);
+
+            _mapper.Map(jobForUpdateDto, jobFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetJob", new {job = jobFromRepo.JobNumber}, jobForUpdateDto);
+
+            throw new Exception($"Updating job lot {jobNum} failed on save");
+        }
+
+        [HttpGet("{jobNum}", Name = "GetJob")]
+        public async Task<IActionResult> GetJob(int userId, string jobNum)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            Job job = await _repo.GetJob(userId, jobNum);
             JobForReturnDto jobForReturn = _mapper.Map<JobForReturnDto>(job);
             return Ok(jobForReturn);
         }
@@ -92,26 +92,26 @@ namespace BackEnd.Controllers
             return Ok(jobs);
         }
 
-        [HttpGet("job={jobNum}")]
-        public async Task<IActionResult> GetJobsByJob(int userId, string jobNum)
+        [HttpGet("part={partNum}")]
+        public async Task<IActionResult> GetJobsByJob(int userId, string partNum)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            IEnumerable<Job> directJobs = await _repo.GetJobByNumber(userId, jobNum);
+            IEnumerable<Job> directJobs = await _repo.GetJobsByPart(userId, partNum);
 
             var jobs = _mapper.Map<IEnumerable<JobForReturnDto>>(directJobs);
 
             return Ok(jobs);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteJob(int userId, int id)
+        [HttpDelete("{jobNum}")]
+        public async Task<IActionResult> DeleteJob(int userId, string jobNum)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
             
-            var jobToDelete = await _repo.GetJob(id);
+            var jobToDelete = await _repo.GetJob(userId, jobNum);
             
             if (userId == int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 _repo.Delete(jobToDelete);

@@ -1,0 +1,114 @@
+<div *ngIf="!canInput">
+  <h1>You must be logged in to add a operation lot!</h1>
+  </div>
+    <form *ngIf="canInput && editOpForm" [formGroup]="editOpForm" (ngSubmit)='onSubmit()' >
+      <div class="form-group">
+        <label for="operation">Operation</label>
+        <input 
+          formControlName='operation'
+          id="operation" 
+          class="form-control"
+        >
+      </div>
+      <div class="form-group">
+        <label for="machine">Machine</label>
+        <select 
+          formControlName='machine'
+          id="machine" 
+          class="form-control">
+          <option 
+          *ngFor="let machine of machines"
+          [selected]="machine.machine === operation.machine">{{machine.machine}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="cycleTime">Cycle Time (Seconds - Optional)</label>
+        <input 
+          formControlName='cycleTime'
+          id="cycleTime" 
+          type="number"
+          class="form-control"
+        >
+      </div>
+      <div class="form-group">
+        <label for="job">Job#</label>
+        <input 
+          formControlName='job'
+          type="text" 
+          id="job" 
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="orderQuantity">Order Quantity (Optional)</label>
+        <input 
+          formControlName='orderQuantity'
+          type="number" 
+          id="orderQuantity" 
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="weightRecieved">Weight Recieved (Optional)</label>
+        <input 
+          formControlName='weightRecieved'
+          type="number" 
+          id="weightRecieved" 
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="oal">Overall Length of Operation (Optional)</label>
+        <input 
+          formControlName='oal'
+          type="number" 
+          id="oal" 
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="cutOff">Cut Off Size (Optional)</label>
+        <input 
+          formControlName='cutOff'
+          type="number" 
+          id="cutOff" 
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="mainFacing">Amount Faced on Main Spindle (Optional)</label>
+        <input 
+          formControlName='mainFacing'
+          type="number" 
+          id="mainFacing" 
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="subFacing">Amount Faced on Sub Spindle (Optional)</label>
+        <input 
+          formControlName='subFacing'
+          type="number" 
+          id="subFacing" 
+          class="form-control">
+      </div>
+      <br><br>
+      <div class="grid">
+        <button 
+          class="btn btn-success" 
+          type="submit"
+          [disabled]="!editOpForm.valid"
+        >
+          Update Operation
+        </button>
+        <div></div>
+        <button 
+          type='button' 
+          class="btn btn-danger" 
+          (click)='onDelete()'
+        >
+          Delete
+        </button>
+        <div></div>
+        <button 
+          type='button' 
+          class='btn btn-danger pull-right' 
+          (click)='onCancel()'
+        >
+          Cancel
+        </button>
+      </div>

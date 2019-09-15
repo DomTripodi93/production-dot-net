@@ -40,35 +40,35 @@ namespace BackEnd.Controllers
             if (await _repo.SaveAll())
             {
                 var machToReturn = _mapper.Map<MachForCreationDto>(mach);
-                return CreatedAtRoute("GetMach", new {id = mach.Id}, machToReturn);
+                return CreatedAtRoute("GetMach", new {mach = mach.Machine}, machToReturn);
             }
                 
             throw new Exception("Creation of machine failed on save");
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMachine(int id, MachForCreationDto machForUpdateDto)
-        {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            var machFromRepo = await _repo.GetMachine(id);
-
-            _mapper.Map(machForUpdateDto, machFromRepo);
-
-            if (await _repo.SaveAll())
-                return CreatedAtRoute("GetMach", new {id = machFromRepo.Id}, machForUpdateDto);
-
-            throw new Exception($"Updating machine {id} failed on save");
-        }
-
-        [HttpGet("{id}", Name = "GetMach")]
-        public async Task<IActionResult> GetMachine(int id, int userId)
+        [HttpPut("{mach}")]
+        public async Task<IActionResult> UpdateMachine(int userId, string mach, MachForCreationDto machForUpdateDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            Mach machine = await _repo.GetMachine(id);
+            var machFromRepo = await _repo.GetMachine(userId, mach);
+
+            _mapper.Map(machForUpdateDto, machFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetMach", new {machine = machFromRepo.Machine}, machForUpdateDto);
+
+            throw new Exception($"Updating machine {mach} failed on save");
+        }
+
+        [HttpGet("{mach}", Name = "GetMach")]
+        public async Task<IActionResult> GetMachine(string mach, int userId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            Mach machine = await _repo.GetMachine(userId, mach);
             MachForReturnDto machForReturn = _mapper.Map<MachForReturnDto>(machine);
             return Ok(machForReturn);
         }
@@ -100,13 +100,13 @@ namespace BackEnd.Controllers
             return Ok(machines);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMachine(int userId, int id)
+        [HttpDelete("{mach}")]
+        public async Task<IActionResult> DeleteMachine(int userId, string mach)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
             
-            var machToDelete = await _repo.GetMachine(id);
+            var machToDelete = await _repo.GetMachine(userId, mach);
             
             if (userId == int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 _repo.Delete(machToDelete);

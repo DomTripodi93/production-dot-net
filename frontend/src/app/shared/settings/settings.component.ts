@@ -16,12 +16,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscriptions.push(
-        this.auth.checkNew().subscribe(()=>{this.checkStatus()})
-    );
+    this.checkStatus();
     this.subscriptions.push(
       this.auth.authChanged.subscribe(()=>{
-        setTimeout(()=>{this.auth.checkNew().subscribe(()=>{this.checkStatus()})}, 50);
+        setTimeout(()=>{this.checkStatus()}, 50);
       })
     );
   }

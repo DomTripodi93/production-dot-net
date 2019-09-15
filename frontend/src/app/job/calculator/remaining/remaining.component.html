@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    <div *ngIf="calc.latheForm" class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form (ngSubmit)='calc.onSubmitRemaining()' [formGroup]="calc.latheForm">
+        <div class='form-group'>
+          <div class='form-group'>
+            <label for='cutOff'>Cut Off</label>
+            <input 
+              type='number' 
+              id='cutOff' 
+              class='form-control'
+              formControlName="cutOff">       
+          </div>
+          <div class='form-group'>
+            <label for='oal'>Over All Length</label>
+            <input 
+              type='number' 
+              id='oal' 
+              class='form-control'
+              formControlName="oal">       
+          </div>
+          <div class='form-group'>
+            <label for='mainFacing'>Main Spindle Facing</label>
+            <input 
+              type='number' 
+              id='mainFacing' 
+              class='form-control'
+              formControlName="mainFacing">       
+          </div>
+          <div class='form-group'>
+            <label for='subFacing'>Sub Spindle Facing</label>
+            <input 
+              type='number' 
+              id='subFacing' 
+              class='form-control'
+              formControlName="subFacing">       
+          </div>
+          <div class='form-group'>
+            <label for='barEnd'>Bar End Length</label>
+            <input 
+              type='number' 
+              id='barEnd' 
+              class='form-control'
+              formControlName="barEnd">       
+          </div>
+          <div class='row'>
+            <div class='col-xs-12' formArrayName='bars'>
+              <label for="bars">Bars:</label>
+              <div 
+                class='row'
+                *ngFor="let barCtrl of calc.getControls(); let i = index"
+                [formGroupName] = 'i'>
+                <div class="col-xs-2">
+                  <label for='noBars'># of</label>
+                    <input
+                      type='number'
+                      class='form-control'
+                      formControlName="noBars">
+                </div>
+                <div class="col-xs-8">
+                  <label for='barLength'>Length</label>
+                    <input
+                      type='number'
+                      class='form-control'
+                      formControlName="barLength">
+                </div>
+                <div class="col-xs-2">
+                  <label>Remove</label>
+                    <button 
+                      type='button' 
+                      class='btn btn-danger'
+                      (click)='calc.onRemoveBar(i)'>
+                    --X--
+                    </button><br><br>
+                </div>       
+                </div>
+                <hr>
+                <button type='button' class='btn btn-primary' (click)="calc.newBars()">Add Another Bar Size</button>
+              </div>
+          </div>
+        <button 
+          class="btn btn-primary" 
+          type="submit"
+          [disabled]="!calc.latheForm.valid"
+          >Calculate</button>
+    </div>
+    <hr>
+    <div class="row" *ngIf="calc.submitted">
+      <div class='col-xs-12'>
+        <h3> Jobs Left to Make: {{calc.jobsToMake}}</h3>
+        <div class='row'>
+      </div>
+    </div>
+  </div>
+
+

@@ -10,15 +10,14 @@ namespace BackEnd.Data
         void Delete<T>(T entity) where T: class;
         Task<bool> SaveAll();
         Task<User> GetUser(int id);
-        Task<Mach> GetMachine(int id);
+        Task<Mach> GetMachine(int userId, string mach);
         Task<IEnumerable<Mach>> GetMachines(int userId);
         Task<IEnumerable<Mach>> GetMachinesByJob(int userId);
-        Task<Part> GetPart(int id);
+        Task<Part> GetPart(int userId, string part);
         Task<IEnumerable<Part>> GetParts(int userId);
         Task<Part> GetPartByJob(int userId, string job);
-        Task<Job> GetJob(int id);
+        Task<Job> GetJob(int userId, string jobNum);
         Task<IEnumerable<Job>> GetJobs(int userId);
-        Task<IEnumerable<Job>> GetJobByNumber(int userId, string jobNum);
         Task<IEnumerable<Job>> GetJobsByPart(int userId, string partNum);
         Task<Operation> GetOp(int id);
         Task<IEnumerable<Operation>> GetOpsByJob(string jobNum);
@@ -34,7 +33,7 @@ namespace BackEnd.Data
         Task<IEnumerable<Hourly>> GetHourlySetByJob(int userId, string job);
         Task<IEnumerable<Hourly>> GetHourlySetByJobAndMachine(int userId, string job, string mach);
         Task<Settings> GetSettings(int userId);
-        Task<StartTime> GetStartTime(int userId, string date, int machId, string shift);
+        Task<StartTime> GetStartTime(int userId, string date, string machName, string shift);
         Task<StartTime> GetUniqueStartTime(int id);
         Task<IEnumerable<ChangeLog>> GetChangeLog(int userId, string model);
         Task<ChangeLog> GetUniqueChangeLog(int id);

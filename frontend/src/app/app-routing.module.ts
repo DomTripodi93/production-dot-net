@@ -30,14 +30,25 @@ import { HourlyFindComponent } from './hourly/hourly-find/hourly-find.component'
 import { HourlyFindShowComponent } from './hourly/hourly-find/hourly-find-show/hourly-find-show.component';
 import { DaysHourlyComponent } from './shared/days/days-hourly/days-hourly.component';
 import { DaysFullComponent } from './shared/days/days-full/days-full.component';
-import { RemainingComponent } from './part/calculator/remaining/remaining.component';
-import { ByWeightComponent } from './part/calculator/by-weight/by-weight.component';
-import { JobTotalComponent } from './part/calculator/job-total/job-total.component';
+import { RemainingComponent } from './job/calculator/remaining/remaining.component';
+import { ByWeightComponent } from './job/calculator/by-weight/by-weight.component';
+import { JobTotalComponent } from './job/calculator/job-total/job-total.component';
 import { ChangeLogComponent } from './change-log/change-log.component';
-import { CalculatorComponent } from './part/calculator/calculator.component';
-import { LengthComponent } from './part/calculator/by-weight/length/length.component';
+import { CalculatorComponent } from './job/calculator/calculator.component';
+import { LengthComponent } from './job/calculator/by-weight/length/length.component';
 import { SettingsComponent } from './shared/settings/settings.component';
 import { AuthGuard } from './guards/auth.guard';
+import { JobComponent } from './job/job.component';
+import { JobShowComponent } from './job/job-show/job-show.component';
+import { JobEditComponent } from './job/job-edit/job-edit.component';
+import { JobNewComponent } from './job/job-new/job-new.component';
+import { JobFindComponent } from './job/job-find/job-find.component';
+import { OperationComponent } from './operation/operation.component';
+import { OpShowComponent } from './operation/op-show/op-show.component';
+import { OpEditComponent } from './operation/op-edit/op-edit.component';
+import { OpNewComponent } from './operation/op-new/op-new.component';
+import { OpFindComponent } from './operation/op-find/op-find.component';
+import { OpFindShowComponent } from './operation/op-find/op-find-show/op-find-show.component';
 
 const appRoutes: Routes = [
     {path: '', component: CalenderComponent, pathMatch: 'full' },
@@ -49,6 +60,38 @@ const appRoutes: Routes = [
             {path: '', component: DaysFullComponent},
             {path: 'hourly', component: DaysHourlyComponent}
         ]},
+        {path: 'machine', component: MachineComponent, children:[
+            {path: '', component: MachineShowComponent},
+            {path: 'edit/:mach', component: MachineEditComponent},
+            {path: 'new', component: MachineNewComponent}
+        ]},
+        {path: 'parts', component: PartComponent, children:[
+            {path: '', component: PartShowComponent},
+            {path: 'edit/:part', component: PartEditComponent},
+            {path: 'new', component: PartNewComponent},
+            {path: 'find', component: PartFindComponent},
+            {path: ":part", component: PartFindShowComponent},
+        ]},
+        {path: 'jobs', component: JobComponent, children:[
+            {path: '', component: JobShowComponent},
+            {path: 'edit/:job', component: JobEditComponent},
+            {path: 'new', component: JobNewComponent},
+            {path: 'find', component: JobFindComponent},
+            {path: "calculator", component: CalculatorComponent, children:[
+                {path: "", component: LengthComponent},
+                {path: "weight/:jobNum", component: ByWeightComponent},
+                {path: "job/:jobNum", component: JobTotalComponent},
+                {path: ":jobNum", component: RemainingComponent},
+            ]},
+            {path: ":job", component: PartFindShowComponent},
+        ]},
+        {path: 'op', component: OperationComponent, children:[
+            {path: '', component: OpShowComponent},
+            {path: 'edit/:part', component: OpEditComponent},
+            {path: 'new', component: OpNewComponent},
+            {path: 'find', component: OpFindComponent},
+            {path: ":part", component: OpFindShowComponent},
+        ]},
         {path: 'production', component: ProductionComponent, children:[
             {path: '', component: ProductionListComponent},
             {path: 'new', component: ProductionNewComponent},
@@ -56,25 +99,6 @@ const appRoutes: Routes = [
             {path: 'single/:id', component: ProductionSingleComponent},
             {path: 'single/:id/edit', component: ProductionEditComponent},
             {path: ":job", component: ProductionByJobSelectComponent},
-        ]},
-        {path: 'machine', component: MachineComponent, children:[
-            {path: '', component: MachineShowComponent},
-            {path: 'edit/:id', component: MachineEditComponent},
-            {path: 'new', component: MachineNewComponent}
-        ]},
-        {path: 'parts', component: PartComponent, children:[
-            {path: '', component: PartShowComponent},
-            {path: 'edit/:id', component: PartEditComponent},
-            {path: 'new', component: PartNewComponent},
-            {path: 'find', component: PartFindComponent},
-            {path: "calculator", component: CalculatorComponent, children:[
-                {path: "", component: LengthComponent},
-                {path: "weight/:id", component: ByWeightComponent},
-                {path: "job/:id", component: JobTotalComponent},
-                {path: ":id", component: RemainingComponent},
-    
-            ]},
-            {path: ":part", component: PartFindShowComponent},
         ]},
         {path: 'hourly', component: HourlyComponent, children:[
             {path: '', component: HourlyShowComponent},

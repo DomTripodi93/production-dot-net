@@ -6,28 +6,14 @@
         <button *ngIf="part.possibleQuantity" class='btn btn-info' routerLink="calculator/{{part.id}}">Remaining Bars</button>
         <button *ngIf="!part.weightQuantity" class='btn btn-success' routerLink="calculator/weight/{{part.id}}">Weight Calc</button>
       </div>
-      <div routerLink="part={{part.part}}">
+      <div routerLink="{{part.partNumber}}">
         <br>
-        <h3>{{part.part}}</h3>
-        <h4>Current Job: <br> {{part.job}}</h4>
-        <h4>Current Machine: <br> {{part.machine}}</h4>
-        <h4 *ngIf="part.cycleTime">Cycle Time: {{part.cycleTime}}</h4>
-        <h4 *ngIf="!part.possibleQuantity && !part.weightQuantity && part.orderQuantity">Possible Quantity: {{part.orderQuantity}}
-        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.orderQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="!part.possibleQuantity && part.weightQuantity">Possible Quantity: {{part.weightQuantity}}
-        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.weightQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="part.possibleQuantity">Possible Quantity: {{part.possibleQuantity}}
-        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.possibleQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="part.remainingQuantity">Remaining Quantity: {{part.remainingQuantity}}
-        <h4 *ngIf="part.cycleTime"> Remaining Machine Hours: {{((part.remainingQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4> <br><br>
+        <h3>{{part.partNumber}}</h3>
+        <br><br>
       </div>
       <div class="grid2">
-          <button class='btn btn-primary' routerLink="edit/{{part.id}}">Edit Part</button>
-          <button class='btn btn-danger' (click)="onDelete(part.part, part.id)">Delete Part</button>
+          <button class='btn btn-primary' routerLink="edit/{{part.partNumber}}">Edit Part</button>
+          <button class='btn btn-danger' (click)="onDelete(part.partNumber, part.id)">Delete Part</button>
       </div>
     </div>
     <br>

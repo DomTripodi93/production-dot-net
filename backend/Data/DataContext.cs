@@ -16,5 +16,17 @@ namespace BackEnd.Data
         public DbSet<Hourly> Hourlys { get; set; }
         public DbSet<Production> Production { get; set; }
         public DbSet<StartTime> StartTimes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Mach>()
+                .HasKey(m => new {m.userId, m.Machine});
+            modelBuilder.Entity<Part>()
+                .HasKey(p => new {p.userId, p.PartNumber});
+            modelBuilder.Entity<Job>()
+                .HasKey(j => new {j.userId, j.JobNumber});
+            modelBuilder.Entity<Settings>()
+                .HasKey(s => s.userId);
+        }
     }
 }

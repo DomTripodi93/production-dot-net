@@ -19,17 +19,25 @@ export class AppComponent implements OnInit {
   ){}
 
   ngOnInit(){
+    this.auth.authChanged.subscribe(()=>{
+      this.auth.apiUrl = this.auth.authApiUrl + "/" + this.auth.user;
+      setTimeout(()=>{
+        if (this.auth.isAuthenticated){
+          this.auth.checkNew().subscribe()
+        }
+      }, 50);
+    });
     this.setTitle(this.title)
     this.auth.user = localStorage.getItem('id'),
     this.auth.token = localStorage.getItem('token');
     if (this.auth.user){
       this.auth.getUserDetails(this.auth.user).subscribe(()=>{
           this.auth.isAuthenticated = true; 
-          this.auth.checkNew().subscribe();
           this.auth.authChanged.next();
-        }, (error)=>{
-          this.auth.user = "";
-          this.auth.token = "";
+        }, ()=>{
+          this.auth.isAuthenticated = false; 
+          this.auth.user = null;
+          this.auth.token = null;
         }
       );
     } else {

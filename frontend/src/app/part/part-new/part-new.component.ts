@@ -4,8 +4,6 @@ import { PartService } from '../part.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Part } from '../part.model';
-import { Machine } from 'src/app/machine/machine.model';
-import { MachineService } from '../../machine/machine.service';
 
 @Component({
   selector: 'app-part-new',
@@ -17,53 +15,26 @@ export class PartNewComponent implements OnInit {
   canInput= false;
   partForm: FormGroup;
   isError = false;
-  machines: Machine[] = []
   andCalculate = "none";
   
   constructor(
     private partServ: PartService,
     private auth: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
-    private mach: MachineService
+    private route: ActivatedRoute
   ){}
   
   ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
-    this.mach.fetchAllMachines()
-    .subscribe(machines => {
-      this.machines = machines;
-      this.initForm();
-    });
+    this.initForm();
     this.auth.hideButton(0);
   }
     
   private initForm() {
     let part: string;
-    let job: string;
-    let machine = "";
-    if (this.machines.length > 0){
-      machine = this.machines[0].machine;
-    }
-    let cycleTime: string;
-    let orderQuantity: string;
-    let weightRecieved: string;
-    let oal: string;
-    let cutOff: string;
-    let mainFacing: string;
-    let subFacing: string;
 
     this.partForm = new FormGroup({
-      'job': new FormControl(job, Validators.required),
-      'part': new FormControl(part, Validators.required),
-      'cycleTime': new FormControl(cycleTime),
-      'machine': new FormControl(machine, Validators.required),
-      "orderQuantity": new FormControl(orderQuantity),
-      "weightRecieved": new FormControl(weightRecieved),
-      "oal": new FormControl(oal),
-      "cutOff": new FormControl(cutOff),
-      "mainFacing": new FormControl(mainFacing),
-      "subFacing": new FormControl(subFacing)
+      'partNumber': new FormControl(part, Validators.required)
     });
   }
 
@@ -84,11 +55,7 @@ export class PartNewComponent implements OnInit {
     });
     setTimeout(()=>{
       if (this.isError){
-        this.error = "That job already exsists on that machine!";
-      } else if (this.andCalculate == "length"){
-        this.router.navigate(["calculator/job"], {relativeTo: this.route})
-      } else if (this.andCalculate == "weight"){
-        this.router.navigate(["calculator/weight"], {relativeTo: this.route})
+        this.error = "That part already exists!";
       } else {
         this.router.navigate([".."], {relativeTo: this.route})
       }

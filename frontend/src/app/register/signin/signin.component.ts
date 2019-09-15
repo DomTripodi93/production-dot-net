@@ -30,13 +30,13 @@ export class SigninComponent {
         (responseData) => {
           this.auth.token = responseData.body['token'];
           localStorage.setItem('token', responseData.body['token']);
-          let id = responseData.body["id"]
-          localStorage.setItem('id', id);
-          this.auth.user = id;
-          this.auth.authChanged.next();
-          if (this.auth.isAuthenticated) {
+          this.auth.user = responseData.body["id"]
+          localStorage.setItem('id', responseData.body["id"]);
+          if (this.auth.user) {
             this.auth.isAuthenticated = true;
-            // this.auth.checkNew().subscribe();
+            setTimeout(()=>{
+              this.auth.authChanged.next();
+            },100);
           }
         },() => {
           this.isError = true

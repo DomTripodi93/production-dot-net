@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DaysService } from 'src/app/shared/days/days.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Machine } from '../machine.model';
 import { MachineService } from 'src/app/machine/machine.service';
-import { ProductionService } from 'src/app/production/production.service';
-import { Subject } from 'rxjs';
-import { PartService } from '../../part/part.service';
+import { JobService } from 'src/app/job/job.service';
 
 @Component({
   selector: 'app-machine-new',
@@ -23,7 +20,7 @@ export class MachineNewComponent implements OnInit {
   
   constructor(
     private mach: MachineService,
-    private part: PartService,
+    private jobServ: JobService,
     private auth: AuthService,
     private router: Router,
     private route: ActivatedRoute
@@ -38,9 +35,9 @@ export class MachineNewComponent implements OnInit {
   private initForm() {
     let machine = '';
     this.jobs = ["None"];
-    this.part.fetchAllParts().subscribe(response =>{
-      response.forEach(part => {
-        this.jobs.push(part.job)
+    this.jobServ.fetchAllJobs().subscribe(response =>{
+      response.forEach(job => {
+        this.jobs.push(job.job)
       });
     })
 

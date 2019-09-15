@@ -44,7 +44,7 @@ namespace BackEnd.Controllers
             if (await _repo.SaveAll())
             {
                 var settingsToReturn = _mapper.Map<SettingsForCreationDto>(settings);
-                return CreatedAtRoute("GetSettings", new {id = settings.Id}, settingsToReturn);
+                return CreatedAtRoute("GetSettings", new {id = settings.userId}, settingsToReturn);
             }
                 
             throw new Exception("Creation of settings count failed on save");
@@ -61,7 +61,7 @@ namespace BackEnd.Controllers
             _mapper.Map(settingsForUpdateDto, settingsFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetSettings", new {id = settingsFromRepo.Id}, settingsForUpdateDto);
+                return CreatedAtRoute("GetSettings", new {id = settingsFromRepo.userId}, settingsForUpdateDto);
 
             throw new Exception($"Updating settings for {userId} failed on save");
         }

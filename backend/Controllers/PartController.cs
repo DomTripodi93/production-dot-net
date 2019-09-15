@@ -42,36 +42,38 @@ namespace BackEnd.Controllers
             if (await _repo.SaveAll())
             {
                 var partToReturn = _mapper.Map<PartForCreationDto>(part);
-                return CreatedAtRoute("GetPart", new {id = part.Id}, partToReturn);
+                return CreatedAtRoute("GetPart", new {part = part.PartNumber}, partToReturn);
             }
                 
             throw new Exception("Creation of part lot failed on save");
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePart(int id, PartForCreationDto partForUpdateDto)
-        {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            var partFromRepo = await _repo.GetPart(id);
-
-            _mapper.Map(partForUpdateDto, partFromRepo);
-
-            if (await _repo.SaveAll())
-                return CreatedAtRoute("GetPart", new {id = partFromRepo.Id}, partForUpdateDto);
-
-            throw new Exception($"Updating part lot {id} failed on save");
-        }
-
-        [HttpGet("{id}", Name = "GetPart")]
-        public async Task<IActionResult> GetPart(int id, int userId)
+        [HttpPut("{part}")]
+        public async Task<IActionResult> UpdatePart(int userId, string part, PartForCreationDto partForUpdateDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            Part part = await _repo.GetPart(id);
-            PartForReturnDto partForReturn = _mapper.Map<PartForReturnDto>(part);
+            var partFromRepo = await _repo.GetPart(userId, part);
+
+            _mapper.Map(partForUpdateDto, partFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetPart", new {part = partFromRepo.PartNumber}, partForUpdateDto);
+
+            throw new Exception($"Updating part {part} failed on save");
+        }
+
+        [HttpGet("{part}", Name = "GetPart")]
+        public async Task<IActionResult> GetPart(int userId, string part)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var partFromRepo = await _repo.GetPart(userId, part);
+
+            PartForReturnDto partForReturn = _mapper.Map<PartForReturnDto>(partFromRepo);
+
             return Ok(partForReturn);
         }
 
@@ -89,21 +91,34 @@ namespace BackEnd.Controllers
             return Ok(parts);
         }
 
+        [HttpGet("job={job}")]
+        public async Task<IActionResult> GetPartByJob(int userId, string job)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePart(int userId, int id)
+            Part directPart = await _repo.GetPartByJob(userId, job);
+
+            var part = _mapper.Map<PartForReturnDto>(directPart);
+
+            return Ok(part);
+        }
+
+
+        [HttpDelete("{part}")]
+        public async Task<IActionResult> DeletePart(int userId, string part)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
             
-            var partToDelete = await _repo.GetPart(id);
+            var partToDelete = await _repo.GetPart(userId, part);
             
             if (userId == int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 _repo.Delete(partToDelete);
                 await _repo.SaveAll();
                 return Ok(
                             partToDelete.PartNumber
-                            +" and any associated Jobs, Production, and Hourly Tracking was deleted!"
+                            +" and any associated Jobs, Ops, Production, and Hourly Tracking was deleted!"
                         );
         }
     }

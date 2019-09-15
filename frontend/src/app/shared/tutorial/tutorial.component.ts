@@ -41,11 +41,6 @@ export class TutorialComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.prodServ.proChanged.subscribe(()=>{
       setTimeout(()=>{this.checkProduction()},50)}
     ));
-    this.subscriptions.push(
-      this.auth.authChanged.subscribe(()=>{
-        setTimeout(()=>{this.auth.checkNew().subscribe()}, 50);
-      })
-    );
   }
 
   checkAll(){

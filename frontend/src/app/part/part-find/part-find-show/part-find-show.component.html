@@ -1,71 +1,17 @@
-<div *ngIf='parts.length > 0 && parts.length < 2'>
-    <ul class='list-group'>
-        <li class=list-group-item *ngFor="let part of parts; let i = index" >
-      <h3>Part #: {{part.part}}</h3>
-      <h4 *ngIf="part.job">Current Job: {{part.job}}</h4>
-      <h4 *ngIf="part.machine">Current Machine: {{part.machine}}</h4>
-      <h4 *ngIf="part.cycleTime">Cycle Time: {{part.cycleTime}}</h4>
-      <h4 *ngIf="part.orderQuantity">Order Quantity: {{part.orderQuantity}}</h4>
-      <h4 *ngIf="part.weightRecieved">Weight Recieved: {{part.weightRecieved}}</h4>
-      <h4 *ngIf="part.weightQuantity">Potential Quantity by Weight: {{part.weightQuantity}}</h4>
-      <h4 *ngIf="part.weightLength">Total Length of Bars by Weight: {{part.weightLength}}</h4>
-      <h4 *ngIf="part.possibleQuantity">Possible Quantity by Bars: {{part.possibleQuantity}}</h4>
-      <h4 *ngIf="part.remainingQuantity">Remaining Quantity: {{part.remainingQuantity}}</h4>
-      <h4 *ngIf="part.heatLot">Heat Lot#: {{part.heatLot}}</h4>        
-      <h4 *ngIf="!part.possibleQuantity && !part.weightQuantity && part.orderQuantity">Most Reliable Possible Quantity: {{part.weightQuantity}}
-        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.orderQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="!part.possibleQuantity && part.weightQuantity">Most Reliable Possible Quantity: {{part.weightQuantity}}
-        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.weightQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="part.possibleQuantity">Most Reliable Possible Quantity: {{part.possibleQuantity}}
-        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.possibleQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="part.remainingQuantity">Remaining Quantity: {{part.remainingQuantity}}</h4>
-        <h4 *ngIf="part.cycleTime"> Remaining Machine Hours: {{((part.remainingQuantity*part.cycleTime)/3600).toFixed(2)}}</h4> <br><br>
+<div *ngIf="part">
+  <div>
+      <ul class='list-group'>
+        <li class=list-group-item >
+          <h3>Part #: {{part.partNumber}}</h3>
           <br><br>
           <div class="grid">
-            <button class='btn btn-primary' routerLink="../edit/{{part.id}}">Edit Part</button>
-            <button class='btn btn-danger' (click)="onDelete(part.part, part.id)">Delete Part</button>
+            <button class='btn btn-primary' routerLink="../edit/{{part.partNumber}}">Edit Part</button>
+            <button class='btn btn-danger' (click)="onDelete(part.partNumber, part.id)">Delete Part</button>
           </div>
         </li>
-    </ul>
-</div>
-<div *ngIf='parts.length > 1'>
-  <div *ngFor="let part of parts; let i=index"> 
-    <div routerLink="../part={{part.part}}" class="border">
-      <h3>Part #: {{part.part}}</h3>
-      <h4 *ngIf="part.job">Current Job: {{part.job}}</h4>
-      <h4 *ngIf="part.machine">Current Machine: {{part.machine}}</h4>
-      <h4 *ngIf="part.cycleTime">Cycle Time: {{part.cycleTime}}</h4>
-      <h4 *ngIf="part.orderQuantity">Order Quantity: {{part.orderQuantity}}</h4>
-      <h4 *ngIf="part.weightRecieved">Weight Recieved: {{part.weightRecieved}}</h4>
-      <h4 *ngIf="part.weightQuantity">Potential Quantity by Weight: {{part.weightQuantity}}</h4>
-      <h4 *ngIf="part.weightLength">Total Length of Bars by Weight: {{part.weightLength}}</h4>
-      <h4 *ngIf="part.possibleQuantity">Possible Quantity by Bars: {{part.possibleQuantity}}</h4>
-      <h4 *ngIf="part.remainingQuantity">Remaining Quantity: {{part.remainingQuantity}}</h4>
-      <h4 *ngIf="part.heatLot">Heat Lot#: {{part.heatLot}}</h4>
-              <h4 *ngIf="!part.possibleQuantity && !part.weightQuantity && part.orderQuantity">Most Reliable Possible Quantity: {{part.weightQuantity}}
-        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.orderQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="!part.possibleQuantity && part.weightQuantity">Most Reliable Possible Quantity: {{part.weightQuantity}}
-        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.weightQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="part.possibleQuantity">Most Reliable Possible Quantity: {{part.possibleQuantity}}
-        <h4 *ngIf="part.cycleTime"> Total Machine Hours: {{((part.possibleQuantity*part.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="part.remainingQuantity">Remaining Quantity: {{part.remainingQuantity}}</h4>
-        <h4 *ngIf="part.cycleTime"> Remaining Machine Hours: {{((part.remainingQuantity*part.cycleTime)/3600).toFixed(2)}}</h4> <br><br>
-      <div class="grid">
-        <button class='btn btn-primary' routerLink="../edit/{{part.id}}">Edit Part</button>
-        <button class='btn btn-danger' (click)="onDelete(part.part, part.id)">Delete Part</button>
-      </div>
-    </div>
-    <br>
+      </ul>
   </div>
 </div>
-
-
-<div *ngIf='parts.length == 0'>
-    <h2> No parts for this Search </h2>
+<div *ngIf='!part'>
+    <h2> No parts with this Part or Job Number </h2>
 </div>

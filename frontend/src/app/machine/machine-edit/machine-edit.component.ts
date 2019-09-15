@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductionService } from 'src/app/production/production.service';
 import { MachineService } from '../machine.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Machine } from '../machine.model';
-import { PartService } from 'src/app/part/part.service';
+import { JobService } from 'src/app/job/job.service';
 
 @Component({
   selector: 'app-machine-edit',
@@ -21,7 +20,7 @@ export class MachineEditComponent implements OnInit {
   
   constructor(
     private mach: MachineService,
-    private part: PartService,
+    private jobServ: JobService,
     private route: ActivatedRoute,
     private router: Router,
     private auth: AuthService
@@ -43,12 +42,12 @@ export class MachineEditComponent implements OnInit {
   private initForm() {
     let machine = this.machine.machine;
     this.jobs = [this.machine.currentJob];
-    this.part.fetchAllParts().subscribe(response =>{
-      response.forEach(part => {
-        if (part.job === this.machine.currentJob){
-          this.jobs.push("None")
-        } else {
-          this.jobs.push(part.job)
+    this.jobServ.fetchAllJobs().subscribe(response =>{
+      response.forEach(job => {
+        if (job.job == this.machine.currentJob){
+          this.jobs.push(job.job)
+        }else {
+          this.jobs.push(job.job)
         }
       });
     })

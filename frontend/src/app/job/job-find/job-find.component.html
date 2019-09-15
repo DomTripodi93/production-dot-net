@@ -1,0 +1,35 @@
+
+<form (ngSubmit)='onSubmit()' #data="ngForm"> 
+  <div class="form-group">
+    <label for="job">Job #:</label>
+    <input 
+      type="text" 
+      id="job" 
+      class="form-control"
+      ngModel
+      name='job'>
+      <br>
+    <label for="part">Part #:</label>
+    <input 
+      type="text" 
+      id="part" 
+      class="form-control"
+      ngModel
+      name='part'>
+  </div>
+  <br>
+  <button 
+    class="btn btn-primary" 
+    type="submit"
+    [disabled]="!data.valid"
+  >
+    Submit
+  </button>
+  <button 
+    type='button' 
+    class='btn btn-danger pull-right' 
+    (click)='onCancel()'
+  >
+    Cancel
+  </button>
+</form>

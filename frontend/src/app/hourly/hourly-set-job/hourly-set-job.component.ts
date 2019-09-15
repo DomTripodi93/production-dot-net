@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HourlyService } from '../hourly.service';
 import { MachineService } from '../../machine/machine.service';
-import { PartService } from '../../part/part.service';
+import { JobService } from 'src/app/job/job.service';
 
 @Component({
   selector: 'app-hourly-set-job',
@@ -16,7 +16,7 @@ export class HourlySetJobComponent implements OnInit {
 
   constructor(
     private hourServ: HourlyService,
-    private part: PartService,
+    private jobServ: JobService,
     private machServ: MachineService
   ) { }
 
@@ -26,9 +26,9 @@ export class HourlySetJobComponent implements OnInit {
 
   private initForm(){
     this.jobs = ["None"];
-    this.part.fetchAllParts().subscribe(response =>{
-      response.forEach(part => {
-        this.jobs.push(part.job)
+    this.jobServ.fetchAllJobs().subscribe(response =>{
+      response.forEach(job => {
+        this.jobs.push(job.job)
       });
     })
 

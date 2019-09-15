@@ -34,24 +34,35 @@ import { PartFindComponent } from './part/part-find/part-find.component';
 import { PartFindShowComponent } from './part/part-find/part-find-show/part-find-show.component';
 import { HourlyFindComponent } from './hourly/hourly-find/hourly-find.component';
 import { HourlyFindShowComponent } from './hourly/hourly-find/hourly-find-show/hourly-find-show.component';
-import { PartRunableComponent } from './part/part-runable/part-runable.component';
 import { ChangeLogComponent } from './change-log/change-log.component';
 import { DaysHourlyComponent } from './shared/days/days-hourly/days-hourly.component';
 import { DaysFullComponent } from './shared/days/days-full/days-full.component';
 import { HourlyNewShortComponent } from './hourly/hourly-new-short/hourly-new-short.component';
 import { HourlyShowEachComponent } from './hourly/hourly-show/hourly-show-each/hourly-show-each.component';
-import { CalculatorComponent } from './part/calculator/calculator.component';
-import { ByWeightComponent } from './part/calculator/by-weight/by-weight.component';
-import { RemainingComponent } from './part/calculator/remaining/remaining.component';
-import { JobTotalComponent } from './part/calculator/job-total/job-total.component';
+import { CalculatorComponent } from './job/calculator/calculator.component';
+import { ByWeightComponent } from './job/calculator/by-weight/by-weight.component';
+import { RemainingComponent } from './job/calculator/remaining/remaining.component';
+import { JobTotalComponent } from './job/calculator/job-total/job-total.component';
 import { ChangeLogSetComponent } from './change-log/change-log-set/change-log-set.component';
 import { HourlySetJobComponent } from './hourly/hourly-set-job/hourly-set-job.component';
 import { ChangeLogFullComponent } from './change-log/change-log-full/change-log-full.component';
-import { LengthComponent } from './part/calculator/by-weight/length/length.component';
+import { LengthComponent } from './job/calculator/by-weight/length/length.component';
 import { AuthInterceptorService } from './shared/auth-interceptor.service';
 import {DropdownDirective} from './shared/dropdown.directive';
 import { TutorialComponent } from './shared/tutorial/tutorial.component';
 import { SettingsComponent } from './shared/settings/settings.component';
+import { JobComponent } from './job/job.component';
+import { OperationComponent } from './operation/operation.component';
+import { JobNewComponent } from './job/job-new/job-new.component';
+import { JobFindComponent } from './job/job-find/job-find.component';
+import { JobFindShowComponent } from './job/job-find/job-find-show/job-find-show.component';
+import { JobEditComponent } from './job/job-edit/job-edit.component';
+import { JobShowComponent } from './job/job-show/job-show.component';
+import { OpNewComponent } from './operation/op-new/op-new.component';
+import { OpShowComponent } from './operation/op-show/op-show.component';
+import { OpEditComponent } from './operation/op-edit/op-edit.component';
+import { OpFindComponent } from './operation/op-find/op-find.component';
+import { OpFindShowComponent } from './operation/op-find/op-find-show/op-find-show.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +96,6 @@ import { SettingsComponent } from './shared/settings/settings.component';
     PartFindShowComponent,
     HourlyFindComponent,
     HourlyFindShowComponent,
-    PartRunableComponent,
     ChangeLogComponent,
     DaysHourlyComponent,
     DaysFullComponent,
@@ -102,6 +112,18 @@ import { SettingsComponent } from './shared/settings/settings.component';
     DropdownDirective,
     TutorialComponent,
     SettingsComponent,
+    JobComponent,
+    OperationComponent,
+    JobNewComponent,
+    JobFindComponent,
+    JobFindShowComponent,
+    JobEditComponent,
+    JobShowComponent,
+    OpNewComponent,
+    OpShowComponent,
+    OpEditComponent,
+    OpFindComponent,
+    OpFindShowComponent,
   ],
   imports: [
     BrowserModule,

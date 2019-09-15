@@ -4,8 +4,9 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 import { AuthService } from '../shared/auth.service';
 import { Subject } from 'rxjs';
 import { Production } from './production.model';
-import { PartService } from 'src/app/part/part.service';
 import { Part } from '../part/part.model';
+import { JobService } from '../job/job.service';
+import { Job } from '../job/job.model';
 
 @Injectable({providedIn: 'root'})
 export class ProductionService {
@@ -15,7 +16,7 @@ export class ProductionService {
     constructor(
         private http: HttpClient,
         private auth: AuthService,
-        private partServ: PartService
+        private jobServ: JobService
         ) {}
 
     fetchProduction(search) {
@@ -64,27 +65,26 @@ export class ProductionService {
       }
 
     addProduction(data: Production){
-      this.partServ.fetchPart("job=" + data.job).subscribe((parts: Part[])=>{
-        parts.forEach((part)=>{
-          if (+part.remainingQuantity > 0){
-            let value = +part.remainingQuantity - data.quantity;
-            if (value >= 0){
-              part.remainingQuantity = "" + value;
-            } else {
-              part.remainingQuantity = "0"
-            }
-          } else if (!part.remainingQuantity && part.possibleQuantity){
-            let value = +part.possibleQuantity - data.quantity;
-            part.remainingQuantity = "" + value;
-          } else if (!part.remainingQuantity && part.orderQuantity){
-            let value = +part.orderQuantity - data.quantity;
-            part.remainingQuantity = "" + value;
-          } else if (!part.remainingQuantity && part.weightQuantity){
-            let value = +part.weightQuantity - data.quantity;
-            part.remainingQuantity = "" + value;
+      this.jobServ.fetchJob(data.job).subscribe((jobs: Job[])=>{
+        let job: Job = jobs[0];
+        if (+job.remainingQuantity > 0){
+          let value = +job.remainingQuantity - data.quantity;
+          if (value >= 0){
+            job.remainingQuantity = "" + value;
+          } else {
+            job.remainingQuantity = "0"
           }
-          this.partServ.changePart(part, part.id).subscribe()
-        })
+        } else if (!job.remainingQuantity && job.possibleQuantity){
+          let value = +job.possibleQuantity - data.quantity;
+          job.remainingQuantity = "" + value;
+        } else if (!job.remainingQuantity && job.orderQuantity){
+          let value = +job.orderQuantity - data.quantity;
+          job.remainingQuantity = "" + value;
+        } else if (!job.remainingQuantity && job.weightQuantity){
+          let value = +job.weightQuantity - data.quantity;
+          job.remainingQuantity = "" + value;
+        }
+        this.jobServ.changeJob(job, data.job).subscribe()
       })
       data.machine = this.auth.splitJoin(data.machine);
         return this.http.post(

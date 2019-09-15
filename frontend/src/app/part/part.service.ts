@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
 import { AuthService } from '../shared/auth.service';
 import { Subject } from 'rxjs';
 import { Part } from './part.model';
-import { Change } from '../shared/change.model';
 
 @Injectable({providedIn: 'root'})
 export class PartService {
@@ -24,31 +23,15 @@ export class PartService {
 
     fetchPart(search) {
         return this.http.get(
-          this.auth.apiUrl + '/part/?' + search
+          this.auth.apiUrl + '/part/' + search
         )
         .pipe(
-          map((responseData: Part[]) => {
-            const partHold: Part[] = [];
-            responseData.forEach((lot)=>{
-              lot.machine = this.auth.rejoin(lot.machine);
-              partHold.push(lot)
-            })
-          return partHold;
+          map((responseData: Part) => {
+            return responseData;
           })
         )
     } 
 
-    fetchPartById(id) {
-        return this.http.get(
-          this.auth.apiUrl + '/part/' + id + "/"
-        )
-        .pipe(
-          map((responseData: Part) => {
-            responseData.machine = this.auth.rejoin(responseData.machine);
-          return responseData;
-          })
-        )
-    } 
   
     fetchAllParts() {
         return this.http.get(
@@ -56,65 +39,50 @@ export class PartService {
         )
         .pipe(
           map((responseData: Part[]) => {
-            responseData.forEach((lot)=>{
-              lot.machine = this.auth.rejoin(lot.machine);
-            })
             const proHold: Part [] = responseData;
           return proHold;
           })
         )
       }
 
-      addPart(data: Part){
-        Object.keys(data).forEach(value => {
-          if (data[value] === ""){
-            data[value] = null
-          }          
-        });
-        data.machine = this.auth.splitJoin(data.machine);
-          return this.http.post(
-            this.auth.apiUrl + '/part/', data
-          );
-      }
-
-      changePart(data: Part, id){
-        this.fetchPartById(id).subscribe((object)=>{
-          let oldValues = ""+JSON.stringify(object);
-          this.auth.logChanges(oldValues, this.model, "Update", id).subscribe();
-        })
-        Object.keys(data).forEach(value => {
-          if (data[value] === ""){
-            data[value] = null
-          }          
-        });
-        data.machine = this.auth.splitJoin(data.machine);
-          return this.http.put(
-            this.auth.apiUrl + '/part/' + id + "/", data
-          );
-      }
-
-      deletePart(id){
-        this.fetchPartById(id).subscribe((object)=>{
-          let oldValues = ""+JSON.stringify(object);
-          this.auth.logChanges(oldValues, this.model, "Delete", id).subscribe();
-        })
-          return this.http.delete(this.auth.apiUrl + "/part/" + id + "/",{
-            observe: 'events',
-            responseType: 'text'
-            }
-          )
-        .pipe(
-            tap(event => {
-                console.log(event);
-                if (event.type === HttpEventType.Sent){
-                    console.log('control')
-                }
-                if (event.type === HttpEventType.Response) {
-                    console.log(event.body);
-                }
-            })
+    addPart(data: Part){
+        return this.http.post(
+          this.auth.apiUrl + '/part/', data
         );
-      }
+    }
+
+    changePart(data: Part, id){
+      this.fetchPart(id).subscribe((object)=>{
+        let oldValues = ""+JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Update", id).subscribe();
+      });
+        return this.http.put(
+          this.auth.apiUrl + '/part/' + id + "/", data
+        );
+    }
+
+    deletePart(id){
+      this.fetchPart(id).subscribe((object)=>{
+        let oldValues = ""+JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Delete", id).subscribe();
+      })
+        return this.http.delete(this.auth.apiUrl + "/part/" + id + "/",{
+          observe: 'events',
+          responseType: 'text'
+          }
+        )
+      .pipe(
+          tap(event => {
+              console.log(event);
+              if (event.type === HttpEventType.Sent){
+                  console.log('control')
+              }
+              if (event.type === HttpEventType.Response) {
+                  console.log(event.body);
+              }
+          })
+      );
+    }
 
       
 }

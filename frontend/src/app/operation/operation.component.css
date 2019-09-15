@@ -1,0 +1,4 @@
+.grid { 
+    display: grid;
+    grid-template-columns: 25% 9% 32% 9%  25%;
+}

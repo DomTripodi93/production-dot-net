@@ -39,10 +39,11 @@ namespace BackEnd.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<Mach> GetMachine(int id)
+        public async Task<Mach> GetMachine(int userId, string mach)
         {
             var machine = await _context.Machines
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Where(m => m.userId == userId)
+                .FirstOrDefaultAsync(m => m.Machine == mach);
             return machine;
         }
 
@@ -64,19 +65,22 @@ namespace BackEnd.Data
             return user.Machine.OrderByDescending(m => m.CurrentJob);
         }
 
-        public async Task<Part> GetPart(int id)
+        public async Task<Part> GetPart(int userId, string part)
         {
-            var part = await _context.Parts.FirstOrDefaultAsync(p => p.Id == id);
-            return part;
+            var partToReturn = await _context.Parts
+                .Where(p => p.userId == userId)
+                .FirstOrDefaultAsync(p => p.PartNumber == part);
+
+            return partToReturn;
         }
 
         public  async Task<IEnumerable<Part>> GetParts(int userId)
         {
-            var user = await _context.Users
-                .Include(x => x.Part)
-                .FirstOrDefaultAsync(u => u.Id == userId);
+            var parts = await _context.Parts
+                .Where(p => p.userId == userId)
+                .ToListAsync();
                 
-            return user.Part;
+            return parts;
         }
 
         public async Task<Part> GetPartByJob(int userId, string jobNum)
@@ -85,24 +89,18 @@ namespace BackEnd.Data
                 .FirstOrDefaultAsync(j => j.JobNumber == jobNum);
 
             var parts = await _context.Parts
-                .Include(x => x.Jobs)
                 .FirstOrDefaultAsync(p => p.PartNumber == job.PartNum);
                 
             return parts;
         }
 
-        public async Task<IEnumerable<Part>> GetPartsByPart(int userId, string part)
+        public async Task<Job> GetJob(int userId, string jobNum)
         {
-            var user = await _context.Users
-                .Include(x => x.Part)
-                .FirstOrDefaultAsync(u => u.Id == userId);
-                
-            return user.Part.Where(p => p.PartNumber == part);
-        }
 
-        public async Task<Job> GetJob(int id)
-        {
-            var job = await _context.Jobs.FirstOrDefaultAsync(j => j.Id == id);
+            var job = await _context.Jobs        
+                .Where(j => j.userId == userId)
+                .FirstOrDefaultAsync(j => j.JobNumber == jobNum);
+
             return job;
         }
 
@@ -118,29 +116,10 @@ namespace BackEnd.Data
 
         public async Task<IEnumerable<Job>> GetJobsByPart(int userId, string partNum)
         {
-            var part = await _context.Parts
-                .Include(x => x.Jobs)
-                .Where(j => j.userId == userId)
-                .FirstOrDefaultAsync(p => p.PartNumber == partNum);
-
-            Job[] prodSet = Array.Empty<Job>();
-   
-            foreach (Job job in part.Jobs)
-            {
-                prodSet.Append<Job>(job);
-            }
-            
-            IEnumerable<Job> prodForReturn = prodSet;
-
-            return prodForReturn;
-        }
-
-        public async Task<IEnumerable<Job>> GetJobByNumber(int userId, string jobNum)
-        {
             var jobs = await _context.Jobs
                 .Include(x => x.Operation)
                 .Where(j => j.userId == userId)
-                .Where(j => j.JobNumber == jobNum)
+                .Where(p => p.PartNum == partNum)
                 .ToListAsync();
 
             return jobs;
@@ -365,10 +344,10 @@ namespace BackEnd.Data
             return user.Settings;
         }
 
-        public async Task<StartTime> GetStartTime(int userId, string date, int machId, string shift)
+        public async Task<StartTime> GetStartTime(int userId, string date, string machName, string shift)
         {
             var starts = await _context.StartTimes
-                .Where(s => s.MachId == machId)
+                .Where(s => s.Machine == machName)
                 .Where(s => s.Date.ToString().Substring(0,9) == date)
                 .FirstOrDefaultAsync(s => s.Shift == shift);
 
