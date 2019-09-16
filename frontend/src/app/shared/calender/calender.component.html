@@ -1,5 +1,5 @@
 <div>
-  <div class="container">
+  <div *ngIf="auth.user" class="container">
     <h3>{{welcome}}</h3><br>
     <br>
     <div class="row">
@@ -31,10 +31,13 @@
         <div class="border padded"><h5 class="white-text">{{date}}</h5></div>
       </div>  
       <div *ngFor="let date of monthDays">
-        <div *ngIf="date !== today" [routerLink] = "['day', year, month+1, date]" class="border padded"><h5>{{date}}</h5></div>
-        <div *ngIf="date == today && month == oldMonth" [routerLink] = "['day', year, month+1, date]" class="today-border padded"><h5>{{date}}</h5></div>
-        <div *ngIf="date == today && month != oldMonth" [routerLink] = "['day', year, month+1, date]" class="border padded"><h5>{{date}}</h5></div>
+        <div *ngIf="date !== today"  (click)="onViewDate(['day', year, month+1, date])" class="border padded"><h5>{{date}}</h5></div>
+        <div *ngIf="date == today && month == oldMonth" (click)="onViewDate(['day', year, month+1, date])" class="today-border padded"><h5>{{date}}</h5></div>
+        <div *ngIf="date == today && month != oldMonth" (click)="onViewDate(['day', year, month+1, date])" class="border padded"><h5>{{date}}</h5></div>
       </div>  
     </div>
+  </div>
+  <div class="border" *ngIf="!auth.user">
+      <app-welcome></app-welcome>
   </div>
 </div>

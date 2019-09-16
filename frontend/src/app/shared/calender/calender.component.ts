@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import _ from 'lodash';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/shared/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calender',
@@ -50,7 +51,8 @@ export class CalenderComponent implements OnInit {
 
 
   constructor(
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) { }
 
 
@@ -81,5 +83,11 @@ export class CalenderComponent implements OnInit {
     this.month = +hold[1] - 1;
     this.setDate();
   }
+
+  onViewDate(arr){
+    let path = "/"+arr.join("/");
+    this.router.navigate([path])
+  }
+
 
 }
