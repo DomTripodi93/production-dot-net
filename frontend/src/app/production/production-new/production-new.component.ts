@@ -77,7 +77,7 @@ export class ProductionNewComponent implements OnInit {
   onSubmit(){
     this.fullMach.forEach((mach)=>{
       if (mach.machine ===this.productionForm.value.machine){
-        this.productionForm.value.job = mach.currentJob;
+        this.productionForm.value.jobNumber = mach.currentJob;
       }
     })
     this.newProduction(this.productionForm.value);

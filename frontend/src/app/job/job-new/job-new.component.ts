@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Machine } from 'src/app/machine/machine.model';
 import { JobService } from '../job.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Job } from '../job.model';
+import { PartService } from '../../part/part.service';
+import { Part } from 'src/app/part/part.model';
 
 @Component({
   selector: 'app-job-new',
@@ -16,25 +17,30 @@ export class JobNewComponent implements OnInit {
   canInput= false;
   jobForm: FormGroup;
   isError = false;
-  machines: Machine[] = []
+  parts: Part[] = []
   andCalculate = "none";
   
   constructor(
     private jobServ: JobService,
     private auth: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private partServ: PartService
   ){}
   
   ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
     this.auth.hideButton(0);
-    this.initForm();
+    this.partServ.fetchAllParts()
+    .subscribe(parts => {
+      this.parts = parts;
+      this.initForm();
+    });
   }
     
   private initForm() {
     let job: string;
-    let part: string;
+    let part: string = this.parts[0].partNumber;
     let cycleTime: string;
     let orderQuantity: string;
     let weightRecieved: string;
@@ -44,8 +50,8 @@ export class JobNewComponent implements OnInit {
     let subFacing: string;
 
     this.jobForm = new FormGroup({
-      'job': new FormControl(job, Validators.required),
-      'part': new FormControl(part, Validators.required),
+      'jobNumber': new FormControl(job, Validators.required),
+      'partNum': new FormControl(part, Validators.required),
       'cycleTime': new FormControl(cycleTime),
       "orderQuantity": new FormControl(orderQuantity),
       "weightRecieved": new FormControl(weightRecieved),

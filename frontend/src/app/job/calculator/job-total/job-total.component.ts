@@ -28,7 +28,7 @@ export class JobTotalComponent implements OnInit, OnDestroy {
     setTimeout(()=>{
       this.jobServ.fetchJob(this.jobNum)
       .subscribe(job => {
-        this.jobServ.jobHold = job[0];
+        this.jobServ.jobHold = job;
         this.initForm();
         if (this.jobServ.jobHold){
           if (this.jobServ.jobHold.bars){

@@ -14,6 +14,7 @@ namespace BackEnd.Models
         public string Machine { get; set; }
         public string Quantity { get; set; }
         public string CounterQuantity { get; set; }
-        public DateTime Time { get; set; }
+        public string Time { get; set; }
+        public DateTime Date { get; set; }
     }
 }

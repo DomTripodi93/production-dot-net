@@ -14,7 +14,7 @@ import { JobService } from 'src/app/job/job.service';
 export class MachineEditComponent implements OnInit {
   editMachineForm: FormGroup;
   machine: Machine;
-  id: number;
+  machName: string;
   canInput = false;
   jobs = [];
   
@@ -29,9 +29,9 @@ export class MachineEditComponent implements OnInit {
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
     this.route.params.subscribe((params: Params) =>{
-      this.id = +params['id'];
+      this.machName = params['mach'];
     });
-    this.mach.fetchMachineById(this.id)
+    this.mach.fetchMachineByName(this.machName)
     .subscribe(machine => {
       this.machine = machine;
       this.initForm();
@@ -40,21 +40,19 @@ export class MachineEditComponent implements OnInit {
 
 
   private initForm() {
-    let machine = this.machine.machine;
     this.jobs = [this.machine.currentJob];
     this.jobServ.fetchAllJobs().subscribe(response =>{
       response.forEach(job => {
-        if (job.job == this.machine.currentJob){
-          this.jobs.push(job.job)
+        if (job.jobNumber == this.machine.currentJob){
+          this.jobs.push(job.jobNumber)
         }else {
-          this.jobs.push(job.job)
+          this.jobs.push(job.jobNumber)
         }
       });
     })
 
     this.editMachineForm = new FormGroup({
-      'currentJob': new FormControl(this.jobs[0]),
-      'machine': new FormControl(machine, Validators.required)
+      'currentJob': new FormControl(this.jobs[0])
     });
   }
 
@@ -64,7 +62,7 @@ export class MachineEditComponent implements OnInit {
   }
 
   editMachine(data: Machine) {
-    this.mach.changeMachine(data, this.id).subscribe(()=>{
+    this.mach.setCurrentJob(data, this.machName).subscribe(()=>{
       this.mach.machChanged.next();
     });
     setTimeout(
@@ -79,7 +77,7 @@ export class MachineEditComponent implements OnInit {
 
   onDelete(){
     if (confirm("Are you sure you want to delete " +this.machine.machine+ "?")){
-      this.mach.deleteMachine(this.id).subscribe();
+      this.mach.deleteMachine(this.machName).subscribe();
       setTimeout(()=>{
       this.router.navigate(["../.."], {relativeTo: this.route})
       }, 50)

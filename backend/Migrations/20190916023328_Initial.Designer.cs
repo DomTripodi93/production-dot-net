@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190915022328_Initial")]
+    [Migration("20190916023328_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,8 @@ namespace backend.Migrations
 
                     b.Property<string>("CounterQuantity");
 
+                    b.Property<DateTime>("Date");
+
                     b.Property<string>("JobNumber");
 
                     b.Property<string>("Machine");
@@ -61,7 +63,7 @@ namespace backend.Migrations
 
                     b.Property<string>("Quantity");
 
-                    b.Property<DateTime>("Time");
+                    b.Property<string>("Time");
 
                     b.Property<int>("userId");
 
@@ -112,8 +114,6 @@ namespace backend.Migrations
 
                     b.Property<string>("WeightRecieved");
 
-                    b.Property<int>("partId");
-
                     b.HasKey("userId", "JobNumber");
 
                     b.HasIndex("PartuserId", "PartNumber");
@@ -129,6 +129,8 @@ namespace backend.Migrations
 
                     b.Property<string>("CurrentJob");
 
+                    b.Property<string>("CurrentOp");
+
                     b.HasKey("userId", "Machine");
 
                     b.ToTable("Machines");
@@ -141,13 +143,11 @@ namespace backend.Migrations
 
                     b.Property<string>("CycleTime");
 
-                    b.Property<int>("JobId");
-
                     b.Property<string>("JobNumber");
 
                     b.Property<string>("Machine");
 
-                    b.Property<string>("Op");
+                    b.Property<string>("OpNumber");
 
                     b.Property<string>("PartsToDate");
 

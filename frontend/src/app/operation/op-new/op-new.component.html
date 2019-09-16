@@ -3,10 +3,10 @@
   </div>
     <form *ngIf="canInput && operationForm" [formGroup]="operationForm" (ngSubmit)='onSubmit()' >
       <div class="form-group">
-        <label for="operation">Operation</label>
+        <label for="opNumber">Operation</label>
         <input 
-          formControlName='operation'
-          id="operation" 
+          formControlName='opNumber'
+          id="opNumber" 
           class="form-control"
         >
       </div>
@@ -35,61 +35,22 @@
           type="number" 
         >
       </div>
-      <div class="form-group">
-        <label for="job">Job#</label>
+      <div *ngIf="jobs" class="form-group">
+        <label for="jobNumber">Job#</label>
+        <select 
+          formControlName='jobNumber'
+          id="jobNumber" 
+          class="form-control">  
+          <option *ngFor = "let job of jobs">{{job.jobNumber}}</option>
+        </select>
+      </div>
+      <div *ngIf="!jobs" class="form-group">
+        <label for="jobNumber">Job#</label>
         <input 
-          formControlName='job'
+          formControlName='jobNumber'
           type="text" 
-          id="job" 
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="orderQuantity">Order Quantity (Optional)</label>
-        <input 
-          formControlName='orderQuantity'
-          type="number" 
-          id="orderQuantity" 
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="weightRecieved">Weight Recieved (Optional)</label>
-        <input 
-          formControlName='weightRecieved'
-          type="number" 
-          id="weightRecieved" 
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="oal">Overall Length of Operation (Optional)</label>
-        <input 
-          formControlName='oal'
-          type="number" 
-          id="oal" 
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="cutOff">Cut Off Size (Optional)</label>
-        <input 
-          formControlName='cutOff'
-          type="number" 
-          id="cutOff" 
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="mainFacing">Amount Faced on Main Spindle (Optional)</label>
-        <input 
-          formControlName='mainFacing'
-          type="number" 
-          id="mainFacing" 
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="subFacing">Amount Faced on Sub Spindle (Optional)</label>
-        <input 
-          formControlName='subFacing'
-          type="number" 
-          id="subFacing" 
-          class="form-control">
+          id="jobNumber" 
+          class="form-control">      
       </div>
       <br><br>
       <div class='grid'>
@@ -108,23 +69,6 @@
           Cancel
         </button>
         <br><br>
-        <button 
-          class="btn btn-success" 
-          type="button"
-          [disabled]="!operationForm.valid"
-          (click)='onAddThenCalcByLength()'
-        >
-          Add Operation and Calculate Production by Length
-        </button>
-        <br><br>
-        <button 
-          class="btn btn-success" 
-          type="button"
-          [disabled]="!operationForm.valid"
-          (click)='onAddThenCalcByWeight()'
-        >
-          Add Operation and Calculate Production by Weight
-        </button>
       </div>
       <br><br>
       <div *ngIf="isError">

@@ -7,7 +7,6 @@ namespace BackEnd.Models
         public User User { get; set; }
         public int userId { get; set; }
         public Part Part { get; set; }
-        public int partId { get; set; }
         public string PartNum { get; set; }
         public string JobNumber { get; set; }
         public string OrderQuantity { get; set; }

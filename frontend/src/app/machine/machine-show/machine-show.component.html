@@ -5,8 +5,8 @@
       <h4 *ngIf="machine.currentJob">Current Job: {{machine.currentJob}}</h4>
       <h4 class="white-text" *ngIf="!machine.currentJob">0</h4>
       <div class="grid2">
-        <button class='btn btn-primary' routerLink="edit/{{machine.id}}">Edit</button>
-        <button class='btn btn-danger' (click)="onDelete(machine.id, machine.machine)">Delete</button>
+        <button class='btn btn-primary' routerLink="edit/{{machine.machine}}">Edit</button>
+        <button class='btn btn-danger' (click)="onDelete(machine.machine)">Delete</button>
       </div>
     </div>
     <div></div>

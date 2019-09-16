@@ -12,7 +12,7 @@ namespace BackEnd.Dtos
         public string PartsToDate { get; set; }
 
         [Required]
-        public string Op { get; set; }
+        public string OpNumber { get; set; }
         public string Machine { get; set; }
         public string RemainingQuantity { get; set; }
         public string CycleTime { get; set; }

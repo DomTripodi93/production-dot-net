@@ -25,13 +25,13 @@ export class HourlyFindComponent implements OnInit, OnDestroy{
   ) {}
 
   onSubmit(){
-    let job = "";
+    let jobNumber = "";
     let machine ="";
     let date ="";
     let searchHold = [];
-    if (this.searchForm.value.job){
-      job = this.searchForm.value.job;
-      searchHold.push("job="+job);
+    if (this.searchForm.value.jobNumber){
+      jobNumber = this.searchForm.value.jobNumber;
+      searchHold.push("jobNumber="+jobNumber);
     }
     if (this.searchForm.value.date){
       date = this.searchForm.value.date;

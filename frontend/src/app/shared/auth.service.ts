@@ -96,7 +96,7 @@ export class AuthService {
         'changedModel': model
       }
       return this.http.post(
-        this.authApiUrl + '/changelog/', data
+        this.apiUrl + '/changelog/', data
       );
     }
 

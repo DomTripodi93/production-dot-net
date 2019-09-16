@@ -1,7 +1,7 @@
 <li class=list-group-item *ngFor="let lot of hourly; let i = index" >
     <div>
         <h5>Time: <br><strong>{{lot.time}}</strong><br>
-        Job #: <br><strong>{{lot.job}}</strong><br>
+        Job #: <br><strong>{{lot.jobNumber}}</strong><br>
         Quantity: <br><strong>{{lot.quantity}}</strong>
         <div *ngIf="lot.counterQuantity">Counter: <br><strong>{{lot.counterQuantity}}</strong></div></h5>
         <div class="grid">

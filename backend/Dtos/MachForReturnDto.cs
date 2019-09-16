@@ -4,6 +4,7 @@ namespace BackEnd.Dtos
     {
         public string Machine { get; set; }
         public string CurrentJob { get; set; }
+        public string CurrentOp { get; set; }
         
     }
 }

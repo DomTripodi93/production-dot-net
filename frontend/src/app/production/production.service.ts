@@ -65,8 +65,7 @@ export class ProductionService {
       }
 
     addProduction(data: Production){
-      this.jobServ.fetchJob(data.job).subscribe((jobs: Job[])=>{
-        let job: Job = jobs[0];
+      this.jobServ.fetchJob(data.jobNumber).subscribe((job: Job)=>{
         if (+job.remainingQuantity > 0){
           let value = +job.remainingQuantity - data.quantity;
           if (value >= 0){
@@ -84,7 +83,7 @@ export class ProductionService {
           let value = +job.weightQuantity - data.quantity;
           job.remainingQuantity = "" + value;
         }
-        this.jobServ.changeJob(job, data.job).subscribe()
+        this.jobServ.changeJob(job, data.jobNumber).subscribe()
       })
       data.machine = this.auth.splitJoin(data.machine);
         return this.http.post(

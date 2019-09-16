@@ -11,8 +11,8 @@ export class CalculatorService {
     cycleTime: number;
     latheForm: FormGroup;
     bars: Bar[];
-    totalJobs: number;
-    jobsToMake: number;
+    totalParts: number;
+    partsToMake: number;
     total = 0;
 
     fullBars: Bar[] =[]
@@ -63,7 +63,7 @@ export class CalculatorService {
         this.facing = null;
         this.latheForm = null;
         this.bars = null;
-        this.jobsToMake = null;
+        this.partsToMake = null;
         this.fullBars = null;
         this.regBars = 0;
         this.total = 0;
@@ -96,7 +96,8 @@ export class CalculatorService {
         this.facing = this.latheForm.value.mainFacing + this.latheForm.value.subFacing;
         this.bars = this.latheForm.value.bars;
         this.jobServ.jobHold.remainingQuantity = ""+this.calculateQuantity();
-        this.jobServ.changeJob(this.jobServ.jobHold, this.jobServ.jobHold.id).subscribe();
+        this.partsToMake = +this.jobServ.jobHold.remainingQuantity;
+        this.jobServ.changeJob(this.jobServ.jobHold, this.jobServ.jobHold.jobNumber).subscribe();
         this.submitted = true;
     }
 
@@ -109,15 +110,15 @@ export class CalculatorService {
         this.facing = +this.jobServ.jobHold.mainFacing + +this.jobServ.jobHold.subFacing;
         this.fullBars = this.latheForm.value.bars;
         this.findRunable();
-        this.jobsToMake = this.calculateQuantity()
+        this.partsToMake = this.calculateQuantity()
         this.jobServ.jobHold.possibleQuantity = ""+this.calculateQuantity();
-        this.pro.fetchProduction("job="+this.jobServ.jobHold.job).subscribe(production => {
+        this.pro.fetchProduction("job="+this.jobServ.jobHold.jobNumber).subscribe(production => {
             production.forEach(pro => {
                 this.total = +pro.quantity + this.total
             })
-            let value = this.jobsToMake - this.total;
+            let value = this.partsToMake - this.total;
             this.jobServ.jobHold.remainingQuantity = "" + value; 
-            this.jobServ.changeJob(this.jobServ.jobHold, this.jobServ.jobHold.id).subscribe();
+            this.jobServ.changeJob(this.jobServ.jobHold, this.jobServ.jobHold.jobNumber).subscribe();
         })
         this.submitted = true;
 
@@ -135,20 +136,20 @@ export class CalculatorService {
         } else {
             this.findLengthFromRoundWeight();
         }
-        this.jobServ.jobHold.weightQuantity = ""+this.jobsToMake;
+        this.jobServ.jobHold.weightQuantity = ""+this.partsToMake;
         this.jobServ.jobHold.weightRecieved = ""+this.latheForm.value.weight
         this.jobServ.jobHold.weightLength = ""+this.feet;
         if (!this.jobServ.jobHold.remainingQuantity){
-            this.pro.fetchProduction("job="+this.jobServ.jobHold.job).subscribe(production => {
+            this.pro.fetchProduction("job="+this.jobServ.jobHold.jobNumber).subscribe(production => {
                 production.forEach(pro => {
                     this.total = +pro.quantity + this.total
                 })
-                let value = this.jobsToMake - this.total;
+                let value = this.partsToMake - this.total;
                 this.jobServ.jobHold.remainingQuantity = "" + value; 
-                this.jobServ.changeJob(this.jobServ.jobHold, this.jobServ.jobHold.id).subscribe(()=>{},(error)=>{console.log(error)});
+                this.jobServ.changeJob(this.jobServ.jobHold, this.jobServ.jobHold.jobNumber).subscribe(()=>{},(error)=>{console.log(error)});
             })
         } else {
-            this.jobServ.changeJob(this.jobServ.jobHold, this.jobServ.jobHold.id).subscribe(()=>{},(error)=>{console.log(error)})
+            this.jobServ.changeJob(this.jobServ.jobHold, this.jobServ.jobHold.jobNumber).subscribe(()=>{},(error)=>{console.log(error)})
         }
         this.submitted = true;
         if (this.latheForm.value.cycleTime){
@@ -170,7 +171,7 @@ export class CalculatorService {
     
     findRunTime(){
         let totalSecs = (this.latheForm.value.cycleMin*60) + this.latheForm.value.cycleSec;
-        let secsLeft = totalSecs * this.jobsToMake;
+        let secsLeft = totalSecs * this.partsToMake;
         let hoursLeft = secsLeft/3600;
             return hoursLeft
     }
@@ -186,7 +187,7 @@ export class CalculatorService {
         this.feet = +(this.latheForm.value.weight/ftWeight).toFixed(2);
         if (this.latheForm.value.oal){
             this.fullBarsFromTotalLength()
-            this.jobsToMake = this.calculateQuantity()
+            this.partsToMake = this.calculateQuantity()
         }
     }
 
@@ -200,7 +201,7 @@ export class CalculatorService {
         this.feet = +(this.latheForm.value.weight/ftWeight).toFixed(2);
         if (this.latheForm.value.oal){
             this.fullBarsFromTotalLength()
-            this.jobsToMake = this.calculateQuantity()
+            this.partsToMake = this.calculateQuantity()
         }
     }
 
@@ -246,7 +247,7 @@ export class CalculatorService {
         barRegHold.noBars = this.regBars;
         barRegHold.barLength = this.latheForm.value.cutTo;
         this.bars.push(barRegHold);
-        this.jobsToMake = this.calculateQuantity()
+        this.partsToMake = this.calculateQuantity()
     }
 
     calculateQuantity(){

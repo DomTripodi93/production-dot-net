@@ -5,6 +5,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Machine } from '../machine.model';
 import { MachineService } from 'src/app/machine/machine.service';
 import { JobService } from 'src/app/job/job.service';
+import { Operation } from 'src/app/operation/operation.model';
+import { OpService } from 'src/app/operation/operation.service';
 
 @Component({
   selector: 'app-machine-new',
@@ -17,13 +19,15 @@ export class MachineNewComponent implements OnInit {
   machineForm: FormGroup;
   isError = false;
   jobs = [];
+  ops: Operation[][] = [];
   
   constructor(
     private mach: MachineService,
     private jobServ: JobService,
     private auth: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private opServ: OpService
   ){}
   
   ngOnInit(){
@@ -37,10 +41,15 @@ export class MachineNewComponent implements OnInit {
     this.jobs = ["None"];
     this.jobServ.fetchAllJobs().subscribe(response =>{
       response.forEach(job => {
-        this.jobs.push(job.job)
+        this.jobs.push(job.jobNumber)
       });
     })
-
+    for (let job in this.jobs){
+      this.opServ.fetchOpByJob(job).subscribe((op)=>{
+          this.ops.push(op);
+        }
+      )
+    }
     this.machineForm = new FormGroup({
       'machine': new FormControl(machine, Validators.required),
       'currentJob': new FormControl(this.jobs[0])

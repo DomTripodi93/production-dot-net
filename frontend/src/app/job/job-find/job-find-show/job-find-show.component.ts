@@ -15,6 +15,7 @@ export class JobFindShowComponent implements OnInit {
   isFetching = false;
   isError = false;
   error = '';
+  oneJob: Job;
   jobs: Job[] = [];
   job = "";
   id = '';
@@ -42,9 +43,7 @@ export class JobFindShowComponent implements OnInit {
 
   onDelete(job, id){
     if (confirm("Are you sure you want to delete " +job+ "?")){
-      this.jobServ.deleteJob(id).subscribe(()=>{
-      setTimeout(()=>{this.getOneJob()},)}
-      );
+      this.jobServ.deleteJob(id).subscribe();
       this.jobServ.jobChanged.next();
     }
   }
@@ -53,7 +52,7 @@ export class JobFindShowComponent implements OnInit {
     this.isFetching = true;
     this.jobServ.fetchJob(this.job)
       .subscribe(job => {
-        this.jobs = job;
+        this.oneJob = job;
         this.dayServ.dates = [];
         this.isFetching = false;
       }, error => {

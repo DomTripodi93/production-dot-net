@@ -44,7 +44,7 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.pro.fetchProductionById(this.id)
     .subscribe(pro => {
       this.production = pro;
-      this.jobs.push(pro.job);
+      this.jobs.push(pro.jobNumber);
       this.initForm();
     }));
     this.subscriptions.push(
@@ -66,7 +66,7 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
   private initForm() {
     this.editProductionForm = new FormGroup({
       'quantity': new FormControl(this.production.quantity, Validators.required),
-      'job': new FormControl(this.production.job, Validators.required),
+      'job': new FormControl(this.production.jobNumber, Validators.required),
       'date': new FormControl(this.production.date, Validators.required),
       'machine': new FormControl(this.production.machine, Validators.required),
       'shift': new FormControl(this.production.shift, Validators.required)

@@ -12,7 +12,7 @@ export class HourlyService {
     hourlyChanged = new Subject();
     machineHold = "";
     quick = [];
-    job ="";
+    jobNumber ="";
     machine: Machine;
     model = "Hourly"
 
@@ -23,7 +23,7 @@ export class HourlyService {
 
     fetchHourly(search) {
         return this.http.get(
-          this.auth.apiUrl + '/hourly/?' + search
+          this.auth.apiUrl + '/hourly/' + search
         )
         .pipe(
           map((responseData: Hourly[]) => {

@@ -22,11 +22,10 @@ export class RemainingComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((params: Params) =>{
       this.jobNum = params['jobNum'];
     });
-    this.initForm();
     setTimeout(()=>{
       this.jobServ.fetchJob(this.jobNum)
       .subscribe(job => {
-        this.jobServ.jobHold = job[0];
+        this.jobServ.jobHold = job;
         this.initForm();
         if (this.jobServ.jobHold){
           if (this.jobServ.jobHold.bars){
@@ -79,7 +78,7 @@ export class RemainingComponent implements OnInit, OnDestroy {
     let bars = new FormArray([]);
 
     this.calc.latheForm = new FormGroup({
-      'job': new FormControl(this.jobServ.jobHold.job),
+      'job': new FormControl(this.jobServ.jobHold.jobNumber),
       'cutOff': new FormControl(cutOff, Validators.required),
       'oal': new FormControl(oal, Validators.required),
       'mainFacing': new FormControl(mainFacing, Validators.required),

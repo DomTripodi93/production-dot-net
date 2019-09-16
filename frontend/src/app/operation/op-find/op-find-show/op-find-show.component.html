@@ -1,61 +1,30 @@
-<div *ngIf='operations.length > 0 && operations.length < 2'>
+<div *ngIf='oneOperation'>
     <ul class='list-group'>
-        <li class=list-group-item *ngFor="let operation of operations; let i = index" >
-      <h3>Operation #: {{operation.operation}}</h3>
-      <h4 *ngIf="operation.job">Current Job: {{operation.job}}</h4>
-      <h4 *ngIf="operation.machine">Current Machine: {{operation.machine}}</h4>
-      <h4 *ngIf="operation.cycleTime">Cycle Time: {{operation.cycleTime}}</h4>
-      <h4 *ngIf="operation.orderQuantity">Order Quantity: {{operation.orderQuantity}}</h4>
-      <h4 *ngIf="operation.weightRecieved">Weight Recieved: {{operation.weightRecieved}}</h4>
-      <h4 *ngIf="operation.weightQuantity">Potential Quantity by Weight: {{operation.weightQuantity}}</h4>
-      <h4 *ngIf="operation.weightLength">Total Length of Bars by Weight: {{operation.weightLength}}</h4>
-      <h4 *ngIf="operation.possibleQuantity">Possible Quantity by Bars: {{operation.possibleQuantity}}</h4>
-      <h4 *ngIf="operation.remainingQuantity">Remaining Quantity: {{operation.remainingQuantity}}</h4>
-      <h4 *ngIf="operation.heatLot">Heat Lot#: {{operation.heatLot}}</h4>        
-      <h4 *ngIf="!operation.possibleQuantity && !operation.weightQuantity && operation.orderQuantity">Most Reliable Possible Quantity: {{operation.weightQuantity}}
-        <h4 *ngIf="operation.cycleTime"> Total Machine Hours: {{((operation.orderQuantity*operation.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="!operation.possibleQuantity && operation.weightQuantity">Most Reliable Possible Quantity: {{operation.weightQuantity}}
-        <h4 *ngIf="operation.cycleTime"> Total Machine Hours: {{((operation.weightQuantity*operation.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="operation.possibleQuantity">Most Reliable Possible Quantity: {{operation.possibleQuantity}}
-        <h4 *ngIf="operation.cycleTime"> Total Machine Hours: {{((operation.possibleQuantity*operation.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="operation.remainingQuantity">Remaining Quantity: {{operation.remainingQuantity}}</h4>
-        <h4 *ngIf="operation.cycleTime"> Remaining Machine Hours: {{((operation.remainingQuantity*operation.cycleTime)/3600).toFixed(2)}}</h4> <br><br>
+        <li class=list-group-item>
+          <h3>Operation #: {{oneOperation.opNumber}}</h3>
+          <h4 *ngIf="oneOperation.jobNumber">Current Job: {{oneOperation.jobNumber}}</h4>
+          <h4 *ngIf="oneOperation.machine">Machine: {{oneOperation.machine}}</h4>
+          <h4 *ngIf="oneOperation.cycleTime">Cycle Time: {{oneOperation.cycleTime}}</h4>
+          <h4 *ngIf="oneOperation.remainingQuantity">Remaining Quantity: {{oneOperation.remainingQuantity}}</h4>
+          <h4 *ngIf="oneOperation.cycleTime"> Remaining Machine Hours: {{((oneOperation.remainingQuantity*oneOperation.cycleTime)/3600).toFixed(2)}}</h4> <br><br>
           <br><br>
           <div class="grid">
-            <button class='btn btn-primary' routerLink="../edit/{{operation.id}}">Edit Operation</button>
-            <button class='btn btn-danger' (click)="onDelete(operation.operation, operation.id)">Delete Operation</button>
+            <button class='btn btn-primary' routerLink="../edit/{{oneOperation.id}}">Edit Operation</button>
+            <button class='btn btn-danger' (click)="onDelete(oneOperation.oneOperation, oneOperation.id)">Delete Operation</button>
           </div>
         </li>
     </ul>
 </div>
 <div *ngIf='operations.length > 1'>
   <div *ngFor="let operation of operations; let i=index"> 
-    <div routerLink="../operation={{operation.operation}}" class="border">
-      <h3>Operation #: {{operation.operation}}</h3>
-      <h4 *ngIf="operation.job">Current Job: {{operation.job}}</h4>
-      <h4 *ngIf="operation.machine">Current Machine: {{operation.machine}}</h4>
+    <div routerLink="../{{operation.id}}" class="border">
+      <h3>Operation #: {{operation.opNumber}}</h3>
+      <h4 *ngIf="operation.jobNumber">Current Job: {{operation.jobNumber}}</h4>
+      <h4 *ngIf="operation.machine">Machine: {{operation.machine}}</h4>
       <h4 *ngIf="operation.cycleTime">Cycle Time: {{operation.cycleTime}}</h4>
-      <h4 *ngIf="operation.orderQuantity">Order Quantity: {{operation.orderQuantity}}</h4>
-      <h4 *ngIf="operation.weightRecieved">Weight Recieved: {{operation.weightRecieved}}</h4>
-      <h4 *ngIf="operation.weightQuantity">Potential Quantity by Weight: {{operation.weightQuantity}}</h4>
-      <h4 *ngIf="operation.weightLength">Total Length of Bars by Weight: {{operation.weightLength}}</h4>
-      <h4 *ngIf="operation.possibleQuantity">Possible Quantity by Bars: {{operation.possibleQuantity}}</h4>
       <h4 *ngIf="operation.remainingQuantity">Remaining Quantity: {{operation.remainingQuantity}}</h4>
-      <h4 *ngIf="operation.heatLot">Heat Lot#: {{operation.heatLot}}</h4>
-              <h4 *ngIf="!operation.possibleQuantity && !operation.weightQuantity && operation.orderQuantity">Most Reliable Possible Quantity: {{operation.weightQuantity}}
-        <h4 *ngIf="operation.cycleTime"> Total Machine Hours: {{((operation.orderQuantity*operation.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="!operation.possibleQuantity && operation.weightQuantity">Most Reliable Possible Quantity: {{operation.weightQuantity}}
-        <h4 *ngIf="operation.cycleTime"> Total Machine Hours: {{((operation.weightQuantity*operation.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="operation.possibleQuantity">Most Reliable Possible Quantity: {{operation.possibleQuantity}}
-        <h4 *ngIf="operation.cycleTime"> Total Machine Hours: {{((operation.possibleQuantity*operation.cycleTime)/3600).toFixed(2)}}</h4>
-        </h4>
-        <h4 *ngIf="operation.remainingQuantity">Remaining Quantity: {{operation.remainingQuantity}}</h4>
-        <h4 *ngIf="operation.cycleTime"> Remaining Machine Hours: {{((operation.remainingQuantity*operation.cycleTime)/3600).toFixed(2)}}</h4> <br><br>
+      <h4 *ngIf="operation.cycleTime"> Remaining Machine Hours: {{((operation.remainingQuantity*operation.cycleTime)/3600).toFixed(2)}}</h4> <br><br>
+      <br><br>
       <div class="grid">
         <button class='btn btn-primary' routerLink="../edit/{{operation.id}}">Edit Operation</button>
         <button class='btn btn-danger' (click)="onDelete(operation.operation, operation.id)">Delete Operation</button>
@@ -66,6 +35,6 @@
 </div>
 
 
-<div *ngIf='operations.length == 0'>
+<div *ngIf='operations.length == 0 && !oneOperation'>
     <h2> No operations for this Search </h2>
 </div>

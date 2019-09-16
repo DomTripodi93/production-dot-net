@@ -16,6 +16,7 @@ export class OpFindShowComponent implements OnInit {
   isError = false;
   error = '';
   operations: Operation[] = [];
+  oneOperation: Operation;
   operation = "";
   id = '';
   subscription = new Subscription;
@@ -51,16 +52,30 @@ export class OpFindShowComponent implements OnInit {
 
   getOneOp() {
     this.isFetching = true;
-    this.operationServ.fetchOp(this.operation)
-      .subscribe(operation => {
-        this.operations = operation;
-        this.dayServ.dates = [];
-        this.isFetching = false;
-      }, error => {
-        this.isFetching = false;
-        this.isError = true;
-        this.error = error.message
-      })
+    if(this.operation.includes("job")){
+      this.operationServ.fetchOpByJob(this.operation)
+        .subscribe(operation => {
+          this.operations = operation;
+          this.dayServ.dates = [];
+          this.isFetching = false;
+        }, error => {
+          this.isFetching = false;
+          this.isError = true;
+          this.error = error.message
+        })
+    } else {
+      this.operationServ.fetchOp(this.operation)
+        .subscribe(operation => {
+          this.oneOperation = operation;
+          this.dayServ.dates = [];
+          this.isFetching = false;
+        }, error => {
+          this.isFetching = false;
+          this.isError = true;
+          this.error = error.message
+        })
+
+    }
   }  
 
 }

@@ -9,6 +9,7 @@ import { Job } from './job.model';
 export class JobService {
     jobChanged = new Subject();
     jobHold: Job;
+    jobsHold: Job[];
     model = "Job";
 
     constructor(
@@ -21,9 +22,19 @@ export class JobService {
         this.auth.apiUrl + '/job/' + search
       )
       .pipe(
+        map((responseData: Job) => {
+        return responseData;
+        })
+      )
+    } 
+
+    fetchJobByPart(search) {
+      return this.http.get(
+        this.auth.apiUrl + '/job/' + search
+      )
+      .pipe(
         map((responseData: Job[]) => {
-          const jobHold: Job[] = responseData;
-        return jobHold;
+        return responseData;
         })
       )
     } 
@@ -34,10 +45,7 @@ export class JobService {
       )
       .pipe(
         map((responseData: Job[]) => {
-          responseData.forEach((lot)=>{
-          })
-          const proHold: Job [] = responseData;
-        return proHold;
+        return responseData;
         })
       )
     }
@@ -50,7 +58,7 @@ export class JobService {
 
     changeJob(data: Job, jobNum){
       this.fetchJob(jobNum).subscribe((object)=>{
-        let oldValues = ""+JSON.stringify(object[0]);
+        let oldValues = ""+JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "Update", jobNum).subscribe();
       })
         return this.http.put(
@@ -60,7 +68,7 @@ export class JobService {
 
     deleteJob(jobNum){
       this.fetchJob(jobNum).subscribe((object)=>{
-        let oldValues = ""+JSON.stringify(object[0]);
+        let oldValues = ""+JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "Delete", jobNum).subscribe();
       })
         return this.http.delete(this.auth.apiUrl + "/job/" + jobNum + "/",{

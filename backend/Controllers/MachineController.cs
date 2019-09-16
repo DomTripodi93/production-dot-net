@@ -46,7 +46,7 @@ namespace BackEnd.Controllers
             throw new Exception("Creation of machine failed on save");
         }
 
-        [HttpPut("{mach}")]
+        [HttpPatch("{mach}")]
         public async Task<IActionResult> UpdateMachine(int userId, string mach, MachForCreationDto machForUpdateDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
@@ -54,10 +54,10 @@ namespace BackEnd.Controllers
 
             var machFromRepo = await _repo.GetMachine(userId, mach);
 
-            _mapper.Map(machForUpdateDto, machFromRepo);
+            machFromRepo.CurrentJob = machForUpdateDto.CurrentJob;
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetMach", new {machine = machFromRepo.Machine}, machForUpdateDto);
+                return CreatedAtRoute("GetMach", new {mach = machFromRepo.Machine}, machForUpdateDto);
 
             throw new Exception($"Updating machine {mach} failed on save");
         }

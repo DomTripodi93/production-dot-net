@@ -45,7 +45,7 @@ namespace BackEnd.Controllers
             if (await _repo.SaveAll())
             {
                 var jobToReturn = _mapper.Map<JobForReturnDto>(job);
-                return CreatedAtRoute("GetJob", new {num = job.JobNumber}, jobToReturn);
+                return CreatedAtRoute("GetJob", new {jobNum = job.JobNumber}, jobToReturn);
             }
                 
             throw new Exception("Creation of job lot failed on save");
@@ -62,7 +62,12 @@ namespace BackEnd.Controllers
             _mapper.Map(jobForUpdateDto, jobFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetJob", new {job = jobFromRepo.JobNumber}, jobForUpdateDto);
+                return CreatedAtRoute("GetJob", new {jobNum = jobFromRepo.JobNumber}, jobForUpdateDto);
+
+            var newData = _mapper.Map(jobForUpdateDto, jobFromRepo);
+
+            if (jobFromRepo == newData)
+                return Ok(jobForUpdateDto);
 
             throw new Exception($"Updating job lot {jobNum} failed on save");
         }

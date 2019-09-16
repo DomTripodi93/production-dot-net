@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
 import { OpService } from '../operation.service';
 import { Operation } from '../operation.model';
+import { JobService } from '../../job/job.service';
+import { Job } from 'src/app/job/job.model';
 
 @Component({
   selector: 'app-op-new',
@@ -17,15 +19,16 @@ export class OpNewComponent implements OnInit {
   canInput= false;
   operationForm: FormGroup;
   isError = false;
-  machines: Machine[] = []
-  andCalculate = "none";
+  machines: Machine[] = [];
+  jobs: Job[] = [];
   
   constructor(
     private operationServ: OpService,
     private auth: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private mach: MachineService
+    private mach: MachineService,
+    private jobServ: JobService
   ){}
   
   ngOnInit(){
@@ -35,41 +38,36 @@ export class OpNewComponent implements OnInit {
       this.machines = machines;
       this.initForm();
     });
+    this.jobServ.fetchAllJobs()
+    .subscribe(jobs => {
+      this.jobs = jobs;
+      this.initForm();
+    });
     this.auth.hideButton(0);
   }
     
   private initForm() {
     let operation: string;
     let job: string;
-    let machine = "";
+    let machine: string;
     if (this.machines.length > 0){
       machine = this.machines[0].machine;
     }
+    if (this.jobs.length > 0){
+      job = this.jobs[0].jobNumber;
+    }
     let cycleTime: string;
-    let orderQuantity: string;
-    let weightRecieved: string;
-    let oal: string;
-    let cutOff: string;
-    let mainFacing: string;
-    let subFacing: string;
 
     this.operationForm = new FormGroup({
-      'job': new FormControl(job, Validators.required),
-      'operation': new FormControl(operation, Validators.required),
+      'jobNumber': new FormControl(job, Validators.required),
+      'opNumber': new FormControl(operation, Validators.required),
       'cycleTime': new FormControl(cycleTime),
-      'machine': new FormControl(machine, Validators.required),
-      "orderQuantity": new FormControl(orderQuantity),
-      "weightRecieved": new FormControl(weightRecieved),
-      "oal": new FormControl(oal),
-      "cutOff": new FormControl(cutOff),
-      "mainFacing": new FormControl(mainFacing),
-      "subFacing": new FormControl(subFacing)
+      'machine': new FormControl(machine, Validators.required)
     });
   }
 
   
   onSubmit(){
-    this.andCalculate = "none";
     this.newOp(this.operationForm.value);
   }
 

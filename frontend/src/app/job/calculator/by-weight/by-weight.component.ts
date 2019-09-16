@@ -25,11 +25,10 @@ export class ByWeightComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((params: Params) =>{
       this.jobNum = params['jobNum'];
     });
-    this.initForm();
     setTimeout(()=>{
       this.jobServ.fetchJob(this.jobNum)
       .subscribe(job => {
-        this.jobServ.jobHold = job[0];
+        this.jobServ.jobHold = job;
         this.initForm();
       });
     },20);

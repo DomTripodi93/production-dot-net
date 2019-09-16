@@ -132,7 +132,7 @@ export class HourlyFindShowComponent implements OnInit {
           this.dayServ.dates.push(this.dayServ.dashToSlash(lot.date))
           // used in link to day's production
         })
-        if (this.search.includes("date") && this.search.includes("job")){
+        if (this.search.includes("date") && this.search.includes("jobNumber")){
           this.machSearch = true;
           this.oneDate = true;
           let hold = [];
@@ -144,7 +144,7 @@ export class HourlyFindShowComponent implements OnInit {
         if (this.search.includes("machine")){
           this.machSearch = true
         }
-        if (this.search.includes("job") && !this.search.includes("date")){
+        if (this.search.includes("jobNumber") && !this.search.includes("date")){
           this.lastDate = this.hourly[0].date;
           this.oneJob = true;
           this.machSearch = true;

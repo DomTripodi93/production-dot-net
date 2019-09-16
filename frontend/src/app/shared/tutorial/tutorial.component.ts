@@ -84,7 +84,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
     this.prodServ.fetchAllProduction()
       .subscribe(prod => {
         if (prod.length > 0){
-          this.job = prod[0].job
+          this.job = prod[0].jobNumber
           this.production = true;
         }
       }

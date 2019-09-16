@@ -23,7 +23,7 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
   isError = false;
   error = '';
   machines: Machine[] = [];
-  job="";
+  jobNumber="";
   avail=false;
   date = "";
   nothing = []
@@ -45,7 +45,7 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
   }
 
   quickInput(index){
-    this.hourServ.job = this.machines[index].currentJob;
+    this.hourServ.jobNumber = this.machines[index].currentJob;
     this.hourServ.machine = this.machines[index];
     this.hourServ.quick[index] = true;
   }

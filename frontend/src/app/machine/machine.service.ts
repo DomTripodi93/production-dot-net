@@ -31,9 +31,9 @@ export class MachineService {
         )
     } 
 
-    fetchMachineById(id) {
+    fetchMachineByName(name) {
         return this.http.get(
-          this.auth.apiUrl + '/machine/' + id + "/"
+          this.auth.apiUrl + '/machine/' + name + "/"
         )
         .pipe(
           map((responseData: Machine) => {
@@ -72,37 +72,23 @@ export class MachineService {
         );
     }
 
-    setCurrentJob(job, id){
-      this.fetchMachineById(id).subscribe((object)=>{
-        console.log(job);
-        let oldValues = ""+JSON.stringify(object);
-        this.auth.logChanges(oldValues, this.model, "Change Job", id).subscribe();
-      })
-      return this.http.patch(
-        this.auth.apiUrl + '/machine/' + id + "/", job
-      );
 
-    }
-
-    changeMachine(data: Machine, id){
-      this.fetchMachineById(id).subscribe((object)=>{
+    setCurrentJob(data, name){
+      this.fetchMachineByName(name).subscribe((object)=>{
         let oldValues = ""+JSON.stringify(object);
-        this.auth.logChanges(oldValues, this.model, "Update", id).subscribe();
+        this.auth.logChanges(oldValues, this.model, "Change Job", name).subscribe();
       })
-      if (!data.currentJob){
-          data.currentJob=null
-      }
-        return this.http.put(
-          this.auth.apiUrl + '/machine/' + id + "/", data
+        return this.http.patch(
+          this.auth.apiUrl + '/machine/' + name + "/", data
         );
     }
 
-    deleteMachine(id){
-      this.fetchMachineById(id).subscribe((object)=>{
+    deleteMachine(name){
+      this.fetchMachineByName(name).subscribe((object)=>{
         let oldValues = ""+JSON.stringify(object);
-        this.auth.logChanges(oldValues, this.model, "Delete", id).subscribe();
+        this.auth.logChanges(oldValues, this.model, "Delete", name).subscribe();
       })
-      return this.http.delete(this.auth.apiUrl + "/machine/" + id + "/",
+      return this.http.delete(this.auth.apiUrl + "/machine/" + name + "/",
       {
           observe: 'events',
           responseType: 'text'

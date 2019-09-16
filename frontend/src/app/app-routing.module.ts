@@ -85,12 +85,12 @@ const appRoutes: Routes = [
             ]},
             {path: ":job", component: PartFindShowComponent},
         ]},
-        {path: 'op', component: OperationComponent, children:[
+        {path: 'ops', component: OperationComponent, children:[
             {path: '', component: OpShowComponent},
-            {path: 'edit/:part', component: OpEditComponent},
+            {path: 'edit/:operation', component: OpEditComponent},
             {path: 'new', component: OpNewComponent},
             {path: 'find', component: OpFindComponent},
-            {path: ":part", component: OpFindShowComponent},
+            {path: ":operation", component: OpFindShowComponent},
         ]},
         {path: 'production', component: ProductionComponent, children:[
             {path: '', component: ProductionListComponent},

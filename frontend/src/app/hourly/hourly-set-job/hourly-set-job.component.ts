@@ -27,8 +27,8 @@ export class HourlySetJobComponent implements OnInit {
   private initForm(){
     this.jobs = ["None"];
     this.jobServ.fetchAllJobs().subscribe(response =>{
-      response.forEach(job => {
-        this.jobs.push(job.job)
+      response.forEach(jobNumber => {
+        this.jobs.push(jobNumber.jobNumber)
       });
     })
 
@@ -38,7 +38,7 @@ export class HourlySetJobComponent implements OnInit {
   }
 
   onSetJob(){
-    this.machServ.setCurrentJob(this.setJobForm.value, this.hourServ.machine.id).subscribe(()=>{
+    this.machServ.setCurrentJob(this.setJobForm.value, this.hourServ.machine.machine).subscribe(()=>{
       this.hourServ.hourlyChanged.next()
     });
     this.onCancel()

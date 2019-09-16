@@ -15,7 +15,7 @@
                         <div>
                             <h5>Date: <strong>{{lot.date}}</strong></h5>
                             <h5>Time: <strong>{{lot.time}}</strong></h5>
-                            <h5>Job #: <strong>{{lot.job}}</strong></h5>
+                            <h5>Job #: <strong>{{lot.jobNumber}}</strong></h5>
                             <h5>Quantity: <strong>{{lot.quantity}}</strong></h5>
                             <h5>Counter: <strong>{{lot.counterQuantity}}</strong></h5>
                             <div class="btn-grid">
@@ -33,7 +33,7 @@
                     <li class=list-group-item *ngFor="let lot of set; let i = index" >
                         <div>
                             <h4>Date: {{lot.date}}</h4>
-                            <h4>Job #: {{lot.job}}</h4>
+                            <h4>Job #: {{lot.jobNumber}}</h4>
                             <h4>Quantity: {{lot.quantity}}</h4>
                             <h4>Counter Quantity: {{lot.counterQuantity}}</h4>
                             <h4>Machine: {{lot.machine}}</h4>
@@ -47,7 +47,7 @@
             <li class=list-group-item *ngFor="let lot of hourly; let i = index" >
                 <div>
                     <h4>Date: {{lot.date}}</h4>
-                    <h4>Job #: {{lot.job}}</h4>
+                    <h4>Job #: {{lot.jobNumber}}</h4>
                     <h4>Quantity: {{lot.quantity}}</h4>
                     <h4>Counter Quantity: {{lot.counterQuantity}}</h4>
                     <h4>Machine: {{lot.machine}}</h4>

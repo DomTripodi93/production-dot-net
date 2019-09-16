@@ -63,7 +63,7 @@ export class HourlyNewComponent implements OnInit {
     if (this.machines.length > 0){
       machine = this.machines[0].machine;
     }
-    let job ='';
+    let jobNumber ='';
 
     this.hourlyForm = new FormGroup({
       'quantity': new FormControl(quantity, Validators.required),
@@ -71,7 +71,7 @@ export class HourlyNewComponent implements OnInit {
       'date': new FormControl(date, Validators.required),
       'time': new FormControl(time, Validators.required),
       'machine': new FormControl(machine, Validators.required),
-      'job': new FormControl(job, Validators.required)
+      'jobNumber': new FormControl(jobNumber, Validators.required)
     });
   }
   

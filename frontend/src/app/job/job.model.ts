@@ -1,6 +1,6 @@
 export interface Job{
     id: number;
-    job: string;
+    jobNumber: string;
     part: string;
     orderQuantity: string;
     possibleQuantity: string;

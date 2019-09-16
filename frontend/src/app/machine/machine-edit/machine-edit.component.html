@@ -3,6 +3,7 @@
   </div>
     <form *ngIf="canInput && editMachineForm" [formGroup]="editMachineForm" (ngSubmit)='onSubmit()' >
     <div class="form-group">
+      <h3> Machine: {{machName}}</h3>
       <label for="currentJob">Job</label>
       <select
         formControlName='currentJob'
@@ -12,14 +13,6 @@
         <option *ngFor = "let job of jobs">{{job}}</option>
       </select>        
     </div>
-      <div class="form-group">
-        <label for="machine">Machine</label>
-        <input 
-          formControlName='machine'
-          id="machine" 
-          class="form-control"
-        >
-      </div>
       <br><br>
       <div class="grid">
         <button 

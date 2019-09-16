@@ -23,16 +23,26 @@ export class OpService {
 
     fetchOp(search) {
         return this.http.get(
-          this.auth.apiUrl + '/operation/?' + search
+          this.auth.apiUrl + '/operation/' + search
+        )
+        .pipe(
+          map((responseData: Operation) => {
+            responseData.machine = this.auth.rejoin(responseData.machine);
+          return responseData;
+          })
+        )
+    } 
+
+    fetchOpByJob(search) {
+        return this.http.get(
+          this.auth.apiUrl + '/operation/' + search
         )
         .pipe(
           map((responseData: Operation[]) => {
-            const operationHold: Operation[] = [];
             responseData.forEach((lot)=>{
               lot.machine = this.auth.rejoin(lot.machine);
-              operationHold.push(lot)
             })
-          return operationHold;
+          return responseData;
           })
         )
     } 

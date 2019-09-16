@@ -5,4 +5,8 @@
 
 input.ng-invalid.ng-touched {
     border: 1px solid red;
-  }
+}
+
+h3{
+    text-align: center;
+}

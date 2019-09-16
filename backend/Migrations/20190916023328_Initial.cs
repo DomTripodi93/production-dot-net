@@ -53,7 +53,8 @@ namespace backend.Migrations
                 {
                     userId = table.Column<int>(nullable: false),
                     Machine = table.Column<string>(nullable: false),
-                    CurrentJob = table.Column<string>(nullable: true)
+                    CurrentJob = table.Column<string>(nullable: true),
+                    CurrentOp = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -138,7 +139,6 @@ namespace backend.Migrations
                     JobNumber = table.Column<string>(nullable: false),
                     PartuserId = table.Column<int>(nullable: true),
                     PartNumber = table.Column<string>(nullable: true),
-                    partId = table.Column<int>(nullable: false),
                     PartNum = table.Column<string>(nullable: true),
                     OrderQuantity = table.Column<string>(nullable: true),
                     PossibleQuantity = table.Column<string>(nullable: true),
@@ -178,9 +178,8 @@ namespace backend.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
-                    JobId = table.Column<int>(nullable: false),
                     JobNumber = table.Column<string>(nullable: true),
-                    Op = table.Column<string>(nullable: true),
+                    OpNumber = table.Column<string>(nullable: true),
                     Machine = table.Column<string>(nullable: true),
                     RemainingQuantity = table.Column<string>(nullable: true),
                     CycleTime = table.Column<string>(nullable: true),
@@ -217,7 +216,8 @@ namespace backend.Migrations
                     Machine = table.Column<string>(nullable: true),
                     Quantity = table.Column<string>(nullable: true),
                     CounterQuantity = table.Column<string>(nullable: true),
-                    Time = table.Column<DateTime>(nullable: false)
+                    Time = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

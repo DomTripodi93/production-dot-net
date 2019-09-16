@@ -47,7 +47,7 @@ export class PartEditComponent implements OnInit {
 
 
   private initForm() {
-    let part = this.part.part;
+    let part = this.part.partNumber;
 
     this.editPartForm = new FormGroup({
       'partNumber': new FormControl(part, Validators.required)
@@ -82,7 +82,7 @@ export class PartEditComponent implements OnInit {
   }
 
   onDelete(){
-    if (confirm("Are you sure you want to delete " +this.part.part+ "?")){
+    if (confirm("Are you sure you want to delete " +this.part.partNumber + "?")){
       this.partServ.deletePart(this.partNum).subscribe();
       setTimeout(()=>{
       this.router.navigate(["../.."], {relativeTo: this.route})

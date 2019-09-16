@@ -55,7 +55,7 @@ export class HourlyEditComponent implements OnInit, OnDestroy {
   private initForm() {
     let quantity = this.hourly.quantity;
     let counterQuantity = this.hourly.counterQuantity;
-    let job = this.hourly.job;
+    let jobNumber = this.hourly.jobNumber;
     let date = this.hourly.date;
     let machine = this.hourly.machine;
     let time = this.hourly.time
@@ -66,7 +66,7 @@ export class HourlyEditComponent implements OnInit, OnDestroy {
       'date': new FormControl(date, Validators.required),
       'time': new FormControl(time, Validators.required),
       'machine': new FormControl(machine, Validators.required),
-      'job': new FormControl(job, Validators.required)
+      'jobNumber': new FormControl(jobNumber, Validators.required)
     });
   }
 

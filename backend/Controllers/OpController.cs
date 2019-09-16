@@ -103,7 +103,7 @@ namespace BackEnd.Controllers
                 await _repo.SaveAll();
                 return Ok(
                             "Operation "
-                            + opToDelete.Op
+                            + opToDelete.OpNumber
                             + " for job# " 
                             + opToDelete.JobNumber 
                             +" was deleted, along with related production lots and hourly counts!"

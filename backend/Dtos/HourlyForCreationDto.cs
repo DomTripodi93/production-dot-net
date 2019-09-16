@@ -18,7 +18,10 @@ namespace BackEnd.Dtos
         public string CounterQuantity { get; set; }
         
         [Required]
-        public DateTime Time { get; set; }
+        public string Time { get; set; }
+        
+        [Required]
+        public DateTime Date { get; set; }
         
     }
 }

@@ -2,16 +2,14 @@
   <div *ngFor="let job of jobs"> 
     <div class="border">
       <div class="grid2">
-        <button *ngIf="!job.possibleQuantity" class='btn btn-primary' routerLink="calculator/job/{{job.id}}">Length Calc</button>
-        <button *ngIf="job.possibleQuantity" class='btn btn-info' routerLink="calculator/{{job.id}}">Remaining Bars</button>
-        <button *ngIf="!job.weightQuantity" class='btn btn-success' routerLink="calculator/weight/{{job.id}}">Weight Calc</button>
+        <button *ngIf="!job.possibleQuantity" class='btn btn-primary' routerLink="calculator/job/{{job.jobNumber}}">Length Calc</button>
+        <button *ngIf="job.possibleQuantity" class='btn btn-info' routerLink="calculator/{{job.jobNumber}}">Remaining Bars</button>
+        <button *ngIf="!job.weightQuantity" class='btn btn-success' routerLink="calculator/weight/{{job.jobNumber}}">Weight Calc</button>
       </div>
-      <div routerLink="job={{job.job}}">
+      <div routerLink="{{job.jobNumber}}">
         <br>
-        <h3>{{job.job}}</h3>
-        <h4>Current Job: <br> {{job.job}}</h4>
-        <h4>Current Machine: <br> {{job.machine}}</h4>
-        <h4 *ngIf="job.cycleTime">Cycle Time: {{job.cycleTime}}</h4>
+        <h3>{{job.jobNumber}}</h3>
+        <h4>Current Job: <br> {{job.jobNumber}}</h4>
         <h4 *ngIf="!job.possibleQuantity && !job.weightQuantity && job.orderQuantity">
           Possible Quantity: {{job.orderQuantity}}
         </h4>
@@ -28,7 +26,7 @@
       </div>
       <div class="grid2">
           <button class='btn btn-primary' routerLink="edit/{{job.id}}">Edit Job</button>
-          <button class='btn btn-danger' (click)="onDelete(job.job, job.id)">Delete Job</button>
+          <button class='btn btn-danger' (click)="onDelete(job.jobNumber, job.id)">Delete Job</button>
       </div>
     </div>
     <br>

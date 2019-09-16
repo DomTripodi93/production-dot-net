@@ -19,7 +19,7 @@ export class ProductionByJobComponent implements OnInit, OnDestroy{
   ) {}
 
   onSubmit(){
-    let job = this.jobForm.value.job
+    let job = this.jobForm.value.jobNumber
     let machine =""
     if (this.jobForm.value.machine){
       machine = this.jobForm.value.machine

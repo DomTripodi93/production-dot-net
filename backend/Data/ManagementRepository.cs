@@ -194,7 +194,7 @@ namespace BackEnd.Data
                 .Include(x => x.Production)
                 .Where(o => o.userId == userId)
                 .Where(o => o.JobNumber == job)
-                .Where(o => o.Op == op)
+                .Where(o => o.OpNumber == op)
                 .ToListAsync();
 
             Production[] prodSet = Array.Empty<Production>();
@@ -295,7 +295,7 @@ namespace BackEnd.Data
 
             DateTime dateAsDate = DateTime.Parse(date);
 
-            return hourlyForReturn.Where(p => p.Time.Date == dateAsDate.Date);
+            return hourlyForReturn.Where(p => p.Date.Date == dateAsDate.Date);
         }
 
         public async Task<IEnumerable<Hourly>> GetHourlySetByJob(int userId, string job)

@@ -37,13 +37,14 @@ export class HourlyNewShortComponent implements OnInit {
     }
     let time = hour+":"+minute;
     
+    
     this.hourlyForm = new FormGroup({
       'quantity': new FormControl(quantity),
       'counterQuantity': new FormControl(counterQuantity),
       'date': new FormControl(date, Validators.required),
       'time': new FormControl(time, Validators.required),
       'machine': new FormControl(this.hourServ.machine.machine, Validators.required),
-      'job': new FormControl(this.hourServ.job, Validators.required)
+      'jobNumber': new FormControl(this.hourServ.jobNumber, Validators.required)
     });
   }
 

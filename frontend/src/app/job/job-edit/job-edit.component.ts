@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Job } from '../job.model';
-import { Machine } from 'src/app/machine/machine.model';
 import { JobService } from '../job.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
-import { MachineService } from 'src/app/machine/machine.service';
+import { PartService } from 'src/app/part/part.service';
+import { Part } from 'src/app/part/part.model';
 
 @Component({
   selector: 'app-job-edit',
@@ -19,14 +19,14 @@ export class JobEditComponent implements OnInit {
   canInput = false;
   isError = false;
   error = "";
-  machines: Machine[] = [];
+  parts: Part[] = [];
   
   constructor(
     private jobServ: JobService,
     private route: ActivatedRoute,
     private router: Router,
     private auth: AuthService,
-    private mach: MachineService
+    private partServ: PartService
   ) { }
 
   ngOnInit() {
@@ -34,20 +34,20 @@ export class JobEditComponent implements OnInit {
     this.route.params.subscribe((params: Params) =>{
       this.jobNum = params['job'];
     });
-    this.mach.fetchAllMachines()
-    .subscribe(machines => {
-      this.machines = machines;
       this.jobServ.fetchJob(this.jobNum)
       .subscribe(jobs => {
         this.job = jobs[0];
-        this.initForm();
+        this.partServ.fetchAllParts()
+        .subscribe(parts => {
+          this.parts = parts;
+          this.initForm();
+        });
       });
-    });
   }
 
 
   private initForm() {
-    let job = this.job.job;
+    let job = this.job.jobNumber;
     let part = this.job.part;
     let orderQuantity = this.job.orderQuantity;
     let weightRecieved = this.job.weightRecieved;
@@ -57,8 +57,8 @@ export class JobEditComponent implements OnInit {
     let subFacing = this.job.subFacing;
 
     this.editJobForm = new FormGroup({
-      'job': new FormControl(job, Validators.required),
-      'part': new FormControl(part, Validators.required),
+      'jobNumber': new FormControl(job, Validators.required),
+      'partNum': new FormControl(part, Validators.required),
       "orderQuantity": new FormControl(orderQuantity),
       "weightRecieved": new FormControl(weightRecieved),
       "oal": new FormControl(oal),
@@ -96,7 +96,7 @@ export class JobEditComponent implements OnInit {
   }
 
   onDelete(){
-    if (confirm("Are you sure you want to delete " +this.job.job+ "?")){
+    if (confirm("Are you sure you want to delete " +this.job.jobNumber+ "?")){
       this.jobServ.deleteJob(this.jobNum).subscribe();
       setTimeout(()=>{
       this.router.navigate(["../.."], {relativeTo: this.route})
