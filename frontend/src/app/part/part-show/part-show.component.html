@@ -1,11 +1,6 @@
 <div class='grid' >
   <div *ngFor="let part of parts"> 
     <div class="border">
-      <div class="grid2">
-        <button *ngIf="!part.possibleQuantity" class='btn btn-primary' routerLink="calculator/job/{{part.id}}">Length Calc</button>
-        <button *ngIf="part.possibleQuantity" class='btn btn-info' routerLink="calculator/{{part.id}}">Remaining Bars</button>
-        <button *ngIf="!part.weightQuantity" class='btn btn-success' routerLink="calculator/weight/{{part.id}}">Weight Calc</button>
-      </div>
       <div routerLink="{{part.partNumber}}">
         <br>
         <h3>{{part.partNumber}}</h3>

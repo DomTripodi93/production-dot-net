@@ -11,7 +11,7 @@ namespace BackEnd.Dtos
         
         [Required]
         public int OpId { get; set; }
-        public string Operation { get; set; }
+        public string OpNumber { get; set; }
         public string Shift { get; set; }
         
         [Required]

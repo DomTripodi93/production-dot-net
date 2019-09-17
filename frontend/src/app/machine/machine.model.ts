@@ -1,5 +1,6 @@
 export interface Machine{
     id: number,
     machine: string,
-    currentJob: string
+    currentJob: string,
+    currentOp: string
 }

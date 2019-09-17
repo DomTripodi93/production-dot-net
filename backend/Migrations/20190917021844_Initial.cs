@@ -175,11 +175,9 @@ namespace backend.Migrations
                 name: "Operations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
-                    JobNumber = table.Column<string>(nullable: true),
-                    OpNumber = table.Column<string>(nullable: true),
+                    JobNumber = table.Column<string>(nullable: false),
+                    OpNumber = table.Column<string>(nullable: false),
                     Machine = table.Column<string>(nullable: true),
                     RemainingQuantity = table.Column<string>(nullable: true),
                     CycleTime = table.Column<string>(nullable: true),
@@ -187,7 +185,7 @@ namespace backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Operations", x => x.Id);
+                    table.PrimaryKey("PK_Operations", x => new { x.userId, x.JobNumber, x.OpNumber });
                     table.ForeignKey(
                         name: "FK_Operations_Users_userId",
                         column: x => x.userId,
@@ -199,7 +197,7 @@ namespace backend.Migrations
                         columns: x => new { x.userId, x.JobNumber },
                         principalTable: "Jobs",
                         principalColumns: new[] { "userId", "JobNumber" },
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,7 +207,6 @@ namespace backend.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
-                    OperationId = table.Column<int>(nullable: true),
                     OpId = table.Column<int>(nullable: false),
                     OpNumber = table.Column<string>(nullable: true),
                     JobNumber = table.Column<string>(nullable: true),
@@ -223,17 +220,17 @@ namespace backend.Migrations
                 {
                     table.PrimaryKey("PK_Hourlys", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Hourlys_Operations_OperationId",
-                        column: x => x.OperationId,
-                        principalTable: "Operations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Hourlys_Users_userId",
                         column: x => x.userId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Hourlys_Operations_userId_JobNumber_OpNumber",
+                        columns: x => new { x.userId, x.JobNumber, x.OpNumber },
+                        principalTable: "Operations",
+                        principalColumns: new[] { "userId", "JobNumber", "OpNumber" },
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -243,8 +240,6 @@ namespace backend.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
-                    OperationId = table.Column<int>(nullable: true),
-                    OpId = table.Column<int>(nullable: false),
                     OpNumber = table.Column<string>(nullable: true),
                     JobNumber = table.Column<string>(nullable: true),
                     PartNumber = table.Column<string>(nullable: true),
@@ -258,17 +253,17 @@ namespace backend.Migrations
                 {
                     table.PrimaryKey("PK_Production", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Production_Operations_OperationId",
-                        column: x => x.OperationId,
-                        principalTable: "Operations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Production_Users_userId",
                         column: x => x.userId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Production_Operations_userId_JobNumber_OpNumber",
+                        columns: x => new { x.userId, x.JobNumber, x.OpNumber },
+                        principalTable: "Operations",
+                        principalColumns: new[] { "userId", "JobNumber", "OpNumber" },
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -277,14 +272,9 @@ namespace backend.Migrations
                 column: "userId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Hourlys_OperationId",
+                name: "IX_Hourlys_userId_JobNumber_OpNumber",
                 table: "Hourlys",
-                column: "OperationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Hourlys_userId",
-                table: "Hourlys",
-                column: "userId");
+                columns: new[] { "userId", "JobNumber", "OpNumber" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Jobs_PartuserId_PartNumber",
@@ -292,19 +282,9 @@ namespace backend.Migrations
                 columns: new[] { "PartuserId", "PartNumber" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Operations_userId_JobNumber",
-                table: "Operations",
-                columns: new[] { "userId", "JobNumber" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Production_OperationId",
+                name: "IX_Production_userId_JobNumber_OpNumber",
                 table: "Production",
-                column: "OperationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Production_userId",
-                table: "Production",
-                column: "userId");
+                columns: new[] { "userId", "JobNumber", "OpNumber" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_StartTimes_userId_Machine",

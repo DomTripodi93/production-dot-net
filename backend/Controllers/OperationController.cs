@@ -44,41 +44,41 @@ namespace BackEnd.Controllers
             if (await _repo.SaveAll())
             {
                 var opToReturn = _mapper.Map<OperationForReturnDto>(op);
-                return CreatedAtRoute("GetOp", new {id = op.Id}, opToReturn);
+                return CreatedAtRoute("GetOp", new {jobNum = op.JobNumber, opNum = op.OpNumber}, opToReturn);
             }
                 
             throw new Exception("Creation of op lot failed on save");
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateOperation(int id, OperationForCreationDto opForUpdateDto)
-        {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            var opFromRepo = await _repo.GetOp(id);
-
-            _mapper.Map(opForUpdateDto, opFromRepo);
-
-            if (await _repo.SaveAll())
-                return CreatedAtRoute("GetOp", new {id = opFromRepo.Id}, opForUpdateDto);
-
-            throw new Exception($"Updating op lot {id} failed on save");
-        }
-
-        [HttpGet("{id}", Name = "GetOp")]
-        public async Task<IActionResult> GetOp(int id, int userId)
+        [HttpPut("{opNum}/job={jobNum}")]
+        public async Task<IActionResult> UpdateOperation(int userId, string jobNum, string opNum, OperationForCreationDto opForUpdateDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            Operation op = await _repo.GetOp(id);
+            var opFromRepo = await _repo.GetOp(jobNum, opNum);
+
+            _mapper.Map(opForUpdateDto, opFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetOp", new {jobNum = opFromRepo.JobNumber, opNum = opFromRepo.OpNumber}, opForUpdateDto);
+
+            throw new Exception($"Updating op operation {opNum} for {jobNum} failed on save");
+        }
+
+        [HttpGet("{opNum}/job={jobNum}", Name = "GetOp")]
+        public async Task<IActionResult> GetOp(string jobNum, string opNum, int userId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            Operation op = await _repo.GetOp(jobNum, opNum);
             OperationForReturnDto opForReturn = _mapper.Map<OperationForReturnDto>(op);
             return Ok(opForReturn);
         }
 
         [HttpGet("job={jobNum}")]
-        public async Task<IActionResult> GetOperationsByOperation(int userId, string jobNum)
+        public async Task<IActionResult> GetOperationsByJob(int userId, string jobNum)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
@@ -90,13 +90,13 @@ namespace BackEnd.Controllers
             return Ok(ops);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOperation(int userId, int id)
+        [HttpDelete("{opNum}/job={jobNum}")]
+        public async Task<IActionResult> DeleteOperation(int userId, string jobNum, string opNum)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
             
-            var opToDelete = await _repo.GetOp(id);
+            var opToDelete = await _repo.GetOp(jobNum, opNum);
             
             if (userId == int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 _repo.Delete(opToDelete);

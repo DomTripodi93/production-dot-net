@@ -7,7 +7,6 @@ namespace BackEnd.Dtos
         public string PartNum { get; set; }
 
         [Required]
-        public int JobId { get; set; }
         public string JobNumber { get; set; }
         public string PartsToDate { get; set; }
 

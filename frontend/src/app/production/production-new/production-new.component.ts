@@ -70,14 +70,16 @@ export class ProductionNewComponent implements OnInit {
       'date': new FormControl(date, Validators.required),
       'shift': new FormControl(this.shifts[0], Validators.required),
       'machine': new FormControl(this.machines[0], Validators.required),
-      'job': new FormControl(this.fullMach[0].currentJob, Validators.required)
+      'jobNumber': new FormControl(this.machines[0], Validators.required),
+      'opNumber': new FormControl(this.machines[0], Validators.required)
     });
   }
   
   onSubmit(){
     this.fullMach.forEach((mach)=>{
-      if (mach.machine ===this.productionForm.value.machine){
+      if (mach.machine === this.productionForm.value.machine){
         this.productionForm.value.jobNumber = mach.currentJob;
+        this.productionForm.value.opNumber = mach.currentOp;
       }
     })
     this.newProduction(this.productionForm.value);

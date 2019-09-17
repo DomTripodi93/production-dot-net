@@ -25,6 +25,8 @@ namespace BackEnd.Data
                 .HasKey(p => new {p.userId, p.PartNumber});
             modelBuilder.Entity<Job>()
                 .HasKey(j => new {j.userId, j.JobNumber});
+            modelBuilder.Entity<Operation>()
+                .HasKey(o => new {o.userId, o.JobNumber, o.OpNumber});
             modelBuilder.Entity<Settings>()
                 .HasKey(s => s.userId);
         }

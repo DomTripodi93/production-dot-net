@@ -18,9 +18,10 @@ export class MachineNewComponent implements OnInit {
   canInput= false;
   machineForm: FormGroup;
   isError = false;
-  jobs = [];
-  ops: Operation[][] = [];
-  
+  jobs = ["None"];
+  ops = ["None"];
+  opSet: string[][] = [["None"]];
+
   constructor(
     private mach: MachineService,
     private jobServ: JobService,
@@ -32,32 +33,61 @@ export class MachineNewComponent implements OnInit {
   
   ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
-    this.initForm();
+    this.jobServ.fetchAllJobs().subscribe(response =>{
+      let goneThrough = 0;
+      if (response.length==0){
+        this.initForm();
+      } else {
+        response.forEach(job => {
+          this.jobs.push(job.jobNumber)
+          goneThrough++;
+          if (goneThrough == response.length){
+            let jobsUsed = 0;
+            for (let job in this.jobs){
+              if (job != "0"){
+                this.opServ.fetchOpByJob("job=" + this.jobs[job]).subscribe((op)=>{
+                  op.forEach((set)=>{
+                    console.log(set)
+                    this.ops.push(set.opNumber);
+                  })
+                  this.opSet.push(this.ops);
+                  this.ops = ["none"];
+                  if (jobsUsed == this.jobs.length){
+                    this.initForm();
+                  }
+                }, ()=>{
+                  this.opSet.push(this.ops);
+                  this.initForm();
+                });
+              }
+              jobsUsed++;
+            }
+          }
+        });
+      }
+    });
     this.auth.hideButton(0);
   }
     
   private initForm() {
     let machine = '';
-    this.jobs = ["None"];
-    this.jobServ.fetchAllJobs().subscribe(response =>{
-      response.forEach(job => {
-        this.jobs.push(job.jobNumber)
-      });
-    })
-    for (let job in this.jobs){
-      this.opServ.fetchOpByJob(job).subscribe((op)=>{
-          this.ops.push(op);
-        }
-      )
-    }
+    // use an index ^^
     this.machineForm = new FormGroup({
       'machine': new FormControl(machine, Validators.required),
-      'currentJob': new FormControl(this.jobs[0])
+      'currentJob': new FormControl(this.jobs[0]),
+      'currentOp': new FormControl(this.ops[0])
     });
   }
   
   onSubmit(){
+    this.machineForm.value.currentJob = this.jobs[this.machineForm.value.currentJob];
     this.newMachine(this.machineForm.value);
+  }
+
+  changeOps(option: number){
+    if (this.opSet){
+      this.ops = this.opSet[option];
+    }
   }
 
   newMachine(data: Machine) {

@@ -75,11 +75,6 @@ export class OpService {
       }
 
       addOp(data: Operation){
-        Object.keys(data).forEach(value => {
-          if (data[value] === ""){
-            data[value] = null
-          }          
-        });
         data.machine = this.auth.splitJoin(data.machine);
           return this.http.post(
             this.auth.apiUrl + '/operation/', data
@@ -91,11 +86,6 @@ export class OpService {
           let oldValues = ""+JSON.stringify(object);
           this.auth.logChanges(oldValues, this.model, "Update", id).subscribe();
         })
-        Object.keys(data).forEach(value => {
-          if (data[value] === ""){
-            data[value] = null
-          }          
-        });
         data.machine = this.auth.splitJoin(data.machine);
           return this.http.put(
             this.auth.apiUrl + '/operation/' + id + "/", data

@@ -19,7 +19,7 @@ namespace BackEnd.Data
         Task<Job> GetJob(int userId, string jobNum);
         Task<IEnumerable<Job>> GetJobs(int userId);
         Task<IEnumerable<Job>> GetJobsByPart(int userId, string partNum);
-        Task<Operation> GetOp(int id);
+        Task<Operation> GetOp(string jobNum, string opNum);
         Task<IEnumerable<Operation>> GetOpsByJob(string jobNum);
         Task<Production> GetProduction(int id);
         Task<IEnumerable<Production>> GetProductionSet(int userId);

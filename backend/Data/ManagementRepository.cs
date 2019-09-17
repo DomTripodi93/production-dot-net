@@ -125,10 +125,14 @@ namespace BackEnd.Data
             return jobs;
         }
 
-        public async Task<Operation> GetOp(int id)
+        public async Task<Operation> GetOp(string jobNum, string opNum)
         {
-            var op = await _context.Operations.FirstOrDefaultAsync(p => p.Id == id);
-            return op;
+            var operation = await _context.Operations
+                .Include(x => x.Production)
+                .Where(o => o.JobNumber == jobNum)
+                .FirstOrDefaultAsync(o => o.OpNumber == opNum);
+
+            return operation;
         }
 
         public async Task<IEnumerable<Operation>> GetOpsByJob(string jobNum)

@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Machine } from '../machine.model';
 import { JobService } from 'src/app/job/job.service';
+import { OpService } from 'src/app/operation/operation.service';
 
 @Component({
   selector: 'app-machine-edit',
@@ -16,14 +17,17 @@ export class MachineEditComponent implements OnInit {
   machine: Machine;
   machName: string;
   canInput = false;
-  jobs = [];
+  jobs = ["None"];
+  ops = ["None"];
+  opSet: string[][] = [["None"]];
   
   constructor(
     private mach: MachineService,
     private jobServ: JobService,
     private route: ActivatedRoute,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private opServ: OpService
   ) { }
 
   ngOnInit() {
@@ -36,32 +40,56 @@ export class MachineEditComponent implements OnInit {
       this.machine = machine;
       this.initForm();
     });
+    this.jobServ.fetchAllJobs().subscribe(response =>{
+      let goneThrough = 0;
+      if (response.length==0){
+        this.initForm();
+      } else {
+        response.forEach(job => {
+          this.jobs.push(job.jobNumber)
+          goneThrough++;
+          if (goneThrough == response.length){
+            let jobsUsed = 0;
+            for (let job in this.jobs){
+              if (job != "0"){
+                this.opServ.fetchOpByJob("job=" + this.jobs[job]).subscribe((op)=>{
+                  op.forEach((set)=>{
+                    this.ops.push(set.opNumber);
+                  })
+                  this.opSet.push(this.ops);
+                  this.ops = ["none"];
+                  if (jobsUsed == this.jobs.length){
+                    this.initForm();
+                  }
+                }, ()=>{
+                  this.opSet.push(this.ops);
+                  this.initForm();
+                });
+              }
+              jobsUsed++;
+            }
+          }
+        });
+      }
+    });
   }
 
 
   private initForm() {
-    this.jobs = [this.machine.currentJob];
-    this.jobServ.fetchAllJobs().subscribe(response =>{
-      response.forEach(job => {
-        if (job.jobNumber == this.machine.currentJob){
-          this.jobs.push(job.jobNumber)
-        }else {
-          this.jobs.push(job.jobNumber)
-        }
-      });
-    })
 
     this.editMachineForm = new FormGroup({
-      'currentJob': new FormControl(this.jobs[0])
+      'currentJob': new FormControl(this.machine.currentJob),
+      'currentOp': new FormControl(this.machine.currentOp)
     });
   }
 
   onSubmit(){
-    this.machine = this.editMachineForm.value;
-    this.editMachine(this.machine);
+    this.editMachineForm.value.currentJob = this.jobs[this.editMachineForm.value.currentJob];
+    this.editMachine(this.editMachineForm.value);
   }
 
-  editMachine(data: Machine) {
+  editMachine(data) {
+    console.log(data)
     this.mach.setCurrentJob(data, this.machName).subscribe(()=>{
       this.mach.machChanged.next();
     });
@@ -73,6 +101,12 @@ export class MachineEditComponent implements OnInit {
 
   onCancel(){
     window.history.back();;
+  }
+
+  changeOps(option: number){
+    if (this.opSet){
+      this.ops = this.opSet[option];
+    }
   }
 
   onDelete(){

@@ -47,7 +47,7 @@ namespace BackEnd.Controllers
         }
 
         [HttpPatch("{mach}")]
-        public async Task<IActionResult> UpdateMachine(int userId, string mach, MachForCreationDto machForUpdateDto)
+        public async Task<IActionResult> UpdateMachine(int userId, string mach, MachForUpdateDto machForUpdateDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
@@ -55,6 +55,7 @@ namespace BackEnd.Controllers
             var machFromRepo = await _repo.GetMachine(userId, mach);
 
             machFromRepo.CurrentJob = machForUpdateDto.CurrentJob;
+            machFromRepo.CurrentOp = machForUpdateDto.CurrentOp;
 
             if (await _repo.SaveAll())
                 return CreatedAtRoute("GetMach", new {mach = machFromRepo.Machine}, machForUpdateDto);
