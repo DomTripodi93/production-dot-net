@@ -18,7 +18,7 @@ export class JobNewComponent implements OnInit {
   jobForm: FormGroup;
   isError = false;
   parts: Part[] = []
-  andCalculate = "none";
+  andCalculate = "None";
   
   constructor(
     private jobServ: JobService,
@@ -64,7 +64,7 @@ export class JobNewComponent implements OnInit {
 
   
   onSubmit(){
-    this.andCalculate = "none";
+    this.andCalculate = "None";
     this.newJob(this.jobForm.value);
   }
 

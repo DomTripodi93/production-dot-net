@@ -13,10 +13,9 @@
         (change)="changeOps($event.target.value)">
         <option 
           *ngFor = "let job of jobs; let i = index" 
-          [selected]="job === machine.jobNumber"
-          [value]="i"
-          >
-            {{job}}
+          [selected]="job === thisJob"
+          [ngValue]="job">
+            {{job.jobNumber}}
           </option>
       </select>     
       <label for="currentOp">Op</label>
@@ -27,7 +26,7 @@
         class="form-control">
         <option 
           *ngFor = "let op of ops; trackBy: changeOps"
-          [selected]="op === machine.opNumber"
+          [selected]="op === machine.currentOp"
           >
             {{op}}
           </option>

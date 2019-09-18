@@ -18,7 +18,7 @@
         id="currentJob" 
         class="form-control"
         (change)="changeOps($event.target.value)">
-        <option *ngFor = "let job of jobs; let i = index" [value]="i">{{job}}</option>
+        <option *ngFor = "let job of jobs" [ngValue]="job">{{job.jobNumber}}</option>
       </select>     
       <label for="currentOp">Op</label>
       <select

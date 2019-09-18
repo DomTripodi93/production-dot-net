@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Machine } from '../machine.model';
 import { JobService } from 'src/app/job/job.service';
 import { OpService } from 'src/app/operation/operation.service';
+import { JobInfo } from '../jobInfo.interface';
 
 @Component({
   selector: 'app-machine-edit',
@@ -17,7 +18,8 @@ export class MachineEditComponent implements OnInit {
   machine: Machine;
   machName: string;
   canInput = false;
-  jobs = ["None"];
+  thisJob: JobInfo;
+  jobs: JobInfo[] = [{id: 0, jobNumber: "None"}];
   ops = ["None"];
   opSet: string[][] = [["None"]];
   
@@ -41,29 +43,39 @@ export class MachineEditComponent implements OnInit {
       this.initForm();
     });
     this.jobServ.fetchAllJobs().subscribe(response =>{
-      let goneThrough = 0;
+      let goneThrough = 1;
       if (response.length==0){
         this.initForm();
       } else {
         response.forEach(job => {
-          this.jobs.push(job.jobNumber)
+          let info: JobInfo = {
+            id: goneThrough,
+            jobNumber: job.jobNumber
+          }
+          this.jobs.push(info);
+          if (this.machine.currentJob == info.jobNumber){
+            this.thisJob = info;
+            console.log(this.thisJob)
+          }
           goneThrough++;
-          if (goneThrough == response.length){
+          if (goneThrough == response.length+1){
             let jobsUsed = 0;
             for (let job in this.jobs){
               if (job != "0"){
-                this.opServ.fetchOpByJob("job=" + this.jobs[job]).subscribe((op)=>{
+                this.opServ.fetchOpByJob("job=" + this.jobs[job].jobNumber).subscribe((op)=>{
                   op.forEach((set)=>{
                     this.ops.push(set.opNumber);
                   })
                   this.opSet.push(this.ops);
-                  this.ops = ["none"];
+                  this.ops = ["None"];
                   if (jobsUsed == this.jobs.length){
                     this.initForm();
+                    this.changeOps(""+this.thisJob.id);
                   }
                 }, ()=>{
                   this.opSet.push(this.ops);
                   this.initForm();
+                  this.changeOps(""+this.thisJob.id);
                 });
               }
               jobsUsed++;
@@ -78,18 +90,17 @@ export class MachineEditComponent implements OnInit {
   private initForm() {
 
     this.editMachineForm = new FormGroup({
-      'currentJob': new FormControl(this.machine.currentJob),
+      'currentJob': new FormControl(this.thisJob),
       'currentOp': new FormControl(this.machine.currentOp)
     });
   }
 
   onSubmit(){
-    this.editMachineForm.value.currentJob = this.jobs[this.editMachineForm.value.currentJob];
+    this.editMachineForm.value.currentJob = this.editMachineForm.value.currentJob.jobNumber;
     this.editMachine(this.editMachineForm.value);
   }
 
   editMachine(data) {
-    console.log(data)
     this.mach.setCurrentJob(data, this.machName).subscribe(()=>{
       this.mach.machChanged.next();
     });
@@ -103,9 +114,10 @@ export class MachineEditComponent implements OnInit {
     window.history.back();;
   }
 
-  changeOps(option: number){
+  changeOps(option: String){
+    let val: String = "" +option
     if (this.opSet){
-      this.ops = this.opSet[option];
+      this.ops = this.opSet[+val.substring(0,1)];
     }
   }
 

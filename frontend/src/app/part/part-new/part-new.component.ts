@@ -15,7 +15,7 @@ export class PartNewComponent implements OnInit {
   canInput= false;
   partForm: FormGroup;
   isError = false;
-  andCalculate = "none";
+  andCalculate = "None";
   
   constructor(
     private partServ: PartService,
@@ -40,7 +40,7 @@ export class PartNewComponent implements OnInit {
 
   
   onSubmit(){
-    this.andCalculate = "none";
+    this.andCalculate = "None";
     this.newPart(this.partForm.value);
   }
 

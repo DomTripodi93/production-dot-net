@@ -48,7 +48,7 @@ export class OpEditComponent implements OnInit {
 
   private initForm() {
     let job = this.operation.job;
-    let operation = this.operation.op;
+    let operation = this.operation.opNumber;
     let machine = this.operation.machine;
     let cycleTime = this.operation.cycleTime;
 
@@ -88,7 +88,7 @@ export class OpEditComponent implements OnInit {
   }
 
   onDelete(){
-    if (confirm("Are you sure you want to delete " +this.operation.op + "from job # " + this.operation.job + "?")){
+    if (confirm("Are you sure you want to delete " +this.operation.opNumber + "from job # " + this.operation.job + "?")){
       this.operationServ.deleteOp(this.id).subscribe();
       setTimeout(()=>{
       this.router.navigate(["../.."], {relativeTo: this.route})

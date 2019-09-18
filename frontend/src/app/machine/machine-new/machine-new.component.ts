@@ -7,6 +7,7 @@ import { MachineService } from 'src/app/machine/machine.service';
 import { JobService } from 'src/app/job/job.service';
 import { Operation } from 'src/app/operation/operation.model';
 import { OpService } from 'src/app/operation/operation.service';
+import { JobInfo } from '../jobInfo.interface';
 
 @Component({
   selector: 'app-machine-new',
@@ -18,7 +19,7 @@ export class MachineNewComponent implements OnInit {
   canInput= false;
   machineForm: FormGroup;
   isError = false;
-  jobs = ["None"];
+  jobs: JobInfo[] = [{id: 0, jobNumber: "None"}];
   ops = ["None"];
   opSet: string[][] = [["None"]];
 
@@ -34,24 +35,26 @@ export class MachineNewComponent implements OnInit {
   ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
     this.jobServ.fetchAllJobs().subscribe(response =>{
-      let goneThrough = 0;
+      let goneThrough = 1;
       if (response.length==0){
         this.initForm();
       } else {
         response.forEach(job => {
-          this.jobs.push(job.jobNumber)
+          this.jobs.push({
+            id: goneThrough,
+            jobNumber: job.jobNumber
+          });
           goneThrough++;
-          if (goneThrough == response.length){
+          if (goneThrough == response.length+1){
             let jobsUsed = 0;
             for (let job in this.jobs){
               if (job != "0"){
-                this.opServ.fetchOpByJob("job=" + this.jobs[job]).subscribe((op)=>{
+                this.opServ.fetchOpByJob("job=" + this.jobs[job].jobNumber).subscribe((op)=>{
                   op.forEach((set)=>{
-                    console.log(set)
                     this.ops.push(set.opNumber);
                   })
                   this.opSet.push(this.ops);
-                  this.ops = ["none"];
+                  this.ops = ["None"];
                   if (jobsUsed == this.jobs.length){
                     this.initForm();
                   }
@@ -80,13 +83,14 @@ export class MachineNewComponent implements OnInit {
   }
   
   onSubmit(){
-    this.machineForm.value.currentJob = this.jobs[this.machineForm.value.currentJob];
+    this.machineForm.value.currentJob = this.machineForm.value.currentJob.jobNumber;
     this.newMachine(this.machineForm.value);
   }
 
-  changeOps(option: number){
+  changeOps(option: String){
+    let val: String = "" +option
     if (this.opSet){
-      this.ops = this.opSet[option];
+      this.ops = this.opSet[+val.substring(0,1)];
     }
   }
 
