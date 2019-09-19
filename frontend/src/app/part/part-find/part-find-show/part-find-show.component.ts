@@ -31,7 +31,6 @@ export class PartFindShowComponent implements OnInit {
   ngOnInit() {
     this.subscription2 = this.route.params.subscribe((params: Params) =>{
       this.partNum = params['part'];
-      console.log("this is working")
       this.getPart();
     });
     this.subscription = this.auth.authChanged.subscribe(

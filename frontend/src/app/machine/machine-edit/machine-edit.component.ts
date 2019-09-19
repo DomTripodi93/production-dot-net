@@ -40,49 +40,47 @@ export class MachineEditComponent implements OnInit {
     this.mach.fetchMachineByName(this.machName)
     .subscribe(machine => {
       this.machine = machine;
-      this.initForm();
-    });
-    this.jobServ.fetchAllJobs().subscribe(response =>{
-      let goneThrough = 1;
-      if (response.length==0){
-        this.initForm();
-      } else {
-        response.forEach(job => {
-          let info: JobInfo = {
-            id: goneThrough,
-            jobNumber: job.jobNumber
-          }
-          this.jobs.push(info);
-          if (this.machine.currentJob == info.jobNumber){
-            this.thisJob = info;
-            console.log(this.thisJob)
-          }
-          goneThrough++;
-          if (goneThrough == response.length+1){
-            let jobsUsed = 0;
-            for (let job in this.jobs){
-              if (job != "0"){
-                this.opServ.fetchOpByJob("job=" + this.jobs[job].jobNumber).subscribe((op)=>{
-                  op.forEach((set)=>{
-                    this.ops.push(set.opNumber);
-                  })
-                  this.opSet.push(this.ops);
-                  this.ops = ["None"];
-                  if (jobsUsed == this.jobs.length){
+      this.jobServ.fetchAllJobs().subscribe(response =>{
+        let goneThrough = 1;
+        if (response.length==0){
+          this.initForm();
+        } else {
+          response.forEach(job => {
+            let info: JobInfo = {
+              id: goneThrough,
+              jobNumber: job.jobNumber
+            }
+            this.jobs.push(info);
+            if (this.machine.currentJob == info.jobNumber){
+              this.thisJob = info;
+            }
+            goneThrough++;
+            if (goneThrough == response.length+1){
+              let jobsUsed = 0;
+              for (let job in this.jobs){
+                if (job != "0"){
+                  this.opServ.fetchOpByJob("job=" + this.jobs[job].jobNumber).subscribe((op)=>{
+                    op.forEach((set)=>{
+                      this.ops.push(set.opNumber);
+                    })
+                    this.opSet.push(this.ops);
+                    this.ops = ["None"];
+                    if (jobsUsed == this.jobs.length){
+                      this.initForm();
+                      this.changeOps(""+this.thisJob.id);
+                    }
+                  }, ()=>{
+                    this.opSet.push(this.ops);
                     this.initForm();
                     this.changeOps(""+this.thisJob.id);
-                  }
-                }, ()=>{
-                  this.opSet.push(this.ops);
-                  this.initForm();
-                  this.changeOps(""+this.thisJob.id);
-                });
+                  });
+                }
+                jobsUsed++;
               }
-              jobsUsed++;
             }
-          }
-        });
-      }
+          });
+        }
+      });
     });
   }
 

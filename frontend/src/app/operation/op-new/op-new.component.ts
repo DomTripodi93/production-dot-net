@@ -68,7 +68,6 @@ export class OpNewComponent implements OnInit {
 
   
   onSubmit(){
-    // console.log(this.operationForm.value)
     this.newOp(this.operationForm.value);
   }
 

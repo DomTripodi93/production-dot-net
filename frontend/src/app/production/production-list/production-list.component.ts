@@ -35,7 +35,6 @@ export class ProductionListComponent implements OnInit {
   getProduction(){
     this.subscriptions.push(this.pro.fetchAllProduction()
     .subscribe(production => {
-      console.log(production)
       this.productionLots = production;
       this.dayServ.dates = [];
       this.productionLots.forEach((lot) =>{

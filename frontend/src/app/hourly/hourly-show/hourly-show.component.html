@@ -7,7 +7,7 @@
             <ul *ngIf="machines" class="list-group">
                 <h2>{{mach.machine}}</h2>
                 <h3>{{mach.currentJob}}</h3>
-                <div *ngIf="mach.currentJob !== 'None'" class="btn-grid">
+                <div *ngIf="mach.currentJob !== 'None' && mach.currentOp !== 'None'" class="btn-grid">
                     <button 
                         *ngIf="!hourServ.quick[i]" 
                         class="btn btn-info" 
@@ -15,6 +15,15 @@
                     >
                         Quick Input
                     </button>
+                </div>
+                <div class="btn-grid" *ngIf="mach.currentJob !=='None' && mach.currentOp === 'None'">
+                    <button 
+                        *ngIf="!hourServ.quick[i]" 
+                        class="btn btn-success" 
+                        (click)="quickInput(i)"
+                    >
+                        Set Job
+                    </button>                    
                 </div>
                 <div class="btn-grid" *ngIf="mach.currentJob ==='None'">
                     <button 
@@ -25,11 +34,15 @@
                         Set Job
                     </button>                    
                 </div>
-                <div *ngIf="hourServ.quick[i] && mach.currentJob !=='None'">
+                <div *ngIf="hourServ.quick[i] && mach.currentJob !=='None' && mach.currentOp !== 'None'">
                     <app-hourly-new-short [index]="i">
                     </app-hourly-new-short>     
                 </div>
                 <div *ngIf="hourServ.quick[i] && mach.currentJob ==='None'">
+                    <app-hourly-set-job [index]="i">
+                    </app-hourly-set-job>     
+                </div>
+                <div *ngIf="hourServ.quick[i] && mach.currentJob !=='None' && mach.currentOp === 'None'">
                     <app-hourly-set-job [index]="i">
                     </app-hourly-set-job>     
                 </div>
