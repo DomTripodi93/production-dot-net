@@ -50,22 +50,6 @@ namespace backend.Controllers
             throw new Exception("Creation of changeLog count failed on save");
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateChangeLog(int id, ChangelogForCreationDto changeLogForUpdateDto)
-        {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            var changeLogFromRepo = await _repo.GetUniqueChangeLog(id);
-
-            _mapper.Map(changeLogForUpdateDto, changeLogFromRepo);
-
-            if (await _repo.SaveAll())
-                return CreatedAtRoute("GetChangeLog", new {id = changeLogFromRepo.Id}, changeLogForUpdateDto);
-
-            throw new Exception($"Updating changeLog count {id} failed on save");
-        }
-
         [HttpGet("{model}")]
         public async Task<IActionResult> GetChangeLog(int userId, string model)
         {
@@ -74,7 +58,7 @@ namespace backend.Controllers
 
             IEnumerable<ChangeLog> changeLog = await _repo.GetChangeLog(userId, model);
 
-            ChangelogForReturnDto changeLogForReturn = _mapper.Map<ChangelogForReturnDto>(changeLog);
+            IEnumerable<ChangelogForReturnDto> changeLogForReturn = _mapper.Map<IEnumerable<ChangelogForReturnDto>>(changeLog);
             return Ok(changeLogForReturn);
         }
         

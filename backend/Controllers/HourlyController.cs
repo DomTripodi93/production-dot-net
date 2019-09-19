@@ -91,39 +91,13 @@ namespace BackEnd.Controllers
             return Ok(hourlySet);
         }
 
-        [HttpGet("date={date}")]
-        public async Task<IActionResult> GetHourlySetByDate(int userId, string date)
+        [HttpGet("date={date}&machine={mach}")]
+        public async Task<IActionResult> GetHourlySetByDateAndMachine(int userId, string mach, string date)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            IEnumerable<Hourly> directHourlySet = await _repo.GetHourlySetByDate(userId, date);
-
-            var hourlySet = _mapper.Map<IEnumerable<HourlyForReturnDto>>(directHourlySet);
-
-            return Ok(hourlySet);
-        }
-
-        [HttpGet("job={job}")]
-        public async Task<IActionResult> GetHourlySetByJob(int userId, string job)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            IEnumerable<Hourly> directHourlySet = await _repo.GetHourlySetByJob(userId, job);
-
-            var hourlySet = _mapper.Map<IEnumerable<HourlyForReturnDto>>(directHourlySet);
-
-            return Ok(hourlySet);
-        }
-
-        [HttpGet("job={job}&machine={mach}")]
-        public async Task<IActionResult> GetHourlySetByJobAndMachine(int userId, string job, string mach)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            IEnumerable<Hourly> directHourlySet = await _repo.GetHourlySetByJobAndMachine(userId, job, mach);
+            IEnumerable<Hourly> directHourlySet = await _repo.GetHourlySetByDateAndMachine(userId, date, mach);
 
             var hourlySet = _mapper.Map<IEnumerable<HourlyForReturnDto>>(directHourlySet);
 

@@ -11,27 +11,27 @@ import { Change } from '../../shared/change.model';
 })
 export class ChangeLogSetComponent implements OnInit {
   @Input() model: string
-  set: any[]=[];
+  set: any[] = [];
 
   ngOnInit() {
     this.fetchChanges().subscribe((logs)=>{
       logs.forEach((log)=>{
           let mod ={
             old: JSON.parse(log.oldValues),
-            timestamp: log.timestamp.split("T"),
+            timeStamp: log.timeStamp.split("T"),
             type: log.changeType,
             id: log.changedId
           }
 
-        if (+mod.timestamp[1].substring(0,2)>12){
-          let timeHold = +mod.timestamp[1].substring(0,2) - 12;
-          mod.timestamp[1] = timeHold + mod.timestamp[1].substring(2, 5) + " PM"
-        } else if (+mod.timestamp[1].substring(0,2) == 0){
-          let timeHold = +mod.timestamp[1].substring(0,2) + 12
-          mod.timestamp[1] = timeHold + mod.timestamp[1].substring(2, 5) + " AM"
+        if (+mod.timeStamp[1].substring(0,2)>12){
+          let timeHold = +mod.timeStamp[1].substring(0,2) - 12;
+          mod.timeStamp[1] = timeHold + mod.timeStamp[1].substring(2, 5) + " PM"
+        } else if (+mod.timeStamp[1].substring(0,2) == 0){
+          let timeHold = +mod.timeStamp[1].substring(0,2) + 12
+          mod.timeStamp[1] = timeHold + mod.timeStamp[1].substring(2, 5) + " AM"
         } else {
-          let timeHold = +mod.timestamp[1].substring(0,2)
-          mod.timestamp[1] = timeHold + mod.timestamp[1].substring(2, 5) + " AM"
+          let timeHold = +mod.timeStamp[1].substring(0,2)
+          mod.timeStamp[1] = timeHold + mod.timeStamp[1].substring(2, 5) + " AM"
         }
         this.set.push(mod)
         })
@@ -45,7 +45,7 @@ export class ChangeLogSetComponent implements OnInit {
 
   fetchChanges() {
       return this.http.get(
-        this.auth.apiUrl + '/changelog/?changedModel=' + this.model
+        this.auth.apiUrl + '/changelog/' + this.model
       )
       .pipe(
         map((responseData: Change[] = []) => {

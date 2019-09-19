@@ -3,5 +3,5 @@ export interface Change{
     changeType: string;
     changedId: string;
     changedModel: string;
-    timestamp: string;
+    timeStamp: string;
 }

@@ -3,7 +3,7 @@
     <li class=list-group-item *ngFor="let log of set">
       <h5>Changed ID: <strong>{{log.id}}</strong></h5>
       <h5>Type of Change: <br><strong>{{log.type}}</strong></h5>
-      <h5>Time of Change: <br><strong>{{log.timestamp[1]}} on {{log.timestamp[0]}}</strong></h5>
+      <h5>Time of Change: <br><strong>{{log.timeStamp[1]}} on {{log.timeStamp[0]}}</strong></h5>
       <div *ngIf="model == 'Machine'">
         <h5>Machine: <br><strong>{{log.old.machine}}</strong></h5>
         <h5>Job: <br>

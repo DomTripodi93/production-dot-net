@@ -29,9 +29,7 @@ namespace BackEnd.Data
         Task<IEnumerable<Production>> GetProductionSetByMachine(int userId, string mach);
         Task<Hourly> GetHourly(int id);
         Task<IEnumerable<Hourly>> GetHourlySet(int userId);
-        Task<IEnumerable<Hourly>> GetHourlySetByDate(int userId, string date);
-        Task<IEnumerable<Hourly>> GetHourlySetByJob(int userId, string job);
-        Task<IEnumerable<Hourly>> GetHourlySetByJobAndMachine(int userId, string job, string mach);
+        Task<IEnumerable<Hourly>> GetHourlySetByDateAndMachine(int userId, string date, string mach);
         Task<Settings> GetSettings(int userId);
         Task<StartTime> GetStartTime(int userId, string date, string machName, string shift);
         Task<StartTime> GetUniqueStartTime(int id);

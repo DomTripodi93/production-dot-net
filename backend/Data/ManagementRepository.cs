@@ -153,105 +153,53 @@ namespace BackEnd.Data
 
         public async Task<IEnumerable<Production>> GetProductionSet(int userId)
         {
-            var operations = await _context.Operations
-                .Include(x => x.Production)
-                .Where(o => o.userId == userId)
+            var prodForReturn = await _context.Production
+                .Where(p => p.userId == userId)
                 .ToListAsync();
-
-            Production[] prodSet = Array.Empty<Production>();
-   
-            foreach (Operation opSet in operations)
-            {
-                foreach (Production prod in opSet.Production)
-                prodSet.Append<Production>(prod);
-            }
-            
-            IEnumerable<Production> prodForReturn = prodSet;
 
             return prodForReturn;
         }
 
         public async Task<IEnumerable<Production>> GetProductionSetByJob(int userId, string job)
         {
-            var operations = await _context.Operations
-                .Include(x => x.Production)
+            var prodForReturn = await _context.Production
                 .Where(o => o.userId == userId)
                 .Where(o => o.JobNumber == job)
                 .ToListAsync();
 
-            Production[] prodSet = Array.Empty<Production>();
-   
-            foreach (Operation opSet in operations)
-            {
-                foreach (Production prod in opSet.Production)
-                prodSet.Append<Production>(prod);
-            }
-            
-            IEnumerable<Production> prodForReturn = prodSet;
-
-            return prodForReturn.Where(p => p.JobNumber == job);
+            return prodForReturn;
         }
 
         public async Task<IEnumerable<Production>> GetProductionSetByOp(int userId, string job, string op)
         {
-            var operations = await _context.Operations
-                .Include(x => x.Production)
+            var prodForReturn = await _context.Production
                 .Where(o => o.userId == userId)
                 .Where(o => o.JobNumber == job)
                 .Where(o => o.OpNumber == op)
                 .ToListAsync();
 
-            Production[] prodSet = Array.Empty<Production>();
-   
-            foreach (Operation opSet in operations)
-            {
-                foreach (Production prod in opSet.Production)
-                prodSet.Append<Production>(prod);
-            }
-            
-            IEnumerable<Production> prodForReturn = prodSet;
-
-            return prodForReturn.Where(p => p.JobNumber == job);
+            return prodForReturn;
         }
 
         public async Task<IEnumerable<Production>> GetProductionSetByJobAndMachine(int userId, string job, string mach)
         {
-            var operations = await _context.Operations
-                .Include(x => x.Production)
+            var prodForReturn = await _context.Production
                 .Where(j => j.userId == userId)
+                .Where(p => p.JobNumber == job)
+                .Where(p => p.Machine == mach)
                 .ToListAsync();
 
-            Production[] prodSet = Array.Empty<Production>();
-   
-            foreach (Operation opSet in operations)
-            {
-                foreach (Production prod in opSet.Production)
-                prodSet.Append<Production>(prod);
-            }
-            
-            IEnumerable<Production> prodForReturn = prodSet;
-
-            return prodForReturn.Where(p => p.JobNumber == job).Where(p => p.Machine == mach);
+            return prodForReturn;
         }
 
         public async Task<IEnumerable<Production>> GetProductionSetByMachine(int userId, string mach)
         {
-            var operations = await _context.Operations
-                .Include(x => x.Production)
+            var prodForReturn = await _context.Production
                 .Where(j => j.userId == userId)
+                .Where(p => p.Machine == mach)
                 .ToListAsync();
 
-            Production[] prodSet = Array.Empty<Production>();
-   
-            foreach (Operation opSet in operations)
-            {
-                foreach (Production prod in opSet.Production)
-                prodSet.Append<Production>(prod);
-            }
-            
-            IEnumerable<Production> prodForReturn = prodSet;
-
-            return prodForReturn.Where(p => p.Machine == mach);
+            return prodForReturn;
         }
 
         public async Task<Hourly> GetHourly(int id)
@@ -262,81 +210,25 @@ namespace BackEnd.Data
 
         public async Task<IEnumerable<Hourly>> GetHourlySet(int userId)
         {
-            var operations = await _context.Operations
-                .Include(x => x.Hourly)
+            var hourlyForReturn = await _context.Hourlys
                 .Where(j => j.userId == userId)
                 .ToListAsync();
-
-            Hourly[] hourlySet = Array.Empty<Hourly>();
-   
-            foreach (Operation opSet in operations)
-            {
-                foreach (Hourly hourly in opSet.Hourly)
-                hourlySet.Append<Hourly>(hourly);
-            }
-            
-            IEnumerable<Hourly> hourlyForReturn = hourlySet;
 
             return hourlyForReturn;
         }
 
-        public async Task<IEnumerable<Hourly>> GetHourlySetByDate(int userId, string date)
+        public async Task<IEnumerable<Hourly>> GetHourlySetByDateAndMachine(int userId, string date, string mach)
         {
-            var operations = await _context.Operations
-                .Include(x => x.Hourly)
-                .Where(j => j.userId == userId)
-                .ToListAsync();
-
-            Hourly[] hourlySet = Array.Empty<Hourly>();
-   
-            foreach (Operation opSet in operations)
-            {
-                foreach (Hourly hourly in opSet.Hourly)
-                hourlySet.Append<Hourly>(hourly);
-            }
-            
-            IEnumerable<Hourly> hourlyForReturn = hourlySet;
 
             DateTime dateAsDate = DateTime.Parse(date);
 
-            return hourlyForReturn.Where(p => p.Date.Date == dateAsDate.Date);
-        }
-
-        public async Task<IEnumerable<Hourly>> GetHourlySetByJob(int userId, string job)
-        {
-            var operations = await _context.Operations
-                .Include(x => x.Hourly)
+            var hourlyForReturn = await _context.Hourlys
                 .Where(j => j.userId == userId)
-                .FirstOrDefaultAsync(j => j.JobNumber == job);
-
-            Hourly[] hourlySet = Array.Empty<Hourly>();
-   
-            foreach (Hourly hourly in operations.Hourly)
-            hourlySet.Append<Hourly>(hourly);
-            
-            IEnumerable<Hourly> hourlyForReturn = hourlySet;
-
-            return hourlyForReturn;
-        }
-
-        public async Task<IEnumerable<Hourly>> GetHourlySetByJobAndMachine(int userId, string job, string mach)
-        {
-            var operations = await _context.Operations
-                .Include(x => x.Hourly)
-                .Where(j => j.userId == userId)
+                .Where(p => p.Date.Date == dateAsDate.Date)
+                .Where(p => p.Machine == mach)
                 .ToListAsync();
 
-            Hourly[] hourlySet = Array.Empty<Hourly>();
-   
-            foreach (Operation opSet in operations)
-            {
-                foreach (Hourly hourly in opSet.Hourly)
-                hourlySet.Append<Hourly>(hourly);
-            }
-            
-            IEnumerable<Hourly> hourlyForReturn = hourlySet;
-
-            return hourlyForReturn.Where(p => p.JobNumber == job).Where(p => p.Machine == mach);
+            return hourlyForReturn;
         }
 
         public async Task<Settings> GetSettings(int userId)

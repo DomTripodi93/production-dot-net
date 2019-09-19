@@ -37,9 +37,7 @@ export class AppComponent implements OnInit {
           this.auth.isAuthenticated = true; 
           this.auth.authChanged.next();
         }, ()=>{
-          this.auth.isAuthenticated = false; 
-          this.auth.user = null;
-          this.auth.token = null;
+          this.auth.logout();
         }
       );
     } else {

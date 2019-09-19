@@ -45,7 +45,6 @@ import { RemainingComponent } from './job/calculator/remaining/remaining.compone
 import { JobTotalComponent } from './job/calculator/job-total/job-total.component';
 import { ChangeLogSetComponent } from './change-log/change-log-set/change-log-set.component';
 import { HourlySetJobComponent } from './hourly/hourly-set-job/hourly-set-job.component';
-import { ChangeLogFullComponent } from './change-log/change-log-full/change-log-full.component';
 import { LengthComponent } from './job/calculator/by-weight/length/length.component';
 import { AuthInterceptorService } from './shared/auth-interceptor.service';
 import {DropdownDirective} from './shared/dropdown.directive';
@@ -108,7 +107,6 @@ import { WelcomeComponent } from './shared/welcome/welcome.component';
     JobTotalComponent,
     ChangeLogSetComponent,
     HourlySetJobComponent,
-    ChangeLogFullComponent,
     LengthComponent,
     DropdownDirective,
     TutorialComponent,
