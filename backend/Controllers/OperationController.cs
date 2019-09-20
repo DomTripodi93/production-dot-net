@@ -50,15 +50,16 @@ namespace BackEnd.Controllers
             throw new Exception("Creation of op lot failed on save");
         }
 
-        [HttpPut("{opNum}/job={jobNum}")]
-        public async Task<IActionResult> UpdateOperation(int userId, string jobNum, string opNum, OperationForCreationDto opForUpdateDto)
+        [HttpPut("{opNum}&job={jobNum}")]
+        public async Task<IActionResult> UpdateOperation(int userId, string jobNum, string opNum, OperationForUpdateDto opForUpdateDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             var opFromRepo = await _repo.GetOp(jobNum, opNum);
 
-            _mapper.Map(opForUpdateDto, opFromRepo);
+            opFromRepo.Machine = opForUpdateDto.Machine;
+            opFromRepo.CycleTime = opForUpdateDto.CycleTime;
 
             if (await _repo.SaveAll())
                 return CreatedAtRoute("GetOp", new {jobNum = opFromRepo.JobNumber, opNum = opFromRepo.OpNumber}, opForUpdateDto);
@@ -66,7 +67,7 @@ namespace BackEnd.Controllers
             throw new Exception($"Updating op operation {opNum} for {jobNum} failed on save");
         }
 
-        [HttpGet("{opNum}/job={jobNum}", Name = "GetOp")]
+        [HttpGet("{opNum}&job={jobNum}", Name = "GetOp")]
         public async Task<IActionResult> GetOp(string jobNum, string opNum, int userId)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
@@ -90,7 +91,7 @@ namespace BackEnd.Controllers
             return Ok(ops);
         }
 
-        [HttpDelete("{opNum}/job={jobNum}")]
+        [HttpDelete("{opNum}&job={jobNum}")]
         public async Task<IActionResult> DeleteOperation(int userId, string jobNum, string opNum)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))

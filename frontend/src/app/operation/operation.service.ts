@@ -46,18 +46,6 @@ export class OpService {
           })
         )
     } 
-
-    fetchOpById(id) {
-        return this.http.get(
-          this.auth.apiUrl + '/operation/' + id + "/"
-        )
-        .pipe(
-          map((responseData: Operation) => {
-            responseData.machine = this.auth.rejoin(responseData.machine);
-          return responseData;
-          })
-        )
-    } 
   
     fetchAllOps() {
         return this.http.get(
@@ -81,23 +69,23 @@ export class OpService {
           );
       }
 
-      changeOp(data: Operation, id){
-        this.fetchOpById(id).subscribe((object)=>{
+      changeOp(data: Operation, info){
+        this.fetchOp(info).subscribe((object)=>{
           let oldValues = ""+JSON.stringify(object);
-          this.auth.logChanges(oldValues, this.model, "Update", id).subscribe();
+          this.auth.logChanges(oldValues, this.model, "Update", info).subscribe();
         })
         data.machine = this.auth.splitJoin(data.machine);
           return this.http.put(
-            this.auth.apiUrl + '/operation/' + id + "/", data
+            this.auth.apiUrl + '/operation/' + info, data
           );
       }
 
-      deleteOp(id){
-        this.fetchOpById(id).subscribe((object)=>{
+      deleteOp(info){
+        this.fetchOp(info).subscribe((object)=>{
           let oldValues = ""+JSON.stringify(object);
-          this.auth.logChanges(oldValues, this.model, "Delete", id).subscribe();
+          this.auth.logChanges(oldValues, this.model, "Delete", info).subscribe();
         })
-          return this.http.delete(this.auth.apiUrl + "/operation/" + id + "/",{
+          return this.http.delete(this.auth.apiUrl + "/operation/" + info + "/",{
             observe: 'events',
             responseType: 'text'
             }

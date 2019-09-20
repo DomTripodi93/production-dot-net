@@ -26,8 +26,8 @@
       <h4 *ngIf="operation.cycleTime"> Remaining Machine Hours: {{((operation.remainingQuantity*operation.cycleTime)/3600).toFixed(2)}}</h4> <br><br>
       <br><br>
       <div class="grid">
-        <button class='btn btn-primary' routerLink="../edit/{{operation.id}}">Edit Operation</button>
-        <button class='btn btn-danger' (click)="onDelete(operation.operation, operation.id)">Delete Operation</button>
+        <button class='btn btn-primary' routerLink="../edit/{{operation.opNumber}}&job={{operation.jobNumber}}">Edit Operation</button>
+        <button class='btn btn-danger' (click)="onDelete(operation)">Delete Operation</button>
       </div>
     </div>
     <br>

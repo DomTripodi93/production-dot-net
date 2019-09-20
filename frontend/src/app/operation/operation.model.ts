@@ -1,6 +1,6 @@
 export interface Operation{
     id: number;
-    job: string;
+    jobNumber: string;
     operationsToDate: string;
     opNumber: string;
     machine: string;

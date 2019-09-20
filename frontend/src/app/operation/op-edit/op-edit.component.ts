@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 export class OpEditComponent implements OnInit {
   editOpForm: FormGroup;
   operation: Operation;
-  id: number;
+  search: string;
   canInput = false;
   isError = false;
   error = "";
@@ -32,13 +32,14 @@ export class OpEditComponent implements OnInit {
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
     this.route.params.subscribe((params: Params) =>{
-      this.id = +params['id'];
+      this.search = params['opInfo'];
     });
     this.mach.fetchAllMachines()
     .subscribe(machines => {
       this.machines = machines;
-      this.operationServ.fetchOpById(this.id)
+      this.operationServ.fetchOp(this.search)
       .subscribe(operation => {
+        console.log(operation)
         this.operation = operation;
         this.initForm();
       });
@@ -47,16 +48,12 @@ export class OpEditComponent implements OnInit {
 
 
   private initForm() {
-    let job = this.operation.job;
-    let operation = this.operation.opNumber;
     let machine = this.operation.machine;
     let cycleTime = this.operation.cycleTime;
 
     this.editOpForm = new FormGroup({
-      'job': new FormControl(job, Validators.required),
-      'operation': new FormControl(operation, Validators.required),
       'cycleTime': new FormControl(cycleTime),
-      'machine': new FormControl(machine, Validators.required),
+      'machine': new FormControl(machine)
     });
   }
 
@@ -67,12 +64,12 @@ export class OpEditComponent implements OnInit {
 
   editOp(data: Operation) {
     this.isError = false;
-    this.operationServ.changeOp(data, this.id).subscribe(()=>{},
+    this.operationServ.changeOp(data, this.search).subscribe(()=>{},
     () =>{
       this.isError = true;
     });
     if (this.isError){
-      this.error = "That job already exsists on that machine!";
+      this.error = "That job already exists on that machine!";
     }else{
       setTimeout(
         ()=>{
@@ -88,8 +85,8 @@ export class OpEditComponent implements OnInit {
   }
 
   onDelete(){
-    if (confirm("Are you sure you want to delete " +this.operation.opNumber + "from job # " + this.operation.job + "?")){
-      this.operationServ.deleteOp(this.id).subscribe();
+    if (confirm("Are you sure you want to delete " +this.operation.opNumber + "from job # " + this.operation.jobNumber + "?")){
+      this.operationServ.deleteOp(this.search).subscribe();
       setTimeout(()=>{
       this.router.navigate(["../.."], {relativeTo: this.route})
       }, 50)

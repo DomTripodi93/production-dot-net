@@ -87,7 +87,7 @@ const appRoutes: Routes = [
         ]},
         {path: 'ops', component: OperationComponent, children:[
             {path: '', component: OpShowComponent},
-            {path: 'edit/:operation', component: OpEditComponent},
+            {path: 'edit/:opInfo', component: OpEditComponent},
             {path: 'new', component: OpNewComponent},
             {path: 'find', component: OpFindComponent},
             {path: ":operation", component: OpFindShowComponent},

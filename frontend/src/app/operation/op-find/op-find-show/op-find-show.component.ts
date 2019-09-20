@@ -32,7 +32,7 @@ export class OpFindShowComponent implements OnInit {
   ngOnInit() {
     this.subscription2 = this.route.params.subscribe((params: Params) =>{
       this.operation = params['operation'];
-      this.getOneOp();
+      this.getOps();
     });
     this.subscription = this.auth.authChanged.subscribe(
       ()=>{
@@ -41,29 +41,22 @@ export class OpFindShowComponent implements OnInit {
     )
   }
 
-  onDelete(operation, id){
-    if (confirm("Are you sure you want to delete " +operation+ "?")){
-      this.operationServ.deleteOp(id).subscribe(()=>{
-      setTimeout(()=>{this.getOneOp()},)}
+  onDelete(operation: Operation){
+    if (confirm(
+      "Are you sure you want to delete " + operation.opNumber + " for job # " 
+      + operation.jobNumber + "?"
+      )){
+        let searchForDelete = operation.opNumber + "&job=" + operation.jobNumber;
+        this.operationServ.deleteOp(searchForDelete).subscribe(()=>{
+        setTimeout(()=>{this.getOps()},)}
       );
       this.operationServ.operationChanged.next();
     }
   }
 
-  getOneOp() {
+  getOps() {
     this.isFetching = true;
-    if(this.operation.includes("job")){
-      this.operationServ.fetchOpByJob(this.operation)
-        .subscribe(operation => {
-          this.operations = operation;
-          this.dayServ.dates = [];
-          this.isFetching = false;
-        }, error => {
-          this.isFetching = false;
-          this.isError = true;
-          this.error = error.message
-        })
-    } else {
+    if(this.operation.includes("&")){
       this.operationServ.fetchOp(this.operation)
         .subscribe(operation => {
           this.oneOperation = operation;
@@ -74,7 +67,17 @@ export class OpFindShowComponent implements OnInit {
           this.isError = true;
           this.error = error.message
         })
-
+    } else {
+      this.operationServ.fetchOpByJob(this.operation)
+        .subscribe(operation => {
+          this.operations = operation;
+          this.dayServ.dates = [];
+          this.isFetching = false;
+        }, error => {
+          this.isFetching = false;
+          this.isError = true;
+          this.error = error.message
+        })
     }
   }  
 
