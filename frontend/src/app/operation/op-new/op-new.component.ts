@@ -43,7 +43,7 @@ export class OpNewComponent implements OnInit {
       this.jobs = jobs;
       this.initForm();
     });
-    this.auth.hideButton(0);
+    this.auth.hideButton(2);
   }
     
   private initForm() {
@@ -84,17 +84,13 @@ export class OpNewComponent implements OnInit {
       if (this.isError){
         this.error = "That op already exsists for that job!";
       } else {
-        this.router.navigate([".."], {relativeTo: this.route})
+        this.auth.showButton(2);
       }
     }, 50);
   }
 
   onCancel(){
-    window.history.back();
-  }
-
-  ngOnDestroy(){
-    this.auth.showButton(0);
+    this.auth.showButton(2);
   }
 
 

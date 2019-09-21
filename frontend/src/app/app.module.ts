@@ -63,6 +63,7 @@ import { OpEditComponent } from './operation/op-edit/op-edit.component';
 import { OpFindComponent } from './operation/op-find/op-find.component';
 import { OpFindShowComponent } from './operation/op-find/op-find-show/op-find-show.component';
 import { WelcomeComponent } from './shared/welcome/welcome.component';
+import { JobOpsComponent } from './job/job-ops/job-ops.component';
 
 @NgModule({
   declarations: [
@@ -124,6 +125,7 @@ import { WelcomeComponent } from './shared/welcome/welcome.component';
     OpFindComponent,
     OpFindShowComponent,
     WelcomeComponent,
+    JobOpsComponent,
   ],
   imports: [
     BrowserModule,

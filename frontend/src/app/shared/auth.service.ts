@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable({providedIn:'root'})
 export class AuthService {
-    buttonHidden = [false, false];
+    buttonHidden = [false, false, false];
     token = '';
     user = '';
     name = '';
