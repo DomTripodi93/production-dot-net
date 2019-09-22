@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Machine } from '../machine.model';
 import { JobService } from 'src/app/job/job.service';
-import { OpService } from 'src/app/operation/operation.service';
+import { OpService } from 'src/app/job/job-ops/operation.service';
 import { JobInfo } from '../jobInfo.interface';
 
 @Component({

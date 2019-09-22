@@ -52,7 +52,7 @@ namespace BackEnd.Controllers
         }
 
         [HttpPut("{jobNum}")]
-        public async Task<IActionResult> UpdateJob(int userId, string jobNum, JobForCreationDto jobForUpdateDto)
+        public async Task<IActionResult> UpdateJob(int userId, string jobNum, JobForUpdateDto jobForUpdateDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();

@@ -1,0 +1,54 @@
+<div class="border">
+<div *ngIf="!canInput">
+  <h1>You must be logged in to edit a operation lot!</h1>
+</div>
+  <form *ngIf="canInput && editOpForm" [formGroup]="editOpForm" (ngSubmit)='onSubmit()' >
+    <h4>
+      <label for="jobNumber">Operation# {{operation.opNumber}}</label>
+    </h4>
+    <div *ngIf="machines" class="form-group">
+      <h6 for="machine">Machine</h6>
+      <select 
+        formControlName='machine'
+        id="machine" 
+        class="form-control"
+        >
+        <option *ngFor = "let machine of machines"
+        [selected]="machine === operation.machine" 
+        [value]="machine.machine">
+          {{machine.machine}}
+        </option>
+      </select>
+    </div>
+    <div *ngIf="!machines" class="form-group">
+      <h6 for="machine">Machine</h6>
+      <input 
+        formControlName='machine'
+        id="machine" 
+        class="form-control">      
+    </div>
+    <div class="form-group">
+      <h6 for="cycleTime">Cycle Time</h6><h6> (Seconds - Optional)</h6>
+      <input 
+        formControlName='cycleTime'
+        id="cycleTime" 
+        class="form-control"
+        type="number" 
+      >
+    </div>
+    <div class="grid">
+      <button 
+        class="btn btn-success" 
+        type="submit"
+        [disabled]="!editOpForm.valid"
+      >
+        Update
+      </button>
+      <button 
+        type='button' 
+        class='btn btn-danger pull-right' 
+        (click)='onCancel()'
+      >
+        Cancel
+      </button>
+    </div>

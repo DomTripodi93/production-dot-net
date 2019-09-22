@@ -24,9 +24,13 @@ export class JobShowComponent implements OnInit {
 
   ngOnInit() {
     this.getJobs();
-    this.subscriptions.push(this.jobServ.jobChanged.subscribe(()=>{
-      setTimeout(()=>{this.getJobs()}, 50);
-    }));
+    this.subscriptions.push(
+      this.jobServ.jobChanged.subscribe(
+        ()=>{
+          setTimeout(()=>{this.getJobs()}, 50);
+        }
+      )
+    );
   }
 
   getJobs(){
@@ -42,19 +46,14 @@ export class JobShowComponent implements OnInit {
   }
 
 
-  onDelete(job, id){
-    if (confirm("Are you sure you want to delete job # " +job+ "?")){
-      this.jobServ.deleteJob(id).subscribe(()=>{
-        this.jobServ.jobChanged.next();
-      });
-    }
-  }
 
   ngOnDestroy(){
     this.jobs = [];
-    this.subscriptions.forEach((sub)=>{
-      sub.unsubscribe();
-    })
+    this.subscriptions.forEach(
+      (sub)=>{
+        sub.unsubscribe();
+      }
+    );
   }
 
 }

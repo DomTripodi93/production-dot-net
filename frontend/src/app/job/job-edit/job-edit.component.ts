@@ -35,8 +35,8 @@ export class JobEditComponent implements OnInit {
       this.jobNum = params['job'];
     });
       this.jobServ.fetchJob(this.jobNum)
-      .subscribe(jobs => {
-        this.job = jobs[0];
+      .subscribe(job => {
+        this.job = job;
         this.partServ.fetchAllParts()
         .subscribe(parts => {
           this.parts = parts;
@@ -47,8 +47,6 @@ export class JobEditComponent implements OnInit {
 
 
   private initForm() {
-    let job = this.job.jobNumber;
-    let part = this.job.part;
     let orderQuantity = this.job.orderQuantity;
     let weightRecieved = this.job.weightRecieved;
     let oal = this.job.oal;
@@ -57,8 +55,6 @@ export class JobEditComponent implements OnInit {
     let subFacing = this.job.subFacing;
 
     this.editJobForm = new FormGroup({
-      'jobNumber': new FormControl(job, Validators.required),
-      'partNum': new FormControl(part, Validators.required),
       "orderQuantity": new FormControl(orderQuantity),
       "weightRecieved": new FormControl(weightRecieved),
       "oal": new FormControl(oal),
@@ -99,7 +95,7 @@ export class JobEditComponent implements OnInit {
     if (confirm("Are you sure you want to delete " +this.job.jobNumber+ "?")){
       this.jobServ.deleteJob(this.jobNum).subscribe();
       setTimeout(()=>{
-      this.router.navigate(["../.."], {relativeTo: this.route})
+        this.router.navigate(["../.."], {relativeTo: this.route})
       }, 50)
     }
   }

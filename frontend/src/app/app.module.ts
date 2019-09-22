@@ -47,23 +47,20 @@ import { ChangeLogSetComponent } from './change-log/change-log-set/change-log-se
 import { HourlySetJobComponent } from './hourly/hourly-set-job/hourly-set-job.component';
 import { LengthComponent } from './job/calculator/by-weight/length/length.component';
 import { AuthInterceptorService } from './shared/auth-interceptor.service';
-import {DropdownDirective} from './shared/dropdown.directive';
+import { DropdownDirective } from './shared/dropdown.directive';
 import { TutorialComponent } from './shared/tutorial/tutorial.component';
 import { SettingsComponent } from './shared/settings/settings.component';
 import { JobComponent } from './job/job.component';
-import { OperationComponent } from './operation/operation.component';
 import { JobNewComponent } from './job/job-new/job-new.component';
 import { JobFindComponent } from './job/job-find/job-find.component';
 import { JobFindShowComponent } from './job/job-find/job-find-show/job-find-show.component';
 import { JobEditComponent } from './job/job-edit/job-edit.component';
 import { JobShowComponent } from './job/job-show/job-show.component';
-import { OpNewComponent } from './operation/op-new/op-new.component';
-import { OpShowComponent } from './operation/op-show/op-show.component';
-import { OpEditComponent } from './operation/op-edit/op-edit.component';
-import { OpFindComponent } from './operation/op-find/op-find.component';
-import { OpFindShowComponent } from './operation/op-find/op-find-show/op-find-show.component';
 import { WelcomeComponent } from './shared/welcome/welcome.component';
 import { JobOpsComponent } from './job/job-ops/job-ops.component';
+import { JobOpsShowComponent } from './job/job-ops/job-ops-show/job-ops-show.component';
+import { JobOpsNewComponent } from './job/job-ops/job-ops-new/job-ops-new.component';
+import { JobOpsEditComponent } from './job/job-ops/job-ops-edit/job-ops-edit.component';
 
 @NgModule({
   declarations: [
@@ -113,19 +110,16 @@ import { JobOpsComponent } from './job/job-ops/job-ops.component';
     TutorialComponent,
     SettingsComponent,
     JobComponent,
-    OperationComponent,
     JobNewComponent,
     JobFindComponent,
     JobFindShowComponent,
     JobEditComponent,
     JobShowComponent,
-    OpNewComponent,
-    OpShowComponent,
-    OpEditComponent,
-    OpFindComponent,
-    OpFindShowComponent,
     WelcomeComponent,
     JobOpsComponent,
+    JobOpsEditComponent,
+    JobOpsNewComponent,
+    JobOpsShowComponent,
   ],
   imports: [
     BrowserModule,

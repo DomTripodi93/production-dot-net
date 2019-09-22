@@ -1,71 +1,77 @@
 <div *ngIf='oneJob'>
-    <ul class='list-group'>
-        <li class=list-group-item>
-          <h3>Job #: {{job.jobNumber}}</h3>
-          <h4 *ngIf="job.jobNumber">Current Job: {{job.jobNumber}}</h4>
-          <h4 *ngIf="job.machine">Current Machine: {{job.machine}}</h4>
-          <h4 *ngIf="job.cycleTime">Cycle Time: {{job.cycleTime}}</h4>
-          <h4 *ngIf="job.orderQuantity">Order Quantity: {{job.orderQuantity}}</h4>
-          <h4 *ngIf="job.weightRecieved">Weight Recieved: {{job.weightRecieved}}</h4>
-          <h4 *ngIf="job.weightQuantity">Potential Quantity by Weight: {{job.weightQuantity}}</h4>
-          <h4 *ngIf="job.weightLength">Total Length of Bars by Weight: {{job.weightLength}}</h4>
-          <h4 *ngIf="job.possibleQuantity">Possible Quantity by Bars: {{job.possibleQuantity}}</h4>
-          <h4 *ngIf="job.remainingQuantity">Remaining Quantity: {{job.remainingQuantity}}</h4>
-          <h4 *ngIf="job.heatLot">Heat Lot#: {{job.heatLot}}</h4>        
-          <h4 *ngIf="!job.possibleQuantity && !job.weightQuantity && job.orderQuantity">Most Reliable Possible Quantity: {{job.weightQuantity}}
-          <h4 *ngIf="job.cycleTime"> Total Machine Hours: {{((job.orderQuantity*job.cycleTime)/3600).toFixed(2)}}</h4>
-          </h4>
-          <h4 *ngIf="!job.possibleQuantity && job.weightQuantity">Most Reliable Possible Quantity: {{job.weightQuantity}}
-          <h4 *ngIf="job.cycleTime"> Total Machine Hours: {{((job.weightQuantity*job.cycleTime)/3600).toFixed(2)}}</h4>
-          </h4>
-          <h4 *ngIf="job.possibleQuantity">Most Reliable Possible Quantity: {{job.possibleQuantity}}
-          <h4 *ngIf="job.cycleTime"> Total Machine Hours: {{((job.possibleQuantity*job.cycleTime)/3600).toFixed(2)}}</h4>
-          </h4>
-          <h4 *ngIf="job.remainingQuantity">Remaining Quantity: {{job.remainingQuantity}}</h4>
-          <h4 *ngIf="job.cycleTime"> Remaining Machine Hours: {{((job.remainingQuantity*job.cycleTime)/3600).toFixed(2)}}</h4> <br><br>
-          <br><br>
-          <div class="grid">
-            <button class='btn btn-primary' routerLink="../edit/{{job.id}}">Edit Job</button>
-            <button class='btn btn-danger' (click)="onDelete(job.jobNumber, job.id)">Delete Job</button>
-          </div>
-        </li>
-    </ul>
+  <div class="border">
+    <div class="grid2">
+      <button *ngIf="!oneJob.possibleQuantity" class='btn btn-primary' routerLink="calculator/oneJob/{{oneJob.jobNumber}}">Length Calc</button>
+      <button *ngIf="oneJob.possibleQuantity" class='btn btn-info' routerLink="calculator/{{oneJob.jobNumber}}">Remaining Bars</button>
+      <button *ngIf="!oneJob.weightQuantity" class='btn btn-success' routerLink="calculator/weight/{{oneJob.jobNumber}}">Weight Calc</button>
+    </div>
+    <div routerLink="{{oneJob.jobNumber}}">
+      <br>
+      <h3>{{oneJob.jobNumber}}</h3>
+      <h4>Part: <br> {{oneJob.partNum}}</h4>
+      <h4 *ngIf="!oneJob.possibleQuantity && !oneJob.weightQuantity && oneJob.orderQuantity">
+        Possible Quantity: {{oneJob.orderQuantity}}
+      </h4>
+      <h4 *ngIf="!oneJob.possibleQuantity && oneJob.weightQuantity">
+        Possible Quantity: {{oneJob.weightQuantity}}
+      </h4>
+      <h4 *ngIf="oneJob.possibleQuantity">
+        Possible Quantity: {{oneJob.possibleQuantity}}
+      </h4>
+      <h4 *ngIf="oneJob.remainingQuantity">
+        Remaining Quantity: {{oneJob.remainingQuantity}}
+      </h4> 
+      <br><br>
+    </div>
+    <div class="grid2">
+        <button class='btn btn-primary' routerLink="edit/{{oneJob.jobNumber}}">Edit Job</button>
+        <button class='btn btn-danger' (click)="onDelete(oneJob.jobNumber, oneJob.id)">Delete Job</button>
+    </div>
+    <div>
+      <h4> Operations </h4>
+      <app-job-ops-show [operation]="'job='+oneJob.jobNumber"></app-job-ops-show>
+    </div>
+  </div>
 </div>
 <div *ngIf='jobs'>
-  <div *ngFor="let job of jobs; let i=index"> 
-    <div routerLink="../job={{job.jobNumber}}" class="border">
-      <h3>Job #: {{job.jobNumber}}</h3>
-      <h4 *ngIf="job.jobNumber">Current Job: {{job.jobNumber}}</h4>
-      <h4 *ngIf="job.machine">Current Machine: {{job.machine}}</h4>
-      <h4 *ngIf="job.cycleTime">Cycle Time: {{job.cycleTime}}</h4>
-      <h4 *ngIf="job.orderQuantity">Order Quantity: {{job.orderQuantity}}</h4>
-      <h4 *ngIf="job.weightRecieved">Weight Recieved: {{job.weightRecieved}}</h4>
-      <h4 *ngIf="job.weightQuantity">Potential Quantity by Weight: {{job.weightQuantity}}</h4>
-      <h4 *ngIf="job.weightLength">Total Length of Bars by Weight: {{job.weightLength}}</h4>
-      <h4 *ngIf="job.possibleQuantity">Possible Quantity by Bars: {{job.possibleQuantity}}</h4>
-      <h4 *ngIf="job.remainingQuantity">Remaining Quantity: {{job.remainingQuantity}}</h4>
-      <h4 *ngIf="job.heatLot">Heat Lot#: {{job.heatLot}}</h4>
-              <h4 *ngIf="!job.possibleQuantity && !job.weightQuantity && job.orderQuantity">Most Reliable Possible Quantity: {{job.weightQuantity}}
-        <h4 *ngIf="job.cycleTime"> Total Machine Hours: {{((job.orderQuantity*job.cycleTime)/3600).toFixed(2)}}</h4>
+  <div *ngFor="let job of jobs; let i=index">  
+    <div class="border">
+      <div class="grid2">
+        <button *ngIf="!job.possibleQuantity" class='btn btn-primary' routerLink="calculator/job/{{job.jobNumber}}">Length Calc</button>
+        <button *ngIf="job.possibleQuantity" class='btn btn-info' routerLink="calculator/{{job.jobNumber}}">Remaining Bars</button>
+        <button *ngIf="!job.weightQuantity" class='btn btn-success' routerLink="calculator/weight/{{job.jobNumber}}">Weight Calc</button>
+      </div>
+      <div routerLink="{{job.jobNumber}}">
+        <br>
+        <h3>{{job.jobNumber}}</h3>
+        <h4>Current Job: <br> {{job.jobNumber}}</h4>
+        <h4 *ngIf="!job.possibleQuantity && !job.weightQuantity && job.orderQuantity">
+          Possible Quantity: {{job.orderQuantity}}
         </h4>
-        <h4 *ngIf="!job.possibleQuantity && job.weightQuantity">Most Reliable Possible Quantity: {{job.weightQuantity}}
-        <h4 *ngIf="job.cycleTime"> Total Machine Hours: {{((job.weightQuantity*job.cycleTime)/3600).toFixed(2)}}</h4>
+        <h4 *ngIf="!job.possibleQuantity && job.weightQuantity">
+          Possible Quantity: {{job.weightQuantity}}
         </h4>
-        <h4 *ngIf="job.possibleQuantity">Most Reliable Possible Quantity: {{job.possibleQuantity}}
-        <h4 *ngIf="job.cycleTime"> Total Machine Hours: {{((job.possibleQuantity*job.cycleTime)/3600).toFixed(2)}}</h4>
+        <h4 *ngIf="job.possibleQuantity">
+          Possible Quantity: {{job.possibleQuantity}}
         </h4>
-        <h4 *ngIf="job.remainingQuantity">Remaining Quantity: {{job.remainingQuantity}}</h4>
-        <h4 *ngIf="job.cycleTime"> Remaining Machine Hours: {{((job.remainingQuantity*job.cycleTime)/3600).toFixed(2)}}</h4> <br><br>
-      <div class="grid">
-        <button class='btn btn-primary' routerLink="../edit/{{job.id}}">Edit Job</button>
-        <button class='btn btn-danger' (click)="onDelete(job.jobNumber, job.id)">Delete Job</button>
+        <h4 *ngIf="job.remainingQuantity">
+          Remaining Quantity: {{job.remainingQuantity}}
+        </h4> 
+        <br><br>
+      </div>
+      <div class="grid2">
+          <button class='btn btn-primary' routerLink="edit/{{job.jobNumber}}">Edit Job</button>
+          <button class='btn btn-danger' (click)="onDelete(job.jobNumber, job.id)">Delete Job</button>
+      </div>
+      <div>
+        <h4> Operations </h4>
+        <app-job-ops [operation]="'job='+job.jobNumber"></app-job-ops>
       </div>
     </div>
-    <br>
   </div>
 </div>
 
 
-<div *ngIf='jobs.length == 0'>
+<div *ngIf='jobs.length == 0 && !oneJob'>
     <h2> No jobs for this Search </h2>
 </div>

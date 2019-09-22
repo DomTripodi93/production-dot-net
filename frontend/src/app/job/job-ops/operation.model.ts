@@ -1,5 +1,4 @@
 export interface Operation{
-    id: number;
     jobNumber: string;
     operationsToDate: string;
     opNumber: string;

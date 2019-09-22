@@ -3,7 +3,7 @@
   </div>
     <form *ngIf="canInput && operationForm" [formGroup]="operationForm" (ngSubmit)='onSubmit()' >
       <div class="form-group">
-        <label for="opNumber">Operation</label>
+        <h6 for="opNumber">Operation</h6>
         <input 
           formControlName='opNumber'
           id="opNumber" 
@@ -11,7 +11,7 @@
         >
       </div>
       <div *ngIf="machines" class="form-group">
-        <label for="machine">Machine</label>
+        <h6 for="machine">Machine</h6>
         <select 
           formControlName='machine'
           id="machine" 
@@ -20,14 +20,14 @@
         </select>
       </div>
       <div *ngIf="!machines" class="form-group">
-        <label for="machine">Machine</label>
+        <h6 for="machine">Machine</h6>
         <input 
           formControlName='machine'
           id="machine" 
           class="form-control">      
       </div>
       <div class="form-group">
-        <label for="cycleTime">Cycle Time (Seconds - Optional)</label>
+        <h6 for="cycleTime">Cycle Time (Seconds - Optional)</h6>
         <input 
           formControlName='cycleTime'
           id="cycleTime" 
@@ -36,21 +36,13 @@
         >
       </div>
       <div *ngIf="jobs" class="form-group">
-        <label for="jobNumber">Job#</label>
+        <h6 for="jobNumber">Job#</h6>
         <select 
           formControlName='jobNumber'
           id="jobNumber" 
           class="form-control">  
           <option *ngFor = "let job of jobs">{{job.jobNumber}}</option>
         </select>
-      </div>
-      <div *ngIf="!jobs" class="form-group">
-        <label for="jobNumber">Job#</label>
-        <input 
-          formControlName='jobNumber'
-          type="text" 
-          id="jobNumber" 
-          class="form-control">      
       </div>
       <br><br>
       <div class='grid'>

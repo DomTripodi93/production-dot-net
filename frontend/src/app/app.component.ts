@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
     this.auth.user = localStorage.getItem('id'),
     this.auth.token = localStorage.getItem('token');
     if (this.auth.user){
-      this.auth.getUserDetails(this.auth.user).subscribe(()=>{
+      this.auth.getUserDetails().subscribe(()=>{
           this.auth.isAuthenticated = true; 
           this.auth.authChanged.next();
         }, ()=>{

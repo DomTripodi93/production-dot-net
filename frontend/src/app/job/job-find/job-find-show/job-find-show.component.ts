@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Job } from '../../job.model';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/shared/auth.service';
 import { JobService } from '../../job.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DaysService } from 'src/app/shared/days/days.service';
@@ -12,53 +11,67 @@ import { DaysService } from 'src/app/shared/days/days.service';
   styleUrls: ['./job-find-show.component.css']
 })
 export class JobFindShowComponent implements OnInit {
+  @Input() search: string;
   isFetching = false;
   isError = false;
   error = '';
   oneJob: Job;
   jobs: Job[] = [];
-  job = "";
+  job: string;
   id = '';
-  subscription = new Subscription;
-  subscription2 = new Subscription;
+  subscriptions: Subscription[] = [];
 
   constructor(
-    private auth: AuthService,
     private jobServ: JobService,
-    private route: ActivatedRoute,
-    private dayServ: DaysService
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.subscription2 = this.route.params.subscribe((params: Params) =>{
-      this.job = params['job'];
-      this.getOneJob();
-    });
-    this.subscription = this.auth.authChanged.subscribe(
-      ()=>{
-        this.id = this.auth.user
-      }
-    )
+    if (this.search.length > 1){
+      this.job = this.search;
+      this.getJob();
+    } else {
+    this.subscriptions.push( 
+          this.route.params.subscribe((params: Params) =>{
+          this.job = params['job'];
+          this.getJob();
+        })
+      );
+    }
   }
-
-  onDelete(job, id){
-    if (confirm("Are you sure you want to delete " +job+ "?")){
-      this.jobServ.deleteJob(id).subscribe();
-      this.jobServ.jobChanged.next();
+  
+  onDelete(job){
+    if (confirm("Are you sure you want to delete job # " +job+ "?")){
+      this.jobServ.deleteJob(job).subscribe(()=>{
+        this.jobServ.jobChanged.next();
+      });
     }
   }
 
-  getOneJob() {
+  getJob() {
     this.isFetching = true;
-    this.jobServ.fetchJob(this.job)
-      .subscribe(job => {
-        this.oneJob = job;
-        this.dayServ.dates = [];
-        this.isFetching = false;
-      }, error => {
-        this.isFetching = false;
-        this.isError = true;
-        this.error = error.message
-      })
-  }  
+    if (this.job.includes("part")){
+      this.jobServ.fetchJobByPart(this.job)
+        .subscribe(jobs => {
+          this.jobs = jobs;
+          this.isFetching = false;
+        }, error => {
+          this.isFetching = false;
+          this.isError = true;
+          this.error = error.message
+        });
+    } else {
+      this.jobServ.fetchJob(this.job)
+        .subscribe(job => {
+          this.oneJob = job;
+          this.isFetching = false;
+        }, error => {
+          this.isFetching = false;
+          this.isError = true;
+          this.error = error.message
+        });
+    }
+  } 
+  
+  
 }

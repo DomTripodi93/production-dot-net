@@ -43,12 +43,6 @@ import { JobShowComponent } from './job/job-show/job-show.component';
 import { JobEditComponent } from './job/job-edit/job-edit.component';
 import { JobNewComponent } from './job/job-new/job-new.component';
 import { JobFindComponent } from './job/job-find/job-find.component';
-import { OperationComponent } from './operation/operation.component';
-import { OpShowComponent } from './operation/op-show/op-show.component';
-import { OpEditComponent } from './operation/op-edit/op-edit.component';
-import { OpNewComponent } from './operation/op-new/op-new.component';
-import { OpFindComponent } from './operation/op-find/op-find.component';
-import { OpFindShowComponent } from './operation/op-find/op-find-show/op-find-show.component';
 
 const appRoutes: Routes = [
     {path: '', component: CalenderComponent, pathMatch: 'full' },
@@ -84,13 +78,6 @@ const appRoutes: Routes = [
                 {path: ":jobNum", component: RemainingComponent},
             ]},
             {path: ":job", component: PartFindShowComponent},
-        ]},
-        {path: 'ops', component: OperationComponent, children:[
-            {path: '', component: OpShowComponent},
-            {path: 'edit/:opInfo', component: OpEditComponent},
-            {path: 'new', component: OpNewComponent},
-            {path: 'find', component: OpFindComponent},
-            {path: ":operation", component: OpFindShowComponent},
         ]},
         {path: 'production', component: ProductionComponent, children:[
             {path: '', component: ProductionListComponent},

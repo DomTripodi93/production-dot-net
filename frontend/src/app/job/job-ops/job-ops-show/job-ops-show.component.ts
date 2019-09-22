@@ -1,15 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Operation } from 'src/app/job/job-ops/operation.model';
-import { OpService } from 'src/app/job/job-ops/operation.service';
+import { OpService } from '../operation.service';
 import { DaysService } from 'src/app/shared/days/days.service';
-import { AuthService } from '../../shared/auth.service';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
-  selector: 'app-job-ops',
-  templateUrl: './job-ops.component.html',
-  styleUrls: ['./job-ops.component.css']
+  selector: 'app-job-ops-show',
+  templateUrl: './job-ops-show.component.html',
+  styleUrls: ['./job-ops-show.component.css']
 })
-export class JobOpsComponent implements OnInit {
+export class JobOpsShowComponent implements OnInit {
   @Input() operation: string;
   isFetching = false;
   isError = false;
@@ -17,15 +17,23 @@ export class JobOpsComponent implements OnInit {
   operations: Operation[] = [];
   id = '';
   showForm = false;
+  editOp: boolean[] = [];
 
   constructor(
-    private operationServ: OpService,
-    private dayServ: DaysService,
-    private auth: AuthService
+    private opServ: OpService,
+    private dayServ: DaysService
   ) { }
 
   ngOnInit() {
     this.getOps();
+    this.opServ.opsChanged.subscribe(()=>{
+        this.getOps();
+        this.showForm = false;
+        for (let bool in this.editOp){
+          this.editOp[bool] = false; 
+        }
+      }
+    )
   }
 
   onDelete(operation: Operation){
@@ -34,17 +42,20 @@ export class JobOpsComponent implements OnInit {
       + operation.jobNumber + "?"
       )){
         let searchForDelete = operation.opNumber + "&job=" + operation.jobNumber;
-        this.operationServ.deleteOp(searchForDelete).subscribe(()=>{
+        this.opServ.deleteOp(searchForDelete).subscribe(()=>{
         setTimeout(()=>{this.getOps()},)}
       );
-      this.operationServ.opsChanged.next();
+      this.opServ.opsChanged.next();
     }
   }
 
   getOps() {
     this.isFetching = true;
-      this.operationServ.fetchOpByJob(this.operation)
+      this.opServ.fetchOpByJob(this.operation)
         .subscribe(operation => {
+          for (let i in operation){
+            this.editOp.push(false)
+          }
           this.operations = operation;
           this.dayServ.dates = [];
           this.isFetching = false;
@@ -55,8 +66,13 @@ export class JobOpsComponent implements OnInit {
         })
   }
 
+  opEdit(index: number){
+    this.editOp[index] = true
+  }
+
   newOp(){
     this.showForm = true;
   }
+
 
 }

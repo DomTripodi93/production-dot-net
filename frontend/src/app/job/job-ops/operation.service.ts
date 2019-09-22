@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { map, tap } from "rxjs/operators";
-import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
-import { AuthService } from '../shared/auth.service';
-import { Subject } from 'rxjs';
-import { Operation } from './operation.model';
+import { HttpClient, HttpEventType } from '@angular/common/http';
+import { AuthService } from '../../shared/auth.service';
+import { Subject, Observable } from 'rxjs';
+import { Operation } from '../../job/job-ops/operation.model';
 
 @Injectable({providedIn: 'root'})
 export class OpService {
-    operationChanged = new Subject();
     operationHold: Operation;
     model = "Operation";
+    public opsChanged = new Subject;
 
     constructor(
         private http: HttpClient,

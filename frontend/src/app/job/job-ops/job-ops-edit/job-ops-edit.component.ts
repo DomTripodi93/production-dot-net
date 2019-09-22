@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { MachineService } from 'src/app/machine/machine.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Operation } from '../operation.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Operation } from 'src/app/job/job-ops/operation.model';
 import { Machine } from 'src/app/machine/machine.model';
 import { OpService } from '../operation.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
+import { MachineService } from 'src/app/machine/machine.service';
 
 @Component({
-  selector: 'app-op-edit',
-  templateUrl: './op-edit.component.html',
-  styleUrls: ['./op-edit.component.css']
+  selector: 'app-job-ops-edit',
+  templateUrl: './job-ops-edit.component.html',
+  styleUrls: ['./job-ops-edit.component.css']
 })
-export class OpEditComponent implements OnInit {
+export class JobOpsEditComponent implements OnInit {
+  @Input() search: string;
   editOpForm: FormGroup;
   operation: Operation;
-  search: string;
   canInput = false;
   isError = false;
   error = "";
@@ -23,23 +23,17 @@ export class OpEditComponent implements OnInit {
   
   constructor(
     private operationServ: OpService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private auth: AuthService,
-    private mach: MachineService
+    private mach: MachineService,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
-    this.route.params.subscribe((params: Params) =>{
-      this.search = params['opInfo'];
-    });
     this.mach.fetchAllMachines()
     .subscribe(machines => {
       this.machines = machines;
       this.operationServ.fetchOp(this.search)
       .subscribe(operation => {
-        console.log(operation)
         this.operation = operation;
         this.initForm();
       });
@@ -73,24 +67,14 @@ export class OpEditComponent implements OnInit {
     }else{
       setTimeout(
         ()=>{
-          this.operationServ.operationChanged.next();
-          this.router.navigate(["../.."], {relativeTo: this.route})
-        }, 50
+          this.operationServ.opsChanged.next();
+        }, 100
       );
     }
   }
 
   onCancel(){
-    window.history.back();;
-  }
-
-  onDelete(){
-    if (confirm("Are you sure you want to delete " +this.operation.opNumber + "from job # " + this.operation.jobNumber + "?")){
-      this.operationServ.deleteOp(this.search).subscribe();
-      setTimeout(()=>{
-      this.router.navigate(["../.."], {relativeTo: this.route})
-      }, 50)
-    }
+    this.operationServ.opsChanged.next();
   }
 
 }

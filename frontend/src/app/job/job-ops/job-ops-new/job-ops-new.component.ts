@@ -1,67 +1,68 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Machine } from 'src/app/machine/machine.model';
-import { MachineService } from 'src/app/machine/machine.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/auth.service';
 import { OpService } from '../operation.service';
-import { Operation } from '../operation.model';
-import { JobService } from '../../job/job.service';
-import { Job } from 'src/app/job/job.model';
+import { AuthService } from 'src/app/shared/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MachineService } from 'src/app/machine/machine.service';
+import { JobService } from '../../job.service';
+import { Operation } from 'src/app/job/job-ops/operation.model';
+import { Job } from '../../job.model';
 
 @Component({
-  selector: 'app-op-new',
-  templateUrl: './op-new.component.html',
-  styleUrls: ['./op-new.component.css']
+  selector: 'app-job-ops-new',
+  templateUrl: './job-ops-new.component.html',
+  styleUrls: ['./job-ops-new.component.css']
 })
-export class OpNewComponent implements OnInit {
+export class JobOpsNewComponent implements OnInit {
+  @Input() jobNumber: string;
   error = '';
   canInput= false;
   operationForm: FormGroup;
   isError = false;
   machines: Machine[] = [];
-  jobs: Job[] = [];
+  jobInUse: Job;
   
   constructor(
-    private operationServ: OpService,
+    private opServ: OpService,
     private auth: AuthService,
-    private router: Router,
-    private route: ActivatedRoute,
     private mach: MachineService,
     private jobServ: JobService
   ){}
   
   ngOnInit(){
+    this.jobServ.fetchJob(this.jobNumber).subscribe((job)=>{
+      this.jobInUse = job;
+    })
     this.canInput = this.auth.isAuthenticated;
     this.mach.fetchAllMachines()
     .subscribe(machines => {
       this.machines = machines;
       this.initForm();
     });
-    this.jobServ.fetchAllJobs()
-    .subscribe(jobs => {
-      this.jobs = jobs;
-      this.initForm();
-    });
-    this.auth.hideButton(2);
   }
     
   private initForm() {
     let operation: string;
-    let job: string;
     let machine: string;
+    let remainingQuantity: string;
+
+    if (this.jobInUse.remainingQuantity){
+      remainingQuantity = this.jobInUse.remainingQuantity;
+    } else if (this.jobInUse.orderQuantity){
+      remainingQuantity = this.jobInUse.orderQuantity;
+    }
+
     if (this.machines.length > 0){
       machine = this.machines[0].machine;
-    }
-    if (this.jobs.length > 0){
-      job = this.jobs[0].jobNumber;
     }
     let cycleTime: string;
 
     this.operationForm = new FormGroup({
-      'jobNumber': new FormControl(job, Validators.required),
+      'jobNumber': new FormControl(this.jobNumber, Validators.required),
       'opNumber': new FormControl(operation, Validators.required),
       'cycleTime': new FormControl(cycleTime),
+      'remainingQuantity': new FormControl(remainingQuantity),
       'machine': new FormControl(machine, Validators.required)
     });
   }
@@ -74,8 +75,8 @@ export class OpNewComponent implements OnInit {
   newOp(data: Operation) {
     this.error= null;
     this.isError = false;
-    this.operationServ.operationChanged.next();
-    this.operationServ.addOp(data).subscribe(() => {},
+    this.opServ.opsChanged.next();
+    this.opServ.addOp(data).subscribe(() => {},
       (error) =>{
         this.isError = true;
         this.error = error;
@@ -84,14 +85,12 @@ export class OpNewComponent implements OnInit {
       if (this.isError){
         this.error = "That op already exsists for that job!";
       } else {
-        this.auth.showButton(2);
+        this.opServ.opsChanged.next()
       }
-    }, 50);
+    }, 100);
   }
 
   onCancel(){
-    this.auth.showButton(2);
+    this.opServ.opsChanged.next();
   }
-
-
 }

@@ -1,12 +1,11 @@
 .grid { 
     display: grid;
-    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-template-columns: 50% 50%;
 }
 
 .grid2 { 
     display: grid;
-    grid-template-columns: 50% 50%;
-    font-size: 20vw;
+    grid-template-columns: 100%;
 }
 
 .border{
@@ -17,10 +16,13 @@
     color: white;
 }
 
-
 h3{
     text-align: center;
     text-decoration: underline;
+}
+
+h2{
+    text-align: center;
 }
 
 h4{

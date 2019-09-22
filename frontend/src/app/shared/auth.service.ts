@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable({providedIn:'root'})
 export class AuthService {
-    buttonHidden = [false, false, false];
+    buttonHidden = [false, false];
     token = '';
     user = '';
     name = '';
@@ -55,9 +55,9 @@ export class AuthService {
         )
     }
 
-    getUserDetails(id){
+    getUserDetails(){
       return this.http.get(
-        this.authApiUrl + "/user/" + id,
+        this.authApiUrl + "/user/" + this.user,
         {
           observe: "response"
         }

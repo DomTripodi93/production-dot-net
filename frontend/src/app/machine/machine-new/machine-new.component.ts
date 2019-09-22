@@ -5,8 +5,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Machine } from '../machine.model';
 import { MachineService } from 'src/app/machine/machine.service';
 import { JobService } from 'src/app/job/job.service';
-import { Operation } from 'src/app/operation/operation.model';
-import { OpService } from 'src/app/operation/operation.service';
+import { Operation } from 'src/app/job/job-ops/operation.model';
+import { OpService } from 'src/app/job/job-ops/operation.service';
 import { JobInfo } from '../jobInfo.interface';
 
 @Component({

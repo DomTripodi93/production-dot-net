@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HourlyService } from '../hourly.service';
 import { MachineService } from '../../machine/machine.service';
 import { JobService } from 'src/app/job/job.service';
-import { OpService } from '../../operation/operation.service';
+import { OpService } from '../../job/job-ops/operation.service';
 import { JobInfo } from 'src/app/machine/jobInfo.interface';
 import { Machine } from 'src/app/machine/machine.model';
 
