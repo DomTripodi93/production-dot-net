@@ -68,7 +68,6 @@ const appRoutes: Routes = [
         ]},
         {path: 'jobs', component: JobComponent, children:[
             {path: '', component: JobShowComponent},
-            {path: 'edit/:job', component: JobEditComponent},
             {path: 'new', component: JobNewComponent},
             {path: 'find', component: JobFindComponent},
             {path: "calculator", component: CalculatorComponent, children:[

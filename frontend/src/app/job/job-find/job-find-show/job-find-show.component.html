@@ -1,45 +1,53 @@
 <div *ngIf='oneJob'>
   <div class="border">
-    <div class="grid2">
-      <button *ngIf="!oneJob.possibleQuantity" class='btn btn-primary' routerLink="calculator/oneJob/{{oneJob.jobNumber}}">Length Calc</button>
-      <button *ngIf="oneJob.possibleQuantity" class='btn btn-info' routerLink="calculator/{{oneJob.jobNumber}}">Remaining Bars</button>
-      <button *ngIf="!oneJob.weightQuantity" class='btn btn-success' routerLink="calculator/weight/{{oneJob.jobNumber}}">Weight Calc</button>
+    <div *ngIf="!editJob">
+      <div class="grid2">
+        <button *ngIf="!oneJob.possibleQuantity" class='btn btn-primary' routerLink="/jobs/calculator/oneJob/{{oneJob.jobNumber}}">Length Calc</button>
+        <button *ngIf="oneJob.possibleQuantity" class='btn btn-info' routerLink="/jobs/calculator/{{oneJob.jobNumber}}">Remaining Bars</button>
+        <button *ngIf="!oneJob.weightQuantity" class='btn btn-success' routerLink="/jobs/calculator/weight/{{oneJob.jobNumber}}">Weight Calc</button>
+      </div>
+      <div routerLink="{{oneJob.jobNumber}}">
+        <br>
+        <h3>{{oneJob.jobNumber}}</h3>
+        <h4>Part: <br> {{oneJob.partNum}}</h4>
+        <h4 *ngIf="!oneJob.possibleQuantity && !oneJob.weightQuantity && oneJob.orderQuantity">
+          Possible Quantity: {{oneJob.orderQuantity}}
+        </h4>
+        <h4 *ngIf="!oneJob.possibleQuantity && oneJob.weightQuantity">
+          Possible Quantity: {{oneJob.weightQuantity}}
+        </h4>
+        <h4 *ngIf="oneJob.possibleQuantity">
+          Possible Quantity: {{oneJob.possibleQuantity}}
+        </h4>
+        <h4 *ngIf="oneJob.remainingQuantity">
+          Remaining Quantity: {{oneJob.remainingQuantity}}
+        </h4> 
+        <br><br>
+      </div>
+      <div class="grid2">
+          <button class='btn btn-primary' (click)="onEdit()">Edit Job</button>
+          <button class='btn btn-danger' (click)="onDelete(oneJob.jobNumber, oneJob.id)">Delete Job</button>
+      </div>
     </div>
-    <div routerLink="{{oneJob.jobNumber}}">
-      <br>
-      <h3>{{oneJob.jobNumber}}</h3>
-      <h4>Part: <br> {{oneJob.partNum}}</h4>
-      <h4 *ngIf="!oneJob.possibleQuantity && !oneJob.weightQuantity && oneJob.orderQuantity">
-        Possible Quantity: {{oneJob.orderQuantity}}
-      </h4>
-      <h4 *ngIf="!oneJob.possibleQuantity && oneJob.weightQuantity">
-        Possible Quantity: {{oneJob.weightQuantity}}
-      </h4>
-      <h4 *ngIf="oneJob.possibleQuantity">
-        Possible Quantity: {{oneJob.possibleQuantity}}
-      </h4>
-      <h4 *ngIf="oneJob.remainingQuantity">
-        Remaining Quantity: {{oneJob.remainingQuantity}}
-      </h4> 
-      <br><br>
+
+    <div *ngIf="editJob">
+      <app-job-edit [jobNum]="oneJob.jobNumber"></app-job-edit>
     </div>
-    <div class="grid2">
-        <button class='btn btn-primary' routerLink="edit/{{oneJob.jobNumber}}">Edit Job</button>
-        <button class='btn btn-danger' (click)="onDelete(oneJob.jobNumber, oneJob.id)">Delete Job</button>
-    </div>
+
     <div>
       <h4> Operations </h4>
       <app-job-ops-show [operation]="'job='+oneJob.jobNumber"></app-job-ops-show>
     </div>
   </div>
 </div>
+
 <div *ngIf='jobs'>
   <div *ngFor="let job of jobs; let i=index">  
     <div class="border">
       <div class="grid2">
-        <button *ngIf="!job.possibleQuantity" class='btn btn-primary' routerLink="calculator/job/{{job.jobNumber}}">Length Calc</button>
-        <button *ngIf="job.possibleQuantity" class='btn btn-info' routerLink="calculator/{{job.jobNumber}}">Remaining Bars</button>
-        <button *ngIf="!job.weightQuantity" class='btn btn-success' routerLink="calculator/weight/{{job.jobNumber}}">Weight Calc</button>
+        <button *ngIf="!job.possibleQuantity" class='btn btn-primary' routerLink="jobs/calculator/job/{{job.jobNumber}}">Length Calc</button>
+        <button *ngIf="job.possibleQuantity" class='btn btn-info' routerLink="jobs/calculator/{{job.jobNumber}}">Remaining Bars</button>
+        <button *ngIf="!job.weightQuantity" class='btn btn-success' routerLink="jobs/calculator/weight/{{job.jobNumber}}">Weight Calc</button>
       </div>
       <div routerLink="{{job.jobNumber}}">
         <br>

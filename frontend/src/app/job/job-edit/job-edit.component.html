@@ -5,7 +5,7 @@
 <form *ngIf="canInput && editJobForm" [formGroup]="editJobForm" (ngSubmit)='onSubmit()' >
   <h4><strong>Job# {{jobNum}}, Part# {{job.partNum}}</strong></h4>
   <div class="form-group">
-    <label for="orderQuantity">Order Quantity (Optional)</label>
+    <h6 for="orderQuantity">Order Quantity (Optional)</h6>
     <input 
       formControlName='orderQuantity'
       type="number" 
@@ -13,7 +13,7 @@
       class="form-control">
   </div>
   <div class="form-group">
-    <label for="weightRecieved">Weight Recieved (Optional)</label>
+    <h6 for="weightRecieved">Weight Recieved (Optional)</h6>
     <input 
       formControlName='weightRecieved'
       type="number" 
@@ -21,7 +21,7 @@
       class="form-control">
   </div>
   <div class="form-group">
-    <label for="oal">Overall Length of Job (Optional)</label>
+    <h6 for="oal">Overall Length of Job (Optional)</h6>
     <input 
       formControlName='oal'
       type="number" 
@@ -29,7 +29,7 @@
       class="form-control">
   </div>
   <div class="form-group">
-    <label for="cutOff">Cut Off Size (Optional)</label>
+    <h6 for="cutOff">Cut Off Size (Optional)</h6>
     <input 
       formControlName='cutOff'
       type="number" 
@@ -37,7 +37,7 @@
       class="form-control">
   </div>
   <div class="form-group">
-    <label for="mainFacing">Amount Faced on Main Spindle (Optional)</label>
+    <h6 for="mainFacing">Amount Faced on Main Spindle (Optional)</h6>
     <input 
       formControlName='mainFacing'
       type="number" 
@@ -45,7 +45,7 @@
       class="form-control">
   </div>
   <div class="form-group">
-    <label for="subFacing">Amount Faced on Sub Spindle (Optional)</label>
+    <h6 for="subFacing">Amount Faced on Sub Spindle (Optional)</h6>
     <input 
       formControlName='subFacing'
       type="number" 
@@ -61,15 +61,6 @@
     >
       Update Job
     </button>
-    <div></div>
-    <button 
-      type='button' 
-      class="btn btn-danger" 
-      (click)='onDelete()'
-    >
-      Delete
-    </button>
-    <div></div>
     <button 
       type='button' 
       class='btn btn-danger pull-right' 

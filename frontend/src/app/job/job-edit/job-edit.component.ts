@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Job } from '../job.model';
 import { JobService } from '../job.service';
-import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
 import { PartService } from 'src/app/part/part.service';
 import { Part } from 'src/app/part/part.model';
@@ -13,9 +12,9 @@ import { Part } from 'src/app/part/part.model';
   styleUrls: ['./job-edit.component.css']
 })
 export class JobEditComponent implements OnInit {
+  @Input() jobNum: string;
   editJobForm: FormGroup;
   job: Job;
-  jobNum: string;
   canInput = false;
   isError = false;
   error = "";
@@ -23,26 +22,21 @@ export class JobEditComponent implements OnInit {
   
   constructor(
     private jobServ: JobService,
-    private route: ActivatedRoute,
-    private router: Router,
     private auth: AuthService,
     private partServ: PartService
   ) { }
 
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
-    this.route.params.subscribe((params: Params) =>{
-      this.jobNum = params['job'];
-    });
-      this.jobServ.fetchJob(this.jobNum)
-      .subscribe(job => {
-        this.job = job;
-        this.partServ.fetchAllParts()
-        .subscribe(parts => {
-          this.parts = parts;
-          this.initForm();
-        });
+    this.jobServ.fetchJob(this.jobNum)
+    .subscribe(job => {
+      this.job = job;
+      this.partServ.fetchAllParts()
+      .subscribe(parts => {
+        this.parts = parts;
+        this.initForm();
       });
+    });
   }
 
 
@@ -81,22 +75,21 @@ export class JobEditComponent implements OnInit {
       setTimeout(
         ()=>{
           this.jobServ.jobChanged.next();
-          this.router.navigate(["../.."], {relativeTo: this.route})
-        }, 50
+        }, 100
       );
     }
   }
 
   onCancel(){
-    window.history.back();;
+    this.jobServ.jobChanged.next();
   }
 
   onDelete(){
     if (confirm("Are you sure you want to delete " +this.job.jobNumber+ "?")){
       this.jobServ.deleteJob(this.jobNum).subscribe();
       setTimeout(()=>{
-        this.router.navigate(["../.."], {relativeTo: this.route})
-      }, 50)
+        this.jobServ.jobChanged.next();
+      }, 100)
     }
   }
 

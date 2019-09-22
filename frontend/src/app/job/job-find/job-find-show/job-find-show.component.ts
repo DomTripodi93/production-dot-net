@@ -3,7 +3,6 @@ import { Job } from '../../job.model';
 import { Subscription } from 'rxjs';
 import { JobService } from '../../job.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { DaysService } from 'src/app/shared/days/days.service';
 
 @Component({
   selector: 'app-job-find-show',
@@ -12,6 +11,7 @@ import { DaysService } from 'src/app/shared/days/days.service';
 })
 export class JobFindShowComponent implements OnInit {
   @Input() search: string;
+  editJob = false
   isFetching = false;
   isError = false;
   error = '';
@@ -31,8 +31,8 @@ export class JobFindShowComponent implements OnInit {
       this.job = this.search;
       this.getJob();
     } else {
-    this.subscriptions.push( 
-          this.route.params.subscribe((params: Params) =>{
+      this.subscriptions.push( 
+        this.route.params.subscribe((params: Params) =>{
           this.job = params['job'];
           this.getJob();
         })
@@ -72,6 +72,9 @@ export class JobFindShowComponent implements OnInit {
         });
     }
   } 
-  
+
+  onEdit(){
+    this.editJob = true;
+  }
   
 }
