@@ -57,7 +57,6 @@ import { JobFindShowComponent } from './job/job-find/job-find-show/job-find-show
 import { JobEditComponent } from './job/job-edit/job-edit.component';
 import { JobShowComponent } from './job/job-show/job-show.component';
 import { WelcomeComponent } from './shared/welcome/welcome.component';
-import { JobOpsComponent } from './job/job-ops/job-ops.component';
 import { JobOpsShowComponent } from './job/job-ops/job-ops-show/job-ops-show.component';
 import { JobOpsNewComponent } from './job/job-ops/job-ops-new/job-ops-new.component';
 import { JobOpsEditComponent } from './job/job-ops/job-ops-edit/job-ops-edit.component';
@@ -116,7 +115,6 @@ import { JobOpsEditComponent } from './job/job-ops/job-ops-edit/job-ops-edit.com
     JobEditComponent,
     JobShowComponent,
     WelcomeComponent,
-    JobOpsComponent,
     JobOpsEditComponent,
     JobOpsNewComponent,
     JobOpsShowComponent,
