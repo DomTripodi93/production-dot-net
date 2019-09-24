@@ -104,7 +104,6 @@ export class HourlyNewComponent implements OnInit {
   }
 
   newHourly(data: Hourly) {
-    this.hourlyForm.value.jobNumber = this.hourlyForm.value.jobNumber.jobNumber;
     this.hourServ.addHourly(data).subscribe();
     setTimeout(()=>{
       this.router.navigate([".."], {relativeTo: this.route});

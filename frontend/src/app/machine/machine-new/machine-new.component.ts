@@ -61,7 +61,6 @@ export class MachineNewComponent implements OnInit {
   }
   
   onSubmit(){
-    this.machineForm.value.currentJob = this.machineForm.value.currentJob.jobNumber;
     this.newMachine(this.machineForm.value);
   }
 

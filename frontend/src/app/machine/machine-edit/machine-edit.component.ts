@@ -60,12 +60,14 @@ export class MachineEditComponent implements OnInit {
   }
 
   onSubmit(){
-    this.editMachineForm.value.currentJob = this.editMachineForm.value.currentJob.jobNumber;
+    console.log(this.editMachineForm.value)
     this.editMachine(this.editMachineForm.value);
   }
 
   editMachine(data) {
     this.mach.setCurrentJob(data, this.machName).subscribe(()=>{
+      this.mach.machChanged.next();
+    },()=>{
       this.mach.machChanged.next();
     });
   }

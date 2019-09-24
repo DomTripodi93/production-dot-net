@@ -60,6 +60,7 @@ export class JobOpsEditComponent implements OnInit {
     this.isError = false;
     this.operationServ.changeOp(data, this.search).subscribe(()=>{},
     () =>{
+      this.operationServ.opsChanged.next();
       this.isError = true;
     });
     if (this.isError){
