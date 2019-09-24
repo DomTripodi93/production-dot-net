@@ -35,7 +35,7 @@ export class OpService {
 
     fetchOpByJob(search) {
         return this.http.get(
-          this.auth.apiUrl + '/operation/' + search
+          this.auth.apiUrl + '/operation/job=' + search
         )
         .pipe(
           map((responseData: Operation[]) => {
@@ -45,61 +45,46 @@ export class OpService {
           return responseData;
           })
         )
-    } 
-  
-    fetchAllOps() {
-        return this.http.get(
-          this.auth.apiUrl + '/operation/'
+    }
+
+    addOp(data: Operation){
+      data.machine = this.auth.splitJoin(data.machine);
+        return this.http.post(
+          this.auth.apiUrl + '/operation/', data
+        );
+    }
+
+    changeOp(data: Operation, info){
+      this.fetchOp(info).subscribe((object)=>{
+        let oldValues = ""+JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Update", info).subscribe();
+      })
+      data.machine = this.auth.splitJoin(data.machine);
+        return this.http.put(
+          this.auth.apiUrl + '/operation/' + info, data
+        );
+    }
+
+    deleteOp(info){
+      this.fetchOp(info).subscribe((object)=>{
+        let oldValues = ""+JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Delete", info).subscribe();
+      })
+        return this.http.delete(this.auth.apiUrl + "/operation/" + info + "/",{
+          observe: 'events',
+          responseType: 'text'
+          }
         )
-        .pipe(
-          map((responseData: Operation[]) => {
-            responseData.forEach((lot)=>{
-              lot.machine = this.auth.rejoin(lot.machine);
-            })
-            const proHold: Operation [] = responseData;
-          return proHold;
+      .pipe(
+          tap(event => {
+              console.log(event);
+              if (event.type === HttpEventType.Sent){
+                  console.log('control')
+              }
+              if (event.type === HttpEventType.Response) {
+                  console.log(event.body);
+              }
           })
-        )
-      }
-
-      addOp(data: Operation){
-        data.machine = this.auth.splitJoin(data.machine);
-          return this.http.post(
-            this.auth.apiUrl + '/operation/', data
-          );
-      }
-
-      changeOp(data: Operation, info){
-        this.fetchOp(info).subscribe((object)=>{
-          let oldValues = ""+JSON.stringify(object);
-          this.auth.logChanges(oldValues, this.model, "Update", info).subscribe();
-        })
-        data.machine = this.auth.splitJoin(data.machine);
-          return this.http.put(
-            this.auth.apiUrl + '/operation/' + info, data
-          );
-      }
-
-      deleteOp(info){
-        this.fetchOp(info).subscribe((object)=>{
-          let oldValues = ""+JSON.stringify(object);
-          this.auth.logChanges(oldValues, this.model, "Delete", info).subscribe();
-        })
-          return this.http.delete(this.auth.apiUrl + "/operation/" + info + "/",{
-            observe: 'events',
-            responseType: 'text'
-            }
-          )
-        .pipe(
-            tap(event => {
-                console.log(event);
-                if (event.type === HttpEventType.Sent){
-                    console.log('control')
-                }
-                if (event.type === HttpEventType.Response) {
-                    console.log(event.body);
-                }
-            })
         );
       }
 

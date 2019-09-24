@@ -2,11 +2,11 @@
   <div class="border">
     <div *ngIf="!editJob">
       <div class="grid2">
-        <button *ngIf="!oneJob.possibleQuantity" class='btn btn-primary' routerLink="/jobs/calculator/oneJob/{{oneJob.jobNumber}}">Length Calc</button>
+        <button *ngIf="!oneJob.possibleQuantity" class='btn btn-primary' routerLink="/jobs/calculator/job/{{oneJob.jobNumber}}">Length Calc</button>
         <button *ngIf="oneJob.possibleQuantity" class='btn btn-info' routerLink="/jobs/calculator/{{oneJob.jobNumber}}">Remaining Bars</button>
         <button *ngIf="!oneJob.weightQuantity" class='btn btn-success' routerLink="/jobs/calculator/weight/{{oneJob.jobNumber}}">Weight Calc</button>
       </div>
-      <div routerLink="{{oneJob.jobNumber}}">
+      <div routerLink="/jobs/{{oneJob.jobNumber}}">
         <br>
         <h3>{{oneJob.jobNumber}}</h3>
         <h4>Part: <br> {{oneJob.partNum}}</h4>
@@ -36,10 +36,11 @@
 
     <div>
       <h4> Operations </h4>
-      <app-job-ops-show [operation]="'job='+oneJob.jobNumber"></app-job-ops-show>
+      <app-job-ops-show [operation]="oneJob.jobNumber"></app-job-ops-show>
     </div>
   </div>
 </div>
+
 
 <div *ngIf='jobs'>
   <div *ngFor="let job of jobs; let i=index">  
@@ -49,7 +50,7 @@
         <button *ngIf="job.possibleQuantity" class='btn btn-info' routerLink="jobs/calculator/{{job.jobNumber}}">Remaining Bars</button>
         <button *ngIf="!job.weightQuantity" class='btn btn-success' routerLink="jobs/calculator/weight/{{job.jobNumber}}">Weight Calc</button>
       </div>
-      <div routerLink="{{job.jobNumber}}">
+      <div routerLink="/jobs/{{job.jobNumber}}">
         <br>
         <h3>{{job.jobNumber}}</h3>
         <h4>Current Job: <br> {{job.jobNumber}}</h4>
@@ -73,7 +74,7 @@
       </div>
       <div>
         <h4> Operations </h4>
-        <app-job-ops-show [operation]="'job='+job.jobNumber"></app-job-ops-show>
+        <app-job-ops-show [operation]="job.jobNumber"></app-job-ops-show>
       </div>
     </div>
   </div>

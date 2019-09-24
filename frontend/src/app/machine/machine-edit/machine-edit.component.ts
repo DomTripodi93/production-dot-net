@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MachineService } from '../machine.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -14,29 +14,22 @@ import { JobInfo } from '../jobInfo.interface';
   styleUrls: ['./machine-edit.component.css']
 })
 export class MachineEditComponent implements OnInit {
+  @Input() machName: string;
   editMachineForm: FormGroup;
   machine: Machine;
-  machName: string;
   canInput = false;
-  thisJob: JobInfo;
-  jobs: JobInfo[] = [{id: 0, jobNumber: "None"}];
+  jobs = ["None"]
   ops = ["None"];
-  opSet: string[][] = [["None"]];
   
   constructor(
     private mach: MachineService,
     private jobServ: JobService,
-    private route: ActivatedRoute,
-    private router: Router,
     private auth: AuthService,
     private opServ: OpService
   ) { }
 
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
-    this.route.params.subscribe((params: Params) =>{
-      this.machName = params['mach'];
-    });
     this.mach.fetchMachineByName(this.machName)
     .subscribe(machine => {
       this.machine = machine;
@@ -46,37 +39,11 @@ export class MachineEditComponent implements OnInit {
           this.initForm();
         } else {
           response.forEach(job => {
-            let info: JobInfo = {
-              id: goneThrough,
-              jobNumber: job.jobNumber
-            }
-            this.jobs.push(info);
-            if (this.machine.currentJob == info.jobNumber){
-              this.thisJob = info;
-            }
+            this.jobs.push(job.jobNumber);
             goneThrough++;
             if (goneThrough == response.length+1){
-              let jobsUsed = 0;
-              for (let job in this.jobs){
-                if (job != "0"){
-                  this.opServ.fetchOpByJob("job=" + this.jobs[job].jobNumber).subscribe((op)=>{
-                    op.forEach((set)=>{
-                      this.ops.push(set.opNumber);
-                    })
-                    this.opSet.push(this.ops);
-                    this.ops = ["None"];
-                    if (jobsUsed == this.jobs.length){
-                      this.initForm();
-                      this.changeOps(""+this.thisJob.id);
-                    }
-                  }, ()=>{
-                    this.opSet.push(this.ops);
-                    this.initForm();
-                    this.changeOps(""+this.thisJob.id);
-                  });
-                }
-                jobsUsed++;
-              }
+              this.changeOps(machine.currentJob);
+              this.initForm();
             }
           });
         }
@@ -86,9 +53,8 @@ export class MachineEditComponent implements OnInit {
 
 
   private initForm() {
-
     this.editMachineForm = new FormGroup({
-      'currentJob': new FormControl(this.thisJob),
+      'currentJob': new FormControl(this.machine.currentJob),
       'currentOp': new FormControl(this.machine.currentOp)
     });
   }
@@ -102,20 +68,20 @@ export class MachineEditComponent implements OnInit {
     this.mach.setCurrentJob(data, this.machName).subscribe(()=>{
       this.mach.machChanged.next();
     });
-    setTimeout(
-      ()=>{
-        this.router.navigate(["../.."], {relativeTo: this.route})
-      }, 50)
   }
 
   onCancel(){
-    window.history.back();;
+    this.mach.machChanged.next();
   }
 
   changeOps(option: String){
-    let val: String = "" +option
-    if (this.opSet){
-      this.ops = this.opSet[+val.substring(0,1)];
+    this.ops = ["None"]
+    if (option != "None"){
+      this.opServ.fetchOpByJob(option).subscribe((ops)=>{
+        ops.forEach((op)=>{
+          this.ops.push(op.opNumber);
+        })
+      })
     }
   }
 
@@ -123,7 +89,7 @@ export class MachineEditComponent implements OnInit {
     if (confirm("Are you sure you want to delete " +this.machine.machine+ "?")){
       this.mach.deleteMachine(this.machName).subscribe();
       setTimeout(()=>{
-      this.router.navigate(["../.."], {relativeTo: this.route})
+        this.mach.machChanged.next();
       }, 50)
     }
   }

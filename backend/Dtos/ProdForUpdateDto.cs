@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BackEnd.Dtos
 {
-    public class ProdForCreationDto
+    public class ProdForUpdateDto
     {
         public string PartNumber { get; set; }
         public string Machine { get; set; }

@@ -13,6 +13,7 @@ export class HourlyService {
     machineHold = "";
     quick = [];
     jobNumber ="";
+    opNumber ="";
     machine: Machine;
     model = "Hourly"
 

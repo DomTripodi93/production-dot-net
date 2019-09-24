@@ -27,7 +27,10 @@ export class JobFindShowComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.search.length > 1){
+    this.jobServ.jobChanged.subscribe(()=>{
+      this.getJob();
+    })
+    if (this.search){
       this.job = this.search;
       this.getJob();
     } else {
@@ -49,6 +52,7 @@ export class JobFindShowComponent implements OnInit {
   }
 
   getJob() {
+    this.editJob = false;
     this.isFetching = true;
     if (this.job.includes("part")){
       this.jobServ.fetchJobByPart(this.job)

@@ -53,13 +53,10 @@ export class PartFindShowComponent implements OnInit {
     this.isFetching = true;
     this.partServ.fetchPart(this.partNum)
       .subscribe(part => {
-        console.log(this.part)
         this.part = part;
-        console.log(this.part)
         this.dayServ.dates = [];
         this.isFetching = false;
       }, error => {
-        console.log(error)
         this.isFetching = false;
         this.isError = true;
         this.error = error.message

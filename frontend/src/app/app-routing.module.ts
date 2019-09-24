@@ -9,8 +9,6 @@ import { ProductionComponent } from './production/production.component';
 import { ProductionNewComponent } from './production/production-new/production-new.component';
 import { ProductionEditComponent } from './production/production-edit/production-edit.component';
 import { ProductionListComponent } from './production/production-list/production-list.component';
-import { ProductionByJobSelectComponent } from './production/production-by-job/production-by-job-select/production-by-job-select.component';
-import { ProductionByJobComponent } from './production/production-by-job/production-by-job.component';
 import { ProductionSingleComponent } from './production/production-single/production-single.component';
 import { MachineComponent } from './machine/machine.component';
 import { MachineShowComponent } from './machine/machine-show/machine-show.component';
@@ -43,6 +41,9 @@ import { JobShowComponent } from './job/job-show/job-show.component';
 import { JobEditComponent } from './job/job-edit/job-edit.component';
 import { JobNewComponent } from './job/job-new/job-new.component';
 import { JobFindComponent } from './job/job-find/job-find.component';
+import { JobFindShowComponent } from './job/job-find/job-find-show/job-find-show.component';
+import { ProductionFindComponent } from './production/production-find/production-find.component';
+import { ProductionFindShowComponent } from './production/production-find/production-find-show/production-find-show.component';
 
 const appRoutes: Routes = [
     {path: '', component: CalenderComponent, pathMatch: 'full' },
@@ -56,7 +57,6 @@ const appRoutes: Routes = [
         ]},
         {path: 'machine', component: MachineComponent, children:[
             {path: '', component: MachineShowComponent},
-            {path: 'edit/:mach', component: MachineEditComponent},
             {path: 'new', component: MachineNewComponent}
         ]},
         {path: 'parts', component: PartComponent, children:[
@@ -76,15 +76,15 @@ const appRoutes: Routes = [
                 {path: "job/:jobNum", component: JobTotalComponent},
                 {path: ":jobNum", component: RemainingComponent},
             ]},
-            {path: ":job", component: PartFindShowComponent},
+            {path: ":job", component: JobFindShowComponent},
         ]},
         {path: 'production', component: ProductionComponent, children:[
             {path: '', component: ProductionListComponent},
             {path: 'new', component: ProductionNewComponent},
-            {path: 'find', component: ProductionByJobComponent},
+            {path: 'find', component: ProductionFindComponent},
             {path: 'single/:id', component: ProductionSingleComponent},
             {path: 'single/:id/edit', component: ProductionEditComponent},
-            {path: ":job", component: ProductionByJobSelectComponent},
+            {path: ":job", component: ProductionFindShowComponent},
         ]},
         {path: 'hourly', component: HourlyComponent, children:[
             {path: '', component: HourlyShowComponent},

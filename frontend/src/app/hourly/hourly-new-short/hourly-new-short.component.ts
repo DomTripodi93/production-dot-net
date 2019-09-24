@@ -19,7 +19,8 @@ export class HourlyNewShortComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initForm()
+    this.dayServ.resetDate();
+    this.initForm();
   }
 
 
@@ -44,7 +45,8 @@ export class HourlyNewShortComponent implements OnInit {
       'date': new FormControl(date, Validators.required),
       'time': new FormControl(time, Validators.required),
       'machine': new FormControl(this.hourServ.machine.machine, Validators.required),
-      'jobNumber': new FormControl(this.hourServ.jobNumber, Validators.required)
+      'jobNumber': new FormControl(this.hourServ.jobNumber, Validators.required),
+      'opNumber': new FormControl(this.hourServ.opNumber, Validators.required)
     });
   }
 

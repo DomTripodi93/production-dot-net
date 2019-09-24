@@ -44,7 +44,7 @@ export class ProductionNewComponent implements OnInit {
     .subscribe((machines: Machine[]) => {
       this.fullMach = machines;
       machines.forEach((mach)=>{
-        if (mach.currentJob !== "None"){
+        if (mach.currentOp !== "None"){
           this.machines.push(mach.machine)
         } else {
           this.joblessMach.push(mach.machine)

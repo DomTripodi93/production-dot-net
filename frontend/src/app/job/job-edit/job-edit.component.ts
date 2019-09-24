@@ -70,7 +70,7 @@ export class JobEditComponent implements OnInit {
       this.isError = true;
     });
     if (this.isError){
-      this.error = "That job already exsists on that machine!";
+      this.error = "That job already exists on that machine!";
     }else{
       setTimeout(
         ()=>{

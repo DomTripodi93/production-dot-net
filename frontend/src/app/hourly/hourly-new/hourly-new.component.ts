@@ -7,6 +7,9 @@ import { Machine } from 'src/app/machine/machine.model';
 import { HourlyService } from '../hourly.service';
 import { DaysService } from 'src/app/shared/days/days.service';
 import { Hourly } from '../hourly.model';
+import { OpService } from 'src/app/job/job-ops/operation.service';
+import { JobService } from 'src/app/job/job.service';
+import { JobInfo } from 'src/app/machine/jobInfo.interface';
 
 @Component({
   selector: 'app-hourly-new',
@@ -17,6 +20,8 @@ export class HourlyNewComponent implements OnInit {
   canInput= false;
   hourlyForm: FormGroup;
   machines: Machine[] = []
+  jobs = ["None"];
+  ops = ["None"];
 
   constructor(
     private hourServ: HourlyService,
@@ -24,10 +29,13 @@ export class HourlyNewComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dayServe: DaysService,
-    private mach: MachineService
+    private mach: MachineService,
+    private opServ: OpService,
+    private jobServ: JobService
   ){}
   
   ngOnInit(){
+    this.dayServe.resetDate();
     this.canInput = this.auth.isAuthenticated;
     if (!this.dayServe.today){
       this.dayServe.resetDate();
@@ -35,7 +43,21 @@ export class HourlyNewComponent implements OnInit {
     this.mach.fetchAllMachines()
     .subscribe(machines => {
       this.machines = machines;
-      this.initForm();
+      this.jobServ.fetchAllJobs().subscribe(response =>{
+        let goneThrough = 1;
+        if (response.length==0){
+          this.initForm();
+        } else {
+          response.forEach(job => {
+            this.jobs.push(job.jobNumber);
+            goneThrough++;
+            if (goneThrough == response.length+1){
+              this.changeOps("None");
+              this.initForm();
+            }
+          });
+        }
+      });
     });
     this.auth.hideButton(0);
   }
@@ -64,6 +86,7 @@ export class HourlyNewComponent implements OnInit {
       machine = this.machines[0].machine;
     }
     let jobNumber ='';
+    let opNumber ='';
 
     this.hourlyForm = new FormGroup({
       'quantity': new FormControl(quantity, Validators.required),
@@ -71,22 +94,32 @@ export class HourlyNewComponent implements OnInit {
       'date': new FormControl(date, Validators.required),
       'time': new FormControl(time, Validators.required),
       'machine': new FormControl(machine, Validators.required),
-      'jobNumber': new FormControl(jobNumber, Validators.required)
+      'jobNumber': new FormControl(jobNumber, Validators.required),
+      'opNumber': new FormControl(opNumber, Validators.required)
     });
   }
   
   onSubmit(){
-    if (!this.hourlyForm.value.counterQuantity){
-      this.hourlyForm.value.counterQuantity = null;
-    }
     this.newHourly(this.hourlyForm.value);
   }
 
   newHourly(data: Hourly) {
+    this.hourlyForm.value.jobNumber = this.hourlyForm.value.jobNumber.jobNumber;
     this.hourServ.addHourly(data).subscribe();
     setTimeout(()=>{
       this.router.navigate([".."], {relativeTo: this.route});
     },10)
+  }
+
+  changeOps(option: String){
+    this.ops = ["None"]
+    if (option != "None"){
+      this.opServ.fetchOpByJob(option).subscribe((ops)=>{
+        ops.forEach((op)=>{
+          this.ops.push(op.opNumber);
+        })
+      })
+    }
   }
 
   onCancel(){

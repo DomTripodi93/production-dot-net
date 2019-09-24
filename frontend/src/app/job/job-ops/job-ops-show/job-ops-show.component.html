@@ -1,18 +1,19 @@
-<div *ngIf='operations.length > 0'>
-  <div class="grid2">
-    <button 
-        *ngIf="!showForm"
-        class='btn btn-primary'
-        (click)="newOp()"
-    >
-        Add New Operation   &#9776;
-    </button>
-    <div
-        *ngIf="showForm"
-    >
-        <app-job-ops-new [jobNumber]="operations[0].jobNumber"></app-job-ops-new>
-    </div>
+
+<div class="grid2">
+  <button 
+      *ngIf="!showForm"
+      class='btn btn-primary'
+      (click)="newOp()"
+  >
+      Add New Operation   &#9776;
+  </button>
+  <div
+      *ngIf="showForm"
+  >
+      <app-job-ops-new [jobNumber]="operation"></app-job-ops-new>
   </div>
+</div>
+<div *ngIf='operations.length > 0'>
   <div class="grid">
     <div *ngFor="let operation of operations; let i=index"> 
       <div *ngIf="!editOp[i]" class="border">
@@ -34,8 +35,8 @@
 </div>
 
 
-<div *ngIf='operations.length == 0 && !oneOperation'>
-    <h2> 
-      No operations for this Job 
-    </h2>
+<div *ngIf='operations.length == 0'>
+  <h4> 
+    No operations for this Job 
+  </h4>
 </div>

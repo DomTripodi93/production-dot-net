@@ -12,6 +12,7 @@ export class DaysService {
     dates = [];
 
     resetDate(){
+        this.date = new Date;
         this.today = ""+this.date.getDate();;
         this.month = this.date.getMonth()+1;
         this.stringMonth = ""+this.month;

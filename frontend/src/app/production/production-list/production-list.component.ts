@@ -36,10 +36,10 @@ export class ProductionListComponent implements OnInit {
     this.subscriptions.push(this.pro.fetchAllProduction()
     .subscribe(production => {
       this.productionLots = production;
-      this.dayServ.dates = [];
       this.productionLots.forEach((lot) =>{
-        this.dayServ.dates.push(this.dayServ.dashToSlash(lot.date))
-      })
+        let beginning = lot.date.substring(6,10);
+        lot.date = beginning + "-" + lot.date.substring(0,4);
+      });
       this.isFetching = false;
     }, error => {
       this.isFetching = false;

@@ -108,8 +108,8 @@ export class ProductionService {
         let oldValues = JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "In Question", id).subscribe();
       })
-        return this.http.patch(
-          this.auth.apiUrl + '/production/' + id + "/", data
+        return this.http.put(
+          this.auth.apiUrl + '/production/' + id + "/inQuestion", data
         );
     }
 

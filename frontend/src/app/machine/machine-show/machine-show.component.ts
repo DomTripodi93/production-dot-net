@@ -10,11 +10,11 @@ import { MachineService } from 'src/app/machine/machine.service';
 })
 export class MachineShowComponent implements OnInit, OnDestroy{
   machines: Machine[] = [];
-  subscription1 = new Subscription;
-  subscription2 = new Subscription;
+  subscriptions: Subscription[] = [];
   isFetching = false;
   isError = false;
   error = '';
+  editMode: boolean[] = [];
 
   constructor(
     private mach: MachineService,
@@ -22,21 +22,32 @@ export class MachineShowComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.getMachines();
-    this.subscription2 = this.mach.machChanged.subscribe(()=>{
-      setTimeout(()=>{this.getMachines()}, 50);
-    })
+    this.subscriptions.push(this.mach.machChanged.subscribe(()=>{
+      this.getMachines();
+    }))
+    this.subscriptions.push(
+      this.mach.machChanged.subscribe(()=>{
+        setTimeout(()=>{this.getMachines();}, 50);
+      })
+    );
   }
 
   getMachines(){
-    this.subscription1 = this.mach.fetchAllMachines()
-    .subscribe(machines => {
-      this.machines = machines;
-      this.isFetching = false;
-    }, error => {
-      this.isFetching = false;
-      this.isError = true;
-      this.error = error.message
-    });
+    this.editMode = [];
+    this.subscriptions.push(
+      this.mach.fetchAllMachines()
+        .subscribe(machines => {
+          this.machines = machines;
+          machines.forEach(()=>{
+            this.editMode.push(false);
+          })
+          this.isFetching = false;
+        }, error => {
+          this.isFetching = false;
+          this.isError = true;
+          this.error = error.message
+      })
+    );
   }
 
   onDelete(machine){
@@ -47,9 +58,14 @@ export class MachineShowComponent implements OnInit, OnDestroy{
     }
   }
 
+  onEdit(index){
+    this.editMode[index] = true;
+  }
+
   ngOnDestroy(){
-    this.subscription1.unsubscribe();
-    this.subscription2.unsubscribe();
+    this.subscriptions.forEach((sub)=>{
+      sub.unsubscribe();
+    });
   }
 
 }

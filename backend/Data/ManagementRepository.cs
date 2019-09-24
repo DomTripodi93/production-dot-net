@@ -111,7 +111,7 @@ namespace BackEnd.Data
                 .Where(j => j.userId == userId)
                 .ToListAsync();
 
-            return jobs;
+            return jobs.OrderByDescending(j => j.JobNumber);
         }
 
         public async Task<IEnumerable<Job>> GetJobsByPart(int userId, string partNum)

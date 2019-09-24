@@ -19,9 +19,8 @@ export class MachineNewComponent implements OnInit {
   canInput= false;
   machineForm: FormGroup;
   isError = false;
-  jobs: JobInfo[] = [{id: 0, jobNumber: "None"}];
+  jobs = ["None"];
   ops = ["None"];
-  opSet: string[][] = [["None"]];
 
   constructor(
     private mach: MachineService,
@@ -40,31 +39,11 @@ export class MachineNewComponent implements OnInit {
         this.initForm();
       } else {
         response.forEach(job => {
-          this.jobs.push({
-            id: goneThrough,
-            jobNumber: job.jobNumber
-          });
+          this.jobs.push(job.jobNumber);
           goneThrough++;
           if (goneThrough == response.length+1){
-            let jobsUsed = 0;
-            for (let job in this.jobs){
-              if (job != "0"){
-                this.opServ.fetchOpByJob("job=" + this.jobs[job].jobNumber).subscribe((op)=>{
-                  op.forEach((set)=>{
-                    this.ops.push(set.opNumber);
-                  })
-                  this.opSet.push(this.ops);
-                  this.ops = ["None"];
-                  if (jobsUsed == this.jobs.length){
-                    this.initForm();
-                  }
-                }, ()=>{
-                  this.opSet.push(this.ops);
-                  this.initForm();
-                });
-              }
-              jobsUsed++;
-            }
+            this.changeOps("None");
+            this.initForm();
           }
         });
       }
@@ -74,7 +53,6 @@ export class MachineNewComponent implements OnInit {
     
   private initForm() {
     let machine = '';
-    // use an index ^^
     this.machineForm = new FormGroup({
       'machine': new FormControl(machine, Validators.required),
       'currentJob': new FormControl(this.jobs[0]),
@@ -88,9 +66,13 @@ export class MachineNewComponent implements OnInit {
   }
 
   changeOps(option: String){
-    let val: String = "" +option
-    if (this.opSet){
-      this.ops = this.opSet[+val.substring(0,1)];
+    this.ops = ["None"]
+    if (option != "None"){
+      this.opServ.fetchOpByJob(option).subscribe((ops)=>{
+        ops.forEach((op)=>{
+          this.ops.push(op.opNumber);
+        })
+      })
     }
   }
 

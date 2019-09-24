@@ -25,11 +25,24 @@
     </div>
     <div class="form-group">
       <label for="jobNumber">Job</label>
-      <input 
+      <select
         formControlName='jobNumber'
         type="text" 
         id="jobNumber" 
+        class="form-control"
+        (change)="changeOps($event.target.value)">
+        <option *ngFor = "let job of jobs">{{job}}</option>
+      </select>     
+    </div>
+    <div class="form-group">
+      <label for="opNumber">Op</label>
+      <select
+        formControlName='opNumber'
+        type="text" 
+        id="opNumber" 
         class="form-control">
+        <option *ngFor = "let op of ops">{{op}}</option>
+      </select>        
     </div>
     <div class="form-group">
       <label for="date">Date</label>

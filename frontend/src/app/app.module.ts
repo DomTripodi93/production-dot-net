@@ -60,6 +60,8 @@ import { WelcomeComponent } from './shared/welcome/welcome.component';
 import { JobOpsShowComponent } from './job/job-ops/job-ops-show/job-ops-show.component';
 import { JobOpsNewComponent } from './job/job-ops/job-ops-new/job-ops-new.component';
 import { JobOpsEditComponent } from './job/job-ops/job-ops-edit/job-ops-edit.component';
+import { ProductionFindComponent } from './production/production-find/production-find.component';
+import { ProductionFindShowComponent } from './production/production-find/production-find-show/production-find-show.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +120,8 @@ import { JobOpsEditComponent } from './job/job-ops/job-ops-edit/job-ops-edit.com
     JobOpsEditComponent,
     JobOpsNewComponent,
     JobOpsShowComponent,
+    ProductionFindComponent,
+    ProductionFindShowComponent,
   ],
   imports: [
     BrowserModule,

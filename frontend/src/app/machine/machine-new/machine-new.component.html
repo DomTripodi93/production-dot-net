@@ -3,14 +3,14 @@
   </div>
     <form *ngIf="canInput && machineForm" [formGroup]="machineForm" (ngSubmit)='onSubmit()' >
     <div class="form-group">
-      <div class="form-group">
-        <label for="machine">Machine</label>
-        <input 
-          formControlName='machine'
-          id="machine" 
-          class="form-control"
-        >
-      </div>
+      <label for="machine">Machine</label>
+      <input 
+        formControlName='machine'
+        id="machine" 
+        class="form-control"
+      >
+    </div>
+    <div class="form-group">
       <label for="currentJob">Job</label>
       <select
         formControlName='currentJob'
@@ -18,16 +18,18 @@
         id="currentJob" 
         class="form-control"
         (change)="changeOps($event.target.value)">
-        <option *ngFor = "let job of jobs" [ngValue]="job">{{job.jobNumber}}</option>
+        <option *ngFor = "let job of jobs">{{job}}</option>
       </select>     
+    </div>
+    <div class="form-group">
       <label for="currentOp">Op</label>
       <select
         formControlName='currentOp'
         type="text" 
         id="currentOp" 
         class="form-control">
-        <option *ngFor = "let op of ops; trackBy: changeOps">{{op}}</option>
-      </select>        
+        <option *ngFor = "let op of ops">{{op}}</option>
+      </select>    
     </div>
       <br><br>
       <button 

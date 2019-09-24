@@ -53,7 +53,23 @@ namespace BackEnd.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduction(int id, ProdForCreationDto prodForUpdateDto)
+        public async Task<IActionResult> UpdateProduction(int id, ProdForUpdateDto prodForUpdateDto)
+        {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var prodFromRepo = await _repo.GetProduction(id);
+
+            _mapper.Map(prodForUpdateDto, prodFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetProd", new {id = prodFromRepo.Id}, prodForUpdateDto);
+
+            throw new Exception($"Updating production lot {id} failed on save");
+        }
+
+        [HttpPut("{id}/inQuestion")]
+        public async Task<IActionResult> UpdateProductionInQuestion(int id, ProdForQuestionDto prodForUpdateDto)
         {
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();

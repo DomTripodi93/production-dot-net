@@ -16,9 +16,9 @@ export class HourlySetJobComponent implements OnInit {
   @Input() index: number;
   setJobForm: FormGroup;
   thisJob: JobInfo;
-  jobs: JobInfo[] = [{id: 0, jobNumber: "None"}];
+  jobs = []
   setOps = ["None"];
-  opSet: string[][] = [["None"]];
+  ops = ["None"];
   thisMach: Machine;
 
   constructor(
@@ -36,35 +36,11 @@ export class HourlySetJobComponent implements OnInit {
         this.initForm();
       } else {
         response.forEach(job => {
-          let info: JobInfo = {
-            id: goneThrough,
-            jobNumber: job.jobNumber
-          }
-          this.jobs.push(info);
-          if (this.thisMach.currentJob == info.jobNumber){
-            this.thisJob = info;
-          }
+          this.jobs.push(job.jobNumber);
           goneThrough++;
-          if (goneThrough == response.length + 1){
-            let jobsUsed = 0;
-            for (let job in this.jobs){
-              if (job != "0"){
-                this.opServ.fetchOpByJob("job=" + this.jobs[job].jobNumber).subscribe((op)=>{
-                  let opHold = ["None"]
-                  op.forEach((set)=>{
-                    opHold.push(set.opNumber);
-                  })
-                  this.opSet.push(opHold);
-                  if (jobsUsed == this.jobs.length){
-                    this.initForm();
-                  }
-                }, ()=>{
-                  this.opSet.push(this.setOps);
-                  this.initForm();
-                });
-              }
-              jobsUsed++;
-            }
+          if (goneThrough == response.length+1){
+            this.changeOps("None");
+            this.initForm();
           }
         });
       }
@@ -72,16 +48,15 @@ export class HourlySetJobComponent implements OnInit {
   }
 
   private initForm(){
-    this.changeOps(""+this.thisJob.id);
 
     this.setJobForm = new FormGroup({
-      'currentJob': new FormControl(this.thisJob, Validators.required),
-      'currentOp': new FormControl(this.setOps[0], Validators.required)
+      'jobNumber': new FormControl(this.thisJob, Validators.required),
+      'opNumber': new FormControl(this.setOps[0], Validators.required)
     });
   }
 
   onSetJob(){
-    this.setJobForm.value.currentJob = this.setJobForm.value.currentJob.jobNumber;
+    this.setJobForm.value.jobNumber = this.setJobForm.value.jobNumber.jobNumber;
     this.machServ.setCurrentJob(this.setJobForm.value, this.thisMach.machine).subscribe(()=>{
       this.hourServ.hourlyChanged.next()
     });
@@ -89,9 +64,13 @@ export class HourlySetJobComponent implements OnInit {
   }
 
   changeOps(option: String){
-    let val: String = "" +option
-    if (this.opSet){
-      this.setOps = this.opSet[+val.substring(0,1)];
+    this.ops = ["None"]
+    if (option != "None"){
+      this.opServ.fetchOpByJob(option).subscribe((ops)=>{
+        ops.forEach((op)=>{
+          this.ops.push(op.opNumber);
+        })
+      })
     }
   }
 
