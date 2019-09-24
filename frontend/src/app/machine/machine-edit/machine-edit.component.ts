@@ -60,7 +60,6 @@ export class MachineEditComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.editMachineForm.value)
     this.editMachine(this.editMachineForm.value);
   }
 
