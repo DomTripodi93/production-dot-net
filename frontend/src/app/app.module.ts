@@ -28,7 +28,6 @@ import { MachineEditComponent } from './machine/machine-edit/machine-edit.compon
 import { ProductionSingleComponent } from './production/production-single/production-single.component';
 import { PartComponent } from './part/part.component';
 import { PartShowComponent } from './part/part-show/part-show.component';
-import { PartEditComponent } from './part/part-edit/part-edit.component';
 import { PartNewComponent } from './part/part-new/part-new.component';
 import { PartFindComponent } from './part/part-find/part-find.component';
 import { PartFindShowComponent } from './part/part-find/part-find-show/part-find-show.component';
@@ -89,7 +88,6 @@ import { ProductionFindShowComponent } from './production/production-find/produc
     ProductionSingleComponent,
     PartComponent,
     PartShowComponent,
-    PartEditComponent,
     PartNewComponent,
     PartFindComponent,
     PartFindShowComponent,

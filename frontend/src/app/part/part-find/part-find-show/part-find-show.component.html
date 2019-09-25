@@ -1,15 +1,14 @@
 <div *ngIf="part">
   <div>
-      <ul class='list-group'>
-        <li class=list-group-item >
-          <h3>Part #: {{part.partNumber}}</h3>
-          <br><br>
-          <div class="grid">
-            <button class='btn btn-primary' routerLink="../edit/{{part.partNumber}}">Edit Part</button>
-            <button class='btn btn-danger' (click)="onDelete(part.partNumber, part.id)">Delete Part</button>
-          </div>
-        </li>
-      </ul>
+    <ul class='border list-group'>
+      <li class="list-group-item" >
+        <h3>Part #: {{part.partNumber}}</h3>
+        <br><br>
+        <div class="grid">
+          <button class='btn btn-danger' (click)="onDelete(part.partNumber, part.id)">Delete Part</button>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>
 <div *ngIf='!part'>

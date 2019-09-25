@@ -48,22 +48,6 @@ namespace BackEnd.Controllers
             throw new Exception("Creation of part lot failed on save");
         }
 
-        [HttpPut("{part}")]
-        public async Task<IActionResult> UpdatePart(int userId, string part, PartForCreationDto partForUpdateDto)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            var partFromRepo = await _repo.GetPart(userId, part);
-
-            _mapper.Map(partForUpdateDto, partFromRepo);
-
-            if (await _repo.SaveAll())
-                return CreatedAtRoute("GetPart", new {part = partFromRepo.PartNumber}, partForUpdateDto);
-
-            throw new Exception($"Updating part {part} failed on save");
-        }
-
         [HttpGet("{part}", Name = "GetPart")]
         public async Task<IActionResult> GetPart(int userId, string part)
         {

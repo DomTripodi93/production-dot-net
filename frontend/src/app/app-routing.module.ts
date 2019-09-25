@@ -12,11 +12,9 @@ import { ProductionListComponent } from './production/production-list/production
 import { ProductionSingleComponent } from './production/production-single/production-single.component';
 import { MachineComponent } from './machine/machine.component';
 import { MachineShowComponent } from './machine/machine-show/machine-show.component';
-import { MachineEditComponent } from './machine/machine-edit/machine-edit.component';
 import { MachineNewComponent } from './machine/machine-new/machine-new.component';
 import { PartComponent } from './part/part.component';
 import { PartShowComponent } from './part/part-show/part-show.component';
-import { PartEditComponent } from './part/part-edit/part-edit.component';
 import { PartNewComponent } from './part/part-new/part-new.component';
 import { HourlyShowComponent } from './hourly/hourly-show/hourly-show.component';
 import { HourlyComponent } from './hourly/hourly.component';
@@ -38,7 +36,6 @@ import { SettingsComponent } from './shared/settings/settings.component';
 import { AuthGuard } from './guards/auth.guard';
 import { JobComponent } from './job/job.component';
 import { JobShowComponent } from './job/job-show/job-show.component';
-import { JobEditComponent } from './job/job-edit/job-edit.component';
 import { JobNewComponent } from './job/job-new/job-new.component';
 import { JobFindComponent } from './job/job-find/job-find.component';
 import { JobFindShowComponent } from './job/job-find/job-find-show/job-find-show.component';
@@ -61,7 +58,6 @@ const appRoutes: Routes = [
         ]},
         {path: 'parts', component: PartComponent, children:[
             {path: '', component: PartShowComponent},
-            {path: 'edit/:part', component: PartEditComponent},
             {path: 'new', component: PartNewComponent},
             {path: 'find', component: PartFindComponent},
             {path: ":part", component: PartFindShowComponent},

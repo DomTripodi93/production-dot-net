@@ -1,16 +1,7 @@
 <div class='grid' >
   <div *ngFor="let part of parts"> 
-    <div class="border">
-      <div routerLink="{{part.partNumber}}">
-        <br>
-        <h3>{{part.partNumber}}</h3>
-        <br><br>
-      </div>
-      <div class="grid2">
-          <button class='btn btn-primary' routerLink="edit/{{part.partNumber}}">Edit Part</button>
-          <button class='btn btn-danger' (click)="onDelete(part.partNumber, part.id)">Delete Part</button>
-      </div>
+    <div>
+      <app-part-find-show [partInput]="part.partNumber"></app-part-find-show>    
     </div>
-    <br>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Part } from '../../part.model';
 import { Subscription } from 'rxjs';
 import { PartService } from '../../part.service';
@@ -12,40 +12,45 @@ import { DaysService } from '../../../shared/days/days.service';
   styleUrls: ['./part-find-show.component.css']
 })
 export class PartFindShowComponent implements OnInit {
+  @Input() partInput;
   isFetching = false;
   isError = false;
   error = '';
   part: Part;
   partNum = "";
   id = '';
-  subscription = new Subscription;
-  subscription2 = new Subscription;
+  subscriptions: Subscription[] = [];
 
   constructor(
-    private auth: AuthService,
     private partServ: PartService,
     private route: ActivatedRoute,
     private dayServ: DaysService
   ) { }
 
   ngOnInit() {
-    this.subscription2 = this.route.params.subscribe((params: Params) =>{
-      this.partNum = params['part'];
+    if (this.partInput){
+      this.partNum = this.partInput;
       this.getPart();
-    });
-    this.subscription = this.auth.authChanged.subscribe(
-      ()=>{
-        this.id = this.auth.user
-      }
+    } else {
+      this.subscriptions.push(
+        this.route.params.subscribe((params: Params) =>{
+          this.partNum = params['part'];
+          this.getPart();
+        })
+      );      
+    }
+    this.subscriptions.push(
+      this.partServ.partChanged.subscribe(()=>{
+        this.getPart();
+      })
     )
   }
 
   onDelete(part, id){
     if (confirm("Are you sure you want to delete " +part+ "?")){
       this.partServ.deletePart(id).subscribe(()=>{
-      setTimeout(()=>{this.getPart()},)}
+        setTimeout(()=>{this.partServ.partChanged.next()},)}
       );
-      this.partServ.partChanged.next();
     }
   }
 
@@ -60,7 +65,8 @@ export class PartFindShowComponent implements OnInit {
         this.isFetching = false;
         this.isError = true;
         this.error = error.message
-      })
-  }  
+      }
+    );
+  } 
 
 }
