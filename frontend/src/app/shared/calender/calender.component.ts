@@ -78,8 +78,6 @@ export class CalenderComponent implements OnInit {
     this.firstDay = new Date(this.year, this.month, 1);
     this.firstDayOfMonth = _.range(0, this.firstDay.getDay());
     this.welcome = "Today is " + this.days[this.day] + " " + (this.month+1) + "-" + this.today + "-" + this.year;
-    this.set = (this.month+1) + "-" + this.today + "-" + this.year;
-    this.set = this.dayServ.dateForForm(this.set);
 
   }
 

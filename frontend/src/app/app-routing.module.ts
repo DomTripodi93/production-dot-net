@@ -7,7 +7,6 @@ import { SigninComponent } from './register/signin/signin.component';
 import { SignoutComponent } from './register/signout/signout.component';
 import { ProductionComponent } from './production/production.component';
 import { ProductionNewComponent } from './production/production-new/production-new.component';
-import { ProductionEditComponent } from './production/production-edit/production-edit.component';
 import { ProductionListComponent } from './production/production-list/production-list.component';
 import { ProductionSingleComponent } from './production/production-single/production-single.component';
 import { MachineComponent } from './machine/machine.component';
@@ -79,7 +78,6 @@ const appRoutes: Routes = [
             {path: 'new', component: ProductionNewComponent},
             {path: 'find', component: ProductionFindComponent},
             {path: 'single/:id', component: ProductionSingleComponent},
-            {path: 'single/:id/edit', component: ProductionEditComponent},
             {path: ":job", component: ProductionFindShowComponent},
         ]},
         {path: 'hourly', component: HourlyComponent, children:[
