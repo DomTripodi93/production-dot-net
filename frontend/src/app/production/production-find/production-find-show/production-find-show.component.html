@@ -1,3 +1,98 @@
-<p>
-  production-find-show works!
-</p>
+<div *ngIf='!inputId && production.length > 0'>
+    <ul class='list-group'>
+        <li *ngIf="!inputId" class="list-group-item">
+            <h4>Job Total: {{total}}</h4>
+        </li>
+        <div class="grid">
+          <div *ngFor="let lot of production; let i = index">
+              <div *ngIf="lot.inQuestion && !editMulti[i]" class="inQuestion border">   
+                  <div class='grid'>
+                      <button class="btn btn-success" (click)="lotIsGood(lot.id)">Set Good</button>
+                      <button class='btn btn-primary' (click)="onEditMulti(i)">Edit This Lot</button>
+                  </div>
+                  <br>
+                  <div routerLink="/production/single/{{lot.id}}">
+                      <h4>Date: <strong>{{lot.date}}</strong></h4>
+                      <h4>Job #: <strong>{{lot.jobNumber}}</strong></h4>
+                      <h4>Shift: <strong>{{lot.shift}}</strong></h4>
+                      <h4>Quantity: <strong>{{lot.quantity}}</strong></h4>
+                      <h4>Machine: <strong>{{lot.machine}}</strong></h4>
+                  </div>
+                  <div class='grid'>
+                      <button class='btn btn-info pull-right' routerLink="/production/{{lot.jobNumber}}">Job Production</button>
+                      <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day Production</button>
+                  </div>
+                  <br>
+              </div>
+              <div *ngIf="!lot.inQuestion && !editMulti[i]" class="border">   
+                  <div class='grid'>
+                      <button class="btn btn-danger" (click)="lotInQuestion(lot.id)">Set In Question</button>
+                      <button class='btn btn-primary' (click)="onEditMulti(i)">Edit</button>
+                  </div>
+                  <br>
+                  <div routerLink="/production/single/{{lot.id}}">
+                      <h4>Date: <strong>{{lot.date}}</strong></h4>
+                      <h4>Job #: <strong>{{lot.jobNumber}}</strong></h4>
+                      <h4>Shift: <strong>{{lot.shift}}</strong></h4>
+                      <h4>Quantity: <strong>{{lot.quantity}}</strong></h4>
+                      <h4>Machine: <strong>{{lot.machine}}</strong></h4>
+                  </div>
+                  <div class='grid'>
+                      <button class='btn btn-info pull-right' routerLink="/production/{{lot.jobNumber}}">Job Production</button>
+                      <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day Production</button>
+                  </div>
+                  <br>
+              </div>
+              <div *ngIf="editMulti[i]">
+                <app-production-edit [id]="lot.id"></app-production-edit>
+              </div>
+          </div>
+        </div>
+    </ul>
+</div>
+<div *ngIf="singleProd">
+  <div *ngIf="singleProd.inQuestion && !editMode" class="inQuestion border">   
+      <div class='grid'>
+          <button class="btn btn-success" (click)="lotIsGood(singleProd.id)">Set Good</button>
+          <button class='btn btn-primary' (click)="onEdit()">Edit</button>
+      </div>
+      <br>
+      <div routerLink="/production/single/{{singleProd.id}}">
+          <h4>Date: <strong>{{singleProd.date}}</strong></h4>
+          <h4>Job #: <strong>{{singleProd.jobNumber}}</strong></h4>
+          <h4>Shift: <strong>{{singleProd.shift}}</strong></h4>
+          <h4>Quantity: <strong>{{singleProd.quantity}}</strong></h4>
+          <h4>Machine: <strong>{{singleProd.machine}}</strong></h4>
+      </div>
+      <div class='grid'>
+          <button class='btn btn-info pull-right' routerLink="/production/{{singleProd.jobNumber}}">Job Production</button>
+          <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day Production</button>
+      </div>
+      <br>
+  </div>
+  <div *ngIf="!singleProd.inQuestion && !editMode" class="border">   
+      <div class='grid'>
+          <button class="btn btn-danger" (click)="lotInQuestion(singleProd.id)">Set In Question</button>
+          <button class='btn btn-primary' (click)="onEdit()">Edit</button>
+      </div>
+      <br>
+      <div routerLink="/production/single/{{singleProd.id}}">
+          <h4>Date: <strong>{{singleProd.date}}</strong></h4>
+          <h4>Job #: <strong>{{singleProd.jobNumber}}</strong></h4>
+          <h4>Shift: <strong>{{singleProd.shift}}</strong></h4>
+          <h4>Quantity: <strong>{{singleProd.quantity}}</strong></h4>
+          <h4>Machine: <strong>{{singleProd.machine}}</strong></h4>
+      </div>
+      <div class='grid'>
+          <button class='btn btn-info pull-right' routerLink="/production/{{singleProd.jobNumber}}">Job Production</button>
+          <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day Production</button>
+      </div>
+      <br>
+  </div>
+  <div *ngIf="editMode">
+    <app-production-edit [id]="singleProd.id"></app-production-edit>
+  </div>
+</div>
+<div *ngIf='production.length == 0 && !singleProd && !isFetching'>
+    <h2> No production for this Job # </h2>
+</div>

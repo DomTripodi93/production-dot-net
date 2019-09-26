@@ -15,8 +15,6 @@ import { HeaderComponent } from './shared/header/header.component';
 import { ProductionNewComponent } from './production/production-new/production-new.component';
 import { ProductionEditComponent } from './production/production-edit/production-edit.component';
 import { ProductionListComponent } from './production/production-list/production-list.component';
-import { ProductionByJobComponent } from './production/production-by-job/production-by-job.component';
-import { ProductionByJobSelectComponent } from './production/production-by-job/production-by-job-select/production-by-job-select.component';
 import { HourlyComponent } from './hourly/hourly.component';
 import { HourlyNewComponent } from './hourly/hourly-new/hourly-new.component';
 import { HourlyShowComponent } from './hourly/hourly-show/hourly-show.component';
@@ -75,8 +73,6 @@ import { ProductionFindShowComponent } from './production/production-find/produc
     ProductionNewComponent,
     ProductionEditComponent,
     ProductionListComponent,
-    ProductionByJobComponent,
-    ProductionByJobSelectComponent,
     HourlyComponent,
     HourlyNewComponent,
     HourlyShowComponent,

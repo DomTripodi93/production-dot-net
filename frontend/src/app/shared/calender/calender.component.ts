@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Router } from '@angular/router';
+import { DaysService } from '../days/days.service';
 
 @Component({
   selector: 'app-calender',
@@ -47,12 +48,14 @@ export class CalenderComponent implements OnInit {
   firstDayOfMonth = []
   firstDay: Date;
   welcome = '';
+  set = "";
 
 
 
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private dayServ: DaysService
   ) { }
 
 
@@ -75,6 +78,9 @@ export class CalenderComponent implements OnInit {
     this.firstDay = new Date(this.year, this.month, 1);
     this.firstDayOfMonth = _.range(0, this.firstDay.getDay());
     this.welcome = "Today is " + this.days[this.day] + " " + (this.month+1) + "-" + this.today + "-" + this.year;
+    this.set = (this.month+1) + "-" + this.today + "-" + this.year;
+    this.set = this.dayServ.dateForForm(this.set);
+
   }
 
   changeDate(){

@@ -1,0 +1,25 @@
+h2{
+    text-align: center;
+}
+
+h4{
+    text-align: center;
+}
+
+.grid { 
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+div{
+    margin: 10px 10px 10px 10px;
+}
+
+button{
+    margin: 10px 10px 10px 10px
+}
+
+.inQuestion{
+    border: solid;
+    border-color: red;
+}

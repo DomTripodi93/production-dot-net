@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ProductionService } from '../production.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Production } from '../production.model';
@@ -7,6 +7,7 @@ import { AuthService } from '../../shared/auth.service';
 import { Machine } from '../../machine/machine.model';
 import { MachineService } from '../../machine/machine.service';
 import { Subscription } from 'rxjs';
+import { DaysService } from '../../shared/days/days.service';
 
 @Component({
   selector: 'app-production-edit',
@@ -14,13 +15,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./production-edit.component.css']
 })
 export class ProductionEditComponent implements OnInit, OnDestroy {
+  @Input() id: number
   editProductionForm: FormGroup;
   production: Production;
-  id: number;
   canInput = false;
   machines = []
   jobs = [];
-  subscriptions: Subscription[]=[];
+  subscriptions: Subscription[] = [];
   shifts = [
     "Day",
     "Night",
@@ -30,72 +31,73 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
   
   constructor(
     private pro: ProductionService,
-    private route: ActivatedRoute,
-    private router: Router,
+    private dayServe: DaysService,
     private auth: AuthService,
     private mach: MachineService
   ) { }
 
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
-    this.subscriptions.push(this.route.params.subscribe((params: Params) =>{
-      this.id = +params['id'];
-    }));
-    this.subscriptions.push(this.pro.fetchProductionById(this.id)
-    .subscribe(pro => {
-      this.production = pro;
-      this.jobs.push(pro.jobNumber);
-      this.initForm();
-    }));
+    this.subscriptions.push(
+      this.pro.fetchProductionById(this.id).subscribe(
+        lot => {
+          let beginning = lot.date.substring(6,10);
+          lot.date = beginning + "-" + lot.date.substring(0,4);
+          this.production = lot;
+          this.initForm();
+        }
+      )
+    );
     this.subscriptions.push(
       this.mach.fetchMachineJobs()
       .subscribe(machines => {
         machines.forEach((mach)=>{
-          if (!this.jobs.includes(mach.currentJob)){
-            if (mach.currentJob !== "None"){
-              this.jobs.push(mach.currentJob)
-            }
+          if (mach.currentJob !== "None" && !this.jobs.includes(mach.currentJob)){
+            this.jobs.push(mach.currentJob)
           }
           this.machines.push(mach.machine)
         });
-        this.machines.sort();
-      }));
+      })
+    );
   }
 
 
   private initForm() {
     this.editProductionForm = new FormGroup({
       'quantity': new FormControl(this.production.quantity, Validators.required),
-      'job': new FormControl(this.production.jobNumber, Validators.required),
-      'date': new FormControl(this.production.date, Validators.required),
+      'jobNumber': new FormControl(this.production.jobNumber, Validators.required),
+      'date': new FormControl(this.dayServe.dateForForm(this.production.date), Validators.required),
       'machine': new FormControl(this.production.machine, Validators.required),
       'shift': new FormControl(this.production.shift, Validators.required)
     });
   }
 
   onSubmit(){
+    console.log(this.editProductionForm.value)
     this.editProduction(this.editProductionForm.value);
   }
 
   editProduction(data: Production) {
     this.pro.changeProduction(data, this.id).subscribe();
-    setTimeout(()=>{this.router.navigate([".."], {relativeTo: this.route})},50);
+    setTimeout(()=>{
+      this.pro.proChanged.next();
+    },50);
   }
 
   onCancel(){
-    window.history.back();;
+    this.pro.proChanged.next();
   }
 
   onDelete(){
     if (confirm("Are you sure you want to delete this lot?")){
-      this.pro.deleteProduction(this.id).subscribe()
-      this.router.navigate(["../../.."], {relativeTo: this.route});
+      this.pro.deleteProduction(this.id).subscribe();
+      this.pro.proChanged.next();
     }
   }
 
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{
-      sub.unsubscribe()
+      sub.unsubscribe();
     });
   }
 

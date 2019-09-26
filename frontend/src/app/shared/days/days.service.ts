@@ -24,4 +24,19 @@ export class DaysService {
         date = dateHold.join("/")
           return date;
     }
+
+    dateForForm(date){
+        console.log(date)
+        let dateHold = date.split("-");
+        if (dateHold[0].length != 2){
+            dateHold[0] = "0" + dateHold[0]
+        }
+        if (dateHold[1].length != 2){
+            dateHold[1] = "0" + dateHold[1]
+        }
+        date = dateHold[2] + "-" + dateHold[0] + "-" + dateHold[1]
+
+        console.log(date)
+          return date;
+    }
 }

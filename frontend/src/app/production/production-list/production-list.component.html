@@ -1,40 +1,5 @@
-<ul class='list-group'>
-    <li class=list-group-item *ngFor="let lot of productionLots; let i = index" >
-        <div *ngIf="lot.inQuestion" class="inQuestion">   
-            <button class="btn btn-success" (click)="lotIsGood(lot.id)">Set Lot Good</button>
-            <div routerLink="single/{{lot.id}}">
-                <h4>Date: <strong>{{lot.date}}</strong></h4>
-                <h4>Job #: <strong>{{lot.jobNumber}}</strong></h4>
-                <h4>Shift: <strong>{{lot.shift}}</strong></h4>
-                <h4>Quantity: <strong>{{lot.quantity}}</strong></h4>
-                <h4>Machine: <strong>{{lot.machine}}</strong></h4>
-                <br>
-            </div>
-            <div class='grid'>
-                <button class='btn btn-primary' routerLink="single/{{lot.id}}/edit">Edit This Lot</button>
-                <div></div>
-                <button class='btn btn-info pull-right' [routerLink]="[lot.jobNumber]">Show Job Production</button>
-                <div></div>
-                <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Show Day Production</button>
-            </div>
-        </div>
-        <div *ngIf="!lot.inQuestion">   
-            <button class="btn btn-danger" (click)="lotInQuestion(lot.id)">Set Lot In Question</button>
-            <div routerLink="single/{{lot.id}}">
-                <h4>Date: <strong>{{lot.date}}</strong></h4>
-                <h4>Job #: <strong>{{lot.jobNumber}}</strong></h4>
-                <h4>Shift: <strong>{{lot.shift}}</strong></h4>
-                <h4>Quantity: <strong>{{lot.quantity}}</strong></h4>
-                <h4>Machine: <strong>{{lot.machine}}</strong></h4>
-            </div>
-            <br>
-            <div class='grid'>
-                <button class='btn btn-primary' routerLink="single/{{lot.id}}/edit">Edit This Lot</button>
-                <div></div>
-                <button class='btn btn-info pull-right' [routerLink]="[lot.jobNumber]">Show Job Production</button>
-                <div></div>
-                <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Show Day Production</button>
-            </div>
-        </div>
-    </li>
-</ul>
+<div class="grid">
+    <div *ngFor="let id of ids" >
+        <app-production-find-show  [inputId]="id"></app-production-find-show>
+    </div>
+</div>
