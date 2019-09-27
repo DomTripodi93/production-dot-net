@@ -21,6 +21,7 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
   error = '';
   avail=false;
   date = "";
+  editMulti: boolean[] = [];
 
 
   constructor(
@@ -34,9 +35,14 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getHourly()
     this.date = this.dayServ.stringMonth+"-"+this.dayServ.today+"-"+this.dayServ.year
-    this.subscriptions.push(this.hourServ.hourlyChanged.subscribe(()=>{
-      setTimeout(()=>{this.getHourly()},50)}
-    ))
+    this.subscriptions.push(
+      this.hourServ.hourlyChanged.subscribe(
+        ()=>{
+          setTimeout(()=>{
+            this.getHourly()
+        },50);
+      })
+    );
   }
 
   getHourly(){
@@ -55,6 +61,7 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
       this.avail=true
       this.dayServ.dates = [];
       this.hourly.forEach((lot) =>{
+        this.editMulti.push(false);
         if (+(lot.time[0]+lot.time[1])>12){
           let timeHold = +(lot.time[0]+lot.time[1]) - 12;
           lot.time = timeHold + lot.time.slice(2, 5) + " PM"
@@ -78,5 +85,17 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
   }
 
+  onEdit(set){
+    this.editMulti[set] = true;
+  }
+
+  onDelete(id){
+    if (confirm("Are you sure you want to delete this hourly production?")){
+      this.hourServ.deleteHourly(id).subscribe()
+      setTimeout(()=>{
+        this.hourServ.hourlyChanged.next();
+      }, 100)
+    }
+  }
 
 }

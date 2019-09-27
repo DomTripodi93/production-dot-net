@@ -1,8 +1,17 @@
 .grid { 
     display: grid;
-    grid-template-columns: 30% 10% 20% 20% 20%;
+    grid-template-columns: 50% 50%;
 }
 
 input.ng-invalid.ng-touched {
     border: 1px solid red;
-  }
+}
+
+h5{
+    text-align: center;
+    font-weight: 600;
+}
+
+input{
+    height: 22px
+}

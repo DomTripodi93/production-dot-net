@@ -64,5 +64,4 @@ export class HourlyNewShortComponent implements OnInit {
     this.hourServ.quick[this.index]=false;
   }
 
-
 }

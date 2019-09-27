@@ -7,13 +7,12 @@ namespace BackEnd.Dtos
     {        
         [Required]
         public string Machine { get; set; }
+
+        [Required]
         public string JobNumber { get; set; }
         
         [Required]
-        public int OpId { get; set; }
-        public string Operation { get; set; }
-        
-        [Required]
+        public string OpNumber { get; set; }
         public string Quantity { get; set; }
         public string CounterQuantity { get; set; }
         

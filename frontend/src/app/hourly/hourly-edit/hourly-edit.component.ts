@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Params, Router, ActivatedRoute } from '@angular/router';
 import { MachineService } from 'src/app/machine/machine.service';
@@ -7,6 +7,7 @@ import { HourlyService } from '../hourly.service';
 import { Subscription } from 'rxjs';
 import { Machine } from 'src/app/machine/machine.model';
 import { Hourly } from '../hourly.model';
+import { DaysService } from 'src/app/shared/days/days.service';
 
 @Component({
   selector: 'app-hourly-edit',
@@ -14,9 +15,9 @@ import { Hourly } from '../hourly.model';
   styleUrls: ['./hourly-edit.component.css']
 })
 export class HourlyEditComponent implements OnInit, OnDestroy {
+  @Input() id: number;
   editHourlyForm: FormGroup;
   hourly: Hourly;
-  id: number;
   canInput = false;
   machines: Machine[] = [];
   subscriptions: Subscription[]=[];
@@ -29,44 +30,36 @@ export class HourlyEditComponent implements OnInit, OnDestroy {
   
   constructor(
     private hourlyServ: HourlyService,
-    private route: ActivatedRoute,
-    private router: Router,
     private auth: AuthService,
-    private mach: MachineService
+    private mach: MachineService,
+    private dayServ: DaysService
   ) { }
 
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
-    this.subscriptions.push(this.route.params.subscribe((params: Params) =>{
-      this.id = +params['id'];
-    }));
     this.subscriptions.push(this.mach.fetchAllMachines()
     .subscribe(machines => {
       this.machines = machines;
     }));
     this.subscriptions.push(this.hourlyServ.fetchHourlyById(this.id)
-    .subscribe(pro => {
-      this.hourly = pro;
+    .subscribe(lot => {
+      let beginning = lot.date.substring(6,10);
+      lot.date = beginning + "-" + lot.date.substring(0,4);
+      this.hourly = lot;
       this.initForm();
     }));
   }
 
 
   private initForm() {
-    let quantity = this.hourly.quantity;
-    let counterQuantity = this.hourly.counterQuantity;
-    let jobNumber = this.hourly.jobNumber;
-    let date = this.hourly.date;
-    let machine = this.hourly.machine;
-    let time = this.hourly.time
-
     this.editHourlyForm = new FormGroup({
-      'quantity': new FormControl(quantity, Validators.required),
-      'counterQuantity': new FormControl(counterQuantity),
-      'date': new FormControl(date, Validators.required),
-      'time': new FormControl(time, Validators.required),
-      'machine': new FormControl(machine, Validators.required),
-      'jobNumber': new FormControl(jobNumber, Validators.required)
+      'quantity': new FormControl(this.hourly.quantity),
+      'counterQuantity': new FormControl(this.hourly.counterQuantity),
+      'date': new FormControl(this.dayServ.dateForForm(""+this.hourly.date), Validators.required),
+      'time': new FormControl(this.hourly.time, Validators.required),
+      'machine': new FormControl(this.hourly.machine, Validators.required),
+      'jobNumber': new FormControl(this.hourly.jobNumber, Validators.required),
+      'opNumber': new FormControl(this.hourly.opNumber, Validators.required)
     });
   }
 
@@ -76,18 +69,21 @@ export class HourlyEditComponent implements OnInit, OnDestroy {
 
   editHourly(data: Hourly) {
     this.hourlyServ.changeHourly(data, this.id).subscribe();
-    setTimeout(()=>{this.router.navigate(["../.."], {relativeTo: this.route})},50);
+    setTimeout(
+      ()=>{
+        this.hourlyServ.hourlyChanged.next();
+      },50);
   }
 
   onCancel(){
-    window.history.back();
+    this.hourlyServ.hourlyChanged.next();
   }
 
   onDelete(){
     if (confirm("Are you sure you want to delete this hourly production?")){
       this.hourlyServ.deleteHourly(this.id).subscribe()
       setTimeout(()=>{
-        this.router.navigate(["../.."], {relativeTo: this.route});
+        this.hourlyServ.hourlyChanged.next();
       }, 50)
     }
   }

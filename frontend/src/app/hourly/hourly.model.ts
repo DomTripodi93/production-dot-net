@@ -4,7 +4,7 @@ export interface Hourly{
     counterQuantity: number;
     jobNumber: string;
     opNumber: string;
-    date: Date;
+    date: string;
     time: string;
     machine: string;
     shift: string;

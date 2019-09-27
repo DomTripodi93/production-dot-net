@@ -7,8 +7,7 @@ namespace BackEnd.Dtos
         public int Id { get; set; }
         public string Machine { get; set; }
         public string JobNumber { get; set; }
-        public int OpId { get; set; }
-        public string Operation { get; set; }
+        public string OpNumber { get; set; }
         public string Quantity { get; set; }
         public string CounterQuantity { get; set; }
         public string Time { get; set; }

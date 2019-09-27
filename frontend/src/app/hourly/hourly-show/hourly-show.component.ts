@@ -46,6 +46,7 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
 
   quickInput(index){
     this.hourServ.jobNumber = this.machines[index].currentJob;
+    this.hourServ.opNumber = this.machines[index].currentOp;
     this.hourServ.machine = this.machines[index];
     this.hourServ.quick[index] = true;
   }
