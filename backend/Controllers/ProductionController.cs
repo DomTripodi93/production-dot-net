@@ -53,9 +53,9 @@ namespace BackEnd.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduction(int id, ProdForUpdateDto prodForUpdateDto)
+        public async Task<IActionResult> UpdateProduction(int userId, int id, ProdForUpdateDto prodForUpdateDto)
         {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             var prodFromRepo = await _repo.GetProduction(id);
@@ -69,9 +69,9 @@ namespace BackEnd.Controllers
         }
 
         [HttpPut("{id}/inQuestion")]
-        public async Task<IActionResult> UpdateProductionInQuestion(int id, ProdForQuestionDto prodForUpdateDto)
+        public async Task<IActionResult> UpdateProductionInQuestion(int userId, int id, ProdForQuestionDto prodForUpdateDto)
         {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             var prodFromRepo = await _repo.GetProduction(id);

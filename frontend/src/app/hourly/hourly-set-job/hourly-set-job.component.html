@@ -4,20 +4,20 @@
 </div>
 <form *ngIf="setJobForm && jobs.length > 1" [formGroup]="setJobForm" (ngSubmit)="onSetJob()">
 <div class="form-group">
-      <label for="jobNumber">Job</label>
+      <label for="currentJob">Job</label>
       <select
-        formControlName='jobNumber'
+        formControlName='currentJob'
         type="text" 
-        id="jobNumber" 
+        id="currentJob" 
         class="form-control"
         (change)="changeOps($event.target.value)">
         <option *ngFor = "let job of jobs" >{{job}}</option>
       </select>     
-      <label for="opNumber">Op</label>
+      <label for="currentOp">Op</label>
       <select
-        formControlName='opNumber'
+        formControlName='currentOp'
         type="text" 
-        id="opNumber" 
+        id="currentOp" 
         class="form-control">
         <option *ngFor = "let op of setOps">{{op}}</option>
       </select>      

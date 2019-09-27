@@ -2,11 +2,20 @@
     <h1 *ngIf="avail">{{date}}</h1>
     <br>
     <h1 *ngIf="machines.length === 0">Add Machines to status production on!</h1>
-    <div class="mach-grid">
+    <div  *ngIf="machines" class="mach-grid">
         <li class ="list-group-item" *ngFor="let mach of machines; let i=index">
-            <ul *ngIf="machines" class="list-group">
+            <ul class="list-group">
+                <div class="btn-grid">
+                    <button 
+                        *ngIf="!hourServ.quick[i]" 
+                        class="btn btn-primary" 
+                        (click)="quickPlus(i)"
+                    >
+                        Change Job
+                    </button>
+                </div>
                 <h2>{{mach.machine}}</h2>
-                <h3>{{mach.currentJob}}</h3>
+                <h3>{{mach.currentJob}}</h3><br>
                 <div *ngIf="mach.currentOp !== 'None'" class="btn-grid">
                     <button 
                         *ngIf="!hourServ.quick[i]" 
@@ -20,18 +29,18 @@
                     <button 
                         *ngIf="!hourServ.quick[i]" 
                         class="btn btn-success" 
-                        (click)="quickInput(i)"
+                        (click)="quickPlus(i)"
                     >
                         Set Job
                     </button>                    
                 </div>
-                <div *ngIf="hourServ.quick[i] && mach.currentOp !== 'None'">
+                <div *ngIf="hourServ.quick[i] && !isJob[i]">
                     <app-hourly-new-short [index]="i">
                     </app-hourly-new-short>     
                 </div>
-                <div *ngIf="hourServ.quick[i] && mach.currentOp ==='None'">
-                    <app-hourly-set-job [index]="i">
-                    </app-hourly-set-job>     
+                <div *ngIf="hourServ.quick[i] && isJob[i]">
+                    <app-machine-edit [machName]="mach.machine">
+                    </app-machine-edit>     
                 </div>
                 <app-hourly-show-each [machine]="mach">
                 </app-hourly-show-each>

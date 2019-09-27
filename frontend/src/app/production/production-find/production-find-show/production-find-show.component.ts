@@ -26,7 +26,7 @@ export class ProductionFindShowComponent implements OnInit {
   editMode: boolean = false;
   editMulti: boolean[] = [];
   inQuestion = {
-    inQuestion: "True"
+    inQuestion: true
   }
 
   constructor(
@@ -106,16 +106,16 @@ export class ProductionFindShowComponent implements OnInit {
   }
 
   lotInQuestion(id){
-    this.inQuestion.inQuestion = "True"
+    this.inQuestion.inQuestion = true;
     this.pro.setInQuestion(this.inQuestion, id).subscribe(()=>{
-      this.pro.proChanged.next()
+      this.pro.proChanged.next();
     })
   }
 
   lotIsGood(id){
-    this.inQuestion.inQuestion = "False"
+    this.inQuestion.inQuestion = false;
     this.pro.setInQuestion(this.inQuestion, id).subscribe(()=>{
-      this.pro.proChanged.next()
+      this.pro.proChanged.next();
     })
   }
 

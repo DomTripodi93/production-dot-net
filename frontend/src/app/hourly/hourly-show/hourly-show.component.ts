@@ -26,7 +26,8 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
   jobNumber="";
   avail=false;
   date = "";
-  nothing = []
+  nothing = [];
+  isJob: boolean[] = [];
 
 
   constructor(
@@ -51,9 +52,18 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
     this.hourServ.quick[index] = true;
   }
 
+  quickPlus(index){
+    this.isJob[index] = true
+    this.quickInput(index);
+
+  }
+
   getMachines(){
     this.subscriptions.push(this.mach.fetchAllMachines()
     .subscribe(machines => {
+      this.isJob = [];
+      this.isJob.push(false);
+      this.hourServ.quick = [];
       for (let i in machines){
         this.hourServ.quick.push(false)  
       }

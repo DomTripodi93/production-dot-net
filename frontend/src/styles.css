@@ -16,3 +16,14 @@ h1, h2, h3, h4, h5, h6{
     border-color: black;
     background-color: rgb(235, 235, 235);
 }
+
+
+@media only screen and (max-width: 768px) {
+    h2{
+        word-wrap: break-word;
+    }
+
+    button{
+        margin: auto;
+    }
+}

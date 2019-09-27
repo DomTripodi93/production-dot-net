@@ -88,13 +88,6 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
     this.pro.proChanged.next();
   }
 
-  onDelete(){
-    if (confirm("Are you sure you want to delete this lot?")){
-      this.pro.deleteProduction(this.id).subscribe();
-      this.pro.proChanged.next();
-    }
-  }
-
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{
       sub.unsubscribe();

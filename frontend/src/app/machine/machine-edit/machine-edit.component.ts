@@ -7,6 +7,7 @@ import { Machine } from '../machine.model';
 import { JobService } from 'src/app/job/job.service';
 import { OpService } from 'src/app/job/job-ops/operation.service';
 import { JobInfo } from '../jobInfo.interface';
+import { HourlyService } from '../../hourly/hourly.service';
 
 @Component({
   selector: 'app-machine-edit',
@@ -25,7 +26,8 @@ export class MachineEditComponent implements OnInit {
     private mach: MachineService,
     private jobServ: JobService,
     private auth: AuthService,
-    private opServ: OpService
+    private opServ: OpService,
+    private hourServ: HourlyService
   ) { }
 
   ngOnInit() {
@@ -66,13 +68,16 @@ export class MachineEditComponent implements OnInit {
   editMachine(data) {
     this.mach.setCurrentJob(data, this.machName).subscribe(()=>{
       this.mach.machChanged.next();
+      this.hourServ.hourlyChanged.next();
     },()=>{
       this.mach.machChanged.next();
+      this.hourServ.hourlyChanged.next();
     });
   }
 
   onCancel(){
     this.mach.machChanged.next();
+    this.hourServ.hourlyChanged.next();
   }
 
   changeOps(option: String){

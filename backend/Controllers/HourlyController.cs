@@ -51,9 +51,9 @@ namespace BackEnd.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateHourly(int id, HourlyForCreationDto hourlyForUpdateDto)
+        public async Task<IActionResult> UpdateHourly(int userId, int id, HourlyForCreationDto hourlyForUpdateDto)
         {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             var hourlyFromRepo = await _repo.GetHourly(id);

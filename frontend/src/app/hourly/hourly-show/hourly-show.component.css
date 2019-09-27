@@ -18,13 +18,14 @@ h4 {
 
 h3{
     text-align: center;
-    line-height: 100%;
+    line-height: 10%;
 }
 
 h2{
     text-align: center;
     line-height: 100%;
-    /* margin: 0%; */
+    font-weight: 600;
+    line-break: auto;
 }
 
 h1{
@@ -44,4 +45,11 @@ li {
 .btn-grid{
     display: grid;
     grid-template-columns: 100%;
+}
+
+
+@media only screen and (max-width: 768px) {
+    h2{
+        word-wrap: break-word;
+    }
 }

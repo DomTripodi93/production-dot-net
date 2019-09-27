@@ -1,4 +1,3 @@
-<meta name="viewport" content="width=600">
 <div *ngIf="!canInput">
   <h1>You can only edit your own hourly lots!</h1>
 </div>
@@ -10,8 +9,7 @@
         formControlName = 'quantity'
         type = "number" 
         id = "quantity" 
-        class = "form-control"
-        (change)="onChange()">
+        class = "form-control">
     </div>
     <div class="form-group">
       <label for="counterQuantity">Counter Quantity</label>
