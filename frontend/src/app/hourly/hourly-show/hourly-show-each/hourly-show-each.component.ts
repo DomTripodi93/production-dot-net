@@ -14,13 +14,13 @@ import { Machine } from 'src/app/machine/machine.model';
 })
 export class HourlyShowEachComponent implements OnInit, OnDestroy {
   @Input() machine: Machine;
+  @Input() date: string;
   hourly: Hourly[] = [];
   subscriptions: Subscription[]=[];
   isFetching = false;
   isError = false;
   error = '';
   avail=false;
-  date = "";
   editMulti: boolean[] = [];
 
 
@@ -47,14 +47,19 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
 
   getHourly(){
     this.hourly = [];
-    this.dayServ.resetDate()
     if (+this.dayServ.today < 10 && this.dayServ.today.length <2){
       this.dayServ.today = "0"+this.dayServ.today
     };
     if (+this.dayServ.month < 10 && this.dayServ.stringMonth.length <2){
       this.dayServ.stringMonth = "0"+this.dayServ.month
     };
-    let date = this.dayServ.year +"-"+this.dayServ.stringMonth+"-"+this.dayServ.today;
+    let date = "";
+    if (this.date){
+      date = this.date;
+    } else {
+      this.dayServ.resetDate();
+      date = this.dayServ.year +"-"+this.dayServ.stringMonth+"-"+this.dayServ.today;
+    }
     this.subscriptions.push(this.hourServ.fetchHourly("date="+date+"&"+"machine="+this.auth.splitJoin(this.machine.machine))
     .subscribe(hourly => {
       this.hourly = hourly;

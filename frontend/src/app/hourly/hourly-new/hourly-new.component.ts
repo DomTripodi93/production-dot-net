@@ -35,11 +35,7 @@ export class HourlyNewComponent implements OnInit {
   ){}
   
   ngOnInit(){
-    this.dayServe.resetDate();
     this.canInput = this.auth.isAuthenticated;
-    if (!this.dayServe.today){
-      this.dayServe.resetDate();
-    }
     this.mach.fetchAllMachines()
     .subscribe(machines => {
       this.machines = machines;

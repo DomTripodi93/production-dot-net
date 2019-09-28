@@ -2,3 +2,20 @@
     display: grid;
     grid-template-columns: 50% 50%;
 }
+
+
+@media only screen and (max-width: 768px) {
+    button{
+        font-size: 9px;
+        font-weight: 600;
+        margin: auto;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    button{
+        font-size: 7px;
+        font-weight: 600;
+        margin: auto;
+    }
+}

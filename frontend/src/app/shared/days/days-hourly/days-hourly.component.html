@@ -1,18 +1,48 @@
-<ul class='list-group'>
-    <li class=list-group-item *ngFor="let lot of hourly" >
-        <div>
-            <h4>Date: {{lot.date}}</h4>
-            <h4>Job #: {{lot.job}}</h4>
-            <h4>Shift: {{lot.time}}</h4>
-            <h4>Quantity: {{lot.quantity}}</h4>
-            <h4 *ngIf="lot.counterQuantity">Counter Quantity: {{lot.counterQuantity}}</h4>
-            <h4>Machine: {{lot.machine}}</h4>
-            <br>
-            <button class='btn btn-primary' routerLink="/hourly/edit/{{lot.id}}">Edit This Lot</button>
-            <button class='btn btn-primary pull-right' routerLink="/hourly/find/job={{lot.job}}">Show Job Production</button>
-        </div>
-    </li>
+<ul *ngIf="machines" class='list-group'>
+    <h1 *ngIf="machines.length === 0">Add Machines to status production on!</h1>
+    <div  *ngIf="machines" class="mach-grid">
+        <li class ="list-group-item border" *ngFor="let mach of machines; let i=index">
+            <ul class="list-group">
+                <div class="btn-grid">
+                    <button 
+                        *ngIf="!hourServ.quick[i]" 
+                        class="btn btn-primary" 
+                        (click)="quickPlus(i)"
+                    >
+                        Change Job
+                    </button>
+                </div>
+                <h2>{{mach.machine}}</h2>
+                <h3>{{mach.currentJob}}</h3><br>
+                <div *ngIf="mach.currentOp !== 'None'" class="btn-grid">
+                    <button 
+                        *ngIf="!hourServ.quick[i]" 
+                        class="btn btn-info" 
+                        (click)="quickInput(i)"
+                    >
+                        Quick Input
+                    </button>
+                </div>
+                <div class="btn-grid" *ngIf="mach.currentOp === 'None'">
+                    <button 
+                        *ngIf="!hourServ.quick[i]" 
+                        class="btn btn-success" 
+                        (click)="quickPlus(i)"
+                    >
+                        Set Job
+                    </button>                    
+                </div>
+                <div *ngIf="hourServ.quick[i] && !isJob[i]">
+                    <app-hourly-new-short [index]="i">
+                    </app-hourly-new-short>     
+                </div>
+                <div *ngIf="hourServ.quick[i] && isJob[i]" class="list-group-item">
+                    <app-machine-edit [machName]="mach.machine">
+                    </app-machine-edit>     
+                </div>
+                <app-hourly-show-each [machine]="mach" [date]="date">
+                </app-hourly-show-each>
+            </ul>
+        </li>
+    </div>
 </ul>
-<div *ngIf='hourly.length == 0'>
-    <h2> No production lots for this Day! </h2>
-</div>

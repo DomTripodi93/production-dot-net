@@ -39,7 +39,7 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
     this.subscriptions.push(
-      this.pro.fetchProductionById(this.id).subscribe(
+      this.pro.fetchProductionBySearch(this.id).subscribe(
         lot => {
           let beginning = lot.date.substring(6,10);
           lot.date = beginning + "-" + lot.date.substring(0,4);

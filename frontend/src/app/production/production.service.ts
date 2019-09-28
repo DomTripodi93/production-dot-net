@@ -21,7 +21,7 @@ export class ProductionService {
 
     fetchProduction(search) {
         return this.http.get(
-          this.auth.apiUrl + '/production/?' + search
+          this.auth.apiUrl + '/production/' + search
         )
         .pipe(
           map((responseData: Production[]) => {
@@ -37,9 +37,9 @@ export class ProductionService {
         )
     } 
 
-    fetchProductionById(id) {
+    fetchProductionBySearch(search) {
         return this.http.get(
-          this.auth.apiUrl + '/production/' + id + "/"
+          this.auth.apiUrl + '/production/' + search 
         )
         .pipe(
           map((responseData: Production) => {
@@ -93,7 +93,7 @@ export class ProductionService {
 
 
     changeProduction(data: Production, id){
-      this.fetchProductionById(id).subscribe((object)=>{
+      this.fetchProductionBySearch(id).subscribe((object)=>{
         let oldValues = ""+JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "Update", id).subscribe();
       })
@@ -104,7 +104,7 @@ export class ProductionService {
     }
 
     setInQuestion(data, id){
-      this.fetchProductionById(id).subscribe((object)=>{
+      this.fetchProductionBySearch(id).subscribe((object)=>{
         let oldValues = JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "In Question", id).subscribe();
       })
@@ -114,7 +114,7 @@ export class ProductionService {
     }
 
     deleteProduction(id){
-      this.fetchProductionById(id).subscribe((object)=>{
+      this.fetchProductionBySearch(id).subscribe((object)=>{
         let oldValues = JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "Delete", id).subscribe();
       })

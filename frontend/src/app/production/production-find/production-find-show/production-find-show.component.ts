@@ -19,9 +19,9 @@ export class ProductionFindShowComponent implements OnInit {
   production: Production[] = [];
   singleProd: Production;
   id: string = '';
-  job: string = '';
+  search: string[];
   subscriptions: Subscription[] = []
-  total: number = 0;
+  total: number;
   quantity: Production;
   editMode: boolean = false;
   editMulti: boolean[] = [];
@@ -41,7 +41,8 @@ export class ProductionFindShowComponent implements OnInit {
     } else {
       this.subscriptions.push(
         this.route.params.subscribe((params: Params) => {
-          this.job = params['job'];
+          this.search = params["search"];
+          console.log(this.search)
           this.getJobProduction();
         })
       )
@@ -53,7 +54,6 @@ export class ProductionFindShowComponent implements OnInit {
           this.editMode = false;
         } else {
           this.editMulti = [];
-          this.total = 0;
           this.getJobProduction();
         }
       })
@@ -62,15 +62,17 @@ export class ProductionFindShowComponent implements OnInit {
 
   getJobProduction() {
     this.isFetching = true;
-    this.pro.fetchProduction("job="+this.job)
+    this.pro.fetchProduction(this.search)
       .subscribe(production => {
         this.production = production;
         this.dayServ.dates = [];
+        this.total = 0;
         this.production.forEach(lot => {
           this.editMulti.push(false);
           let beginning = lot.date.substring(6,10);
           lot.date = beginning + "-" + lot.date.substring(0,4);
           this.total = +lot.quantity + this.total;
+          this.dayServ.dates.push(this.dayServ.dashToSlash(lot.date))
         })
         this.isFetching = false;
       }, error => {
@@ -82,7 +84,7 @@ export class ProductionFindShowComponent implements OnInit {
 
   getSingleProduction() {
     this.isFetching = true;
-    this.pro.fetchProductionById(this.inputId)
+    this.pro.fetchProductionBySearch(this.inputId)
       .subscribe(production => {
         this.singleProd = production;
         this.dayServ.dates = [];

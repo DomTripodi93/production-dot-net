@@ -78,11 +78,10 @@ const appRoutes: Routes = [
             {path: 'new', component: ProductionNewComponent},
             {path: 'find', component: ProductionFindComponent},
             {path: 'single/:id', component: ProductionSingleComponent},
-            {path: ":job", component: ProductionFindShowComponent},
+            {path: ":search", component: ProductionFindShowComponent},
         ]},
         {path: 'hourly', component: HourlyComponent, children:[
             {path: '', component: HourlyShowComponent},
-            {path: 'edit/:id', component: HourlyEditComponent},
             {path: 'find', component: HourlyFindComponent},
             {path: 'find/:search', component: HourlyFindShowComponent},
             {path: 'new', component: HourlyNewComponent},

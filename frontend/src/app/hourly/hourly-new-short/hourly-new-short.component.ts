@@ -19,7 +19,6 @@ export class HourlyNewShortComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dayServ.resetDate();
     this.initForm();
   }
 

@@ -1,9 +1,7 @@
 <ul class='list-group'>
-    <h1 *ngIf="avail">{{date}}</h1>
-    <br>
     <h1 *ngIf="machines.length === 0">Add Machines to status production on!</h1>
     <div  *ngIf="machines" class="mach-grid">
-        <li class ="list-group-item" *ngFor="let mach of machines; let i=index">
+        <li class ="list-group-item border" *ngFor="let mach of machines; let i=index">
             <ul class="list-group">
                 <div class="btn-grid">
                     <button 
@@ -38,7 +36,7 @@
                     <app-hourly-new-short [index]="i">
                     </app-hourly-new-short>     
                 </div>
-                <div *ngIf="hourServ.quick[i] && isJob[i]">
+                <div *ngIf="hourServ.quick[i] && isJob[i]" class="list-group-item">
                     <app-machine-edit [machName]="mach.machine">
                     </app-machine-edit>     
                 </div>
@@ -47,3 +45,4 @@
             </ul>
         </li>
     </div>
+</ul>

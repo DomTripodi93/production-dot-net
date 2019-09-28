@@ -3,11 +3,6 @@ li {
     border-color: blue;
 }
 
-.grid { 
-    display: grid;
-    grid-template-columns: 20% 15% 30% 5% 30%;
-}
-
 h5 {
     text-align: center;
 }

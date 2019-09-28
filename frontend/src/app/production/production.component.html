@@ -14,8 +14,22 @@
                 routerLink="find"
             >
                 Find Production By Job
-            </button>          
+            </button>            
             <br><br>
+            <form (ngSubmit)='chooseMach()' #chooseMachine="ngForm">
+                <div class="grid2 col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">    
+                    <select 
+                        id="machine" 
+                        class="form-control"
+                        [(ngModel)]="defaultMach"
+                        name="machine">
+                        <option *ngFor = "let machine of machines">{{machine}}</option>
+                    </select>
+                    <div></div>
+                    <button class="btn btn-primary"><strong>Change Machine</strong></button>
+                </div>
+            </form>   
+            <br><br><br><br>
             <router-outlet></router-outlet>
         </div>
     </div>

@@ -7,8 +7,8 @@
         <div *ngFor="let lot of production; let i = index">
             <div *ngIf="lot.inQuestion && !editMulti[i]" class="inQuestion border">   
                 <div class='grid'>
-                    <button class="btn btn-success" (click)="lotIsGood(lot.id)">Set Good</button>
-                    <button class='btn btn-primary' (click)="onEditMulti(i)">Edit This Lot</button>
+                    <button class="btn btn-success" (click)="lotIsGood(lot.id)">Set <br> Good</button>
+                    <button class='btn btn-primary' (click)="onEditMulti(i)">Edit <br>This Lot</button>
                 </div>
                 <br>
                 <div routerLink="/production/single/{{lot.id}}">
@@ -20,15 +20,15 @@
                     <h4>Machine: <strong>{{lot.machine}}</strong></h4>
                 </div>
                 <div class='grid'>
-                    <button class='btn btn-info pull-right' routerLink="/production/{{lot.jobNumber}}">Job Production</button>
-                    <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day Production</button>
+                    <button class='btn btn-info pull-right' routerLink="/production/job={{lot.jobNumber}}">Job <br> Production</button>
+                    <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day <br> Production</button>
                 </div>
                 <br>
             </div>
             <div *ngIf="!lot.inQuestion && !editMulti[i]" class="border">   
                 <div class='grid'>
-                    <button class="btn btn-danger" (click)="lotInQuestion(lot.id)">Set In Question</button>
-                    <button class='btn btn-primary' (click)="onEditMulti(i)">Edit</button>
+                    <button class="btn btn-danger" (click)="lotInQuestion(lot.id)">Set <br> In Question</button>
+                    <button class='btn btn-primary' (click)="onEditMulti(i)">Edit <br> This Lot</button>
                 </div>
                 <br>
                 <div routerLink="/production/single/{{lot.id}}">
@@ -40,8 +40,8 @@
                     <h4>Machine: <strong>{{lot.machine}}</strong></h4>
                 </div>
                 <div class='grid'>
-                    <button class='btn btn-info pull-right' routerLink="/production/{{lot.jobNumber}}">Job Production</button>
-                    <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day Production</button>
+                    <button class='btn btn-info pull-right' routerLink="/production/job={{lot.jobNumber}}">Job <br> Production</button>
+                    <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day <br> Production</button>
                 </div>
                 <br>
             </div>
@@ -55,8 +55,8 @@
 <div *ngIf="singleProd">
     <div *ngIf="singleProd.inQuestion && !editMode" class="inQuestion border">   
         <div class='grid'>
-            <button class="btn btn-success" (click)="lotIsGood(singleProd.id)">Set Good</button>
-            <button class='btn btn-primary' (click)="onEdit()">Edit</button>
+            <button class="btn btn-success" (click)="lotIsGood(singleProd.id)">Set <br> Good</button>
+            <button class='btn btn-primary' (click)="onEdit()">Edit <br> This Lot</button>
         </div>
         <br>
         <div routerLink="/production/single/{{singleProd.id}}">
@@ -68,15 +68,15 @@
             <h4>Machine: <strong>{{singleProd.machine}}</strong></h4>
         </div>
         <div class='grid'>
-            <button class='btn btn-info pull-right' routerLink="/production/{{singleProd.jobNumber}}">Job Production</button>
-            <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day Production</button>
+            <button class='btn btn-info pull-right' routerLink="/production/job={{singleProd.jobNumber}}">Job <br> Production</button>
+            <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day <br> Production</button>
         </div>
         <br>
     </div>
     <div *ngIf="!singleProd.inQuestion && !editMode" class="border">   
         <div class='grid'>
-            <button class="btn btn-danger" (click)="lotInQuestion(singleProd.id)">Set In Question</button>
-            <button class='btn btn-primary' (click)="onEdit()">Edit</button>
+            <button class="btn btn-danger" (click)="lotInQuestion(singleProd.id)">Set <br> In Question</button>
+            <button class='btn btn-primary' (click)="onEdit()">Edit <br> This Lot </button>
         </div>
         <br>
         <div routerLink="/production/single/{{singleProd.id}}">
@@ -88,8 +88,8 @@
             <h4>Machine: <strong>{{singleProd.machine}}</strong></h4>
         </div>
         <div class='grid'>
-            <button class='btn btn-info pull-right' routerLink="/production/{{singleProd.jobNumber}}">Job Production</button>
-            <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day Production</button>
+            <button class='btn btn-info pull-right' routerLink="/production/job={{singleProd.jobNumber}}">Job <br> Production</button>
+            <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day <br> Production</button>
         </div>
         <br>
     </div>

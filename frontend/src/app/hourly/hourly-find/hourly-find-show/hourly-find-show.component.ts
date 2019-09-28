@@ -54,28 +54,6 @@ export class HourlyFindShowComponent implements OnInit {
     );
   }
 
-  splitByDate(){
-    this.hourly.forEach( 
-      (lot) =>{
-        if (lot.date==this.lastDate && lot == this.hourly[this.hourly.length-1]){
-          this.hourlyHold.push(lot);
-          this.splitLots.push(this.hourlyHold);
-        } else if(lot == this.hourly[this.hourly.length-1]){
-          this.splitLots.push(this.hourlyHold);
-          this.hourlyHold = [];
-          this.hourlyHold.push(lot);
-          this.splitLots.push(this.hourlyHold);
-        } else if (lot.date==this.lastDate){ 
-          this.hourlyHold.push(lot);
-        } else { 
-          this.splitLots.push(this.hourlyHold);
-          this.lastDate = lot.date;
-          this.hourlyHold = [];
-          this.hourlyHold.push(lot);
-        }
-      }
-    );
-  }
 
   constructor(
     private auth: AuthService,
@@ -83,6 +61,29 @@ export class HourlyFindShowComponent implements OnInit {
     private route: ActivatedRoute,
     private dayServ: DaysService
   ) { }
+
+  splitByDate(){
+    this.hourly.forEach( 
+      (lot) =>{
+        if (this.dayServ.dashToSlash(lot.date)==this.lastDate && lot == this.hourly[this.hourly.length-1]){
+          this.hourlyHold.push(lot);
+          this.splitLots.push(this.hourlyHold);
+        } else if(lot == this.hourly[this.hourly.length-1]){
+          this.splitLots.push(this.hourlyHold);
+          this.hourlyHold = [];
+          this.hourlyHold.push(lot);
+          this.splitLots.push(this.hourlyHold);
+        } else if (this.dayServ.dashToSlash(lot.date) == this.lastDate){ 
+          this.hourlyHold.push(lot);
+        } else { 
+          this.splitLots.push(this.hourlyHold);
+          this.lastDate = this.dayServ.dashToSlash(lot.date);
+          this.hourlyHold = [];
+          this.hourlyHold.push(lot);
+        }
+      }
+    );
+  }
 
   ngOnInit() {
     this.subscriptions.push(
@@ -130,7 +131,6 @@ export class HourlyFindShowComponent implements OnInit {
             lot.time = timeHold + lot.time.slice(2, -3) + " AM"
           }
           this.dayServ.dates.push(this.dayServ.dashToSlash(lot.date))
-          // used in link to day's production
         })
         if (this.search.includes("date") && this.search.includes("jobNumber")){
           this.machSearch = true;
@@ -145,7 +145,7 @@ export class HourlyFindShowComponent implements OnInit {
           this.machSearch = true
         }
         if (this.search.includes("jobNumber") && !this.search.includes("date")){
-          this.lastDate = this.hourly[0].date;
+          this.lastDate = this.dayServ.dashToSlash(this.hourly[0].date);
           this.oneJob = true;
           this.machSearch = true;
           this.splitByDate();

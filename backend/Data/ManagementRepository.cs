@@ -202,6 +202,17 @@ namespace BackEnd.Data
             return prodForReturn;
         }
 
+        public async Task<IEnumerable<Production>> GetProductionSetByDate(int userId, string date)
+        {
+            DateTime DateAsDate = DateTime.Parse(date);
+
+            var prodForReturn = await _context.Production
+                .Where(p => p.Date == DateAsDate)
+                .ToListAsync();
+
+            return prodForReturn;
+        }
+
         public async Task<Hourly> GetHourly(int id)
         {
             var hourly = await _context.Hourlys.FirstOrDefaultAsync(p => p.Id == id);

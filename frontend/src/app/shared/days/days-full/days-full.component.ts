@@ -12,6 +12,7 @@ import { DaysService } from '../days.service';
 })
 export class DaysFullComponent implements OnInit {
   subscription: Subscription;
+  ids = [];
   searchHold = [];
   search = '';
   production: Production[] = [];
@@ -44,7 +45,10 @@ export class DaysFullComponent implements OnInit {
       this.search = this.searchHold.join("-");
       this.pro.fetchProduction("date="+this.search)
         .subscribe(production => {
-          this.production = production;
+          this.ids = [];
+          production.forEach((lot)=>{
+            this.ids.push(lot.id);
+          })
           this.isFetching = false;
         }, error => {
           this.isFetching = false;

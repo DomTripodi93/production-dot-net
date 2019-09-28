@@ -122,26 +122,39 @@ namespace BackEnd.Controllers
             return Ok(productionSet);
         }
 
-        [HttpGet("op={job}")]
-        public async Task<IActionResult> GetProductionSetByJob(int userId, string job)
+        [HttpGet("date={date}")]
+        public async Task<IActionResult> GetProductionSetByDate(int userId, string date)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            IEnumerable<Production> directProductions = await _repo.GetProductionSetByJob(userId, job);
+            IEnumerable<Production> directProductions = await _repo.GetProductionSetByDate(userId, date);
 
             var productionSet = _mapper.Map<IEnumerable<ProdForReturnDto>>(directProductions);
 
             return Ok(productionSet);
         }
 
-        [HttpGet("job={job}&op={op}")]
+        [HttpGet("op={op}&job={job}")]
         public async Task<IActionResult> GetProductionSetByOp(int userId, string job, string op)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             IEnumerable<Production> directProductions = await _repo.GetProductionSetByOp(userId, job, op);
+
+            var productionSet = _mapper.Map<IEnumerable<ProdForReturnDto>>(directProductions);
+
+            return Ok(productionSet);
+        }
+
+        [HttpGet("job={job}")]
+        public async Task<IActionResult> GetProductionSetByJob(int userId, string job)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            IEnumerable<Production> directProductions = await _repo.GetProductionSetByJob(userId, job);
 
             var productionSet = _mapper.Map<IEnumerable<ProdForReturnDto>>(directProductions);
 
