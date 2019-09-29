@@ -123,13 +123,18 @@ export class HourlyFindShowComponent implements OnInit {
           }
           timeHold = hourHold + ":" + minHold
           this.prodTime.push(timeHold);
-          if (+(lot.time[0]+lot.time[1])>12){
+          if (+(lot.time[0]+lot.time[1])==12) {
+            lot.time = lot.time + " PM"
+          } else if (+(lot.time[0]+lot.time[1])>11){
             let timeHold = +(lot.time[0]+lot.time[1]) - 12;
-            lot.time = timeHold + lot.time.slice(2, -3) + " PM"
+            lot.time = timeHold + lot.time.slice(2, 5) + " PM"
+          } else if (+(lot.time[0]+lot.time[1]) == 0) {
+            let timeHold = +(lot.time[0]+lot.time[1]) + 12;
+            lot.time = timeHold + lot.time.slice(2, 5) + " AM"
           } else {
             let timeHold = +(lot.time[0]+lot.time[1])
-            lot.time = timeHold + lot.time.slice(2, -3) + " AM"
-          }
+            lot.time = timeHold + lot.time.slice(2, 5) + " AM"
+          };
           this.dayServ.dates.push(this.dayServ.dashToSlash(lot.date))
         })
         if (this.search.includes("date") && this.search.includes("jobNumber")){

@@ -67,7 +67,9 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
       this.dayServ.dates = [];
       this.hourly.forEach((lot) =>{
         this.editMulti.push(false);
-        if (+(lot.time[0]+lot.time[1])>12){
+        if (+(lot.time[0]+lot.time[1])==12) {
+          lot.time = lot.time + " PM"
+        } else if (+(lot.time[0]+lot.time[1])>11){
           let timeHold = +(lot.time[0]+lot.time[1]) - 12;
           lot.time = timeHold + lot.time.slice(2, 5) + " PM"
         } else if (+(lot.time[0]+lot.time[1]) == 0) {
@@ -76,7 +78,7 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
         } else {
           let timeHold = +(lot.time[0]+lot.time[1])
           lot.time = timeHold + lot.time.slice(2, 5) + " AM"
-        }
+        };
       })
       this.isFetching = false;
     }, error => {

@@ -148,6 +148,7 @@ namespace BackEnd.Data
         public async Task<Production> GetProduction(int id)
         {
             var production = await _context.Production.FirstOrDefaultAsync(p => p.Id == id);
+            
             return production;
         }
 
@@ -157,7 +158,7 @@ namespace BackEnd.Data
                 .Where(p => p.userId == userId)
                 .ToListAsync();
 
-            return prodForReturn;
+            return prodForReturn.OrderByDescending(p => p.Date);
         }
 
         public async Task<IEnumerable<Production>> GetProductionSetByJob(int userId, string job)
@@ -167,7 +168,7 @@ namespace BackEnd.Data
                 .Where(o => o.JobNumber == job)
                 .ToListAsync();
 
-            return prodForReturn;
+            return prodForReturn.OrderByDescending(p => p.Date);
         }
 
         public async Task<IEnumerable<Production>> GetProductionSetByOp(int userId, string job, string op)
@@ -178,7 +179,7 @@ namespace BackEnd.Data
                 .Where(o => o.OpNumber == op)
                 .ToListAsync();
 
-            return prodForReturn;
+            return prodForReturn.OrderByDescending(p => p.Date);
         }
 
         public async Task<IEnumerable<Production>> GetProductionSetByJobAndMachine(int userId, string job, string mach)
@@ -189,7 +190,7 @@ namespace BackEnd.Data
                 .Where(p => p.Machine == mach)
                 .ToListAsync();
 
-            return prodForReturn;
+            return prodForReturn.OrderByDescending(p => p.Date);
         }
 
         public async Task<IEnumerable<Production>> GetProductionSetByMachine(int userId, string mach)
@@ -199,7 +200,7 @@ namespace BackEnd.Data
                 .Where(p => p.Machine == mach)
                 .ToListAsync();
 
-            return prodForReturn;
+            return prodForReturn.OrderByDescending(p => p.Date);
         }
 
         public async Task<IEnumerable<Production>> GetProductionSetByDate(int userId, string date)
@@ -210,12 +211,13 @@ namespace BackEnd.Data
                 .Where(p => p.Date == DateAsDate)
                 .ToListAsync();
 
-            return prodForReturn;
+            return prodForReturn.OrderByDescending(p => p.Date);
         }
 
         public async Task<Hourly> GetHourly(int id)
         {
             var hourly = await _context.Hourlys.FirstOrDefaultAsync(p => p.Id == id);
+            
             return hourly;
         }
 
@@ -225,7 +227,7 @@ namespace BackEnd.Data
                 .Where(j => j.userId == userId)
                 .ToListAsync();
 
-            return hourlyForReturn;
+            return hourlyForReturn.OrderBy(o => o.Time);
         }
 
         public async Task<IEnumerable<Hourly>> GetHourlySetByDateAndMachine(int userId, string date, string mach)
@@ -239,7 +241,7 @@ namespace BackEnd.Data
                 .Where(p => p.Machine == mach)
                 .ToListAsync();
 
-            return hourlyForReturn;
+            return hourlyForReturn.OrderBy(o => o.Time);
         }
 
         public async Task<Settings> GetSettings(int userId)
