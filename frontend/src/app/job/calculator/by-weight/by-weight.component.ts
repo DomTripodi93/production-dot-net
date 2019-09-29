@@ -72,12 +72,12 @@ export class ByWeightComponent implements OnInit, OnDestroy {
 
 
     this.calc.latheForm = new FormGroup({
-      "type": new FormControl(this.type[0]),
-      "averageBar": new FormControl(averageBar),
-      "cutTo": new FormControl(cutTo),
-      "material" : new FormControl(this.calc.densities[0].material),
-      "dia": new FormControl(dia),
-      "weight": new FormControl(weight),
+      "type": new FormControl(this.type[0], Validators.required),
+      "averageBar": new FormControl(averageBar, Validators.required),
+      "cutTo": new FormControl(cutTo, Validators.required),
+      "material" : new FormControl(this.calc.densities[0].material, Validators.required),
+      "dia": new FormControl(dia, Validators.required),
+      "weight": new FormControl(weight, Validators.required),
       'cutOff': new FormControl(cutOff, Validators.required),
       'oal': new FormControl(oal, Validators.required),
       'mainFacing': new FormControl(mainFacing, Validators.required),

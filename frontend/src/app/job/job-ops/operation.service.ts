@@ -43,7 +43,9 @@ export class OpService {
         map((responseData: Operation[]) => {
           responseData.forEach((lot)=>{
             lot.machine = this.auth.rejoin(lot.machine);
-            lot.opNumber = this.dayServ.dashToSlash(lot.opNumber)
+            if (lot.opNumber.includes("-")){
+              lot.opNumber = this.dayServ.dashToSlash(lot.opNumber)
+            }
           })
         return responseData;
         })
@@ -63,10 +65,19 @@ export class OpService {
         let oldValues = ""+JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "Update", info).subscribe();
       })
-      data.opNumber = this.slashToDash(data.opNumber);
       data.machine = this.auth.splitJoin(data.machine);
         return this.http.put(
           this.auth.apiUrl + '/operation/op=' + info, data
+        );
+    }
+
+    changeOpRemaining(data, info){
+      this.fetchOp(info).subscribe((object)=>{
+        let oldValues = ""+JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Update", info).subscribe();
+      })
+        return this.http.put(
+          this.auth.apiUrl + '/operation/remaining/op=' + info, data
         );
     }
 

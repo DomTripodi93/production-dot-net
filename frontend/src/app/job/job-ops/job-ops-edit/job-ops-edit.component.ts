@@ -28,9 +28,7 @@ export class JobOpsEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.search)
     this.search = this.operationServ.slashToDash(this.search);
-    console.log(this.search)
     this.canInput = this.auth.isAuthenticated;
     this.mach.fetchAllMachines()
     .subscribe(machines => {
@@ -55,26 +53,18 @@ export class JobOpsEditComponent implements OnInit {
   }
 
   onSubmit(){
-    this.operation = this.editOpForm.value;
-    this.editOp(this.operation);
+    this.editOp(this.editOpForm.value);
   }
 
   editOp(data: Operation) {
     this.isError = false;
-    this.operationServ.changeOp(data, this.search).subscribe(()=>{},
-    () =>{
-      this.operationServ.opsChanged.next();
-      this.isError = true;
-    });
-    if (this.isError){
-      this.error = "That job already exists on that machine!";
-    }else{
+    this.operationServ.changeOp(data, this.search).subscribe(()=>{
       setTimeout(
         ()=>{
           this.operationServ.opsChanged.next();
         }, 100
       );
-    }
+    });
   }
 
   onCancel(){

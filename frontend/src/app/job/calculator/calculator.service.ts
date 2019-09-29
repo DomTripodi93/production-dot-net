@@ -3,6 +3,7 @@ import { Bar } from './bar.model';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { JobService } from 'src/app/job/job.service';
 import { ProductionService } from '../../production/production.service';
+import { OpService } from '../job-ops/operation.service';
 
 @Injectable({providedIn: 'root'})
 export class CalculatorService {
@@ -54,7 +55,8 @@ export class CalculatorService {
 
     constructor(
         private jobServ: JobService,
-        private pro: ProductionService
+        private pro: ProductionService,
+        private opServ: OpService
     ){}
 
 
@@ -118,7 +120,20 @@ export class CalculatorService {
             })
             let value = this.partsToMake - this.total;
             this.jobServ.jobHold.remainingQuantity = "" + value; 
-            this.jobServ.changeJob(this.jobServ.jobHold, this.jobServ.jobHold.jobNumber).subscribe();
+            this.jobServ.changeJob(this.jobServ.jobHold, this.jobServ.jobHold.jobNumber).subscribe(
+                ()=>{
+                    this.opServ.fetchOpByJob(this.jobServ.jobHold.jobNumber).subscribe((ops)=>{
+                        ops.forEach((op)=>{
+                            if(op.opNumber.includes("/")){
+                                op.opNumber = this.opServ.slashToDash(op.opNumber);
+                            }
+                            let update = {remainingQuantity: this.jobServ.jobHold.remainingQuantity};
+                            let search = op.opNumber + "&job=" + op.jobNumber;
+                            this.opServ.changeOpRemaining(update, search).subscribe();
+                        });
+                    });
+                }
+            );
         })
         this.submitted = true;
 
@@ -149,7 +164,21 @@ export class CalculatorService {
                 this.jobServ.changeJob(this.jobServ.jobHold, this.jobServ.jobHold.jobNumber).subscribe(()=>{},(error)=>{console.log(error)});
             })
         } else {
-            this.jobServ.changeJob(this.jobServ.jobHold, this.jobServ.jobHold.jobNumber).subscribe(()=>{},(error)=>{console.log(error)})
+            this.jobServ.changeJob(this.jobServ.jobHold, this.jobServ.jobHold.jobNumber).subscribe(
+                ()=>{
+                    this.opServ.fetchOpByJob(this.jobServ.jobHold.jobNumber).subscribe((ops)=>{
+                        ops.forEach((op)=>{
+                            if(op.opNumber.includes("/")){
+                                op.opNumber = this.opServ.slashToDash(op.opNumber);
+                            }
+                            let update = {remainingQuantity: this.jobServ.jobHold.remainingQuantity};
+                            let search = op.opNumber + "&job=" + op.jobNumber;
+                            this.opServ.changeOpRemaining(update, search).subscribe();           
+                        });
+                    });
+                },
+                (error)=>{console.log(error);}
+            );
         }
         this.submitted = true;
         if (this.latheForm.value.cycleTime){
