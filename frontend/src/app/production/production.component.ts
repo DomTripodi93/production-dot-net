@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { DaysService } from '../shared/days/days.service';
 import { AuthService } from '../shared/auth.service';
 import { NgForm } from '@angular/forms';
@@ -26,7 +26,8 @@ export class ProductionComponent {
     private router: Router,
     private mach: MachineService,
     private auth: AuthService,
-    private pro: ProductionService
+    private pro: ProductionService,
+    private opServ: OpService
   ){
     this.mach.fetchMachineJobs()
     .subscribe((machines: Machine[]) => {
@@ -53,6 +54,10 @@ export class ProductionComponent {
     });
     let job = machToSet.currentJob;
     let op = machToSet.currentOp;
+    if (op.includes("/")){
+      op = this.opServ.slashToDash(op);
+    }    
+    console.log(job)
     this.router.navigate(["/production/op=" + op + "&job=" + job])
   }
 

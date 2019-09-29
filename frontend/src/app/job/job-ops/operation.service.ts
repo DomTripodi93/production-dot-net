@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { map, tap } from "rxjs/operators";
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { AuthService } from '../../shared/auth.service';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Operation } from '../../job/job-ops/operation.model';
+import { DaysService } from 'src/app/shared/days/days.service';
 
 @Injectable({providedIn: 'root'})
 export class OpService {
@@ -12,8 +13,9 @@ export class OpService {
     public opsChanged = new Subject;
 
     constructor(
-        private http: HttpClient,
-        private auth: AuthService
+      private http: HttpClient,
+      private auth: AuthService,
+      private dayServ: DaysService
     ) {}
 
 
@@ -22,33 +24,35 @@ export class OpService {
     }
 
     fetchOp(search) {
-        return this.http.get(
-          this.auth.apiUrl + '/operation/' + search
-        )
-        .pipe(
-          map((responseData: Operation) => {
-            responseData.machine = this.auth.rejoin(responseData.machine);
-          return responseData;
-          })
-        )
+      return this.http.get(
+        this.auth.apiUrl + '/operation/' + search
+      )
+      .pipe(
+        map((responseData: Operation) => {
+          responseData.machine = this.auth.rejoin(responseData.machine);
+        return responseData;
+        })
+      )
     } 
 
     fetchOpByJob(search) {
-        return this.http.get(
-          this.auth.apiUrl + '/operation/job=' + search
-        )
-        .pipe(
-          map((responseData: Operation[]) => {
-            responseData.forEach((lot)=>{
-              lot.machine = this.auth.rejoin(lot.machine);
-            })
-          return responseData;
+      return this.http.get(
+        this.auth.apiUrl + '/operation/job=' + search
+      )
+      .pipe(
+        map((responseData: Operation[]) => {
+          responseData.forEach((lot)=>{
+            lot.machine = this.auth.rejoin(lot.machine);
+            lot.opNumber = this.dayServ.dashToSlash(lot.opNumber)
           })
-        )
+        return responseData;
+        })
+      )
     }
 
     addOp(data: Operation){
       data.machine = this.auth.splitJoin(data.machine);
+      data.opNumber = this.slashToDash(data.opNumber);
         return this.http.post(
           this.auth.apiUrl + '/operation/', data
         );
@@ -77,16 +81,22 @@ export class OpService {
         )
       .pipe(
           tap(event => {
-              console.log(event);
-              if (event.type === HttpEventType.Sent){
-                  console.log('control')
-              }
-              if (event.type === HttpEventType.Response) {
-                  console.log(event.body);
-              }
-          })
-        );
-      }
+            console.log(event);
+            if (event.type === HttpEventType.Sent){
+                console.log('control')
+            }
+            if (event.type === HttpEventType.Response) {
+                console.log(event.body);
+            }
+          }
+        )
+      );
+    }
 
+    slashToDash(op){
+      let opHold = op.split("/");
+      op = opHold.join("-")
+        return op;
+    }
       
 }

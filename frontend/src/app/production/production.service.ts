@@ -7,6 +7,8 @@ import { Production } from './production.model';
 import { Part } from '../part/part.model';
 import { JobService } from '../job/job.service';
 import { Job } from '../job/job.model';
+import { OpService } from '../job/job-ops/operation.service';
+import { DaysService } from '../shared/days/days.service';
 
 @Injectable({providedIn: 'root'})
 export class ProductionService {
@@ -16,7 +18,9 @@ export class ProductionService {
     constructor(
         private http: HttpClient,
         private auth: AuthService,
-        private jobServ: JobService
+        private jobServ: JobService,
+        private opServ: OpService,
+        private dayServ: DaysService
         ) {}
 
     fetchProduction(search) {
@@ -43,6 +47,7 @@ export class ProductionService {
         )
         .pipe(
           map((responseData: Production) => {
+            responseData.opNumber = this.dayServ.dashToSlash(responseData.opNumber);
             responseData.machine = this.auth.rejoin(responseData.machine);
           return responseData;
           })
@@ -56,6 +61,7 @@ export class ProductionService {
         .pipe(
           map((responseData: Production[]) => {
             responseData.forEach((lot)=>{
+              lot.opNumber = this.dayServ.dashToSlash(lot.opNumber);
               lot.machine = this.auth.rejoin(lot.machine);
             })
             const proHold: Production [] = responseData;
@@ -86,6 +92,7 @@ export class ProductionService {
         this.jobServ.changeJob(job, data.jobNumber).subscribe()
       })
       data.machine = this.auth.splitJoin(data.machine);
+      data.opNumber = this.opServ.slashToDash(data.opNumber);
         return this.http.post(
           this.auth.apiUrl + '/production/', data
         );

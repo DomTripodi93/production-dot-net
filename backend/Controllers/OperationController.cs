@@ -50,7 +50,7 @@ namespace BackEnd.Controllers
             throw new Exception("Creation of op lot failed on save");
         }
 
-        [HttpPut("{opNum}&job={jobNum}")]
+        [HttpPut("op={opNum}&job={jobNum}")]
         public async Task<IActionResult> UpdateOperation(int userId, string jobNum, string opNum, OperationForUpdateDto opForUpdateDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
@@ -67,7 +67,7 @@ namespace BackEnd.Controllers
             throw new Exception($"Updating op operation {opNum} for {jobNum} failed on save");
         }
 
-        [HttpGet("{opNum}&job={jobNum}", Name = "GetOp")]
+        [HttpGet("op={opNum}&job={jobNum}", Name = "GetOp")]
         public async Task<IActionResult> GetOp(string jobNum, string opNum, int userId)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
@@ -91,7 +91,7 @@ namespace BackEnd.Controllers
             return Ok(ops);
         }
 
-        [HttpDelete("{opNum}&job={jobNum}")]
+        [HttpDelete("op={opNum}&job={jobNum}")]
         public async Task<IActionResult> DeleteOperation(int userId, string jobNum, string opNum)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))

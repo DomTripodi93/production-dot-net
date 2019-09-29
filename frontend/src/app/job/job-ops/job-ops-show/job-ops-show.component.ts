@@ -41,6 +41,9 @@ export class JobOpsShowComponent implements OnInit {
       "Are you sure you want to delete " + operation.opNumber + " for job # " 
       + operation.jobNumber + "?"
       )){
+        if (operation.opNumber.includes("/")){
+          operation.opNumber = this.opServ.slashToDash(operation.opNumber);
+        }
         let searchForDelete = operation.opNumber + "&job=" + operation.jobNumber;
         this.opServ.deleteOp(searchForDelete).subscribe(()=>{
         setTimeout(()=>{this.getOps()},)}

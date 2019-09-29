@@ -54,7 +54,7 @@
 </h4>
 <h4 *ngIf="production" class="centered">
   After adding <a routerLink="/production/new">Multiple Production Lots</a> for one job, the 
-  <a routerLink="/production/job={{job}}&op={{op}}">Production By Job and Op</a> page will show total parts 
+  <a routerLink="/production/op={{op}}&job={{job}}">Production By Job and Op</a> page will show total parts 
   to date for the operation. This can also be reached by using the dropdown on the 
   <a routerLink="/production">Production</a> page, and checking the production for the current
   job and operation on the selected machine.

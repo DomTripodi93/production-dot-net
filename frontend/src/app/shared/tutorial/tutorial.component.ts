@@ -104,7 +104,10 @@ export class TutorialComponent implements OnInit, OnDestroy {
       .subscribe(ops => {
         if (ops.length > 0){
           this.checkHourly();
-          this.op = ops[0].opNumber
+          this.op = ops[0].opNumber;
+          if (this.op.includes("/")){
+            this.op = this.opServ.slashToDash(this.op);
+          }
           this.ops = true;
         }
       }
