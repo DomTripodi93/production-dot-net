@@ -28,3 +28,14 @@ h2{
 h4{
     text-align: center;
 }
+
+button{
+    font-size: auto;
+}
+
+@media only screen and (max-width: 768px) {
+    button{
+        font-size: 9px;
+        font-weight: 600;
+    }
+}

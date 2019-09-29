@@ -13,7 +13,8 @@
                     </button>
                 </div>
                 <h2>{{mach.machine}}</h2>
-                <h3>{{mach.currentJob}}</h3><br>
+                <h3>Job: <strong>{{mach.currentJob}}</strong></h3>
+                <h3><br><br>Op: <strong>{{mach.currentOp}}</strong></h3><br>
                 <div *ngIf="mach.currentOp !== 'None'" class="btn-grid">
                     <button 
                         *ngIf="!hourServ.quick[i]" 

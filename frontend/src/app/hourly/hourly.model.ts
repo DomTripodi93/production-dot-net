@@ -8,5 +8,6 @@ export interface Hourly{
     time: string;
     machine: string;
     shift: string;
+    startTime: string;
 }
 

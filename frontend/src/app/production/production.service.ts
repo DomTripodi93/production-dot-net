@@ -116,7 +116,7 @@ export class ProductionService {
         this.auth.logChanges(oldValues, this.model, "In Question", id).subscribe();
       })
         return this.http.put(
-          this.auth.apiUrl + '/production/' + id + "/inQuestion", data
+          this.auth.apiUrl + "/production/inQuestion/" + id, data
         );
     }
 
@@ -125,7 +125,7 @@ export class ProductionService {
         let oldValues = JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "Delete", id).subscribe();
       })
-        return this.http.delete(this.auth.apiUrl + "/production/" + id + "/",{
+        return this.http.delete(this.auth.apiUrl + "/production/" + id,{
           observe: 'events',
           responseType: 'text'
           }

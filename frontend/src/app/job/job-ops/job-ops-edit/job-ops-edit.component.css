@@ -20,3 +20,25 @@ h6 {
     text-align: center;
     line-height: 75%;
 }
+
+.grid2 { 
+    display: grid;
+    grid-template-columns: 100%;
+}
+
+.mobile {
+    display: none;
+    visibility: hidden;
+}
+
+@media screen and (max-width: 900px) {
+    .separator {
+        display: none;
+        visibility: hidden;
+    }
+
+    .mobile { 
+        visibility: visible;
+        display: initial;
+    }
+}

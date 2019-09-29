@@ -253,23 +253,6 @@ namespace BackEnd.Data
             return user.Settings;
         }
 
-        public async Task<StartTime> GetStartTime(int userId, string date, string machName, string shift)
-        {
-            var starts = await _context.StartTimes
-                .Where(s => s.Machine == machName)
-                .Where(s => s.Date.ToString().Substring(0,9) == date)
-                .FirstOrDefaultAsync(s => s.Shift == shift);
-
-            return starts;
-        }
-
-        public async Task<StartTime> GetUniqueStartTime(int id)
-        {
-            var startTime = await _context.StartTimes
-                .FirstOrDefaultAsync(m => m.Id == id);
-            return startTime;
-        }
-
         public async Task<IEnumerable<ChangeLog>> GetChangeLog(int userId, string model)
         {
             var changes = await _context.ChangeLogs

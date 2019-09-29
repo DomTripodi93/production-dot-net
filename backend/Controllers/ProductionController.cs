@@ -68,7 +68,7 @@ namespace BackEnd.Controllers
             throw new Exception($"Updating production lot {id} failed on save");
         }
 
-        [HttpPut("{id}/inQuestion")]
+        [HttpPut("inQuestion/{id}")]
         public async Task<IActionResult> UpdateProductionInQuestion(int userId, int id, ProdForQuestionDto prodForUpdateDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))

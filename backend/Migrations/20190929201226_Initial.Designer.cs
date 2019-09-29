@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190917021844_Initial")]
+    [Migration("20190929201226_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,6 +60,8 @@ namespace backend.Migrations
                     b.Property<string>("OpNumber");
 
                     b.Property<string>("Quantity");
+
+                    b.Property<string>("StartTime");
 
                     b.Property<string>("Time");
 
@@ -205,26 +207,6 @@ namespace backend.Migrations
                     b.ToTable("Settings");
                 });
 
-            modelBuilder.Entity("BackEnd.Models.StartTime", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Date");
-
-                    b.Property<string>("Machine");
-
-                    b.Property<string>("Shift");
-
-                    b.Property<int>("userId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("userId", "Machine");
-
-                    b.ToTable("StartTimes");
-                });
-
             modelBuilder.Entity("BackEnd.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -322,18 +304,6 @@ namespace backend.Migrations
                         .WithOne("Settings")
                         .HasForeignKey("BackEnd.Models.Settings", "userId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("BackEnd.Models.StartTime", b =>
-                {
-                    b.HasOne("BackEnd.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("BackEnd.Models.Mach", "Mach")
-                        .WithMany("StartTimes")
-                        .HasForeignKey("userId", "Machine");
                 });
 #pragma warning restore 612, 618
         }

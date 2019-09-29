@@ -15,7 +15,6 @@ namespace BackEnd.Data
         public DbSet<Operation> Operations { get; set; }
         public DbSet<Hourly> Hourlys { get; set; }
         public DbSet<Production> Production { get; set; }
-        public DbSet<StartTime> StartTimes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

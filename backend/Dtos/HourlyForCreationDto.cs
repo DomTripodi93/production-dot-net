@@ -15,6 +15,7 @@ namespace BackEnd.Dtos
         public string OpNumber { get; set; }
         public string Quantity { get; set; }
         public string CounterQuantity { get; set; }
+        public string StartTime { get; set; }
         
         [Required]
         public string Time { get; set; }

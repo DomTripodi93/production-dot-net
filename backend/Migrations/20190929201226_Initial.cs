@@ -104,34 +104,6 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StartTimes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    userId = table.Column<int>(nullable: false),
-                    Machine = table.Column<string>(nullable: true),
-                    Shift = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StartTimes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_StartTimes_Users_userId",
-                        column: x => x.userId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_StartTimes_Machines_userId_Machine",
-                        columns: x => new { x.userId, x.Machine },
-                        principalTable: "Machines",
-                        principalColumns: new[] { "userId", "Machine" },
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Jobs",
                 columns: table => new
                 {
@@ -214,6 +186,7 @@ namespace backend.Migrations
                     Quantity = table.Column<string>(nullable: true),
                     CounterQuantity = table.Column<string>(nullable: true),
                     Time = table.Column<string>(nullable: true),
+                    StartTime = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -285,11 +258,6 @@ namespace backend.Migrations
                 name: "IX_Production_userId_JobNumber_OpNumber",
                 table: "Production",
                 columns: new[] { "userId", "JobNumber", "OpNumber" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StartTimes_userId_Machine",
-                table: "StartTimes",
-                columns: new[] { "userId", "Machine" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -301,19 +269,16 @@ namespace backend.Migrations
                 name: "Hourlys");
 
             migrationBuilder.DropTable(
+                name: "Machines");
+
+            migrationBuilder.DropTable(
                 name: "Production");
 
             migrationBuilder.DropTable(
                 name: "Settings");
 
             migrationBuilder.DropTable(
-                name: "StartTimes");
-
-            migrationBuilder.DropTable(
                 name: "Operations");
-
-            migrationBuilder.DropTable(
-                name: "Machines");
 
             migrationBuilder.DropTable(
                 name: "Jobs");

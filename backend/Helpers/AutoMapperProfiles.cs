@@ -26,8 +26,6 @@ namespace BackEnd.Helpers
             CreateMap<ChangelogForCreationDto, ChangeLog>().ReverseMap();
             CreateMap<Settings, SettingsForReturnDto>();
             CreateMap<SettingsForCreationDto, Settings>().ReverseMap();
-            CreateMap<StartTime, StartTimeForReturnDto>();
-            CreateMap<StartTimeForCreationDto, StartTime>().ReverseMap();
             CreateMap<Operation, OperationForReturnDto>();
             CreateMap<OperationForCreationDto, Operation>().ReverseMap();
         }

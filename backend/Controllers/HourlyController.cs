@@ -66,6 +66,22 @@ namespace BackEnd.Controllers
             throw new Exception($"Updating hourly count {id} failed on save");
         }
 
+        [HttpPut("startTime/{id}")]
+        public async Task<IActionResult> UpdateStartTimeHourly(int userId, int id, HourlyForCreationDto hourlyForUpdateDto)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var hourlyFromRepo = await _repo.GetHourly(id);
+
+            _mapper.Map(hourlyForUpdateDto, hourlyFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetHourly", new {id = hourlyFromRepo.Id}, hourlyForUpdateDto);
+
+            throw new Exception($"Updating hourly count {id} failed on save");
+        }
+
         [HttpGet("{id}", Name = "GetHourly")]
         public async Task<IActionResult> GetHourly(int id, int userId)
         {

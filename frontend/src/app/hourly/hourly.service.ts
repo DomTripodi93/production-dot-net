@@ -17,6 +17,7 @@ export class HourlyService {
     opNumber ="";
     machine: Machine;
     model = "Hourly"
+    startTimes: string[] = [];
 
     constructor(
         private http: HttpClient,
@@ -84,6 +85,16 @@ export class HourlyService {
       })
       data.opNumber = this.opServ.slashToDash(data.opNumber);
       data.machine = this.auth.splitJoin(data.machine);
+        return this.http.put(
+          this.auth.apiUrl + '/hourly/startTime/' + id, data
+        );
+    }
+
+    changeStartTime(data: Hourly, id){
+      this.fetchHourlyById(id).subscribe((object)=>{
+        let oldValues = ""+JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Update Start Time", id).subscribe();
+      })
         return this.http.put(
           this.auth.apiUrl + '/hourly/' + id, data
         );
