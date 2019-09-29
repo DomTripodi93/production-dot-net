@@ -25,7 +25,7 @@ export class OpService {
 
     fetchOp(search) {
       return this.http.get(
-        this.auth.apiUrl + '/operation/' + search
+        this.auth.apiUrl + '/operation/op=' + search
       )
       .pipe(
         map((responseData: Operation) => {
@@ -63,9 +63,10 @@ export class OpService {
         let oldValues = ""+JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "Update", info).subscribe();
       })
+      data.opNumber = this.slashToDash(data.opNumber);
       data.machine = this.auth.splitJoin(data.machine);
         return this.http.put(
-          this.auth.apiUrl + '/operation/' + info, data
+          this.auth.apiUrl + '/operation/op=' + info, data
         );
     }
 
@@ -74,7 +75,7 @@ export class OpService {
         let oldValues = ""+JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "Delete", info).subscribe();
       })
-        return this.http.delete(this.auth.apiUrl + "/operation/" + info + "/",{
+        return this.http.delete(this.auth.apiUrl + "/operation/op=" + info + "/",{
           observe: 'events',
           responseType: 'text'
           }
