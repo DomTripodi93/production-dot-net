@@ -5,6 +5,8 @@ import { PartService } from 'src/app/part/part.service';
 import { HourlyService } from '../../hourly/hourly.service';
 import { ProductionService } from '../../production/production.service';
 import { Subscription } from 'rxjs';
+import { OpService } from 'src/app/job/job-ops/operation.service';
+import { JobService } from '../../job/job.service';
 
 @Component({
   selector: 'app-tutorial',
@@ -14,9 +16,12 @@ import { Subscription } from 'rxjs';
 export class TutorialComponent implements OnInit, OnDestroy {
   machines = false;
   parts = false;
+  jobs = false;
+  ops = false;
   hourly = false;
   production = false;  
   job = "";
+  op = "";
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -24,28 +29,38 @@ export class TutorialComponent implements OnInit, OnDestroy {
     private mach: MachineService,
     private partServ: PartService,
     private hourlyServ: HourlyService,
-    private prodServ: ProductionService
+    private prodServ: ProductionService,
+    private opServ: OpService,
+    private jobServ: JobService
   ) { }
 
   ngOnInit() {
-    this.checkAll();
+    this.checkMachines();
     this.subscriptions.push(this.mach.machChanged.subscribe(()=>{
-      setTimeout(()=>{this.checkMachines()},50)}
+      setTimeout(()=>{this.checkMachines();},50)}
     ));
     this.subscriptions.push(this.partServ.partChanged.subscribe(()=>{
-      setTimeout(()=>{this.checkParts()},50)}
+      setTimeout(()=>{this.checkParts();},50)}
+    ));
+    this.subscriptions.push(this.jobServ.jobChanged.subscribe(()=>{
+      setTimeout(()=>{this.checkJobs();},50)}
+    ));
+    this.subscriptions.push(this.opServ.opsChanged.subscribe(()=>{
+      setTimeout(()=>{this.checkOps();},50)}
     ));
     this.subscriptions.push(this.hourlyServ.hourlyChanged.subscribe(()=>{
-      setTimeout(()=>{this.checkHourly()},50)}
+      setTimeout(()=>{this.checkHourly();},50)}
     ));
     this.subscriptions.push(this.prodServ.proChanged.subscribe(()=>{
-      setTimeout(()=>{this.checkProduction()},50)}
+      setTimeout(()=>{this.checkProduction();},50)}
     ));
   }
 
   checkAll(){
     this.checkMachines();
     this.checkParts();
+    this.checkJobs();
+    this.checkOps();
     this.checkHourly();
     this.checkProduction();
   }
@@ -54,17 +69,43 @@ export class TutorialComponent implements OnInit, OnDestroy {
     this.mach.fetchAllMachines()
       .subscribe(machine => {
         if (machine.length > 0){
+          this.checkParts();
           this.machines = true;
-          }
         }
-      )
+      }
+    );
   }
 
   checkParts(){
     this.partServ.fetchAllParts()
       .subscribe(part => {
         if (part.length > 0){
+          this.checkJobs();
           this.parts = true;
+        }
+      }
+    );
+  }
+
+  checkJobs(){
+    this.jobServ.fetchAllJobs()
+      .subscribe(job => {
+        if (job.length > 0){
+          this.job = job[0].jobNumber
+          this.jobs = true;
+          this.checkOps();
+        }
+      }
+    )
+  }
+
+  checkOps(){
+    this.opServ.fetchOpByJob(this.job)
+      .subscribe(ops => {
+        if (ops.length > 0){
+          this.checkHourly();
+          this.op = ops[0].opNumber
+          this.ops = true;
         }
       }
     )
@@ -74,11 +115,12 @@ export class TutorialComponent implements OnInit, OnDestroy {
     this.hourlyServ.fetchAllHourly()
       .subscribe(hour => {
         if (hour.length > 0){
+          this.checkProduction();
           this.hourly = true;
         }
       }
-    )}
-
+    );
+  }
 
   checkProduction(){
     this.prodServ.fetchAllProduction()
@@ -95,13 +137,13 @@ export class TutorialComponent implements OnInit, OnDestroy {
     if (confirm("Are you sure you want to hide these tutorials?")){
       this.auth.changeNew().subscribe(()=>{
         this.auth.authChanged.next();
-      })
+      });
     }
   }
 
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{
       sub.unsubscribe()
-    })
+    });
   }
 }

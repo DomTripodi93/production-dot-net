@@ -42,7 +42,6 @@ export class ProductionFindShowComponent implements OnInit {
       this.subscriptions.push(
         this.route.params.subscribe((params: Params) => {
           this.search = params["search"];
-          console.log(this.search)
           this.getJobProduction();
         })
       )

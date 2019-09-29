@@ -73,7 +73,6 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(){
-    console.log(this.editProductionForm.value)
     this.editProduction(this.editProductionForm.value);
   }
 

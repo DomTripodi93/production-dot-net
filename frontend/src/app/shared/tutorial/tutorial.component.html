@@ -3,44 +3,61 @@
 <br>
 <h4 *ngIf="!machines" class="centered">
   Start by adding a <a routerLink="/machine/new">Machine</a>. It's not 
-  going to give you any options for the job field, but that is perfectly 
+  going to give you any options for the job or op field, but that is perfectly 
   normal. 
 <br>
 </h4>
 <h4 *ngIf="!machines" class="centered">
-  You will need to have at least 1 machine to be able to add a <a routerLink="/parts/new">Part</a>.
-  Each  <a routerLink="/parts/new">Part</a> needs to be assigned a "job number," which will give you the 
-  ability to asign a job to a machine later.
+  You will need to have at least 1 <a routerLink="/machine/new">Machine</a> and 1 <a routerLink="/parts/new">Part</a> to be able to add a 
+  <a routerLink="/jobs/new">Job</a>, and at least 1 <a routerLink="/jobs/new">Job</a> to assign an <a routerLink="/jobs">Op</a> to.
 <br>
 </h4>
 <h4 *ngIf="machines && !parts" class="centered">
-  Now that you have created a machine, you can add your first part! 
-  A <a routerLink="/parts/new">Part</a> needs to have a "part number," "job number," and "machine." 
-  all other fields are optional. The same <a routerLink="/parts/new">Part</a> can be used more than once,
-  where it is ok to have <strong>either</strong> the same "job number" or "machine." 
-  <strong>However</strong> the same combination of "job number" and "machine" cannot repeat.
+  Now that you have created a machine, lets add your first part! 
+  A <a routerLink="/parts/new">Part</a> only needs to have a "part number." 
+  The same <a routerLink="/parts/new">Part</a> can be used on as many jobs as you need it for.
+  <br>
+  You will need to have at least 1 <a routerLink="/parts/new">Part</a> to be able to add a 
+  <a routerLink="/jobs/new">Job</a>
 <br>
 </h4>
-<h4  *ngIf="parts && !hourly" class="centered">
-  Now that you have created your first part, you will be able to use the production
-  calculators, and production tracking features for that part.
+<h4  *ngIf="parts && !jobs" class="centered">
+  Now that you have created your first part, we can add our first <a routerLink="/jobs/new">Job</a>. A job 
+  holds all of your information for the material recieved for the job. 
+  <br> 
+  By inputing information for the first lathe operation, you will be able to calculate a maximum production 
+  for the material recieved.
 <br>
 </h4>
-<h4 *ngIf="parts && !hourly" class="centered">
+<h4  *ngIf="jobs && !ops" class="centered">
+  Now that you have created your first job, you will be able to use the production
+  calculator features for that job. 
+  <br>
+  Now lets add an <a routerLink="/jobs">Operation</a> to the job below, which will let us create production lots 
+  and hourly production, after we assign a job and op to our machine. 
+<br>
+</h4>
+<h4  *ngIf="ops && !hourly" class="centered">
+  Now that you have created your first job and operation, you will be able to use the production 
+  tracking features for that job.
+  <br>
   Lets start by using the <a routerLink="/hourly">Hourly Tracking</a> where you will see a button that allows 
-  you to asign a job to you machine if you have not already done so. Once a job is assigned, you can add a 
+  you to asign a job and op to your machine if you have not already done so. Once a job is assigned, you can add a 
   production count by clicking on "<strong>quick input</strong>."
-<br>
+  <br>
 </h4>
 <h4 *ngIf="hourly && !production" class="centered">
-  Now lets try adding a <a routerLink="/production/new">Production Lot</a>. 
-  Your production lots will be used to track how many parts have been made to the job so far.
+  Now that we have our first hourly production count, lets try adding a 
+  <a routerLink="/production/new">Production Lot</a>. Your production lots will be used to track 
+  how many parts have been made to an operation on the job so far.
 <br>
 </h4>
 <h4 *ngIf="production" class="centered">
   After adding <a routerLink="/production/new">Multiple Production Lots</a> for one job, the 
-  <a routerLink="/production/job={{job}}">Production By Job</a> page will show total parts to 
-  date for the job.
+  <a routerLink="/production/job={{job}}&op={{op}}">Production By Job and Op</a> page will show total parts 
+  to date for the operation. This can also be reached by using the dropdown on the 
+  <a routerLink="/production">Production</a> page, and checking the production for the current
+  job and operation on the selected machine.
 <br>
 </h4>
 <br>

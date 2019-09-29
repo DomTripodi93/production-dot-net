@@ -32,8 +32,8 @@
           </option>
       </select>        
     </div>
-      <br><br>
-      <div class="grid2">
+      <div class="grid separator">
+        <div><br></div><div></div>
         <button 
           class="btn btn-success" 
           type="submit"
@@ -44,6 +44,22 @@
         <button 
           type='button' 
           class='btn btn-danger pull-right' 
+          (click)='onCancel()'
+        >
+          Cancel
+        </button>
+      </div>
+      <div class="grid2">
+        <button 
+          class="btn btn-success mobile" 
+          type="submit"
+          [disabled]="!editMachineForm.valid"
+        >
+          Update
+        </button>
+        <button 
+          type='button' 
+          class='btn btn-danger mobile' 
           (click)='onCancel()'
         >
           Cancel

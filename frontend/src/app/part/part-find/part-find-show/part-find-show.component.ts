@@ -46,9 +46,9 @@ export class PartFindShowComponent implements OnInit {
     )
   }
 
-  onDelete(part, id){
+  onDelete(part){
     if (confirm("Are you sure you want to delete " +part+ "?")){
-      this.partServ.deletePart(id).subscribe(()=>{
+      this.partServ.deletePart(part).subscribe(()=>{
         setTimeout(()=>{this.partServ.partChanged.next()},)}
       );
     }
