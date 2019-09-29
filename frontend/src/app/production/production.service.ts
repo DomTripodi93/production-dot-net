@@ -71,25 +71,22 @@ export class ProductionService {
       }
 
     addProduction(data: Production){
-      this.jobServ.fetchJob(data.jobNumber).subscribe((job: Job)=>{
-        if (+job.remainingQuantity > 0){
-          let value = +job.remainingQuantity - data.quantity;
+      let search = this.opServ.slashToDash(data.opNumber) + "&job=" + data.jobNumber;
+      this.opServ.fetchOp(search).subscribe((op)=>{
+        if (+op.remainingQuantity > 0){
+          let value = +op.remainingQuantity - data.quantity;
           if (value >= 0){
-            job.remainingQuantity = "" + value;
+            let setValue = {remainingQuantity: "" + value};
+            this.opServ.changeOpRemaining(setValue, search).subscribe(()=>{
+              this.changeJobInfo(data.jobNumber);
+            });
           } else {
-            job.remainingQuantity = "0"
+            let setValue = {remainingQuantity: "" + 0};
+            this.opServ.changeOpRemaining(setValue, search).subscribe(()=>{
+              this.changeJobInfo(data.jobNumber);
+            });
           }
-        } else if (!job.remainingQuantity && job.possibleQuantity){
-          let value = +job.possibleQuantity - data.quantity;
-          job.remainingQuantity = "" + value;
-        } else if (!job.remainingQuantity && job.orderQuantity){
-          let value = +job.orderQuantity - data.quantity;
-          job.remainingQuantity = "" + value;
-        } else if (!job.remainingQuantity && job.weightQuantity){
-          let value = +job.weightQuantity - data.quantity;
-          job.remainingQuantity = "" + value;
         }
-        this.jobServ.changeJob(job, data.jobNumber).subscribe()
       })
       data.machine = this.auth.splitJoin(data.machine);
       data.opNumber = this.opServ.slashToDash(data.opNumber);
@@ -98,6 +95,29 @@ export class ProductionService {
         );
     }
 
+    changeJobInfo(jobNum){
+      this.opServ.fetchOpByJob(jobNum).subscribe((ops)=>{
+        let remaining: number = 0;
+        let opsUsed: number = 1;
+        ops.forEach((op)=>{
+          if (+op.remainingQuantity > remaining){
+            remaining = +op.remainingQuantity;
+            if (opsUsed == ops.length){
+              this.jobServ.fetchJob(jobNum).subscribe((job)=>{
+                job.remainingQuantity = "" + remaining;
+                this.jobServ.changeJob(job, jobNum).subscribe();
+              })
+            }
+          } else if (opsUsed == ops.length){
+            this.jobServ.fetchJob(jobNum).subscribe((job)=>{
+              job.remainingQuantity = "" + remaining;
+              this.jobServ.changeJob(job, jobNum).subscribe();
+            })
+          }
+          opsUsed++
+        });
+      })
+    }
 
     changeProduction(data: Production, id){
       this.fetchProductionBySearch(id).subscribe((object)=>{
