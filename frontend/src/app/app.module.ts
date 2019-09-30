@@ -58,6 +58,7 @@ import { JobOpsNewComponent } from './job/job-ops/job-ops-new/job-ops-new.compon
 import { JobOpsEditComponent } from './job/job-ops/job-ops-edit/job-ops-edit.component';
 import { ProductionFindComponent } from './production/production-find/production-find.component';
 import { ProductionFindShowComponent } from './production/production-find/production-find-show/production-find-show.component';
+import { HourlySetTimeComponent } from './hourly/hourly-set-time/hourly-set-time.component';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { ProductionFindShowComponent } from './production/production-find/produc
     JobOpsShowComponent,
     ProductionFindComponent,
     ProductionFindShowComponent,
+    HourlySetTimeComponent,
   ],
   imports: [
     BrowserModule,

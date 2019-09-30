@@ -18,6 +18,7 @@ export class HourlyService {
     machine: Machine;
     model = "Hourly"
     startTimes: string[] = [];
+    noStart: boolean = true;
 
     constructor(
         private http: HttpClient,

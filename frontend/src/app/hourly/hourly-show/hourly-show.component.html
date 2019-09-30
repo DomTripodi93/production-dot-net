@@ -11,6 +11,13 @@
                     >
                         Change Job
                     </button>
+                    <button 
+                        *ngIf="!hourServ.quick[i] && noStart" 
+                        class="btn btn-warning" 
+                        (click)="quickTime(i)"
+                    >
+                        Set Start Time
+                    </button>
                 </div>
                 <h2>{{mach.machine}}</h2>
                 <h3>Job: <strong>{{mach.currentJob}}</strong></h3>
@@ -33,13 +40,16 @@
                         Set Job
                     </button>                    
                 </div>
-                <div *ngIf="hourServ.quick[i] && !isJob[i]">
+                <div *ngIf="hourServ.quick[i] && !isJob[i] && !setTime[i]">
                     <app-hourly-new-short [index]="i">
                     </app-hourly-new-short>     
                 </div>
                 <div *ngIf="hourServ.quick[i] && isJob[i]" class="list-group-item">
                     <app-machine-edit [machName]="mach.machine">
                     </app-machine-edit>     
+                </div>
+                <div *ngIf="hourServ.quick[i] && setTime[i]" class="list-group-item">
+                    <app-hourly-set-time></app-hourly-set-time>
                 </div>
                 <app-hourly-show-each [machine]="mach">
                 </app-hourly-show-each>
