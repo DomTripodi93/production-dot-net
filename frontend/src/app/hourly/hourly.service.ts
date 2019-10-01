@@ -17,8 +17,11 @@ export class HourlyService {
     opNumber ="";
     machine: Machine;
     model = "Hourly"
-    startTimes: string[] = [];
-    noStart: boolean = true;
+    isJob: boolean[] = [];
+    setTime: boolean[] = [];
+    canSetTime: boolean[] = [];
+    noStart: boolean[] = [];
+    editMode: boolean[] = [];
 
     constructor(
         private http: HttpClient,
@@ -91,13 +94,13 @@ export class HourlyService {
         );
     }
 
-    changeStartTime(data: Hourly, id){
+    changeStartTime(data, id){
       this.fetchHourlyById(id).subscribe((object)=>{
         let oldValues = ""+JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "Update Start Time", id).subscribe();
       })
         return this.http.put(
-          this.auth.apiUrl + '/hourly/' + id, data
+          this.auth.apiUrl + '/hourly/startTime/' + id, data
         );
     }
 

@@ -19,6 +19,7 @@ namespace BackEnd.Helpers
             CreateMap<PartForCreationDto, Part>().ReverseMap();
             CreateMap<Hourly, HourlyForReturnDto>();
             CreateMap<HourlyForCreationDto, Hourly>().ReverseMap();
+            CreateMap<HourlyForStartTimeDto, Hourly>().ReverseMap();
             CreateMap<Job, JobForReturnDto>();
             CreateMap<JobForCreationDto, Job>().ReverseMap();
             CreateMap<JobForUpdateDto, Job>().ReverseMap();

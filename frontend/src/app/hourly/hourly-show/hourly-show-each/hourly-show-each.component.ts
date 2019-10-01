@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { HourlyService } from 'src/app/hourly/hourly.service';
 import { DaysService } from '../../../shared/days/days.service';
 import { AuthService } from 'src/app/shared/auth.service';
-import { MachineService } from 'src/app/machine/machine.service';
 import { Machine } from 'src/app/machine/machine.model';
 
 @Component({
@@ -14,7 +13,7 @@ import { Machine } from 'src/app/machine/machine.model';
 })
 export class HourlyShowEachComponent implements OnInit, OnDestroy {
   @Input() machine: Machine;
-  @Input() date: string;
+  @Input() index: number;
   hourly: Hourly[] = [];
   subscriptions: Subscription[]=[];
   isFetching = false;
@@ -33,13 +32,12 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.getHourly()
-    this.date = this.dayServ.stringMonth+"-"+this.dayServ.today+"-"+this.dayServ.year
+    this.getHourly();
     this.subscriptions.push(
       this.hourServ.hourlyChanged.subscribe(
         ()=>{
           setTimeout(()=>{
-            this.getHourly()
+            this.getHourly();
         },50);
       })
     );
@@ -53,39 +51,41 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
     if (+this.dayServ.month < 10 && this.dayServ.stringMonth.length <2){
       this.dayServ.stringMonth = "0"+this.dayServ.month
     };
-    let date = "";
-    if (this.date){
-      date = this.date;
-    } else {
-      this.dayServ.resetDate();
-      date = this.dayServ.year +"-"+this.dayServ.stringMonth+"-"+this.dayServ.today;
-    }
-    this.subscriptions.push(this.hourServ.fetchHourly("date="+date+"&"+"machine="+this.auth.splitJoin(this.machine.machine))
-    .subscribe(hourly => {
-      this.hourly = hourly;
-      this.avail=true
-      this.dayServ.dates = [];
-      this.hourly.forEach((lot) =>{
-        this.editMulti.push(false);
-        if (+(lot.time[0]+lot.time[1])==12) {
-          lot.time = lot.time + " PM"
-        } else if (+(lot.time[0]+lot.time[1])>11){
-          let timeHold = +(lot.time[0]+lot.time[1]) - 12;
-          lot.time = timeHold + lot.time.slice(2, 5) + " PM"
-        } else if (+(lot.time[0]+lot.time[1]) == 0) {
-          let timeHold = +(lot.time[0]+lot.time[1]) + 12;
-          lot.time = timeHold + lot.time.slice(2, 5) + " AM"
-        } else {
-          let timeHold = +(lot.time[0]+lot.time[1])
-          lot.time = timeHold + lot.time.slice(2, 5) + " AM"
-        };
-      })
-      this.isFetching = false;
-    }, error => {
-      this.isFetching = false;
-      this.isError = true;
-      this.error = error.message
-    }));
+    let date = this.dayServ.year +"-"+this.dayServ.stringMonth+"-"+this.dayServ.today;
+    this.subscriptions.push(
+      this.hourServ.fetchHourly("date="+date+"&"+"machine="+this.auth.splitJoin(this.machine.machine)).subscribe(
+        hourly => {
+          if (hourly.length > 0){
+            this.hourServ.canSetTime[this.index] = true;
+          };
+          if (hourly[0].startTime){
+            this.hourServ.noStart[this.index] = false;
+          };
+          this.hourly = hourly;
+          this.avail=true;
+          this.hourly.forEach((lot) =>{
+            this.editMulti.push(false);
+            if (+(lot.time[0]+lot.time[1])==12) {
+              lot.time = lot.time + " PM"
+            } else if (+(lot.time[0]+lot.time[1])>11){
+              let timeHold = +(lot.time[0]+lot.time[1]) - 12;
+              lot.time = timeHold + lot.time.slice(2, 5) + " PM"
+            } else if (+(lot.time[0]+lot.time[1]) == 0) {
+              let timeHold = +(lot.time[0]+lot.time[1]) + 12;
+              lot.time = timeHold + lot.time.slice(2, 5) + " AM"
+            } else {
+              let timeHold = +(lot.time[0]+lot.time[1])
+              lot.time = timeHold + lot.time.slice(2, 5) + " AM"
+            };
+          })
+          this.isFetching = false;
+        }, error => {
+          this.isFetching = false;
+          this.isError = true;
+          this.error = error.message
+        }
+      )
+    );
   }
 
   ngOnDestroy(){

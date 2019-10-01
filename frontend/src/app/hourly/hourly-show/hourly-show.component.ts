@@ -24,11 +24,7 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
   error = '';
   machines: Machine[] = [];
   jobNumber="";
-  date = "";
   nothing = [];
-  isJob: boolean[] = [];
-  setTime: boolean[] = [];
-  noStart: boolean = true;
 
 
   constructor(
@@ -39,7 +35,7 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.date = this.dayServ.stringMonth+"-"+this.dayServ.today+"-"+this.dayServ.year
+    this.dayServ.resetDate();
     this.getMachines();
     this.subscriptions.push(this.hourServ.hourlyChanged.subscribe(()=>{
       setTimeout(()=>{this.getMachines()},50)}
@@ -54,25 +50,37 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
   }
 
   quickPlus(index){
-    this.isJob[index] = true
+    this.hourServ.isJob[index] = true
     this.quickInput(index);
   }
 
   quickTime(index){
-    this.setTime[index] = true
+    this.hourServ.setTime[index] = true
+    this.quickInput(index);
+  }
+
+  quickTimeEdit(index){
+    this.hourServ.editMode[index] = true;
+    this.hourServ.setTime[index] = true
     this.quickInput(index);
   }
 
   getMachines(){
     this.subscriptions.push(this.mach.fetchAllMachines()
     .subscribe(machines => {
-      this.isJob = [];
-      this.setTime = []
+      this.hourServ.isJob = [];
+      this.hourServ.setTime = [];
+      this.hourServ.canSetTime = [];
       this.hourServ.quick = [];
+      this.hourServ.noStart = [];
+      this.hourServ.editMode = [];
       for (let i in machines){
-        this.isJob.push(false);
-        this.setTime.push(false);
-        this.hourServ.quick.push(false)  
+        this.hourServ.isJob.push(false);
+        this.hourServ.setTime.push(false);
+        this.hourServ.canSetTime.push(false);
+        this.hourServ.quick.push(false);
+        this.hourServ.noStart.push(true);
+        this.hourServ.editMode.push(false);
       }
       this.machines = machines;
       this.isFetching = false;

@@ -12,11 +12,18 @@
                         Change Job
                     </button>
                     <button 
-                        *ngIf="!hourServ.quick[i] && noStart" 
+                        *ngIf="!hourServ.quick[i] && hourServ.noStart[i] && hourServ.canSetTime[i]" 
                         class="btn btn-warning" 
                         (click)="quickTime(i)"
                     >
                         Set Start Time
+                    </button>
+                    <button 
+                        *ngIf="!hourServ.quick[i] && !hourServ.noStart[i] && hourServ.canSetTime[i]" 
+                        class="btn btn-warning" 
+                        (click)="quickTimeEdit(i)"
+                    >
+                        Change Start Time
                     </button>
                 </div>
                 <h2>{{mach.machine}}</h2>
@@ -40,18 +47,18 @@
                         Set Job
                     </button>                    
                 </div>
-                <div *ngIf="hourServ.quick[i] && !isJob[i] && !setTime[i]">
+                <div *ngIf="hourServ.quick[i] && !hourServ.isJob[i] && !hourServ.setTime[i]" class="list-group-item">
                     <app-hourly-new-short [index]="i">
                     </app-hourly-new-short>     
                 </div>
-                <div *ngIf="hourServ.quick[i] && isJob[i]" class="list-group-item">
-                    <app-machine-edit [machName]="mach.machine">
+                <div *ngIf="hourServ.quick[i] && hourServ.isJob[i]" class="list-group-item">
+                    <app-machine-edit [machName]="mach.machine" [id]="i">
                     </app-machine-edit>     
                 </div>
-                <div *ngIf="hourServ.quick[i] && setTime[i]" class="list-group-item">
-                    <app-hourly-set-time></app-hourly-set-time>
+                <div *ngIf="hourServ.quick[i] && hourServ.setTime[i] && !editMode" class="list-group-item">
+                    <app-hourly-set-time [machName]="mach.machine" [index]="i"></app-hourly-set-time>
                 </div>
-                <app-hourly-show-each [machine]="mach">
+                <app-hourly-show-each [machine]="mach" [index]="i">
                 </app-hourly-show-each>
             </ul>
         </li>

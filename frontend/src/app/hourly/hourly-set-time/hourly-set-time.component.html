@@ -1,3 +1,24 @@
-<p>
-  hourly-set-time works!
-</p>
+<form *ngIf="hourlyForm" [formGroup]="hourlyForm" (ngSubmit)='onSubmit()' >
+  <div class="form-group">
+      <label for="startTime">Start Time</label>
+      <input 
+          formControlName='startTime'
+          type="time" 
+          id="startTime" 
+          class="form-control">
+  </div>
+  <div class="grid">
+    <button 
+      class="btn btn-success" 
+      type="submit"
+      [disabled]="!hourlyForm.valid"
+    >
+    Add</button>
+    <button 
+      type='button' 
+      class='btn btn-danger pull-right' 
+      (click)='onCancel()'
+    >
+    Cancel</button>
+  </div>
+  <br>

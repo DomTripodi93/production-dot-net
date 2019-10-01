@@ -16,6 +16,7 @@ import { HourlyService } from '../../hourly/hourly.service';
 })
 export class MachineEditComponent implements OnInit {
   @Input() machName: string;
+  @Input() id: number;
   editMachineForm: FormGroup;
   machine: Machine;
   canInput = false;
@@ -77,7 +78,10 @@ export class MachineEditComponent implements OnInit {
 
   onCancel(){
     this.mach.machChanged.next();
-    this.hourServ.hourlyChanged.next();
+    if (this.id > -1){
+      this.hourServ.isJob[this.id] = false;
+      this.hourServ.quick[this.id] = false;
+    }
   }
 
   changeOps(option: String){

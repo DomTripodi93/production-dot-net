@@ -67,7 +67,7 @@ namespace BackEnd.Controllers
         }
 
         [HttpPut("startTime/{id}")]
-        public async Task<IActionResult> UpdateStartTimeHourly(int userId, int id, HourlyForCreationDto hourlyForUpdateDto)
+        public async Task<IActionResult> UpdateStartTimeHourly(int userId, int id, HourlyForStartTimeDto hourlyForUpdateDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
