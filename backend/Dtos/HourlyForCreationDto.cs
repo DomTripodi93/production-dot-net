@@ -21,6 +21,6 @@ namespace BackEnd.Dtos
         
         [Required]
         public DateTime Date { get; set; }
-        
+        public string StartTime { get; set; }        
     }
 }

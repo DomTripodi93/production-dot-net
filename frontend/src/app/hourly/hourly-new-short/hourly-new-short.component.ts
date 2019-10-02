@@ -11,6 +11,7 @@ import { Hourly } from '../hourly.model';
 })
 export class HourlyNewShortComponent implements OnInit {
   @Input() index: number;
+  startTime: string;
   hourlyForm: FormGroup;
 
   constructor(
@@ -19,6 +20,7 @@ export class HourlyNewShortComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.startTime = this.hourServ.startTimes[this.index];
     this.initForm();
   }
 
@@ -45,7 +47,8 @@ export class HourlyNewShortComponent implements OnInit {
       'time': new FormControl(time, Validators.required),
       'machine': new FormControl(this.hourServ.machine.machine, Validators.required),
       'jobNumber': new FormControl(this.hourServ.jobNumber, Validators.required),
-      'opNumber': new FormControl(this.hourServ.opNumber, Validators.required)
+      'opNumber': new FormControl(this.hourServ.opNumber, Validators.required),
+      'startTime': new FormControl(this.startTime)
     });
   }
 

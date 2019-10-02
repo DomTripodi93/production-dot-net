@@ -23,10 +23,11 @@
                         class="btn btn-warning" 
                         (click)="quickTimeEdit(i)"
                     >
-                        Change Start Time
+                        Edit Start Time
                     </button>
                 </div>
                 <h2>{{mach.machine}}</h2>
+                <h5 *ngIf="hourServ.startTimes[i].length > 0">Start Time: <strong>{{hourServ.startTimes[i]}}</strong></h5>
                 <h3>Job: <strong>{{mach.currentJob}}</strong></h3>
                 <h3><br><br>Op: <strong>{{mach.currentOp}}</strong></h3><br>
                 <div *ngIf="mach.currentOp !== 'None'" class="btn-grid">

@@ -22,6 +22,7 @@ export class HourlyService {
     canSetTime: boolean[] = [];
     noStart: boolean[] = [];
     editMode: boolean[] = [];
+    startTimes: string[] = [];
 
     constructor(
         private http: HttpClient,

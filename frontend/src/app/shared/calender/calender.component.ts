@@ -64,10 +64,11 @@ export class CalenderComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.month < 10){
+    if (this.month < 9){
       this.monthHold ="0"+this.monthHold
+      console.log(this.monthHold)
     }
-    this.defaultMonth = this.year +"-"+ this.monthHold
+    this.defaultMonth = this.year + "-" + this.monthHold
     this.setDate()
   }
 
