@@ -25,6 +25,7 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
   runTimes: string[] = [];
   runMinutes: number[] = [];
   cycleTime: number;
+  alwaysUp: number[] = [];
 
 
   constructor(
@@ -81,6 +82,7 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
             if (runMin < 0){
               runMin = runMin + 60;
             };
+            this.alwaysUp.push(((runMin*60)/this.cycleTime).toFixed(0));
             if (runMin == 0){
               runMinString = "00";
             } else if (runMin < 10){
