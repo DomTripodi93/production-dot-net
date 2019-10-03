@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/shared/auth.service';
 import { map } from 'rxjs/operators';
-import { Change } from '../../shared/change.model';
+import { Change } from '../../change.model';
 
 @Component({
   selector: 'app-change-log-set',

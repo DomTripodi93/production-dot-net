@@ -28,3 +28,15 @@ h2{
 h4{
     text-align: center;
 }
+
+.mobile {
+    display: none;
+    visibility: hidden;
+}
+
+@media screen and (max-width: 900px) {
+    .mobile { 
+        visibility: visible;
+        display: initial;
+    }
+}

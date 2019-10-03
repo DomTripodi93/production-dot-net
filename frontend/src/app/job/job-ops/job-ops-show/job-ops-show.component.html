@@ -17,11 +17,11 @@
   <div class="grid">
     <div *ngFor="let operation of operations; let i=index"> 
       <div *ngIf="!editOp[i]" class="border">
-        <h3>Op #: {{operation.opNumber}}</h3>
-        <h4 *ngIf="operation.machine">Machine: {{operation.machine}}</h4>
-        <h4 *ngIf="operation.cycleTime">Cycle Time: {{operation.cycleTime}}</h4>
-        <h4 *ngIf="operation.remainingQuantity">Remaining Quantity: {{operation.remainingQuantity}}</h4>
-        <h4 *ngIf="operation.cycleTime"> Remaining Machine Hours: {{((operation.remainingQuantity*operation.cycleTime)/3600).toFixed(2)}}</h4>
+        <h3>Op #: <strong>{{operation.opNumber}}</strong></h3>
+        <h4 *ngIf="operation.machine">Machine: <br> <strong>{{operation.machine}}</strong></h4>
+        <h4 *ngIf="operation.cycleTime">Cycle Time: <br> <strong>{{operation.cycleTime}}</strong></h4>
+        <h4 *ngIf="operation.remainingQuantity">Remaining Quantity: <br> <strong>{{operation.remainingQuantity}}</strong></h4>
+        <h4 *ngIf="operation.cycleTime"> Remaining Machine Hours: <br> <strong>{{((operation.remainingQuantity*operation.cycleTime)/3600).toFixed(2)}}</strong></h4>
         <div class="grid">
           <button class='btn btn-primary' (click)="opEdit(i)">Edit</button>
           <button class='btn btn-danger' (click)="onDelete(operation)">Delete</button>

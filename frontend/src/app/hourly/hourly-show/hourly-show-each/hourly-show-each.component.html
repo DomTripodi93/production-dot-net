@@ -4,7 +4,7 @@
         Quantity: <br><strong>{{lot.quantity}}</strong>
         <div *ngIf="lot.counterQuantity">Counter: <br><strong>{{lot.counterQuantity}}</strong></div>
         <div *ngIf="lot.startTime">Run Time: <br><strong>{{runTimes[i]}}</strong></div>
-        <div *ngIf="lot.startTime && cycleTime">Up Time: <br><strong>{{(lot.quantity/alwaysUp[i]).toFixed(2)}}%</strong></div></h5>
+        <div *ngIf="lot.startTime && cycleTime">Up Time: <br><strong>{{((lot.quantity/alwaysUp[i])*100).toFixed(2)}}%</strong></div></h5>
         <div class="grid">
             <button class='btn btn-primary' (click)="onEdit(i)">Edit</button>
             <button class='btn btn-danger' (click)="onDelete(lot.id)">Delete</button>

@@ -8,19 +8,19 @@
       </div>
       <div routerLink="/jobs/{{oneJob.jobNumber}}">
         <br>
-        <h3>{{oneJob.jobNumber}}</h3>
-        <h4>Part: <br> {{oneJob.partNum}}</h4>
+        <h3>Job#: <strong>{{oneJob.jobNumber}}</strong></h3>
+        <h4>Part#: <br class="mobile"> <strong>{{oneJob.partNum}}</strong></h4>
         <h4 *ngIf="!oneJob.possibleQuantity && !oneJob.weightQuantity && oneJob.orderQuantity">
-          Possible Quantity: {{oneJob.orderQuantity}}
+          Order Quantity: <br class="mobile"> <strong>{{oneJob.orderQuantity}}</strong>
         </h4>
         <h4 *ngIf="!oneJob.possibleQuantity && oneJob.weightQuantity">
-          Possible Quantity: {{oneJob.weightQuantity}}
+          Possible Quantity: <br class="mobile"> <strong>{{oneJob.weightQuantity}}</strong>
         </h4>
         <h4 *ngIf="oneJob.possibleQuantity">
-          Possible Quantity: {{oneJob.possibleQuantity}}
+          Possible Quantity: <br class="mobile"> <strong>{{oneJob.possibleQuantity}}</strong>
         </h4>
         <h4 *ngIf="oneJob.remainingQuantity">
-          Remaining Quantity: {{oneJob.remainingQuantity}}
+          Remaining Quantity: <br class="mobile"> <strong>{{oneJob.remainingQuantity}}</strong>
         </h4> 
         <br><br>
       </div>
@@ -52,19 +52,19 @@
       </div>
       <div routerLink="/jobs/{{job.jobNumber}}">
         <br>
-        <h3>{{job.jobNumber}}</h3>
-        <h4>Current Job: <br> {{job.jobNumber}}</h4>
+        <h3>Job#: <strong>{{job.jobNumber}}</strong></h3>
+        <h4>Part#: <br> {{job.partNumber}}</h4>
         <h4 *ngIf="!job.possibleQuantity && !job.weightQuantity && job.orderQuantity">
-          Possible Quantity: {{job.orderQuantity}}
+          Possible Quantity: <strong>{{job.orderQuantity}}</strong>
         </h4>
         <h4 *ngIf="!job.possibleQuantity && job.weightQuantity">
-          Possible Quantity: {{job.weightQuantity}}
+          Possible Quantity: <strong>{{job.weightQuantity}}</strong>
         </h4>
         <h4 *ngIf="job.possibleQuantity">
-          Possible Quantity: {{job.possibleQuantity}}
+          Possible Quantity: <strong>{{job.possibleQuantity}}</strong>
         </h4>
         <h4 *ngIf="job.remainingQuantity">
-          Remaining Quantity: {{job.remainingQuantity}}
+          Remaining Quantity: <strong>{{job.remainingQuantity}}</strong>
         </h4> 
         <br><br>
       </div>
