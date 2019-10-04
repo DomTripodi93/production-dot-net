@@ -1,3 +1,17 @@
 .float-right{
     float: right;
 }
+
+h4{
+    margin: 0px 20px 20px 20px;
+}
+
+.float-mid{
+    text-align: center;
+}
+
+
+.grid { 
+    display: grid;
+    grid-template-columns: 33% 33% 10% 23%;
+}

@@ -75,9 +75,15 @@ export class AuthService {
         map((responseData: User) => {
           console.log(responseData)
           this.isNew = responseData.isNew;
-          this.defaultBarCut = responseData.defaultBarCut;
-          this.defaultBarEnd = responseData.defaultBarEnd;
-          this.defaultStartTime = responseData.defaultStartTime;
+          if (responseData.defaultBarCut){
+            this.defaultBarCut = responseData.defaultBarCut;            
+          }
+          if (responseData.defaultBarEnd){
+            this.defaultBarEnd = responseData.defaultBarEnd;            
+          }
+          if (responseData.defaultStartTime){
+            this.defaultStartTime = responseData.defaultStartTime;           
+          }
         return responseData;
         })
       )

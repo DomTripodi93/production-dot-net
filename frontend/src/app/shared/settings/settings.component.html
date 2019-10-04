@@ -1,15 +1,73 @@
 <div class="border">
   <br>
-  <h4>
-    Toggle Tutorials: {{tutorialStatus}}
+  <h4 class="grid">
+    <div class="float-mid">
+      Toggle Tutorials:
+    </div>
+    <div class="float-mid">
+      <strong>{{tutorialStatus}}</strong>
+    </div>
+    <div></div>
     <button
-    *ngIf="auth.isNew" 
-    (click)="changeTutorial()"
-    class="btn btn-primary float-right"><strong>Hide Tutorial Messages</strong></button>
+      *ngIf="auth.isNew" 
+      (click)="changeTutorial()"
+      class="btn btn-primary">
+      <strong>Hide Tutorial Messages</strong>
+    </button>
     <button
-    *ngIf="!auth.isNew" 
-    (click)="changeTutorial()"
-    class="btn btn-primary float-right"><strong>Show Tutorial Messages</strong></button><br>
+      *ngIf="!auth.isNew" 
+      (click)="changeTutorial()"
+      class="btn btn-primary">
+      <strong>Show Tutorial Messages</strong>
+    </button>
+  </h4>
+</div>
+<br>
+<div class="border">
+  <br>
+  <h4 class="grid">
+    <div class="float-mid">
+      Default Start Time: 
+    </div>
+    <div class="float-mid">
+      <strong>{{auth.defaultStartTime}}</strong> 
+    </div>
+    <div></div>
+    <button class="btn btn-primary" (click)="onChangeStartTime()">
+      <strong>Change</strong>
+    </button> 
+  </h4>
+</div>
+<br>
+<div class="border">
+  <br>
+  <h4 class="grid">
+    <div class="float-mid">
+      Default Bar End Size: 
+    </div>
+    <div class="float-mid">
+      <strong>{{auth.defaultBarEnd}}</strong> 
+    </div>
+    <div></div>
+    <button class="btn btn-primary" (click)="onChangeBarEnd()">
+      <strong>Change</strong>
+    </button> 
+  </h4>
+</div>
+<br>
+<div class="border">
+  <br>
+  <h4 class="grid">
+    <div class="float-mid">
+      Default Bar Cut Size: 
+    </div>
+    <div class="float-mid">
+      <strong>{{auth.defaultBarCut}}</strong>
+    </div>
+    <div></div>
+    <button class="btn btn-primary" (click)="onChangeBarCut()">
+      <strong>Change</strong>
+    </button> 
   </h4>
   <br>
 </div>
