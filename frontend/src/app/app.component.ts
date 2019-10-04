@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
       this.auth.apiUrl = this.auth.authApiUrl + "/" + this.auth.user;
       setTimeout(()=>{
         if (this.auth.isAuthenticated){
-          this.auth.checkNew().subscribe(()=>{},()=>{
+          this.auth.checkSettings().subscribe(()=>{},()=>{
             this.auth.logout();
           })
         }

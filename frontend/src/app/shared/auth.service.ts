@@ -12,6 +12,9 @@ export class AuthService {
     user = '';
     name = '';
     isNew = false;
+    defaultStartTime = "07:45";
+    defaultBarEnd = "3";
+    defaultBarCut = "48";
     isAuthenticated = true;
     authApiUrl = 'http://localhost:5000/api'
     apiUrl = 'http://localhost:5000/api/' + localStorage.getItem('id');
@@ -64,13 +67,17 @@ export class AuthService {
       )
     }
 
-    checkNew(){
+    checkSettings(){
       return this.http.get(
         this.apiUrl + "/settings/",
       )
       .pipe(
         map((responseData: User) => {
+          console.log(responseData)
           this.isNew = responseData.isNew;
+          this.defaultBarCut = responseData.defaultBarCut;
+          this.defaultBarEnd = responseData.defaultBarEnd;
+          this.defaultStartTime = responseData.defaultStartTime;
         return responseData;
         })
       )
