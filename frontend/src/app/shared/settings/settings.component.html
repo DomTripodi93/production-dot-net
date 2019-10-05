@@ -38,7 +38,7 @@
     </button> 
   </h4>
   <div *ngIf="auth.setStartTime">
-    <app-change-time [time]="auth.defaultStartTime"></app-change-time>
+    <app-change-value [time]="auth.defaultStartTime" [type]="'time'"></app-change-value>
   </div>
 </div>
 <br>
@@ -57,7 +57,7 @@
     </button> 
   </h4>
   <div *ngIf="auth.setBarEnd">
-    <app-change-size [size]="auth.defaultBarEnd" [type]="'End'"></app-change-size>
+    <app-change-value [size]="auth.defaultBarEnd" [type]="'end'"></app-change-value>
   </div>
 </div>
 <br>
@@ -76,6 +76,6 @@
     </button> 
   </h4>
   <div *ngIf="auth.setBarCut">
-    <app-change-size [size]="auth.defaultBarCut" [type]="'Cut'"></app-change-size>
+    <app-change-value [size]="auth.defaultBarCut" [type]="'cut'"></app-change-value>
   </div>
 </div>

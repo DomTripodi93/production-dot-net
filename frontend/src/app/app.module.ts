@@ -59,8 +59,7 @@ import { JobOpsEditComponent } from './job/job-ops/job-ops-edit/job-ops-edit.com
 import { ProductionFindComponent } from './production/production-find/production-find.component';
 import { ProductionFindShowComponent } from './production/production-find/production-find-show/production-find-show.component';
 import { HourlySetTimeComponent } from './hourly/hourly-set-time/hourly-set-time.component';
-import { ChangeSizeComponent } from './shared/settings/change-size/change-size.component';
-import { ChangeTimeComponent } from './shared/settings/change-time/change-time.component';
+import { ChangeValueComponent } from './shared/settings/change-value/change-value.component';
 
 @NgModule({
   declarations: [
@@ -118,8 +117,7 @@ import { ChangeTimeComponent } from './shared/settings/change-time/change-time.c
     ProductionFindComponent,
     ProductionFindShowComponent,
     HourlySetTimeComponent,
-    ChangeSizeComponent,
-    ChangeTimeComponent,
+    ChangeValueComponent,
   ],
   imports: [
     BrowserModule,

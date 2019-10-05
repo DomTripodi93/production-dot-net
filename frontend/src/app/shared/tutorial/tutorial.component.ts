@@ -138,9 +138,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
 
   notNew() {
     if (confirm("Are you sure you want to hide these tutorials?")){
-      this.auth.changeNew().subscribe(()=>{
-        this.auth.authChanged.next();
-      });
+      this.auth.changeNew();
     }
   }
 

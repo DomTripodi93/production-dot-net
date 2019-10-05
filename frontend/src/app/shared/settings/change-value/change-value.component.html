@@ -1,0 +1,34 @@
+<form *ngIf="editValueForm" [formGroup]="editValueForm" (ngSubmit)='onSubmit()'>
+  <div class='form-group'>
+    <div *ngIf="!startTimeForm" class="form-group">
+      <h3 for="time">Size</h3>
+      <input 
+        type="number" 
+        id="size" 
+        class="form-control"
+        formControlName='size'>
+    </div>
+    <div *ngIf="startTimeForm" class="form-group">
+      <h3 for="time">Time</h3>
+      <input 
+        type="time" 
+        id="time" 
+        class="form-control"
+        formControlName='time'>
+    </div>
+    <br>
+    <div class="grid">
+      <button 
+        class="btn btn-success" 
+        type="submit"
+        [disabled]="!editValueForm.valid"
+      >
+      Edit</button>
+      <button 
+        type='button' 
+        class='btn btn-danger pull-right' 
+        (click)='onCancel()'
+      >
+      Cancel</button>
+    </div>
+  </div>

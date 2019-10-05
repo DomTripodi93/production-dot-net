@@ -25,20 +25,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   checkStatus(){
-    this.auth.checkSettings();
-    if (this.auth.isNew === true){
-      this.tutorialStatus = "Currently displaying tutorials."
-    } else {
-      this.tutorialStatus = "Currently not displaying tutorials."
-    }
+    this.auth.checkSettings().subscribe(()=>{
+      if (this.auth.isNew === true){
+        this.tutorialStatus = "Currently displaying tutorials."
+      } else {
+        this.tutorialStatus = "Currently not displaying tutorials."
+      }
+    });
   }
 
 
   changeTutorial() {
     if (confirm("Are you sure you want to hide these tutorials?")){
-      this.auth.changeNew().subscribe(()=>{
-        this.auth.authChanged.next();
-      })
+      this.auth.changeNew();
     }
   }
 

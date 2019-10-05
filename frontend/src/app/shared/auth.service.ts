@@ -76,7 +76,6 @@ export class AuthService {
     )
     .pipe(
       map((responseData: User) => {
-        console.log(responseData)
         this.isNew = responseData.isNew;
         if (responseData.defaultBarCut){
           this.defaultBarCut = responseData.defaultBarCut;            
@@ -94,14 +93,20 @@ export class AuthService {
 
   changeNew(){
     if (this.isNew == true){
-      return this.http.put(
-        this.apiUrl + "/settings", this.makeOld      
-      );
+      this.changeSetting("new", this.makeOld).subscribe(()=>{
+        this.authChanged.next();
+      });
     } else {
-      return this.http.put(
-        this.apiUrl + "/settings", this.makeNew
-      );
+      this.changeSetting("new", this.makeNew).subscribe(()=>{
+        this.authChanged.next();
+      });
     }
+  }
+
+  changeSetting(path, data){
+    return this.http.put(
+      this.apiUrl + "/settings/" + path, data      
+    );
   }
 
   logChanges(values, model, type, id){
