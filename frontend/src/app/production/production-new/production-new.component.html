@@ -1,6 +1,9 @@
 <div *ngIf="!canInput">
   <h1>You must be logged in to add a production lot!</h1>
 </div>
+<div *ngIf="submitted">
+  <h3>{{submission}}</h3>
+</div>
 <form *ngIf="canInput && productionForm" [formGroup]="productionForm" (ngSubmit)='onSubmit()'>
   <div class='form-group'>
     <div class="form-group">
@@ -69,4 +72,12 @@
       (click)='onCancel()'
     >
     Cancel</button>
+    <br><br>
+    <button 
+      type='button' 
+      class="btn btn-info" 
+      (click)='onSubmitPlus()'
+      [disabled]="!productionForm.valid"
+    >
+    Add Production and Another</button>
   </div>

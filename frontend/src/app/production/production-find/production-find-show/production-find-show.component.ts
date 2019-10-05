@@ -68,7 +68,7 @@ export class ProductionFindShowComponent implements OnInit {
         this.total = 0;
         this.production.forEach(lot => {
           this.editMulti.push(false);
-          let beginning = lot.date.substring(6,10);
+          let beginning = lot.date.substring(5,10);
           lot.date = beginning + "-" + lot.date.substring(0,4);
           this.total = +lot.quantity + this.total;
           this.dayServ.dates.push(this.dayServ.dashToSlash(lot.date))
@@ -87,7 +87,7 @@ export class ProductionFindShowComponent implements OnInit {
       .subscribe(production => {
         this.singleProd = production;
         this.dayServ.dates = [];
-        let beginning = this.singleProd.date.substring(6,10);
+        let beginning = this.singleProd.date.substring(5,10);
         this.singleProd.date = beginning + "-" + this.singleProd.date.substring(0,4);
         this.total = +this.singleProd.quantity + this.total;
         this.isFetching = false;

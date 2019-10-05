@@ -19,13 +19,16 @@ export class ProductionNewComponent implements OnInit {
   machines = [];
   joblessMach = [];
   fullMach: Machine[] = [];
+  submitted: boolean = false;
+  submission: string;
   shifts = [
     "Day",
     "Night",
     "Over-Night",
     "Found"
   ];
-  
+
+
   constructor(
     private pro: ProductionService,
     private auth: AuthService,
@@ -75,6 +78,17 @@ export class ProductionNewComponent implements OnInit {
     });
   }
   
+  onSubmitPlus(){
+    let prodMach: Machine = this.fullMach.find((mach)=>{
+      return mach.machine == this.productionForm.value.machine;
+    });
+    this.productionForm.value.jobNumber = prodMach.currentJob;
+    this.productionForm.value.opNumber = prodMach.currentOp;
+    this.newProductionPlus(this.productionForm.value);
+    this.submitted = true;
+    this.submission = "Successfully added produciton lot of " + this.productionForm.value.quantity + " pieces produced on the " + this.productionForm.value.machine;
+  }
+  
   onSubmit(){
     let prodMach: Machine = this.fullMach.find((mach)=>{
       return mach.machine == this.productionForm.value.machine;
@@ -82,6 +96,12 @@ export class ProductionNewComponent implements OnInit {
     this.productionForm.value.jobNumber = prodMach.currentJob;
     this.productionForm.value.opNumber = prodMach.currentOp;
     this.newProduction(this.productionForm.value);
+  }
+
+  newProductionPlus(data: Production) {
+    this.pro.addProduction(data).subscribe(()=>{
+      this.pro.proChanged.next();
+    });
   }
 
   newProduction(data: Production) {
