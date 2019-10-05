@@ -25,7 +25,6 @@ export class HourlySetTimeComponent implements OnInit {
   }
 
   initForm(){
-    let startTime: string;
     if (this.hourServ.editMode[this.index]){
       let date = this.dayServ.stringMonth+"-"+this.dayServ.today+"-"+this.dayServ.year;
       this.hourServ.fetchHourly("date="+date+"&"+"machine="+this.auth.splitJoin(this.machName)).subscribe(
@@ -36,9 +35,8 @@ export class HourlySetTimeComponent implements OnInit {
         }
       );
     } else {
-      startTime = "07:45";
       this.hourlyForm = new FormGroup({
-        'startTime': new FormControl(startTime, Validators.required)
+        'startTime': new FormControl(this.auth.defaultStartTime, Validators.required)
       });
     }
   }

@@ -35,7 +35,7 @@ namespace BackEnd.Controllers
 
             var production = _mapper.Map<Production>(prodForCreationDto);
 
-            var opInfo = await _repo.GetOp(production.JobNumber, production.OpNumber);
+            var opInfo = await _repo.GetOp(userId, production.JobNumber, production.OpNumber);
 
             production.userId = userId;
             production.InQuestion = false;

@@ -56,7 +56,7 @@ namespace BackEnd.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var opFromRepo = await _repo.GetOp(jobNum, opNum);
+            var opFromRepo = await _repo.GetOp(userId, jobNum, opNum);
 
             _mapper.Map(opForUpdateDto, opFromRepo);
 
@@ -72,7 +72,7 @@ namespace BackEnd.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var opFromRepo = await _repo.GetOp(jobNum, opNum);
+            var opFromRepo = await _repo.GetOp(userId, jobNum, opNum);
 
             _mapper.Map(opForRemainingDto, opFromRepo);
 
@@ -88,7 +88,7 @@ namespace BackEnd.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            Operation op = await _repo.GetOp(jobNum, opNum);
+            Operation op = await _repo.GetOp(userId, jobNum, opNum);
             OperationForReturnDto opForReturn = _mapper.Map<OperationForReturnDto>(op);
             return Ok(opForReturn);
         }
@@ -99,7 +99,7 @@ namespace BackEnd.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            IEnumerable<Operation> directOperations = await _repo.GetOpsByJob(jobNum);
+            IEnumerable<Operation> directOperations = await _repo.GetOpsByJob(userId, jobNum);
 
             var ops = _mapper.Map<IEnumerable<OperationForReturnDto>>(directOperations);
 
@@ -112,7 +112,7 @@ namespace BackEnd.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
             
-            var opToDelete = await _repo.GetOp(jobNum, opNum);
+            var opToDelete = await _repo.GetOp(userId, jobNum, opNum);
             
             if (userId == int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 _repo.Delete(opToDelete);

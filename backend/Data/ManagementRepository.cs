@@ -125,20 +125,22 @@ namespace BackEnd.Data
             return jobs;
         }
 
-        public async Task<Operation> GetOp(string jobNum, string opNum)
+        public async Task<Operation> GetOp(int userId, string jobNum, string opNum)
         {
             var operation = await _context.Operations
                 .Include(x => x.Production)
+                .Where(m => m.userId == userId)
                 .Where(o => o.JobNumber == jobNum)
                 .FirstOrDefaultAsync(o => o.OpNumber == opNum);
 
             return operation;
         }
 
-        public async Task<IEnumerable<Operation>> GetOpsByJob(string jobNum)
+        public async Task<IEnumerable<Operation>> GetOpsByJob(int userId, string jobNum)
         {
             var operations = await _context.Operations
                 .Include(x => x.Production)
+                .Where(m => m.userId == userId)
                 .Where(o => o.JobNumber == jobNum)
                 .ToListAsync();
 
@@ -209,6 +211,7 @@ namespace BackEnd.Data
 
             var prodForReturn = await _context.Production
                 .Where(p => p.Date == DateAsDate)
+                .Where(m => m.userId == userId)
                 .ToListAsync();
 
             return prodForReturn.OrderByDescending(p => p.Date);
@@ -257,6 +260,7 @@ namespace BackEnd.Data
         {
             var changes = await _context.ChangeLogs
                 .Where(c => c.ChangedModel == model)
+                .Where(m => m.userId == userId)
                 .ToListAsync();
 
             return changes;

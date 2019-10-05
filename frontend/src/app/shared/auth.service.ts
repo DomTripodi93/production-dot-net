@@ -16,6 +16,7 @@ export class AuthService {
   name = '';
   isNew = false;
   defaultStartTime = "07:45";
+  defaultStartTimeString = "07:45 AM";
   defaultBarEnd = "3";
   defaultBarCut = "48";
   isAuthenticated = true;
@@ -34,14 +35,22 @@ export class AuthService {
   ){}
   
   logout(){
-      this.user = '';
-      this.token = '';
-      this.name = '';
-      this.isAuthenticated = false;
-      this.isNew = false;
-      localStorage.setItem('token', '');
-      localStorage.setItem('id', '');
-      this.authChanged.next();
+    this.defaultStartTime = "07:45";
+    this.defaultStartTimeString = "07:45 AM";
+    this.defaultBarEnd = "3";
+    this.defaultBarCut = "48";
+    this.setStartTime = false;
+    this.setBarCut = false;
+    this.setBarEnd= false;
+    this.buttonHidden = [false, false];
+    this.user = '';
+    this.token = '';
+    this.name = '';
+    this.isAuthenticated = false;
+    this.isNew = false;
+    localStorage.setItem('token', '');
+    localStorage.setItem('id', '');
+    this.authChanged.next();
   }
 
   registerUser(data: User){
@@ -52,13 +61,13 @@ export class AuthService {
   }
 
   signinUser(data: Signin){
-      return this.http.post(
-        this.authApiUrl + '/auth/login',
-        data,
-        {
-          observe: 'response'
-        }
-      )
+    return this.http.post(
+      this.authApiUrl + '/auth/login',
+      data,
+      {
+        observe: 'response'
+      }
+    )
   }
 
   getUserDetails(){
@@ -84,7 +93,19 @@ export class AuthService {
           this.defaultBarEnd = responseData.defaultBarEnd;            
         }
         if (responseData.defaultStartTime){
-          this.defaultStartTime = responseData.defaultStartTime;           
+          this.defaultStartTime = responseData.defaultStartTime;
+          if (+(this.defaultStartTime[0]+this.defaultStartTime[1])==12) {
+            this.defaultStartTimeString = this.defaultStartTime + " PM";
+          } else if (+(this.defaultStartTime[0]+this.defaultStartTime[1])>11){
+            let timeHold = +(this.defaultStartTime[0]+this.defaultStartTime[1]) - 12;
+            this.defaultStartTimeString = timeHold + this.defaultStartTime.slice(2, 5) + " PM";
+          } else if (+(this.defaultStartTime[0]+this.defaultStartTime[1]) == 0) {
+            let timeHold = +(this.defaultStartTime[0]+this.defaultStartTime[1]) + 12;
+            this.defaultStartTimeString = timeHold + this.defaultStartTime.slice(2, 5) + " AM";
+          } else {
+            let timeHold = +(this.defaultStartTime[0]+this.defaultStartTime[1]);
+            this.defaultStartTimeString = timeHold + this.defaultStartTime.slice(2, 5) + " AM";
+          };      
         }
       return responseData;
       })
@@ -122,30 +143,30 @@ export class AuthService {
   }
 
   splitJoin(machine: string){
-      let machineHold1: string;
-      let machineHold2 = machine.split(" ");
-      machineHold1 = machineHold2.join("-")
-      machine = machineHold1
-        return machine;
+    let machineHold1: string;
+    let machineHold2 = machine.split(" ");
+    machineHold1 = machineHold2.join("-")
+    machine = machineHold1
+      return machine;
   }
 
   rejoin(machine){
-      let machineHold1 = machine;
-      let machineHold2 = machineHold1.split("-");
-      machineHold1 = machineHold2.join(" ")
-      machine = machineHold1
-        return machine;
+    let machineHold1 = machine;
+    let machineHold2 = machineHold1.split("-");
+    machineHold1 = machineHold2.join(" ")
+    machine = machineHold1
+      return machine;
   }
 
   hideButton(i){
-      setTimeout(()=>{
-        this.buttonHidden[i] = true;
-      })
+    setTimeout(()=>{
+      this.buttonHidden[i] = true;
+    })
   }
 
   showButton(i){
-      setTimeout(()=>{
-        this.buttonHidden[i] = false;
-      })
+    setTimeout(()=>{
+      this.buttonHidden[i] = false;
+    })
   }
 }
