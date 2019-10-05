@@ -42,6 +42,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+  onChangeStartTime(){
+    this.auth.setStartTime = true;
+  }
+
+  onChangeBarEnd(){
+    this.auth.setBarEnd = true;
+  }
+
+  onChangeBarCut(){
+    this.auth.setBarCut = true;
+  }
+  
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{
       sub.unsubscribe()

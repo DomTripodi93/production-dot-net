@@ -25,7 +25,7 @@
 <br>
 <div class="border">
   <br>
-  <h4 class="grid">
+  <h4 *ngIf="!auth.setStartTime" class="grid">
     <div class="float-mid">
       Default Start Time: 
     </div>
@@ -37,11 +37,14 @@
       <strong>Change</strong>
     </button> 
   </h4>
+  <div *ngIf="auth.setStartTime">
+    <app-change-time [time]="auth.defaultStartTime"></app-change-time>
+  </div>
 </div>
 <br>
 <div class="border">
   <br>
-  <h4 class="grid">
+  <h4 *ngIf="!auth.setBarEnd" class="grid">
     <div class="float-mid">
       Default Bar End Size: 
     </div>
@@ -53,11 +56,14 @@
       <strong>Change</strong>
     </button> 
   </h4>
+  <div *ngIf="auth.setBarEnd">
+    <app-change-size [size]="auth.defaultBarEnd" [type]="'End'"></app-change-size>
+  </div>
 </div>
 <br>
 <div class="border">
   <br>
-  <h4 class="grid">
+  <h4 *ngIf="!auth.setBarCut" class="grid">
     <div class="float-mid">
       Default Bar Cut Size: 
     </div>
@@ -69,4 +75,7 @@
       <strong>Change</strong>
     </button> 
   </h4>
+  <div *ngIf="auth.setBarCut">
+    <app-change-size [size]="auth.defaultBarCut" [type]="'Cut'"></app-change-size>
+  </div>
 </div>

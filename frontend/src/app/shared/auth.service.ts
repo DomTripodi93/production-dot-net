@@ -7,137 +7,140 @@ import { map } from 'rxjs/operators';
 
 @Injectable({providedIn:'root'})
 export class AuthService {
-    buttonHidden = [false, false];
-    token = '';
-    user = '';
-    name = '';
-    isNew = false;
-    defaultStartTime = "07:45";
-    defaultBarEnd = "3";
-    defaultBarCut = "48";
-    isAuthenticated = true;
-    authApiUrl = 'http://localhost:5000/api'
-    apiUrl = 'http://localhost:5000/api/' + localStorage.getItem('id');
-    public authChanged = new Subject();
-    makeOld = {
-      isNew: false
-    }
-    makeNew = {
-      isNew: true
-    }
+  setStartTime: boolean = false;
+  setBarCut: boolean = false;
+  setBarEnd: boolean = false;
+  buttonHidden = [false, false];
+  token = '';
+  user = '';
+  name = '';
+  isNew = false;
+  defaultStartTime = "07:45";
+  defaultBarEnd = "3";
+  defaultBarCut = "48";
+  isAuthenticated = true;
+  authApiUrl = 'http://localhost:5000/api'
+  apiUrl = 'http://localhost:5000/api/' + localStorage.getItem('id');
+  public authChanged = new Subject();
+  makeOld = {
+    isNew: false
+  }
+  makeNew = {
+    isNew: true
+  }
 
-    constructor(
-        private http: HttpClient
-    ){}
-    
-    logout(){
-        this.user = '';
-        this.token = '';
-        this.name = '';
-        this.isAuthenticated = false;
-        this.isNew = false;
-        localStorage.setItem('token', '');
-        localStorage.setItem('id', '');
-        this.authChanged.next();
-    }
+  constructor(
+      private http: HttpClient
+  ){}
+  
+  logout(){
+      this.user = '';
+      this.token = '';
+      this.name = '';
+      this.isAuthenticated = false;
+      this.isNew = false;
+      localStorage.setItem('token', '');
+      localStorage.setItem('id', '');
+      this.authChanged.next();
+  }
 
-    registerUser(data: User){
+  registerUser(data: User){
+    return this.http.post(
+      this.authApiUrl + '/auth/register',
+      data
+    )
+  }
+
+  signinUser(data: Signin){
       return this.http.post(
-        this.authApiUrl + '/auth/register',
-        data
-      )
-    }
-
-    signinUser(data: Signin){
-        return this.http.post(
-          this.authApiUrl + '/auth/login',
-          data,
-          {
-            observe: 'response'
-          }
-        )
-    }
-
-    getUserDetails(){
-      return this.http.get(
-        this.authApiUrl + "/user/" + this.user,
+        this.authApiUrl + '/auth/login',
+        data,
         {
-          observe: "response"
+          observe: 'response'
         }
       )
-    }
+  }
 
-    checkSettings(){
-      return this.http.get(
-        this.apiUrl + "/settings/",
-      )
-      .pipe(
-        map((responseData: User) => {
-          console.log(responseData)
-          this.isNew = responseData.isNew;
-          if (responseData.defaultBarCut){
-            this.defaultBarCut = responseData.defaultBarCut;            
-          }
-          if (responseData.defaultBarEnd){
-            this.defaultBarEnd = responseData.defaultBarEnd;            
-          }
-          if (responseData.defaultStartTime){
-            this.defaultStartTime = responseData.defaultStartTime;           
-          }
-        return responseData;
-        })
-      )
-    }
-
-    changeNew(){
-      if (this.isNew == true){
-        return this.http.put(
-          this.apiUrl + "/settings", this.makeOld      
-        );
-      } else {
-        return this.http.put(
-          this.apiUrl + "/settings", this.makeNew
-        );
+  getUserDetails(){
+    return this.http.get(
+      this.authApiUrl + "/user/" + this.user,
+      {
+        observe: "response"
       }
-    }
+    )
+  }
 
-    logChanges(values, model, type, id){
-      let data = {
-        'oldValues': " "+values,
-        'changeType': type,
-        'changedId': id,
-        'changedModel': model
-      }
-      return this.http.post(
-        this.apiUrl + '/changelog/', data
+  checkSettings(){
+    return this.http.get(
+      this.apiUrl + "/settings/",
+    )
+    .pipe(
+      map((responseData: User) => {
+        console.log(responseData)
+        this.isNew = responseData.isNew;
+        if (responseData.defaultBarCut){
+          this.defaultBarCut = responseData.defaultBarCut;            
+        }
+        if (responseData.defaultBarEnd){
+          this.defaultBarEnd = responseData.defaultBarEnd;            
+        }
+        if (responseData.defaultStartTime){
+          this.defaultStartTime = responseData.defaultStartTime;           
+        }
+      return responseData;
+      })
+    )
+  }
+
+  changeNew(){
+    if (this.isNew == true){
+      return this.http.put(
+        this.apiUrl + "/settings", this.makeOld      
+      );
+    } else {
+      return this.http.put(
+        this.apiUrl + "/settings", this.makeNew
       );
     }
+  }
 
-    splitJoin(machine: string){
-        let machineHold1: string;
-        let machineHold2 = machine.split(" ");
-        machineHold1 = machineHold2.join("-")
-        machine = machineHold1
-          return machine;
+  logChanges(values, model, type, id){
+    let data = {
+      'oldValues': " "+values,
+      'changeType': type,
+      'changedId': id,
+      'changedModel': model
     }
+    return this.http.post(
+      this.apiUrl + '/changelog/', data
+    );
+  }
 
-    rejoin(machine){
-        let machineHold1 = machine;
-        let machineHold2 = machineHold1.split("-");
-        machineHold1 = machineHold2.join(" ")
-        machine = machineHold1
-          return machine;
-    }
+  splitJoin(machine: string){
+      let machineHold1: string;
+      let machineHold2 = machine.split(" ");
+      machineHold1 = machineHold2.join("-")
+      machine = machineHold1
+        return machine;
+  }
 
-    hideButton(i){
-        setTimeout(()=>{
-          this.buttonHidden[i] = true;
-        })
-    }
-  
-    showButton(i){
-        setTimeout(()=>{
-          this.buttonHidden[i] = false;
-        })
-    }
+  rejoin(machine){
+      let machineHold1 = machine;
+      let machineHold2 = machineHold1.split("-");
+      machineHold1 = machineHold2.join(" ")
+      machine = machineHold1
+        return machine;
+  }
+
+  hideButton(i){
+      setTimeout(()=>{
+        this.buttonHidden[i] = true;
+      })
+  }
+
+  showButton(i){
+      setTimeout(()=>{
+        this.buttonHidden[i] = false;
+      })
+  }
 }
