@@ -3,6 +3,7 @@ import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CalculatorService } from '../calculator.service';
 import { JobService } from 'src/app/job/job.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-remaining',
@@ -15,7 +16,8 @@ export class RemainingComponent implements OnInit, OnDestroy {
   constructor(
     private calc: CalculatorService,
     private jobServ: JobService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private auth: AuthService
   ){}
 
   ngOnInit(){
@@ -83,7 +85,7 @@ export class RemainingComponent implements OnInit, OnDestroy {
       'oal': new FormControl(oal, Validators.required),
       'mainFacing': new FormControl(mainFacing, Validators.required),
       'subFacing': new FormControl(subFacing, null),
-      'barEnd': new FormControl(barEnd, Validators.required),
+      'barEnd': new FormControl(this.auth.defaultBarEnd, Validators.required),
       'bars': bars
     });
   }

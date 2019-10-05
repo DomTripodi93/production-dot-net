@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { JobService } from 'src/app/job/job.service';
 import { CalculatorService } from '../calculator.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-by-weight',
@@ -18,7 +19,7 @@ export class ByWeightComponent implements OnInit, OnDestroy {
     private calc: CalculatorService,
     private jobServ: JobService,
     private route: ActivatedRoute,
-    private router: Router
+    private auth: AuthService
   ){}
 
   ngOnInit(){
@@ -59,7 +60,6 @@ export class ByWeightComponent implements OnInit, OnDestroy {
        subFacing = +this.jobServ.jobHold.subFacing
       }
     }
-    let barEnd = 3;
     let weight: number;
     if (this.jobServ.jobHold){
       if (this.jobServ.jobHold.weightRecieved){
@@ -68,13 +68,12 @@ export class ByWeightComponent implements OnInit, OnDestroy {
     }
     let dia: number;
     let averageBar = 144;
-    let cutTo = 48;
 
 
     this.calc.latheForm = new FormGroup({
       "type": new FormControl(this.type[0], Validators.required),
       "averageBar": new FormControl(averageBar, Validators.required),
-      "cutTo": new FormControl(cutTo, Validators.required),
+      "cutTo": new FormControl(this.auth.defaultBarCut, Validators.required),
       "material" : new FormControl(this.calc.densities[0].material, Validators.required),
       "dia": new FormControl(dia, Validators.required),
       "weight": new FormControl(weight, Validators.required),
@@ -82,7 +81,7 @@ export class ByWeightComponent implements OnInit, OnDestroy {
       'oal': new FormControl(oal, Validators.required),
       'mainFacing': new FormControl(mainFacing, Validators.required),
       'subFacing': new FormControl(subFacing),
-      'barEnd': new FormControl(barEnd, Validators.required),
+      'barEnd': new FormControl(this.auth.defaultBarEnd, Validators.required),
     });
   }
 
