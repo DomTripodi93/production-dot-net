@@ -11,7 +11,7 @@ export class LengthComponent implements OnInit, OnDestroy{
   type =["Round ⌀", "Hex"];
 
   constructor(
-    private calc: CalculatorService,
+    public calc: CalculatorService,
   ){}
 
   ngOnInit(){

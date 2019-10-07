@@ -53,9 +53,9 @@ export class CalenderComponent implements OnInit {
 
 
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     private router: Router,
-    private dayServ: DaysService
+    public dayServ: DaysService
   ) { }
 
 

@@ -125,7 +125,6 @@ import { ChangeValueComponent } from './shared/settings/change-value/change-valu
     ReactiveFormsModule,
     HttpClientModule,
     AppRouteModule,
-
   ],
   providers: [
     {

@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 export class JobComponent implements OnInit {
 
   constructor(
-    private auth: AuthService
+    public auth: AuthService
   ) { }
 
   ngOnInit() {

@@ -1,5 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { DaysService } from './days.service';
 import { AuthService } from 'src/app/shared/auth.service';
 
@@ -35,9 +34,8 @@ export class DaysComponent{
 
 
   constructor(
-    private route: ActivatedRoute,
-    private dayServ: DaysService,
-    private auth: AuthService
+    public dayServ: DaysService,
+    public auth: AuthService
     ) { }
 
 

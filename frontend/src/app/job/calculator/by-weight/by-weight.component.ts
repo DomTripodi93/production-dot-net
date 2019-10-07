@@ -16,8 +16,8 @@ export class ByWeightComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private calc: CalculatorService,
-    private jobServ: JobService,
+    public calc: CalculatorService,
+    public jobServ: JobService,
     private route: ActivatedRoute,
     private auth: AuthService
   ){}

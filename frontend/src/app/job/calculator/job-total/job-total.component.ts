@@ -15,7 +15,7 @@ export class JobTotalComponent implements OnInit, OnDestroy {
   jobNum: string;
 
   constructor(
-    private calc: CalculatorService,
+    public calc: CalculatorService,
     private jobServ: JobService,
     private route: ActivatedRoute,
     private auth: AuthService

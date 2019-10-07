@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   id: number;
 
   public constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     private titleService: Title
   ){}
 

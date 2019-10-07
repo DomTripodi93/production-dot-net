@@ -13,7 +13,7 @@ export class HourlyComponent implements OnInit {
   constructor(    
     private router: Router,
     private dayServe: DaysService,
-    private auth: AuthService
+    public auth: AuthService
   ){}
 
   onNew(){

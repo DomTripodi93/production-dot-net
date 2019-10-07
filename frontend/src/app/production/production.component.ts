@@ -25,7 +25,7 @@ export class ProductionComponent {
     private dayServ: DaysService,
     private router: Router,
     private mach: MachineService,
-    private auth: AuthService,
+    public auth: AuthService,
     private pro: ProductionService,
     private opServ: OpService
   ){

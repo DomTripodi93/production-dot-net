@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 export class MachineComponent implements OnInit {
 
   constructor(
-    private auth: AuthService
+    public auth: AuthService
   ) { }
 
   ngOnInit() {
