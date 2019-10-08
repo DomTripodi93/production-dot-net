@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BackEnd.Helpers;
 using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -256,14 +257,13 @@ namespace BackEnd.Data
             return user.Settings;
         }
 
-        public async Task<IEnumerable<ChangeLog>> GetChangeLog(int userId, string model)
+        public async Task<PagedList<ChangeLog>> GetChangeLog(int userId, string model, ChangeLogParams changeLogParams)
         {
-            var changes = await _context.ChangeLogs
-                .Where(c => c.ChangedModel == model)
+            var changes = _context.ChangeLogs
                 .Where(m => m.userId == userId)
-                .ToListAsync();
+                .Where(c => c.ChangedModel == model);
 
-            return changes;
+            return await PagedList<ChangeLog>.CreateAsync(changes, changeLogParams.PageNumber, changeLogParams.PageSize);
         }
 
         public async Task<ChangeLog> GetUniqueChangeLog(int id)

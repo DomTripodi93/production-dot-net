@@ -15,6 +15,7 @@ export class ChangeLogSetComponent implements OnInit {
 
   ngOnInit() {
     this.fetchChanges().subscribe((logs)=>{
+      console.log(logs)
       logs.forEach((log)=>{
           let mod ={
             old: JSON.parse(log.oldValues),

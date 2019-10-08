@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BackEnd.Helpers;
 using BackEnd.Models;
 
 namespace BackEnd.Data
@@ -32,7 +33,7 @@ namespace BackEnd.Data
         Task<IEnumerable<Hourly>> GetHourlySet(int userId);
         Task<IEnumerable<Hourly>> GetHourlySetByDateAndMachine(int userId, string date, string mach);
         Task<Settings> GetSettings(int userId);
-        Task<IEnumerable<ChangeLog>> GetChangeLog(int userId, string model);
+        Task<PagedList<ChangeLog>> GetChangeLog(int userId, string model, ChangeLogParams changeLogParams);
         Task<ChangeLog> GetUniqueChangeLog(int id);
     }
 }

@@ -8,6 +8,7 @@ using BackEnd.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using BackEnd.Helpers;
 
 namespace backend.Controllers
 {
@@ -51,14 +52,17 @@ namespace backend.Controllers
         }
 
         [HttpGet("{model}")]
-        public async Task<IActionResult> GetChangeLog(int userId, string model)
+        public async Task<IActionResult> GetChangeLog(int userId, string model, ChangeLogParams changeLogParams)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            IEnumerable<ChangeLog> changeLog = await _repo.GetChangeLog(userId, model);
+            var changeLog = await _repo.GetChangeLog(userId, model, changeLogParams);
 
-            IEnumerable<ChangelogForReturnDto> changeLogForReturn = _mapper.Map<IEnumerable<ChangelogForReturnDto>>(changeLog);
+            var changeLogForReturn = _mapper.Map<IEnumerable<ChangelogForReturnDto>>(changeLog);
+
+            Response.AddPagination(changeLog.CurrentPage, changeLog.PageSize, changeLog.TotalCount, changeLog.TotalPages);
+            
             return Ok(changeLogForReturn);
         }
         
