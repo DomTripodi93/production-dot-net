@@ -56,8 +56,8 @@ export class ProductionComponent {
     let op = machToSet.currentOp;
     if (op.includes("/")){
       op = this.opServ.slashToDash(op);
-    }    
-    console.log(job)
+    }
+    this.pro.setMach = this.chooseMachForm.value.machine;
     this.router.navigate(["/production/op=" + op + "&job=" + job])
   }
 

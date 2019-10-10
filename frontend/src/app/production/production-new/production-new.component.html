@@ -38,7 +38,11 @@
         formControlName='machine'
         id="machine" 
         class="form-control">
-        <option *ngFor = "let machine of machines">{{machine}}</option>
+        <option 
+          *ngFor="let machine of machines"
+          [selected]="machine === myMach" >
+          {{machine}}
+        </option>
       </select>
     </div>
     <div *ngIf="notRunning" class="form-group">

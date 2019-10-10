@@ -14,6 +14,7 @@ import { DaysService } from '../shared/days/days.service';
 export class ProductionService {
     proChanged = new Subject();
     model = "Production"
+    setMach = "";
 
     constructor(
         private http: HttpClient,

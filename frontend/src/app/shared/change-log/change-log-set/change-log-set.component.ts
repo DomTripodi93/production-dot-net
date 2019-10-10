@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AuthService } from 'src/app/shared/auth.service';
 import { map } from 'rxjs/operators';
 import { Change } from '../../change.model';
+import { PaginatedResult } from '../../pagination';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-change-log-set',
@@ -12,11 +14,13 @@ import { Change } from '../../change.model';
 export class ChangeLogSetComponent implements OnInit {
   @Input() model: string
   set: any[] = [];
+  logs: Change[] = []
 
   ngOnInit() {
     this.fetchChanges().subscribe((logs)=>{
       console.log(logs)
-      logs.forEach((log)=>{
+      this.logs = logs["change"]
+      this.logs.forEach((log)=>{
           let mod ={
             old: JSON.parse(log.oldValues),
             timeStamp: log.timeStamp.split("T"),
@@ -44,15 +48,30 @@ export class ChangeLogSetComponent implements OnInit {
     private auth: AuthService
     ) {}
 
-  fetchChanges() {
+  fetchChanges(page?, itemsPerPage?): Observable<PaginatedResult<Change[]>> {
+    const paginatedResult: PaginatedResult<Change[]> = new PaginatedResult<Change[]>();
+
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null){
+      params = params.append("pageNumber", page);
+      params = params.append("pageSize", itemsPerPage);
+    } else {
+      params = params.append("pageNumber", "1");
+      params = params.append("pageSize", "5");
+    }
+
       return this.http.get(
-        this.auth.apiUrl + '/changelog/' + this.model
-      )
-      .pipe(
-        map((responseData: Change[] = []) => {
-        return responseData;
-        })
-      )
+        this.auth.apiUrl + '/changelog/' + this.model, { observe: "response", params })
+        .pipe(
+          map((responseData: any) => {
+            paginatedResult.result = responseData.body;
+            if (responseData.headers.get("Pagination") != null){
+              paginatedResult.pagination = JSON.parse(responseData.headers.get("Pagination"));
+            }
+              return paginatedResult;
+          })
+        )
   }
 
 }

@@ -27,6 +27,7 @@ export class ProductionNewComponent implements OnInit {
     "Over-Night",
     "Found"
   ];
+  myMach = "";
 
 
   constructor(
@@ -67,14 +68,18 @@ export class ProductionNewComponent implements OnInit {
       this.dayServe.stringMonth = "0"+this.dayServe.month
     };
     let date = this.dayServe.year +"-"+this.dayServe.stringMonth+"-"+this.dayServe.today;
+    this.myMach = this.machines[0];
+    if (this.pro.setMach != ""){
+      this.myMach = this.pro.setMach;
+    }
 
     this.productionForm = new FormGroup({
       'quantity': new FormControl("", Validators.required),
       'date': new FormControl(date, Validators.required),
       'shift': new FormControl(this.shifts[0], Validators.required),
-      'machine': new FormControl(this.machines[0], Validators.required),
-      'jobNumber': new FormControl(this.machines[0], Validators.required),
-      'opNumber': new FormControl(this.machines[0], Validators.required)
+      'machine': new FormControl(this.myMach, Validators.required),
+      'jobNumber': new FormControl(""),
+      'opNumber': new FormControl("")
     });
   }
   
