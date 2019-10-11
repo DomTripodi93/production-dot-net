@@ -1,10 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/shared/auth.service';
-import { map } from 'rxjs/operators';
 import { Change } from '../../change.model';
-import { PaginatedResult } from '../../pagination';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-change-log-set',
@@ -14,12 +11,20 @@ import { Observable } from 'rxjs';
 export class ChangeLogSetComponent implements OnInit {
   @Input() model: string
   set: any[] = [];
-  logs: Change[] = []
+  logs: Change[] = [];
+
+
+  constructor(
+    private http: HttpClient,
+    private auth: AuthService
+    ) {}
+
 
   ngOnInit() {
-    this.fetchChanges().subscribe((logs)=>{
+    this.auth.model = this.model;
+    this.auth.fetchChanges().subscribe((logs)=>{
       console.log(logs)
-      this.logs = logs["change"]
+      this.logs = logs["change"].result
       this.logs.forEach((log)=>{
           let mod ={
             old: JSON.parse(log.oldValues),
@@ -41,37 +46,6 @@ export class ChangeLogSetComponent implements OnInit {
         this.set.push(mod)
         })
     })
-  }
-
-  constructor(
-    private http: HttpClient,
-    private auth: AuthService
-    ) {}
-
-  fetchChanges(page?, itemsPerPage?): Observable<PaginatedResult<Change[]>> {
-    const paginatedResult: PaginatedResult<Change[]> = new PaginatedResult<Change[]>();
-
-    let params = new HttpParams();
-
-    if (page != null && itemsPerPage != null){
-      params = params.append("pageNumber", page);
-      params = params.append("pageSize", itemsPerPage);
-    } else {
-      params = params.append("pageNumber", "1");
-      params = params.append("pageSize", "5");
-    }
-
-      return this.http.get(
-        this.auth.apiUrl + '/changelog/' + this.model, { observe: "response", params })
-        .pipe(
-          map((responseData: any) => {
-            paginatedResult.result = responseData.body;
-            if (responseData.headers.get("Pagination") != null){
-              paginatedResult.pagination = JSON.parse(responseData.headers.get("Pagination"));
-            }
-              return paginatedResult;
-          })
-        )
   }
 
 }

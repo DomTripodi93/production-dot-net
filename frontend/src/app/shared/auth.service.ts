@@ -1,9 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Subject } from 'rxjs';
-import { HttpClient} from '@angular/common/http';
+import { Subject, Observable } from 'rxjs';
+import { HttpClient, HttpParams} from '@angular/common/http';
 import { User } from '../register/user.model';
 import { Signin } from '../register/signin/signin.model';
 import { map } from 'rxjs/operators';
+import { PaginatedResult } from './pagination';
+import { Change } from './change.model';
 
 @Injectable({providedIn:'root'})
 export class AuthService {
@@ -29,6 +31,7 @@ export class AuthService {
   makeNew = {
     isNew: true
   }
+  model = "";
 
   constructor(
       private http: HttpClient
@@ -110,6 +113,29 @@ export class AuthService {
       return responseData;
       })
     )
+  }
+
+  fetchChanges(page?, itemsPerPage?){
+    const paginatedResult: PaginatedResult<Change[]> = new PaginatedResult<Change[]>();
+
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null){
+      params = params.append("pageNumber", page);
+      params = params.append("pageSize", itemsPerPage);
+    }
+
+      return this.http.get(
+        this.apiUrl + '/changelog/' + this.model, { observe: "response", params })
+        .pipe(
+          map((responseData: any) => {
+            paginatedResult.result = responseData.body;
+            if (responseData.headers.get("Pagination") != null){
+              paginatedResult.pagination = JSON.parse(responseData.headers.get("Pagination"));
+            }
+              return paginatedResult;
+          })
+        )
   }
 
   changeNew(){
