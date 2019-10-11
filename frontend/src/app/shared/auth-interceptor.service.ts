@@ -9,7 +9,7 @@ export class AuthInterceptorService implements HttpInterceptor{
     intercept(req: HttpRequest<any>, next: HttpHandler){
         if (req.url != this.auth.apiUrl +"auth/register/" && req.url != this.auth.apiUrl +"auth/login/"){
             const authenticatedRequest = req.clone({
-                headers: req.headers.append("Authorization", 'Bearer ' + this.auth.token).append("Content-Type", "application/json")
+                headers: req.headers.append("Authorization", 'Bearer ' + this.auth.token)
             })
             return next.handle(authenticatedRequest);
         } else {
