@@ -115,7 +115,7 @@ export class AuthService {
     )
   }
 
-  fetchChanges(page?, itemsPerPage?){
+  fetchChanges(page?, itemsPerPage?): Observable<PaginatedResult<Change[]>> {
     const paginatedResult: PaginatedResult<Change[]> = new PaginatedResult<Change[]>();
 
     let params = new HttpParams();
@@ -129,6 +129,7 @@ export class AuthService {
         this.apiUrl + '/changelog/' + this.model, { observe: "response", params })
         .pipe(
           map((responseData: any) => {
+            console.log(responseData)
             paginatedResult.result = responseData.body;
             if (responseData.headers.get("Pagination") != null){
               paginatedResult.pagination = JSON.parse(responseData.headers.get("Pagination"));

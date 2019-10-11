@@ -22,7 +22,8 @@ export class ChangeLogSetComponent implements OnInit {
 
   ngOnInit() {
     this.auth.model = this.model;
-    this.auth.fetchChanges().subscribe((logs)=>{
+    console.log(this.model)
+    this.auth.fetchChanges(1, 5).subscribe((logs)=>{
       console.log(logs)
       this.logs = logs["change"].result
       this.logs.forEach((log)=>{
