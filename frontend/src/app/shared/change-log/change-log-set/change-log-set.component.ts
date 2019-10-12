@@ -19,13 +19,10 @@ export class ChangeLogSetComponent implements OnInit {
     private auth: AuthService
     ) {}
 
-
   ngOnInit() {
     this.auth.model = this.model;
-    console.log(this.model)
     this.auth.fetchChanges(1, 5).subscribe((logs)=>{
-      console.log(logs)
-      this.logs = logs["change"].result
+      this.logs = logs.result
       this.logs.forEach((log)=>{
           let mod ={
             old: JSON.parse(log.oldValues),
@@ -46,7 +43,7 @@ export class ChangeLogSetComponent implements OnInit {
         }
         this.set.push(mod)
         })
-    })
-  }
+      })
+    }
 
 }
