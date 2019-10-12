@@ -21,14 +21,14 @@
                     class="btn btn-info" 
                     (click)="showLog(1)"
                 >
-                    Show Part <br>Changes
+                    Show Job <br>Changes
                 </button>
                 <button 
                     *ngIf="isShown[1]" 
                     class="btn btn-info" 
                     (click)="hideLog(1)"
                 >
-                    Hide Part <br>Changes
+                    Hide Job <br>Changes
                 </button>
                 <button 
                     *ngIf="!isShown[2]" 
@@ -61,22 +61,22 @@
             </div>
             <div class="grid">
                 <div *ngIf="isShown[0]">
-                    <app-change-log-set [model]="'Machine'"></app-change-log-set>
+                    <app-change-log-set [model]="'Machine'" [pageSize]="3"></app-change-log-set>
                 </div>
                 <div *ngIf="!isShown[0]">
                 </div>
                 <div *ngIf="isShown[1]">
-                    <app-change-log-set [model]="'Part'"></app-change-log-set>
+                    <app-change-log-set [model]="'Job'"></app-change-log-set>
                 </div>
                 <div *ngIf="!isShown[1]">
                 </div>
                 <div *ngIf="isShown[2]">
-                    <app-change-log-set [model]="'Hourly'"></app-change-log-set>
+                    <app-change-log-set [model]="'Hourly'" [pageSize]="2"></app-change-log-set>
                 </div>
                 <div *ngIf="!isShown[2]">
                 </div>
                 <div *ngIf="isShown[3]">
-                    <app-change-log-set [model]="'Production'"></app-change-log-set>
+                    <app-change-log-set [model]="'Production'" [pageSize]="2"></app-change-log-set>
                 </div>
                 <div *ngIf="!isShown[3]">
                 </div>

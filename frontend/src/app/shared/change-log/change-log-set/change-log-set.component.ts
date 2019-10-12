@@ -10,7 +10,8 @@ import { Pagination } from '../../pagination';
   styleUrls: ['./change-log-set.component.css']
 })
 export class ChangeLogSetComponent implements OnInit {
-  @Input() model: string
+  @Input() model: string;
+  @Input() pageSize: number;
   set: any[] = [];
   logs: Change[] = [];
   pageNum: number = 1;
@@ -23,11 +24,14 @@ export class ChangeLogSetComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-      this.getChanges();
+    if (!this.pageSize){
+      this.pageSize = 5;
     }
+    this.getChanges();
+  }
 
   getChanges(){    
-    this.auth.fetchChanges(this.model, this.pageNum, 10).subscribe((logs)=>{
+    this.auth.fetchChanges(this.model, this.pageNum, this.pageSize).subscribe((logs)=>{
       this.pageNum++;
       this.pagination = logs.pagination;
       this.logs = logs.result;
