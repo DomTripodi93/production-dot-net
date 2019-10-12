@@ -29,9 +29,7 @@ export class ChangeLogSetComponent implements OnInit {
   getChanges(){    
     this.auth.fetchChanges(this.model, this.pageNum, 10).subscribe((logs)=>{
       this.pageNum++;
-      console.log(logs.pagination)
       this.pagination = logs.pagination;
-      console.log(this.pagination)
       this.logs = logs.result;
       this.logs.forEach((log)=>{
           let mod ={

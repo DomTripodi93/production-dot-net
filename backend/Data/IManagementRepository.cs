@@ -33,7 +33,7 @@ namespace BackEnd.Data
         Task<IEnumerable<Hourly>> GetHourlySet(int userId);
         Task<IEnumerable<Hourly>> GetHourlySetByDateAndMachine(int userId, string date, string mach);
         Task<Settings> GetSettings(int userId);
-        Task<PagedList<ChangeLog>> GetChangeLog(int userId, string model, ChangeLogParams changeLogParams);
+        Task<PagedList<ChangeLog>> GetChangeLog(int userId, string model, PagingParams changeLogParams);
         Task<ChangeLog> GetUniqueChangeLog(int id);
     }
 }

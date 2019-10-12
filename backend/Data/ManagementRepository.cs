@@ -257,7 +257,7 @@ namespace BackEnd.Data
             return user.Settings;
         }
 
-        public async Task<PagedList<ChangeLog>> GetChangeLog(int userId, string model, ChangeLogParams changeLogParams)
+        public async Task<PagedList<ChangeLog>> GetChangeLog(int userId, string model, PagingParams changeLogParams)
         {
             var changes = _context.ChangeLogs
                 .Where(m => m.userId == userId)

@@ -52,7 +52,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("{model}")]
-        public async Task<IActionResult> GetChangeLog(int userId, string model, [FromQuery]ChangeLogParams changeLogParams)
+        public async Task<IActionResult> GetChangeLog(int userId, string model, [FromQuery]PagingParams changeLogParams)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
