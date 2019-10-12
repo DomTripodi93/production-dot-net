@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Change } from '../../change.model';
+import { Pagination } from '../../pagination';
 
 @Component({
   selector: 'app-change-log-set',
@@ -12,6 +13,8 @@ export class ChangeLogSetComponent implements OnInit {
   @Input() model: string
   set: any[] = [];
   logs: Change[] = [];
+  pageNum: number = 1;
+  pagination: Pagination;
 
 
   constructor(
@@ -20,9 +23,16 @@ export class ChangeLogSetComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.auth.model = this.model;
-    this.auth.fetchChanges(1, 5).subscribe((logs)=>{
-      this.logs = logs.result
+      this.getChanges();
+    }
+
+  getChanges(){    
+    this.auth.fetchChanges(this.model, this.pageNum, 10).subscribe((logs)=>{
+      this.pageNum++;
+      console.log(logs.pagination)
+      this.pagination = logs.pagination;
+      console.log(this.pagination)
+      this.logs = logs.result;
       this.logs.forEach((log)=>{
           let mod ={
             old: JSON.parse(log.oldValues),
@@ -30,7 +40,6 @@ export class ChangeLogSetComponent implements OnInit {
             type: log.changeType,
             id: log.changedId
           }
-
         if (+mod.timeStamp[1].substring(0,2)>12){
           let timeHold = +mod.timeStamp[1].substring(0,2) - 12;
           mod.timeStamp[1] = timeHold + mod.timeStamp[1].substring(2, 5) + " PM"
@@ -44,6 +53,10 @@ export class ChangeLogSetComponent implements OnInit {
         this.set.push(mod)
         })
       })
+    }
+
+    showMore(){
+      this.getChanges();      
     }
 
 }

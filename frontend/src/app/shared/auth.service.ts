@@ -22,16 +22,15 @@ export class AuthService {
   defaultBarEnd = "3";
   defaultBarCut = "48";
   isAuthenticated = true;
-  authApiUrl = 'http://localhost:5000/api'
+  authApiUrl = 'http://localhost:5000/api';
   apiUrl = 'http://localhost:5000/api/' + localStorage.getItem('id');
   public authChanged = new Subject();
   makeOld = {
     isNew: false
-  }
+  };
   makeNew = {
     isNew: true
-  }
-  model = "";
+  };
 
   constructor(
       private http: HttpClient
@@ -54,14 +53,14 @@ export class AuthService {
     localStorage.setItem('token', '');
     localStorage.setItem('id', '');
     this.authChanged.next();
-  }
+  };
 
   registerUser(data: User){
     return this.http.post(
       this.authApiUrl + '/auth/register',
       data
-    )
-  }
+    );
+  };
 
   signinUser(data: Signin){
     return this.http.post(
@@ -70,8 +69,8 @@ export class AuthService {
       {
         observe: 'response'
       }
-    )
-  }
+    );
+  };
 
   getUserDetails(){
     return this.http.get(
@@ -79,8 +78,8 @@ export class AuthService {
       {
         observe: "response"
       }
-    )
-  }
+    );
+  };
 
   checkSettings(){
     return this.http.get(
@@ -112,10 +111,10 @@ export class AuthService {
         }
       return responseData;
       })
-    )
-  }
+    );
+  };
 
-  fetchChanges(page?, itemsPerPage?): Observable<PaginatedResult<Change[]>> {
+  fetchChanges(model, page?, itemsPerPage?): Observable<PaginatedResult<Change[]>> {
     const paginatedResult: PaginatedResult<Change[]> = new PaginatedResult<Change[]>();
 
     let params = new HttpParams();
@@ -126,10 +125,9 @@ export class AuthService {
     }
 
       return this.http.get(
-        this.apiUrl + '/changelog/' + this.model, { observe: "response", params })
+        this.apiUrl + '/changelog/' + model, { observe: "response", params })
         .pipe(
           map((responseData: any) => {
-            console.log(responseData)
             paginatedResult.result = responseData.body;
             if (responseData.headers.get("Pagination") != null){
               paginatedResult.pagination = JSON.parse(responseData.headers.get("Pagination"));

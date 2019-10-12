@@ -41,3 +41,8 @@
       </div>
     </li>
   </ul>
+  <div *ngIf="pagination && pagination.totalPages !> pagination.currentPage && pagination.totalPages != pagination.currentPage" class="grid">
+    <button class="btn btn-primary" (click)="showMore()">
+      Show More
+    </button>
+  </div>

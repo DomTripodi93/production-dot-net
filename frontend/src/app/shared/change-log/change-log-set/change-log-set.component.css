@@ -10,3 +10,8 @@ li {
     border: solid;
     border-color: red;
 }
+
+.grid{
+    display: grid;
+    grid-template-columns: 100%;
+}
