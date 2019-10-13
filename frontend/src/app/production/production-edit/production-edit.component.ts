@@ -81,7 +81,7 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.editProductionForm = new FormGroup({
-      'partNumber': new FormControl(this.production.partNum),
+      'partNumber': new FormControl(this.production.partNumber),
       'quantity': new FormControl(this.production.quantity, Validators.required),
       'jobNumber': new FormControl(this.production.jobNumber, Validators.required),
       'opNumber': new FormControl(this.production.opNumber, Validators.required),

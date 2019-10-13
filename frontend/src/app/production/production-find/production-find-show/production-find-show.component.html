@@ -14,6 +14,7 @@
                 <div routerLink="/production/single/{{lot.id}}">
                     <h4>Date: <strong>{{lot.date}}</strong></h4>
                     <h4>Job #: <strong>{{lot.jobNumber}}</strong></h4>
+                    <h4 *ngIf="lot.partNumber">Part #: <strong>{{lot.partNumber}}</strong></h4>
                     <h4>Operation #: <strong>{{lot.opNumber}}</strong></h4>
                     <h4>Shift: <strong>{{lot.shift}}</strong></h4>
                     <h4>Quantity: <strong>{{lot.quantity}}</strong></h4>
@@ -34,6 +35,7 @@
                 <div routerLink="/production/single/{{lot.id}}">
                     <h4>Date: <strong>{{lot.date}}</strong></h4>
                     <h4>Job #: <strong>{{lot.jobNumber}}</strong></h4>
+                    <h4 *ngIf="lot.partNumber">Part #: <strong>{{lot.partNumber}}</strong></h4>
                     <h4>Operation #: <strong>{{lot.opNumber}}</strong></h4>
                     <h4>Shift: <strong>{{lot.shift}}</strong></h4>
                     <h4>Quantity: <strong>{{lot.quantity}}</strong></h4>
@@ -62,6 +64,7 @@
         <div routerLink="/production/single/{{singleProd.id}}">
             <h4>Date: <strong>{{singleProd.date}}</strong></h4>
             <h4>Job #: <strong>{{singleProd.jobNumber}}</strong></h4>
+            <h4 *ngIf="singleProd.partNumber">Part #: <strong>{{singleProd.partNumber}}</strong></h4>
             <h4>Operation #: <strong>{{singleProd.opNumber}}</strong></h4>
             <h4>Shift: <strong>{{singleProd.shift}}</strong></h4>
             <h4>Quantity: <strong>{{singleProd.quantity}}</strong></h4>
@@ -82,6 +85,7 @@
         <div routerLink="/production/single/{{singleProd.id}}">
             <h4>Date: <strong>{{singleProd.date}}</strong></h4>
             <h4>Job #: <strong>{{singleProd.jobNumber}}</strong></h4>
+            <h4 *ngIf="singleProd.partNumber">Part #: <strong>{{singleProd.partNumber}}</strong></h4>
             <h4>Operation #: <strong>{{singleProd.opNumber}}</strong></h4>
             <h4>Shift: <strong>{{singleProd.shift}}</strong></h4>
             <h4>Quantity: <strong>{{singleProd.quantity}}</strong></h4>

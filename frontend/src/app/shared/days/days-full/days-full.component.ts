@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Production } from 'src/app/production/production.model';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -10,8 +10,8 @@ import { DaysService } from '../days.service';
   templateUrl: './days-full.component.html',
   styleUrls: ['./days-full.component.css']
 })
-export class DaysFullComponent implements OnInit {
-  subscription: Subscription;
+export class DaysFullComponent implements OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
   ids = [];
   searchHold = [];
   search = '';
@@ -27,7 +27,7 @@ export class DaysFullComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.subscription = this.route.params.subscribe((params: Params) =>{
+    this.subscriptions.push(this.route.params.subscribe((params: Params) =>{
       this.dayServ.month = params['month'];
       this.dayServ.today = params['day'];
       this.dayServ.year = params['year'];
@@ -43,19 +43,32 @@ export class DaysFullComponent implements OnInit {
       }
       this.searchHold.push(this.dayServ.today);
       this.search = this.searchHold.join("-");
-      this.pro.fetchProduction("date="+this.search)
-        .subscribe(production => {
-          this.ids = [];
-          production.forEach((lot)=>{
-            this.ids.push(lot.id);
-          })
-          this.isFetching = false;
-        }, error => {
-          this.isFetching = false;
-          this.isError = true;
-          this.error = error.message
-        })
-    });
+      this.getProduction();
+    }));
+    this.subscriptions.push(this.pro.proChanged.subscribe(()=>{
+      this.getProduction();
+    }));
+  }
+
+  getProduction(){
+    this.pro.fetchProduction("date="+this.search)
+    .subscribe(production => {
+      this.ids = [];
+      production.forEach((lot)=>{
+        this.ids.push(lot.id);
+      })
+      this.isFetching = false;
+    }, error => {
+      this.isFetching = false;
+      this.isError = true;
+      this.error = error.message
+    })
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach((sub=>{
+      sub.unsubscribe();
+    }))
   }
 
 }

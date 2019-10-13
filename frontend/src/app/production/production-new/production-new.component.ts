@@ -3,10 +3,10 @@ import { Production } from '../production.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProductionService } from '../production.service';
 import { AuthService } from '../../shared/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import { DaysService } from '../../shared/days/days.service';
 import { Machine } from '../../machine/machine.model';
 import { MachineService } from 'src/app/machine/machine.service';
+import { JobService } from 'src/app/job/job.service';
 
 @Component({
   selector: 'app-production-new',
@@ -33,10 +33,9 @@ export class ProductionNewComponent implements OnInit {
   constructor(
     private pro: ProductionService,
     private auth: AuthService,
-    private router: Router,
-    private route: ActivatedRoute,
     private dayServe: DaysService,
-    private mach: MachineService
+    private mach: MachineService,
+    private jobServ: JobService
   ){}
   
   ngOnInit(){
@@ -87,20 +86,26 @@ export class ProductionNewComponent implements OnInit {
     let prodMach: Machine = this.fullMach.find((mach)=>{
       return mach.machine == this.productionForm.value.machine;
     });
-    this.productionForm.value.jobNumber = prodMach.currentJob;
-    this.productionForm.value.opNumber = prodMach.currentOp;
-    this.newProductionPlus(this.productionForm.value);
-    this.submitted = true;
-    this.submission = "Successfully added produciton lot of " + this.productionForm.value.quantity + " pieces produced on the " + this.productionForm.value.machine;
+    this.jobServ.fetchJob(prodMach.currentJob).subscribe((job)=>{
+      this.productionForm.value.partNumber = job.partNum;
+      this.productionForm.value.jobNumber = prodMach.currentJob;
+      this.productionForm.value.opNumber = prodMach.currentOp;
+      this.newProductionPlus(this.productionForm.value);
+      this.submitted = true;
+      this.submission = "Successfully added produciton lot of " + this.productionForm.value.quantity + " pieces produced on the " + this.productionForm.value.machine;
+    })
   }
   
   onSubmit(){
     let prodMach: Machine = this.fullMach.find((mach)=>{
       return mach.machine == this.productionForm.value.machine;
     });
-    this.productionForm.value.jobNumber = prodMach.currentJob;
-    this.productionForm.value.opNumber = prodMach.currentOp;
-    this.newProduction(this.productionForm.value);
+    this.jobServ.fetchJob(prodMach.currentJob).subscribe((job)=>{
+      this.productionForm.value.partNumber = job.partNum;
+      this.productionForm.value.jobNumber = prodMach.currentJob;
+      this.productionForm.value.opNumber = prodMach.currentOp;
+      this.newProduction(this.productionForm.value);
+    })
   }
 
   newProductionPlus(data: Production) {
@@ -113,7 +118,7 @@ export class ProductionNewComponent implements OnInit {
     this.pro.addProduction(data).subscribe(()=>{
       this.pro.proChanged.next();
     });
-    this.router.navigate([".."], {relativeTo: this.route});
+    window.history.back();
   }
 
   onCancel(){

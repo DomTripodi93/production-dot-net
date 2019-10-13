@@ -1,6 +1,6 @@
 export interface Production {
     id: number;
-    partNum: string;
+    partNumber: string;
     quantity: number;
     jobNumber: string;
     opNumber: string;
