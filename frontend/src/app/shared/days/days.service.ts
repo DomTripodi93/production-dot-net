@@ -26,6 +26,7 @@ export class DaysService {
     }
 
     dateForForm(date){
+        console.log(date)
         let dateHold = date.split("-");
         if (dateHold[0].length != 2){
             dateHold[0] = "0" + dateHold[0];

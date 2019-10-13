@@ -17,10 +17,28 @@
         formControlName='jobNumber'
         type="text" 
         id="jobNumber" 
+        class="form-control"
+        (change)="changeOps($event.target.value)">
+        <option 
+          *ngFor = "let job of jobs" 
+          [selected]="job === production.jobNumber">
+            {{job}}
+          </option>
+      </select>     
+    </div>
+    <div class="form-group">
+      <label for="opNumber">Op</label>
+      <select
+        formControlName='opNumber'
+        type="text" 
+        id="opNumber" 
         class="form-control">
         <option 
-          [selected]="job === production.jobNumber"
-          *ngFor = "let job of jobs">{{job}}</option>
+          *ngFor = "let op of ops"
+          [selected]="op === production.opNumber"
+          >
+            {{op}}
+          </option>
       </select>        
     </div>
     <div class="form-group">

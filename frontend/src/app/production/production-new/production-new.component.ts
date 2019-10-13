@@ -44,8 +44,7 @@ export class ProductionNewComponent implements OnInit {
     if (!this.dayServe.today){
       this.dayServe.resetDate();
     }
-    this.mach.fetchMachineJobs()
-    .subscribe((machines: Machine[]) => {
+    this.mach.fetchMachineJobs().subscribe((machines: Machine[]) => {
       this.fullMach = machines;
       machines.forEach((mach)=>{
         if (mach.currentOp !== "None"){
@@ -79,7 +78,8 @@ export class ProductionNewComponent implements OnInit {
       'shift': new FormControl(this.shifts[0], Validators.required),
       'machine': new FormControl(this.myMach, Validators.required),
       'jobNumber': new FormControl(""),
-      'opNumber': new FormControl("")
+      'opNumber': new FormControl(""),
+      'partNumber': new FormControl("")
     });
   }
   
