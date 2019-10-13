@@ -57,9 +57,6 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
       this.mach.fetchMachineJobs()
       .subscribe(machines => {
         machines.forEach((mach)=>{
-          if (mach.currentJob !== "None" && !this.jobs.includes(mach.currentJob)){
-            this.jobs.push(mach.currentJob)
-          }
           this.machines.push(mach.machine)
         });
         this.jobServ.fetchAllJobs().subscribe(response =>{
@@ -83,7 +80,6 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
 
 
   private initForm() {
-    console.log(this.dayServe.dateForForm(this.production.date))
     this.editProductionForm = new FormGroup({
       'partNumber': new FormControl(this.production.partNum),
       'quantity': new FormControl(this.production.quantity, Validators.required),
