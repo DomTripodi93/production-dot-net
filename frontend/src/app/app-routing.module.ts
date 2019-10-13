@@ -17,7 +17,6 @@ import { PartShowComponent } from './part/part-show/part-show.component';
 import { PartNewComponent } from './part/part-new/part-new.component';
 import { HourlyShowComponent } from './hourly/hourly-show/hourly-show.component';
 import { HourlyComponent } from './hourly/hourly.component';
-import { HourlyEditComponent } from './hourly/hourly-edit/hourly-edit.component';
 import { HourlyNewComponent } from './hourly/hourly-new/hourly-new.component';
 import { PartFindComponent } from './part/part-find/part-find.component';
 import { PartFindShowComponent } from './part/part-find/part-find-show/part-find-show.component';

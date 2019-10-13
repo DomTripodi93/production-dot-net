@@ -50,6 +50,9 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
   }
 
   getHourly(){
+    if (this.machine.currentOp.includes("/")){
+      this.machine.currentOp = this.opServ.slashToDash(this.machine.currentOp);
+    }
     this.opServ.fetchOp(this.machine.currentOp + "&job=" + this.machine.currentJob).subscribe(
       (op)=>{
         this.cycleTime = +op.cycleTime;

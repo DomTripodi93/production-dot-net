@@ -103,7 +103,7 @@ export class HourlyNewComponent implements OnInit {
     this.hourServ.addHourly(data).subscribe();
     setTimeout(()=>{
       this.router.navigate([".."], {relativeTo: this.route});
-    },10)
+    },10);
   }
 
   changeOps(option: String){
