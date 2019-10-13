@@ -61,7 +61,7 @@
             </div>
             <div class="grid">
                 <div *ngIf="isShown[0]">
-                    <app-change-log-set [model]="'Machine'" [pageSize]="3"></app-change-log-set>
+                    <app-change-log-set [model]="'Machine'"></app-change-log-set>
                 </div>
                 <div *ngIf="!isShown[0]">
                 </div>
@@ -71,12 +71,12 @@
                 <div *ngIf="!isShown[1]">
                 </div>
                 <div *ngIf="isShown[2]">
-                    <app-change-log-set [model]="'Hourly'" [pageSize]="2"></app-change-log-set>
+                    <app-change-log-set [model]="'Hourly'" [pageSize]="4"></app-change-log-set>
                 </div>
                 <div *ngIf="!isShown[2]">
                 </div>
                 <div *ngIf="isShown[3]">
-                    <app-change-log-set [model]="'Production'" [pageSize]="2"></app-change-log-set>
+                    <app-change-log-set [model]="'Production'" [pageSize]="4"></app-change-log-set>
                 </div>
                 <div *ngIf="!isShown[3]">
                 </div>

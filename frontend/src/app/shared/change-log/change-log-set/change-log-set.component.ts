@@ -36,12 +36,13 @@ export class ChangeLogSetComponent implements OnInit {
       this.pagination = logs.pagination;
       this.logs = logs.result;
       this.logs.forEach((log)=>{
-          let mod ={
-            old: JSON.parse(log.oldValues),
-            timeStamp: log.timeStamp.split("T"),
-            type: log.changeType,
-            id: log.changedId
-          }
+        let mod ={
+          old: JSON.parse(log.oldValues),
+          timeStamp: log.timeStamp.split("T"),
+          type: log.changeType,
+          id: log.changedId
+        }
+        console.log(mod.old)
         if (+mod.timeStamp[1].substring(0,2)>12){
           let timeHold = +mod.timeStamp[1].substring(0,2) - 12;
           mod.timeStamp[1] = timeHold + mod.timeStamp[1].substring(2, 5) + " PM"
@@ -53,12 +54,12 @@ export class ChangeLogSetComponent implements OnInit {
           mod.timeStamp[1] = timeHold + mod.timeStamp[1].substring(2, 5) + " AM"
         }
         this.set.push(mod)
-        })
       })
-    }
+    })
+  }
 
-    showMore(){
-      this.getChanges();      
-    }
+  showMore(){
+    this.getChanges();      
+  }
 
 }
