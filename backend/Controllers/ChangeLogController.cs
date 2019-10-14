@@ -39,6 +39,8 @@ namespace backend.Controllers
 
             var changeLog = _mapper.Map<ChangeLog>(changeLogForCreationDto);
 
+            changeLog.TimeStamp = DateTime.Now;
+
             changeLog.userId = userId;
 
             _repo.Add(changeLog);
