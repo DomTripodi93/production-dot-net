@@ -9,14 +9,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190929201226_Initial")]
+    [Migration("20191014004604_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("BackEnd.Models.ChangeLog", b =>
                 {
@@ -199,6 +200,12 @@ namespace backend.Migrations
             modelBuilder.Entity("BackEnd.Models.Settings", b =>
                 {
                     b.Property<int>("userId");
+
+                    b.Property<string>("DefaultBarCut");
+
+                    b.Property<string>("DefaultBarEnd");
+
+                    b.Property<string>("DefaultStartTime");
 
                     b.Property<bool>("IsNew");
 

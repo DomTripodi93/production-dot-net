@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace backend.Migrations
@@ -12,7 +13,7 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Email = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<byte[]>(nullable: true),
@@ -28,7 +29,7 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     userId = table.Column<int>(nullable: false),
                     ChangedModel = table.Column<string>(nullable: true),
                     ChangeType = table.Column<string>(nullable: true),
@@ -90,7 +91,10 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     userId = table.Column<int>(nullable: false),
-                    IsNew = table.Column<bool>(nullable: false)
+                    IsNew = table.Column<bool>(nullable: false),
+                    DefaultStartTime = table.Column<string>(nullable: true),
+                    DefaultBarEnd = table.Column<string>(nullable: true),
+                    DefaultBarCut = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -177,7 +181,7 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     userId = table.Column<int>(nullable: false),
                     OpId = table.Column<int>(nullable: false),
                     OpNumber = table.Column<string>(nullable: true),
@@ -211,7 +215,7 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     userId = table.Column<int>(nullable: false),
                     OpNumber = table.Column<string>(nullable: true),
                     JobNumber = table.Column<string>(nullable: true),

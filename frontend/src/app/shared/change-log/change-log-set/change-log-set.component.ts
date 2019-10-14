@@ -42,7 +42,6 @@ export class ChangeLogSetComponent implements OnInit {
           type: log.changeType,
           id: log.changedId
         }
-        console.log(mod.old)
         if (+mod.timeStamp[1].substring(0,2)>12){
           let timeHold = +mod.timeStamp[1].substring(0,2) - 12;
           mod.timeStamp[1] = timeHold + mod.timeStamp[1].substring(2, 5) + " PM"
