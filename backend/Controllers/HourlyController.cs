@@ -94,19 +94,6 @@ namespace BackEnd.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> GetHourlySet(int userId)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            IEnumerable<Hourly> directHourlySet = await _repo.GetHourlySet(userId);
-
-            var hourlySet = _mapper.Map<IEnumerable<HourlyForReturnDto>>(directHourlySet);
-
-            return Ok(hourlySet);
-        }
-
         [HttpGet("date={date}&machine={mach}")]
         public async Task<IActionResult> GetHourlySetByDateAndMachine(int userId, string mach, string date)
         {

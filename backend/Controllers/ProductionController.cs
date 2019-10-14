@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BackEnd.Data;
 using BackEnd.Dtos;
+using BackEnd.Helpers;
 using BackEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -91,22 +92,26 @@ namespace BackEnd.Controllers
                 return Unauthorized();
 
             Production production = await _repo.GetProduction(id);
+
             ProdForReturnDto prodForReturn = _mapper.Map<ProdForReturnDto>(production);
+
             return Ok(prodForReturn);
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> GetProductionSet(int userId)
+        public async Task<IActionResult> GetProductionSet(int userId, [FromQuery]PagingParams prodParams)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            IEnumerable<Production> directProductions = await _repo.GetProductionSet(userId);
+            PagedList<Production> directProductions = await _repo.GetProductionSet(userId, prodParams);
 
-            var productionSet = _mapper.Map<IEnumerable<ProdForReturnDto>>(directProductions);
+            var productionForReturn = _mapper.Map<IEnumerable<ProdForReturnDto>>(directProductions);
 
-            return Ok(productionSet);
+            Response.AddPagination(directProductions.CurrentPage, directProductions.PageSize, directProductions.TotalCount, directProductions.TotalPages);
+
+            return Ok(productionForReturn);
         }
 
         [HttpGet("machine={mach}")]

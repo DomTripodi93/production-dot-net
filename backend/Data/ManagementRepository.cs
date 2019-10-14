@@ -155,14 +155,16 @@ namespace BackEnd.Data
             return production;
         }
 
-        public async Task<IEnumerable<Production>> GetProductionSet(int userId)
+        public async Task<PagedList<Production>> GetProductionSet(int userId, PagingParams prodParams)
         {
-            var prodForReturn = await _context.Production
-                .Where(p => p.userId == userId)
-                .ToListAsync();
+            var prod = _context.Production
+                .Where(p => p.userId == userId);
+            
+            var prodForReturn = prod.OrderByDescending(p => p.Date);
 
-            return prodForReturn.OrderByDescending(p => p.Date);
+            return await PagedList<Production>.CreateAsync(prodForReturn, prodParams.PageNumber, prodParams.PageSize);
         }
+
 
         public async Task<IEnumerable<Production>> GetProductionSetByJob(int userId, string job)
         {
@@ -223,15 +225,6 @@ namespace BackEnd.Data
             var hourly = await _context.Hourlys.FirstOrDefaultAsync(p => p.Id == id);
             
             return hourly;
-        }
-
-        public async Task<IEnumerable<Hourly>> GetHourlySet(int userId)
-        {
-            var hourlyForReturn = await _context.Hourlys
-                .Where(j => j.userId == userId)
-                .ToListAsync();
-
-            return hourlyForReturn.OrderBy(o => o.Time);
         }
 
         public async Task<IEnumerable<Hourly>> GetHourlySetByDateAndMachine(int userId, string date, string mach)
