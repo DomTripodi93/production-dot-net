@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Change } from '../../change.model';
 import { Pagination } from '../../pagination';
@@ -19,7 +18,6 @@ export class ChangeLogSetComponent implements OnInit {
 
 
   constructor(
-    private http: HttpClient,
     private auth: AuthService
     ) {}
 

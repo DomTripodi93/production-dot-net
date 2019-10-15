@@ -34,9 +34,7 @@ export class SigninComponent {
           localStorage.setItem('id', responseData.body["id"]);
           if (this.auth.user) {
             this.auth.isAuthenticated = true;
-            setTimeout(()=>{
-              this.auth.authChanged.next();
-            },100);
+            this.auth.authChanged.next();
           }
         },() => {
           this.isError = true
