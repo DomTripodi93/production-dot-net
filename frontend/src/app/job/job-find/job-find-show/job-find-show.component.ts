@@ -10,7 +10,7 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./job-find-show.component.css']
 })
 export class JobFindShowComponent implements OnInit {
-  @Input() search: string;
+  @Input() jobInput: Job;
   editJob = false
   isFetching = false;
   isError = false;
@@ -28,11 +28,13 @@ export class JobFindShowComponent implements OnInit {
 
   ngOnInit() {
     this.jobServ.jobChanged.subscribe(()=>{
-      this.getJob();
-    })
-    if (this.search){
-      this.job = this.search;
-      this.getJob();
+      if (!this.jobInput){
+        this.getJob();
+      }
+    }); 
+    if (this.jobInput){
+      this.job = ""+this.jobInput.id;
+      this.oneJob = this.jobInput;
     } else {
       this.subscriptions.push( 
         this.route.params.subscribe((params: Params) =>{

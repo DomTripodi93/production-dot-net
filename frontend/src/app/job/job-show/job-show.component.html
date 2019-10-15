@@ -1,6 +1,6 @@
 <div class='grid' >
   <div *ngFor="let job of jobs"> 
-    <app-job-find-show [search]="job.jobNumber"> </app-job-find-show>
+    <app-job-find-show [jobInput]="job"> </app-job-find-show>
   </div>
 </div>
 <br>
