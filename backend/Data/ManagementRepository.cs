@@ -105,14 +105,15 @@ namespace BackEnd.Data
             return job;
         }
 
-        public async Task<IEnumerable<Job>> GetJobs(int userId)
+        public async Task<PagedList<Job>> GetJobs(int userId, PagingParams jobParams)
         {
-            var jobs = await _context.Jobs
+            var jobs = _context.Jobs
                 .Include(x => x.Operation)
-                .Where(j => j.userId == userId)
-                .ToListAsync();
+                .Where(j => j.userId == userId);
 
-            return jobs.OrderByDescending(j => j.JobNumber);
+            var jobsForReturn = jobs.OrderByDescending(j => j.JobNumber);
+
+            return await PagedList<Job>.CreateAsync(jobsForReturn, jobParams.PageNumber, jobParams.PageSize);
         }
 
         public async Task<IEnumerable<Job>> GetJobsByPart(int userId, string partNum)
@@ -164,7 +165,6 @@ namespace BackEnd.Data
 
             return await PagedList<Production>.CreateAsync(prodForReturn, prodParams.PageNumber, prodParams.PageSize);
         }
-
 
         public async Task<IEnumerable<Production>> GetProductionSetByJob(int userId, string job)
         {

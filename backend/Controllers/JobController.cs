@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BackEnd.Data;
 using BackEnd.Dtos;
+using BackEnd.Helpers;
 using BackEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -85,14 +86,16 @@ namespace BackEnd.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetJobs(int userId)
+        public async Task<IActionResult> GetJobs(int userId, [FromQuery]PagingParams jobParams)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            IEnumerable<Job> directJobs = await _repo.GetJobs(userId);
+            PagedList<Job> directJobs = await _repo.GetJobs(userId, jobParams);
 
             var jobs = _mapper.Map<IEnumerable<JobForReturnDto>>(directJobs);
+
+            Response.AddPagination(directJobs.CurrentPage, directJobs.PageSize, directJobs.TotalCount, directJobs.TotalPages);
 
             return Ok(jobs);
         }

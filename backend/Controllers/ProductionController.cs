@@ -98,7 +98,6 @@ namespace BackEnd.Controllers
             return Ok(prodForReturn);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> GetProductionSet(int userId, [FromQuery]PagingParams prodParams)
         {
