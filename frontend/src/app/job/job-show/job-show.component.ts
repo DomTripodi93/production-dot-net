@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Job } from '../job.model';
 import { Subscription } from 'rxjs';
 import { JobService } from '../job.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Pagination } from '../../shared/pagination';
 
 @Component({
   selector: 'app-job-show',
@@ -15,11 +15,12 @@ export class JobShowComponent implements OnInit {
   isFetching = false;
   isError = false;
   error = '';
+  pageNum = 1;
+  pageSize = 6;
+  pagination: Pagination;
 
   constructor(
-    private jobServ: JobService,
-    private router: Router,
-    private route: ActivatedRoute
+    private jobServ: JobService
   ) { }
 
   ngOnInit() {
@@ -27,25 +28,33 @@ export class JobShowComponent implements OnInit {
     this.subscriptions.push(
       this.jobServ.jobChanged.subscribe(
         ()=>{
+          this.pageNum = 1;
+          this.jobs = [];
           setTimeout(()=>{this.getJobs()}, 50);
         }
       )
     );
   }
 
-  getJobs(){
-    this.subscriptions.push(this.jobServ.fetchAllJobs()
+  getJobs(){this.jobServ.fetchAllJobs(this.pageNum, this.pageSize)
     .subscribe(jobs => {
-      this.jobs = jobs;
+      this.pageNum++
+      this.pagination = jobs.pagination;
+      console.log(jobs)
+      jobs.result.forEach((job)=>{
+        this.jobs.push(job);
+      })
       this.isFetching = false;
     }, error => {
       this.isFetching = false;
       this.isError = true;
       this.error = error.message
-    }));
+    });
   }
 
-
+  showMore(){
+    this.getJobs();
+  }
 
   ngOnDestroy(){
     this.jobs = [];
