@@ -54,6 +54,8 @@ export class AuthService {
     localStorage.setItem('id', '');
     this.authChanged.next();
   };
+  //Resets all related values from Login to their initial values, and activated authentication 
+  // observable subscription actions
 
   registerUser(data: User){
     return this.http.post(
@@ -61,6 +63,7 @@ export class AuthService {
       data
     );
   };
+  //Posts User Creation Data to registration end-point
 
   signinUser(data: Signin){
     return this.http.post(
@@ -71,15 +74,15 @@ export class AuthService {
       }
     );
   };
+  //Sends Email and Password to backend to return User Token, and Id for Future API Calls
 
   getUserDetails(){
     return this.http.get(
-      this.authApiUrl + "/user/" + this.user,
-      {
-        observe: "response"
-      }
+      this.authApiUrl + "/user/" + this.user
     );
   };
+  //Sends API Call with Token and User ID to verify User and Set Authenticated Value to true 
+  // from App Component
 
   checkSettings(){
     return this.http.get(
@@ -98,21 +101,26 @@ export class AuthService {
           this.defaultStartTime = responseData.defaultStartTime;
           if (+(this.defaultStartTime[0]+this.defaultStartTime[1])==12) {
             this.defaultStartTimeString = this.defaultStartTime + " PM";
+            //Sets Default Start Time Display Value for 12:00PM-12:59PM 
           } else if (+(this.defaultStartTime[0]+this.defaultStartTime[1])>11){
             let timeHold = +(this.defaultStartTime[0]+this.defaultStartTime[1]) - 12;
             this.defaultStartTimeString = timeHold + this.defaultStartTime.slice(2, 5) + " PM";
+            //Sets Default Start Time Display Value for 1:00PM-11:59PM
           } else if (+(this.defaultStartTime[0]+this.defaultStartTime[1]) == 0) {
             let timeHold = +(this.defaultStartTime[0]+this.defaultStartTime[1]) + 12;
             this.defaultStartTimeString = timeHold + this.defaultStartTime.slice(2, 5) + " AM";
+            //Sets Default Start Time Display Value for 12:00AM-12:59AM
           } else {
             let timeHold = +(this.defaultStartTime[0]+this.defaultStartTime[1]);
             this.defaultStartTimeString = timeHold + this.defaultStartTime.slice(2, 5) + " AM";
+            //Sets Default Start Time Display Value for 1:00AM-11:59AM
           };      
         }
       return responseData;
       })
     );
   };
+  //Sends Get Request to Settings Endpoint to return and Set User's Settings where applicable
 
   fetchChanges(model, page?, itemsPerPage?): Observable<PaginatedResult<Change[]>> {
     const paginatedResult: PaginatedResult<Change[]> = new PaginatedResult<Change[]>();
@@ -136,6 +144,8 @@ export class AuthService {
           })
         )
   }
+  //Gets Values for specified model for Change-Log viewing, showing the original values 
+  // of the model, which are set and displayed based on the model of the edited value
 
   changeNew(){
     if (this.isNew == true){
@@ -148,12 +158,15 @@ export class AuthService {
       });
     }
   }
+  //Checks if tutorials are active, and either activates or deactivates them for the 
+  // current user
 
   changeSetting(path, data){
     return this.http.put(
       this.apiUrl + "/settings/" + path, data      
     );
   }
+  //Updates settings value other than Tutorials
 
   logChanges(values, model, type, id){
     let data = {
@@ -166,6 +179,7 @@ export class AuthService {
       this.apiUrl + '/changelog/', data
     );
   }
+  //Logs the old values of a model before updating to be reviewed at a later time
 
   splitJoin(machine: string){
     let machineHold1: string;
@@ -174,6 +188,9 @@ export class AuthService {
     machine = machineHold1
       return machine;
   }
+  //Turns multi-word machine names into a single word by joining them with slashes before 
+  // using them in the database, or searches for them in the database so that searching 
+  // returns consistant results
 
   rejoin(machine){
     let machineHold1 = machine;
@@ -182,16 +199,23 @@ export class AuthService {
     machine = machineHold1
       return machine;
   }
+  //Returns multi-word machine names where the words are joined by slashes for API Searchability
+  // to a multi-word string
 
   hideButton(i){
     setTimeout(()=>{
       this.buttonHidden[i] = true;
     })
   }
+  //Hides one of two buttons that consistantly need to be conditionally hidden accross multiple
+  // components
 
   showButton(i){
     setTimeout(()=>{
       this.buttonHidden[i] = false;
     })
   }
+  //Shows one of two buttons that consistantly need to be conditionally hidden accross multiple
+  // components
+
 }
