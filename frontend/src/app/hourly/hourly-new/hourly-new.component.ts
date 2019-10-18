@@ -39,8 +39,9 @@ export class HourlyNewComponent implements OnInit {
     this.mach.fetchAllMachines()
     .subscribe(machines => {
       this.machines = machines;
-      this.jobServ.fetchAllJobs().subscribe(response =>{
+      this.jobServ.fetchAllJobs().subscribe(paginatedResponse =>{
         let goneThrough = 1;
+        let response = paginatedResponse.result;
         if (response.length==0){
           this.initForm();
         } else {

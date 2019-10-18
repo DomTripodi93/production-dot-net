@@ -33,8 +33,9 @@ export class MachineNewComponent implements OnInit {
   
   ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
-    this.jobServ.fetchAllJobs().subscribe(response =>{
+    this.jobServ.fetchAllJobs().subscribe(paginatedResponse =>{
       let goneThrough = 1;
+      let response = paginatedResponse.result;
       if (response.length==0){
         this.initForm();
       } else {

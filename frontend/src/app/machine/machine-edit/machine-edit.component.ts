@@ -36,8 +36,9 @@ export class MachineEditComponent implements OnInit {
     this.mach.fetchMachineByName(this.machName)
     .subscribe(machine => {
       this.machine = machine;
-      this.jobServ.fetchAllJobs().subscribe(response =>{
+      this.jobServ.fetchAllJobs().subscribe(paginatedResponse =>{
         let goneThrough = 1;
+        let response = paginatedResponse.result;
         if (response.length==0){
           this.initForm();
         } else {
