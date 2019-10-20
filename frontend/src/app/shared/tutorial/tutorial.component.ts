@@ -118,7 +118,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
   checkHourly(){
     this.hourlyServ.fetchAllHourly()
       .subscribe(hour => {
-        if (hour.length > 0){
+        if (hour){
           this.checkProduction();
           this.hourly = true;
         }

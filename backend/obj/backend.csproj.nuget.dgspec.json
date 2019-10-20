@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/dominic/Code/Showcase/Full/productiondotnet/backend/backend.csproj": {}
+    "/home/dominic/Code/Showcase/productiondotnet/backend/backend.csproj": {}
   },
   "projects": {
-    "/home/dominic/Code/Showcase/Full/productiondotnet/backend/backend.csproj": {
+    "/home/dominic/Code/Showcase/productiondotnet/backend/backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/dominic/Code/Showcase/Full/productiondotnet/backend/backend.csproj",
+        "projectUniqueName": "/home/dominic/Code/Showcase/productiondotnet/backend/backend.csproj",
         "projectName": "backend",
-        "projectPath": "/home/dominic/Code/Showcase/Full/productiondotnet/backend/backend.csproj",
+        "projectPath": "/home/dominic/Code/Showcase/productiondotnet/backend/backend.csproj",
         "packagesPath": "/home/dominic/.nuget/packages/",
-        "outputPath": "/home/dominic/Code/Showcase/Full/productiondotnet/backend/obj/",
+        "outputPath": "/home/dominic/Code/Showcase/productiondotnet/backend/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/share/dotnet/sdk/NuGetFallbackFolder"

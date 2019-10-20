@@ -64,11 +64,7 @@ export class HourlyService {
           this.auth.apiUrl + '/hourly/'
         )
         .pipe(
-          map((responseData: Hourly[]) => {
-            responseData.forEach((lot)=>{
-              lot.opNumber = this.dayServ.dashToSlash(lot.opNumber);
-              lot.machine = this.auth.rejoin(lot.machine);
-            })
+          map((responseData: Hourly) => {
           return responseData;
           })
         )

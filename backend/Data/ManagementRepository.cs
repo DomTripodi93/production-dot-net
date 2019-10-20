@@ -220,6 +220,14 @@ namespace BackEnd.Data
             return prodForReturn.OrderByDescending(p => p.Date);
         }
 
+        public async Task<Hourly> GetAnyHourly(int userId)
+        {
+            var hourly = await _context.Hourlys
+            .FirstOrDefaultAsync(p => p.userId == userId);
+            
+            return hourly;
+        }
+
         public async Task<Hourly> GetHourly(int id)
         {
             var hourly = await _context.Hourlys.FirstOrDefaultAsync(p => p.Id == id);
