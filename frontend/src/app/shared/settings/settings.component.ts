@@ -33,6 +33,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
       }
     });
   }
+  //Checks settings and sets displayed option text for Tutorial 
+  // activation and deactivation
 
 
   changeTutorial() {
@@ -40,18 +42,23 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.auth.changeNew();
     }
   }
+  //Confirms decision to change Tutorial activation status, and sends 
+  // change data to backend API
 
   onChangeStartTime(){
     this.auth.setStartTime = true;
   }
+  //Sets variable for display of form to edit default start time
 
   onChangeBarEnd(){
     this.auth.setBarEnd = true;
   }
+  //Sets variable for display of form to edit default bar end length
 
   onChangeBarCut(){
     this.auth.setBarCut = true;
   }
+  //Sets variable for display of form to edit default bar cut to length
   
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{
