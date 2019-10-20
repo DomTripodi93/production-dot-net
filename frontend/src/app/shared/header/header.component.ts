@@ -7,23 +7,10 @@ import { AuthService } from '../auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-  subscription: Subscription;
-  id = false;
+export class HeaderComponent implements OnInit {
 
-  constructor(private auth: AuthService) { }
+  constructor(public auth: AuthService) { }
 
-  ngOnInit() {
-    this.id = this.auth.isAuthenticated;
-    this.subscription = this.auth.authChanged.subscribe(
-      ()=>{
-        this.id = this.auth.isAuthenticated;
-      }
-    )
-  }
-
-  ngOnDestroy(){
-    this.subscription.unsubscribe();
-  }
+  ngOnInit() { }
 
 }

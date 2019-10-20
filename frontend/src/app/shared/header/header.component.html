@@ -13,18 +13,18 @@
           </li>
           <li routerLinkActive="!active"><a routerLink='/'>Home</a></li>
           <li
-            *ngIf="!id" 
+            *ngIf="!auth.isAuthenticated" 
             routerLinkActive="active">
             <a routerLink='/register'>Signup</a></li>
           <li
-            *ngIf="!id" 
+            *ngIf="!auth.isAuthenticated" 
             routerLinkActive="active">
             <a routerLink='/login'>Signin</a></li>
           <li
-            *ngIf="id" 
+            *ngIf="auth.isAuthenticated" 
             routerLinkActive="active">
             <a routerLink='/logout'>Signout</a></li>
-          <li class="dropdown" *ngIf="id" appDropdown>
+          <li class="dropdown" *ngIf="auth.isAuthenticated" appDropdown>
             <a
             style ='cursor: pointer;'
             class="dropdown-toggle"  
@@ -45,12 +45,12 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li 
-            *ngIf="id" 
+            *ngIf="auth.isAuthenticated" 
             routerLinkActive="active" 
             [routerLinkActiveOptions]="{exact: true}">
             <a routerLink='/changes'>Change Log</a></li>
           <li 
-            *ngIf="id" 
+            *ngIf="auth.isAuthenticated" 
             routerLinkActive="active" 
             [routerLinkActiveOptions]="{exact: true}">
             <a routerLink='/settings'>Settings</a></li>
