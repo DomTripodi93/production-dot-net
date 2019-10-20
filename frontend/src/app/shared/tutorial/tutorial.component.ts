@@ -36,6 +36,9 @@ export class TutorialComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.checkMachines();
+    //Checks if user has created any machines, and starts a chain 
+    // reaction to check subsequent model creations to initially set
+    // tutorial display option
     this.subscriptions.push(this.mach.machChanged.subscribe(()=>{
       setTimeout(()=>{this.checkMachines();},50)}
     ));
@@ -56,15 +59,6 @@ export class TutorialComponent implements OnInit, OnDestroy {
     ));
   }
 
-  checkAll(){
-    this.checkMachines();
-    this.checkParts();
-    this.checkJobs();
-    this.checkOps();
-    this.checkHourly();
-    this.checkProduction();
-  }
-
   checkMachines(){
     this.mach.fetchAllMachines()
       .subscribe(machine => {
@@ -75,6 +69,8 @@ export class TutorialComponent implements OnInit, OnDestroy {
       }
     );
   }
+  //Checks if user has created any Machines, and if they have, moves
+  // to check the next relevant model, parts
 
   checkParts(){
     this.partServ.fetchAllParts()
@@ -86,6 +82,8 @@ export class TutorialComponent implements OnInit, OnDestroy {
       }
     );
   }
+  //Checks if user has created any Parts, and if they have, moves
+  // to check the next relevant Model, Jobs
 
   checkJobs(){
     this.jobServ.fetchAllJobs()
@@ -99,6 +97,9 @@ export class TutorialComponent implements OnInit, OnDestroy {
       }
     )
   }
+  //Checks if user has created any Jobs, and if they have, moves
+  // to check the next relevant model, Ops, also sets job number
+  // for multiple production lots link
 
   checkOps(){
     this.opServ.fetchOpByJob(this.job)
@@ -114,6 +115,9 @@ export class TutorialComponent implements OnInit, OnDestroy {
       }
     )
   }
+  //Checks if user has created any Ops, and if they have, moves
+  // to check the next relevant model, Hourly, also sets op number
+  // for multiple production lots link
 
   checkHourly(){
     this.hourlyServ.fetchAllHourly()
@@ -125,23 +129,27 @@ export class TutorialComponent implements OnInit, OnDestroy {
       }
     );
   }
+  //Checks if user has created any Hourly lots, and if they have, moves
+  // to check the next relevant model, Production
 
   checkProduction(){
     this.prodServ.fetchAllProduction()
       .subscribe(prod => {
         if (prod.length > 0){
-          this.job = prod[0].jobNumber
           this.production = true;
         }
       }
     )
   }
+  //Checks if user has created any Production Lots
 
   notNew() {
     if (confirm("Are you sure you want to hide these tutorials?")){
       this.auth.changeNew();
     }
   }
+  //Confirms hiding of tutorials, and sets user settings for tutorial 
+  // view on confirmation
 
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{
