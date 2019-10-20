@@ -38,5 +38,4 @@ export class DaysComponent{
     public auth: AuthService
     ) { }
 
-
 }

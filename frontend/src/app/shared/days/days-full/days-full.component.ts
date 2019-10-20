@@ -64,6 +64,8 @@ export class DaysFullComponent implements OnInit, OnDestroy {
       this.error = error.message
     })
   }
+  //Pulls all production lots for the day from the database 
+  // for display
 
   ngOnDestroy(){
     this.subscriptions.forEach((sub=>{

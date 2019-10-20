@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { HourlyService } from 'src/app/hourly/hourly.service';
-import { Hourly } from 'src/app/hourly/hourly.model';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DaysService } from '../days.service';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -89,11 +88,15 @@ export class DaysHourlyComponent implements OnInit, OnDestroy {
     this.hourServ.machine = this.machines[index];
     this.hourServ.quick[index] = true;
   }
+  //Sets values for the related machine job and operation to be 
+  // used to create an hourly production lot
 
   quickPlus(index){
     this.isJob[index] = true
     this.quickInput(index);
   }
+  //Sets values to show form to change current job and operation for
+  // a designated machine
 
   getMachines(){
     this.subscriptions.push(this.mach.fetchAllMachines()
@@ -112,6 +115,8 @@ export class DaysHourlyComponent implements OnInit, OnDestroy {
       this.error = error.message
     }));
   }
+  //Pulls all machines for the user from the database to be used as the
+  // basis for displaying hourly production for the day
 
 
   ngOnDestroy(){

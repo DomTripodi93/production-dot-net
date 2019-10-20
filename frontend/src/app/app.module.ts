@@ -60,6 +60,7 @@ import { ProductionFindComponent } from './production/production-find/production
 import { ProductionFindShowComponent } from './production/production-find/production-find-show/production-find-show.component';
 import { HourlySetTimeComponent } from './hourly/hourly-set-time/hourly-set-time.component';
 import { ChangeValueComponent } from './shared/settings/change-value/change-value.component';
+import { FooterComponent } from './shared/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { ChangeValueComponent } from './shared/settings/change-value/change-valu
     ProductionFindShowComponent,
     HourlySetTimeComponent,
     ChangeValueComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
