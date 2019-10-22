@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ViewChild, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DaysService } from '../shared/days/days.service';
 import { AuthService } from '../shared/auth.service';
 import { NgForm } from '@angular/forms';
@@ -7,19 +7,21 @@ import { Machine } from '../machine/machine.model';
 import { MachineService } from '../machine/machine.service';
 import { OpService } from '../job/job-ops/operation.service';
 import { ProductionService } from './production.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-production',
   templateUrl: './production.component.html',
   styleUrls: ['./production.component.css']
 })
-export class ProductionComponent {
+export class ProductionComponent implements OnDestroy {
   @ViewChild('chooseMachine') chooseMachForm: NgForm;
   machines = [];
   fullMach: Machine[] = [];
   job = '';
   machine = '';
   defaultMach = '';
+  subscriptions: Subscription[] = [];
 
   constructor(
     private dayServ: DaysService,
@@ -27,8 +29,14 @@ export class ProductionComponent {
     private mach: MachineService,
     public auth: AuthService,
     private pro: ProductionService,
-    private opServ: OpService
+    private opServ: OpService,
+    private route: ActivatedRoute
   ){
+    this.subscriptions.push(
+      this.route.params.subscribe((params: Params) => {
+        this.auth.machType = params["machType"];
+      })
+    )
     this.mach.fetchMachineJobs()
     .subscribe((machines: Machine[]) => {
       this.fullMach = machines;
@@ -59,6 +67,12 @@ export class ProductionComponent {
     }
     this.pro.setMach = this.chooseMachForm.value.machine;
     this.router.navigate(["/production/op=" + op + "&job=" + job])
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach(sub=>{
+      sub.unsubscribe();
+    })
   }
 
 }

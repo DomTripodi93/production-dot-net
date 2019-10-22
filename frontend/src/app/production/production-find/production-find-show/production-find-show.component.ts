@@ -32,10 +32,12 @@ export class ProductionFindShowComponent implements OnInit {
   constructor(
     private pro: ProductionService,
     private route: ActivatedRoute,
-    private dayServ: DaysService
+    public dayServ: DaysService,
+    public auth: AuthService
   ) { }
 
   ngOnInit() {
+    this.dayServ.dates = [];
     if (this.inputId){
       this.getSingleProduction();
     } else {
@@ -71,13 +73,14 @@ export class ProductionFindShowComponent implements OnInit {
           let beginning = lot.date.substring(5,10);
           lot.date = beginning + "-" + lot.date.substring(0,4);
           this.total = +lot.quantity + this.total;
-          this.dayServ.dates.push(this.dayServ.dashToSlash(lot.date))
+          this.dayServ.dates.push(this.dayServ.dashToSlash(lot.date));
+          console.log(this.dayServ.dates)
         })
         this.isFetching = false;
       }, error => {
         this.isFetching = false;
         this.isError = true;
-        this.error = error.message
+        this.error = error.message;
       })
   }  
 
@@ -86,15 +89,16 @@ export class ProductionFindShowComponent implements OnInit {
     this.pro.fetchProductionBySearch(this.inputId)
       .subscribe(production => {
         this.singleProd = production;
-        this.dayServ.dates = [];
         let beginning = this.singleProd.date.substring(5,10);
         this.singleProd.date = beginning + "-" + this.singleProd.date.substring(0,4);
         this.total = +this.singleProd.quantity + this.total;
+        this.dayServ.dates.push(this.dayServ.dashToSlash(this.singleProd.date));
+        console.log(this.dayServ.dates)
         this.isFetching = false;
       }, error => {
         this.isFetching = false;
         this.isError = true;
-        this.error = error.message
+        this.error = error.message;
       })
   }  
 

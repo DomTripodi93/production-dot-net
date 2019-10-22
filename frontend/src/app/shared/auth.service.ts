@@ -24,7 +24,8 @@ export class AuthService {
   isAuthenticated = true;
   authApiUrl = 'http://localhost:5000/api';
   apiUrl = 'http://localhost:5000/api/' + localStorage.getItem('id');
-  public authChanged = new Subject();
+  authChanged = new Subject();
+  machType = "";  
   makeOld = {
     isNew: false
   };

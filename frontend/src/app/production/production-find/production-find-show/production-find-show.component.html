@@ -21,7 +21,7 @@
                     <h4>Machine: <strong>{{lot.machine}}</strong></h4>
                 </div>
                 <div class='grid'>
-                    <button class='btn btn-info pull-right' routerLink="/production/op={{lot.opNumber}}&job={{lot.jobNumber}}">Job/Op <br> Production</button>
+                    <button class='btn btn-info pull-right' routerLink="/{{auth.machType}}/production/op={{lot.opNumber}}&job={{lot.jobNumber}}">Job/Op <br> Production</button>
                     <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day <br> Production</button>
                 </div>
                 <br>

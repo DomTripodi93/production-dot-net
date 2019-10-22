@@ -34,14 +34,18 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a routerLink='/machine'>Machines</a></li>
-              <li><a routerLink='/parts'>Parts</a></li>
-              <li><a routerLink='/jobs'>Jobs</a></li>
-              <li><a routerLink='/production'>Production</a></li>
-              <li><a routerLink='/hourly'>Hourly</a></li>
-              <li><a routerLink='/jobs/calculator'>Length From Weight</a></li>
+              <li><a routerLink='lathe/machine'>Machines</a></li>
+              <li><a routerLink='lathe/parts'>Parts</a></li>
+              <li><a routerLink='lathe/jobs'>Jobs</a></li>
+              <li><a routerLink='lathe/production'>Production</a></li>
+              <li><a routerLink='lathe/jobs/calculator'>Length From Weight</a></li>
             </ul>
           </li> 
+          <li
+            *ngIf="auth.isAuthenticated" 
+            routerLinkActive="active">
+            <a routerLink='hourly'>Hourly</a>
+          </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li 

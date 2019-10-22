@@ -35,6 +35,7 @@ export class ProductionService {
             })
             const proHold: Production[] = [];
             responseData.forEach(data => {
+              data.opNumber = this.dayServ.dashToSlash(data.opNumber);
               proHold.push(data);                
             });
           return proHold;

@@ -46,6 +46,7 @@ const appRoutes: Routes = [
     {path: 'login', component: SigninComponent},
     {path: "", runGuardsAndResolvers: "always", canActivate: [AuthGuard], children: [
         {path: 'settings', component: SettingsComponent },
+        {path: 'logout', component: SignoutComponent},
         {path: 'day/:year/:month/:day', component: DaysComponent, children:[
             {path: '', component: DaysFullComponent},
             {path: 'hourly', component: DaysHourlyComponent}
@@ -54,31 +55,6 @@ const appRoutes: Routes = [
             {path: '', component: MachineShowComponent},
             {path: 'new', component: MachineNewComponent}
         ]},
-        {path: 'parts', component: PartComponent, children:[
-            {path: '', component: PartShowComponent},
-            {path: 'new', component: PartNewComponent},
-            {path: 'find', component: PartFindComponent},
-            {path: ":part", component: PartFindShowComponent},
-        ]},
-        {path: 'jobs', component: JobComponent, children:[
-            {path: '', component: JobShowComponent},
-            {path: 'new', component: JobNewComponent},
-            {path: 'find', component: JobFindComponent},
-            {path: "calculator", component: CalculatorComponent, children:[
-                {path: "", component: LengthComponent},
-                {path: "weight/:jobNum", component: ByWeightComponent},
-                {path: "job/:jobNum", component: JobTotalComponent},
-                {path: ":jobNum", component: RemainingComponent},
-            ]},
-            {path: ":job", component: JobFindShowComponent},
-        ]},
-        {path: 'production', component: ProductionComponent, children:[
-            {path: '', component: ProductionListComponent},
-            {path: 'new', component: ProductionNewComponent},
-            {path: 'find', component: ProductionFindComponent},
-            {path: 'single/:id', component: ProductionSingleComponent},
-            {path: ":search", component: ProductionFindShowComponent},
-        ]},
         {path: 'hourly', component: HourlyComponent, children:[
             {path: '', component: HourlyShowComponent},
             {path: 'find', component: HourlyFindComponent},
@@ -86,7 +62,33 @@ const appRoutes: Routes = [
             {path: 'new', component: HourlyNewComponent},
         ]},
         {path: 'changes', component: ChangeLogComponent},
-        {path: 'logout', component: SignoutComponent}
+        {path: ":machType", children:[
+            {path: 'parts', component: PartComponent, children:[
+                {path: '', component: PartShowComponent},
+                {path: 'new', component: PartNewComponent},
+                {path: 'find', component: PartFindComponent},
+                {path: ":part", component: PartFindShowComponent},
+            ]},
+            {path: 'jobs', component: JobComponent, children:[
+                {path: '', component: JobShowComponent},
+                {path: 'new', component: JobNewComponent},
+                {path: 'find', component: JobFindComponent},
+                {path: "calculator", component: CalculatorComponent, children:[
+                    {path: "", component: LengthComponent},
+                    {path: "weight/:jobNum", component: ByWeightComponent},
+                    {path: "job/:jobNum", component: JobTotalComponent},
+                    {path: ":jobNum", component: RemainingComponent},
+                ]},
+                {path: ":job", component: JobFindShowComponent},
+            ]},
+            {path: 'production', component: ProductionComponent, children:[
+                {path: '', component: ProductionListComponent},
+                {path: 'new', component: ProductionNewComponent},
+                {path: 'find', component: ProductionFindComponent},
+                {path: 'single/:id', component: ProductionSingleComponent},
+                {path: ":search", component: ProductionFindShowComponent},
+            ]},
+        ]}
     ]},
     {path: "**", redirectTo:"/", pathMatch: "full"}
 ];
