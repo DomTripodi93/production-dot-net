@@ -28,6 +28,7 @@ export class ProductionFindShowComponent implements OnInit {
   inQuestion = {
     inQuestion: true
   }
+  date = "";
 
   constructor(
     private pro: ProductionService,
@@ -74,7 +75,6 @@ export class ProductionFindShowComponent implements OnInit {
           lot.date = beginning + "-" + lot.date.substring(0,4);
           this.total = +lot.quantity + this.total;
           this.dayServ.dates.push(this.dayServ.dashToSlash(lot.date));
-          console.log(this.dayServ.dates)
         })
         this.isFetching = false;
       }, error => {
@@ -92,8 +92,7 @@ export class ProductionFindShowComponent implements OnInit {
         let beginning = this.singleProd.date.substring(5,10);
         this.singleProd.date = beginning + "-" + this.singleProd.date.substring(0,4);
         this.total = +this.singleProd.quantity + this.total;
-        this.dayServ.dates.push(this.dayServ.dashToSlash(this.singleProd.date));
-        console.log(this.dayServ.dates)
+        this.date = this.dayServ.dashToSlash(this.singleProd.date);
         this.isFetching = false;
       }, error => {
         this.isFetching = false;
