@@ -51,10 +51,6 @@ const appRoutes: Routes = [
             {path: '', component: DaysFullComponent},
             {path: 'hourly', component: DaysHourlyComponent}
         ]},
-        {path: 'machine', component: MachineComponent, children:[
-            {path: '', component: MachineShowComponent},
-            {path: 'new', component: MachineNewComponent}
-        ]},
         {path: 'hourly', component: HourlyComponent, children:[
             {path: '', component: HourlyShowComponent},
             {path: 'find', component: HourlyFindComponent},
@@ -63,6 +59,10 @@ const appRoutes: Routes = [
         ]},
         {path: 'changes', component: ChangeLogComponent},
         {path: ":machType", children:[
+            {path: 'machine', component: MachineComponent, children:[
+                {path: '', component: MachineShowComponent},
+                {path: 'new', component: MachineNewComponent}
+            ]},
             {path: 'parts', component: PartComponent, children:[
                 {path: '', component: PartShowComponent},
                 {path: 'new', component: PartNewComponent},

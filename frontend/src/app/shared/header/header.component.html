@@ -41,6 +41,23 @@
               <li><a routerLink='lathe/jobs/calculator'>Length From Weight</a></li>
             </ul>
           </li> 
+          <li class="dropdown" *ngIf="auth.isAuthenticated" appDropdown>
+            <a
+            style ='cursor: pointer;'
+            class="dropdown-toggle"  
+            data-toggle="dropdown" 
+            type="button">
+              Mill
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a routerLink='mill/machine'>Machines</a></li>
+              <li><a routerLink='mill/parts'>Parts</a></li>
+              <li><a routerLink='mill/jobs'>Jobs</a></li>
+              <li><a routerLink='mill/production'>Production</a></li>
+              <li><a routerLink='mill/jobs/calculator'>Length From Weight</a></li>
+            </ul>
+          </li> 
           <li
             *ngIf="auth.isAuthenticated" 
             routerLinkActive="active">
