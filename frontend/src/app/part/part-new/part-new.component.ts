@@ -34,7 +34,8 @@ export class PartNewComponent implements OnInit {
     let part: string;
 
     this.partForm = new FormGroup({
-      'partNumber': new FormControl(part, Validators.required)
+      'partNumber': new FormControl(part, Validators.required),
+      "machType": new FormControl(this.auth.machType)
     });
   }
 

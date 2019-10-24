@@ -78,7 +78,8 @@ export class ProductionNewComponent implements OnInit {
       'machine': new FormControl(this.myMach, Validators.required),
       'jobNumber': new FormControl(""),
       'opNumber': new FormControl(""),
-      'partNumber': new FormControl("")
+      'partNumber': new FormControl(""),
+      "machType": new FormControl(this.auth.machType)
     });
   }
   
