@@ -248,31 +248,5 @@ namespace BackEnd.Data
 
             return hourlyForReturn.OrderBy(o => o.Time);
         }
-
-        public async Task<Settings> GetSettings(int userId)
-        {
-            var user = await _context.Users
-                .Include(x => x.Settings)
-                .FirstOrDefaultAsync(u => u.Id == userId);
-
-            return user.Settings;
-        }
-
-        public async Task<PagedList<ChangeLog>> GetChangeLog(int userId, string model, PagingParams changeLogParams)
-        {
-            var changes = _context.ChangeLogs
-                .Where(m => m.userId == userId)
-                .Where(c => c.ChangedModel == model);
-
-            return await PagedList<ChangeLog>.CreateAsync(changes, changeLogParams.PageNumber, changeLogParams.PageSize);
-        }
-
-        public async Task<ChangeLog> GetUniqueChangeLog(int id)
-        {
-            var changes = await _context.ChangeLogs
-                .FirstOrDefaultAsync(c => c.Id == id);
-
-            return changes;
-        }
     }
 }

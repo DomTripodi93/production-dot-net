@@ -19,9 +19,9 @@ namespace backend.Controllers
     public class ChangeLogController: ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IManagementRepository _repo;
+        private readonly IUserRepository _repo;
 
-        public ChangeLogController(IMapper mapper, IManagementRepository repo)
+        public ChangeLogController(IMapper mapper, IUserRepository repo)
         {
             _mapper = mapper;
             _repo = repo;

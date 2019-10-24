@@ -32,8 +32,5 @@ namespace BackEnd.Data
         Task<Hourly> GetAnyHourly(int userId);
         Task<Hourly> GetHourly(int id);
         Task<IEnumerable<Hourly>> GetHourlySetByDateAndMachine(int userId, string date, string mach);
-        Task<Settings> GetSettings(int userId);
-        Task<PagedList<ChangeLog>> GetChangeLog(int userId, string model, PagingParams changeLogParams);
-        Task<ChangeLog> GetUniqueChangeLog(int id);
     }
 }

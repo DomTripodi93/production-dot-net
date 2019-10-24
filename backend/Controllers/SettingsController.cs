@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -17,9 +16,9 @@ namespace BackEnd.Controllers
     public class SettingsController: ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IManagementRepository _repo;
+        private readonly IUserRepository _repo;
 
-        public SettingsController(IMapper mapper, IManagementRepository repo)
+        public SettingsController(IMapper mapper, IUserRepository repo)
         {
             _mapper = mapper;
             _repo = repo;
