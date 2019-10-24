@@ -59,7 +59,8 @@ export class MachineEditComponent implements OnInit {
   private initForm() {
     this.editMachineForm = new FormGroup({
       'currentJob': new FormControl(this.machine.currentJob),
-      'currentOp': new FormControl(this.machine.currentOp)
+      'currentOp': new FormControl(this.machine.currentOp),
+      "machType": new FormControl(this.auth.machType)
     });
   }
 

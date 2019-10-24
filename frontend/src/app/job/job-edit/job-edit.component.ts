@@ -55,6 +55,7 @@ export class JobEditComponent implements OnInit {
       "cutOff": new FormControl(cutOff),
       "mainFacing": new FormControl(mainFacing),
       "subFacing": new FormControl(subFacing),
+      "machType": new FormControl(this.auth.machType)
     });
   }
 

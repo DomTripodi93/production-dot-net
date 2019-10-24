@@ -88,7 +88,8 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
       'opNumber': new FormControl(this.production.opNumber, Validators.required),
       'date': new FormControl(this.dayServe.dateForForm(this.production.date), Validators.required),
       'machine': new FormControl(this.production.machine, Validators.required),
-      'shift': new FormControl(this.production.shift, Validators.required)
+      'shift': new FormControl(this.production.shift, Validators.required),
+      "machType": new FormControl(this.auth.machType)
     });
   }
 
