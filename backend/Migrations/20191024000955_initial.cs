@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace backend.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,7 +55,8 @@ namespace backend.Migrations
                     userId = table.Column<int>(nullable: false),
                     Machine = table.Column<string>(nullable: false),
                     CurrentJob = table.Column<string>(nullable: true),
-                    CurrentOp = table.Column<string>(nullable: true)
+                    CurrentOp = table.Column<string>(nullable: true),
+                    MachType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -73,7 +74,8 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     userId = table.Column<int>(nullable: false),
-                    PartNumber = table.Column<string>(nullable: false)
+                    PartNumber = table.Column<string>(nullable: false),
+                    MachType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -128,7 +130,8 @@ namespace backend.Migrations
                     MainFacing = table.Column<string>(nullable: true),
                     SubFacing = table.Column<string>(nullable: true),
                     HeatLot = table.Column<string>(nullable: true),
-                    Bars = table.Column<string>(nullable: true)
+                    Bars = table.Column<string>(nullable: true),
+                    MachType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -224,7 +227,8 @@ namespace backend.Migrations
                     Shift = table.Column<string>(nullable: true),
                     Quantity = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
-                    InQuestion = table.Column<bool>(nullable: false)
+                    InQuestion = table.Column<bool>(nullable: false),
+                    MachType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

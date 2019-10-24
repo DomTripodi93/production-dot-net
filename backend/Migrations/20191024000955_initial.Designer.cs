@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191014004604_Initial")]
-    partial class Initial
+    [Migration("20191024000955_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,6 +87,8 @@ namespace backend.Migrations
 
                     b.Property<string>("HeatLot");
 
+                    b.Property<string>("MachType");
+
                     b.Property<string>("MainFacing");
 
                     b.Property<string>("MatRecieved");
@@ -130,6 +132,8 @@ namespace backend.Migrations
 
                     b.Property<string>("CurrentOp");
 
+                    b.Property<string>("MachType");
+
                     b.HasKey("userId", "Machine");
 
                     b.ToTable("Machines");
@@ -162,6 +166,8 @@ namespace backend.Migrations
 
                     b.Property<string>("PartNumber");
 
+                    b.Property<string>("MachType");
+
                     b.HasKey("userId", "PartNumber");
 
                     b.ToTable("Parts");
@@ -177,6 +183,8 @@ namespace backend.Migrations
                     b.Property<bool>("InQuestion");
 
                     b.Property<string>("JobNumber");
+
+                    b.Property<string>("MachType");
 
                     b.Property<string>("Machine");
 

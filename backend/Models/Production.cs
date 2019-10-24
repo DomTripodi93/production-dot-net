@@ -17,5 +17,6 @@ namespace BackEnd.Models
         public string Quantity { get; set; }
         public DateTime Date { get; set; }
         public bool InQuestion { get; set; }
+        public string MachType { get; set; }
     }
 }

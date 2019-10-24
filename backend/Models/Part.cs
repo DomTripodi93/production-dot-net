@@ -9,6 +9,7 @@ namespace BackEnd.Models
         public User User { get; set; }
         public int userId { get; set; }
         public string PartNumber { get; set; }
+        public string MachType { get; set; }
         public ICollection<Job> Jobs { get; set; }
     }
 }
