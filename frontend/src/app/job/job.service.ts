@@ -52,7 +52,7 @@ export class JobService {
     }
 
       return this.http.get(
-        this.auth.apiUrl + '/job/', {observe: "response", params}
+        this.auth.apiUrl + '/job/' + this.auth.machType, {observe: "response", params}
       )
       .pipe(
         map((responseData: any) => {

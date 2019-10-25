@@ -6,7 +6,7 @@ using BackEnd.Helpers;
 using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend.Data
+namespace BackEnd.Data
 {
     public class UserRepository : IUserRepository
     {
