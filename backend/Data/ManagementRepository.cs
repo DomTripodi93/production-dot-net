@@ -105,11 +105,12 @@ namespace BackEnd.Data
             return job;
         }
 
-        public async Task<PagedList<Job>> GetJobs(int userId, PagingParams jobParams)
+        public async Task<PagedList<Job>> GetJobs(int userId, PagingParams jobParams, string machType)
         {
             var jobs = _context.Jobs
                 .Include(x => x.Operation)
-                .Where(j => j.userId == userId);
+                .Where(j => j.userId == userId)
+                .Where(j => j.MachType == machType);
 
             var jobsForReturn = jobs.OrderByDescending(j => j.JobNumber);
 

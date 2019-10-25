@@ -18,7 +18,7 @@ namespace BackEnd.Data
         Task<IEnumerable<Part>> GetParts(int userId);
         Task<Part> GetPartByJob(int userId, string job);
         Task<Job> GetJob(int userId, string jobNum);
-        Task<PagedList<Job>> GetJobs(int userId, PagingParams jobParams);
+        Task<PagedList<Job>> GetJobs(int userId, PagingParams jobParams, string machType);
         Task<IEnumerable<Job>> GetJobsByPart(int userId, string partNum);
         Task<Operation> GetOp(int userId, string jobNum, string opNum);
         Task<IEnumerable<Operation>> GetOpsByJob(int userId, string jobNum);

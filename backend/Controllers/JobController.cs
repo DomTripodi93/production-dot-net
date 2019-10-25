@@ -85,13 +85,13 @@ namespace BackEnd.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> GetJobs(int userId, [FromQuery]PagingParams jobParams)
+        [HttpGet("{machType}")]
+        public async Task<IActionResult> GetJobs(int userId, [FromQuery]PagingParams jobParams, string machType)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            PagedList<Job> directJobs = await _repo.GetJobs(userId, jobParams);
+            PagedList<Job> directJobs = await _repo.GetJobs(userId, jobParams, machType);
 
             var jobs = _mapper.Map<IEnumerable<JobForReturnDto>>(directJobs);
 
