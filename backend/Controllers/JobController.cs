@@ -85,7 +85,7 @@ namespace BackEnd.Controllers
         }
 
 
-        [HttpGet("{machType}")]
+        [HttpGet("type={machType}")]
         public async Task<IActionResult> GetJobs(int userId, [FromQuery]PagingParams jobParams, string machType)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
