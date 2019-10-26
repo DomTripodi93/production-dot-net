@@ -58,7 +58,7 @@ export class ProductionService {
   
     fetchAllProduction() {
         return this.http.get(
-          this.auth.apiUrl + '/production/'
+          this.auth.apiUrl + '/production/type=' + this.auth.machType
         )
         .pipe(
           map((responseData: Production[]) => {

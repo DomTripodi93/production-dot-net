@@ -75,13 +75,13 @@ namespace BackEnd.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> GetMachines(int userId)
+        [HttpGet("type={machType}")]
+        public async Task<IActionResult> GetMachines(int userId, string machType)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            IEnumerable<Mach> directMachines = await _repo.GetMachines(userId);
+            IEnumerable<Mach> directMachines = await _repo.GetMachines(userId, machType);
 
             var machines = _mapper.Map<IEnumerable<MachForReturnDto>>(directMachines);
 

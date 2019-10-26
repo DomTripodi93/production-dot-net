@@ -35,7 +35,7 @@ export class PartService {
   
     fetchAllParts() {
         return this.http.get(
-          this.auth.apiUrl + '/part/'
+          this.auth.apiUrl + '/part/type=' + this.auth.machType
         )
         .pipe(
           map((responseData: Part[]) => {

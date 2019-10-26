@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../shared/auth.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { PartService } from './part.service';
 
 @Component({
   selector: 'app-part',
@@ -13,11 +14,13 @@ export class PartComponent implements OnDestroy {
 
   constructor(
     public auth: AuthService,
+    private partServ: PartService,
     private route: ActivatedRoute
   ) {
     this.subscriptions.push(
       this.route.params.subscribe((params: Params) => {
         this.auth.machType = params["machType"];
+        this.partServ.partChanged.next();
       })
     ) 
   }

@@ -35,6 +35,7 @@ export class ProductionComponent implements OnDestroy {
     this.subscriptions.push(
       this.route.params.subscribe((params: Params) => {
         this.auth.machType = params["machType"];
+        this.pro.proChanged.next();
       })
     )
     this.mach.fetchMachineJobs()

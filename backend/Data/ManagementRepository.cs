@@ -48,13 +48,14 @@ namespace BackEnd.Data
             return machine;
         }
 
-        public async Task<IEnumerable<Mach>> GetMachines(int userId)
+        public async Task<IEnumerable<Mach>> GetMachines(int userId, string machType)
         {
-            var user = await _context.Users
-                .Include(x => x.Machine)
-                .FirstOrDefaultAsync(u => u.Id == userId);
+            var machines = await _context.Machines
+                .Where(m => m.userId == userId)
+                .Where(m => m.MachType == machType)
+                .ToListAsync();
                 
-            return user.Machine;
+            return machines;
         }
 
         public async Task<IEnumerable<Mach>> GetMachinesByJob(int userId)
@@ -75,10 +76,11 @@ namespace BackEnd.Data
             return partToReturn;
         }
 
-        public  async Task<IEnumerable<Part>> GetParts(int userId)
+        public  async Task<IEnumerable<Part>> GetParts(int userId, string machType)
         {
             var parts = await _context.Parts
                 .Where(p => p.userId == userId)
+                .Where(p => p.MachType == machType)
                 .ToListAsync();
                 
             return parts;
@@ -157,9 +159,10 @@ namespace BackEnd.Data
             return production;
         }
 
-        public async Task<PagedList<Production>> GetProductionSet(int userId, PagingParams prodParams)
+        public async Task<PagedList<Production>> GetProductionSet(int userId, PagingParams prodParams, string machType)
         {
             var prod = _context.Production
+                .Where(j => j.MachType == machType)
                 .Where(p => p.userId == userId);
             
             var prodForReturn = prod.OrderByDescending(p => p.Date);

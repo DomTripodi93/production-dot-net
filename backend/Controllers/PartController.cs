@@ -62,13 +62,13 @@ namespace BackEnd.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> GetParts(int userId)
+        [HttpGet("type={machType}")]
+        public async Task<IActionResult> GetParts(int userId, string machType)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            IEnumerable<Part> directParts = await _repo.GetParts(userId);
+            IEnumerable<Part> directParts = await _repo.GetParts(userId, machType);
 
             var parts = _mapper.Map<IEnumerable<PartForReturnDto>>(directParts);
 

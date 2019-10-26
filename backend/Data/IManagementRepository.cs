@@ -12,10 +12,10 @@ namespace BackEnd.Data
         Task<bool> SaveAll();
         Task<User> GetUser(int id);
         Task<Mach> GetMachine(int userId, string mach);
-        Task<IEnumerable<Mach>> GetMachines(int userId);
+        Task<IEnumerable<Mach>> GetMachines(int userId, string machType);
         Task<IEnumerable<Mach>> GetMachinesByJob(int userId);
         Task<Part> GetPart(int userId, string part);
-        Task<IEnumerable<Part>> GetParts(int userId);
+        Task<IEnumerable<Part>> GetParts(int userId, string machType);
         Task<Part> GetPartByJob(int userId, string job);
         Task<Job> GetJob(int userId, string jobNum);
         Task<PagedList<Job>> GetJobs(int userId, PagingParams jobParams, string machType);
@@ -23,7 +23,7 @@ namespace BackEnd.Data
         Task<Operation> GetOp(int userId, string jobNum, string opNum);
         Task<IEnumerable<Operation>> GetOpsByJob(int userId, string jobNum);
         Task<Production> GetProduction(int id);
-        Task<PagedList<Production>> GetProductionSet(int userId, PagingParams prodParams);
+        Task<PagedList<Production>> GetProductionSet(int userId, PagingParams prodParams, string machType);
         Task<IEnumerable<Production>> GetProductionSetByJob(int userId, string job);
         Task<IEnumerable<Production>> GetProductionSetByOp(int userId, string job, string Op);
         Task<IEnumerable<Production>> GetProductionSetByJobAndMachine(int userId, string job, string mach);

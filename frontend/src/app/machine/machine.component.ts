@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
+import { MachineService } from './machine.service';
 
 @Component({
   selector: 'app-machine',
@@ -14,13 +15,15 @@ export class MachineComponent implements OnDestroy{
 
   constructor(
     public auth: AuthService,
+    private machServ: MachineService,
     private route: ActivatedRoute
   ) {
     this.subscriptions.push(
       this.route.params.subscribe((params: Params) => {
         this.auth.machType = params["machType"];
+        this.machServ.machChanged.next();
       })
-    ) 
+    );
   }
 
   ngOnDestroy(){
