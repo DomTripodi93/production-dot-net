@@ -3,6 +3,7 @@ import { Job } from '../job.model';
 import { Subscription } from 'rxjs';
 import { JobService } from '../job.service';
 import { Pagination } from '../../shared/pagination';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-job-show',
@@ -20,10 +21,16 @@ export class JobShowComponent implements OnInit {
   pagination: Pagination;
 
   constructor(
-    private jobServ: JobService
+    private jobServ: JobService,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
+    this.subscriptions.push(this.auth.machTypeChanged.subscribe(()=>{
+      this.pageNum = 1;
+      this.jobs = [];
+      this.getJobs();
+    }))
     this.getJobs();
     this.subscriptions.push(
       this.jobServ.jobChanged.subscribe(

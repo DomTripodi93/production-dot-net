@@ -7,5 +7,6 @@ namespace BackEnd.Dtos
         
         [Required]
         public string PartNumber { get; set; }
+        public string MachType { get; set; }
     }
 }

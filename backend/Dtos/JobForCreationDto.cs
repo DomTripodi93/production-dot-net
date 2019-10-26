@@ -21,6 +21,7 @@ namespace BackEnd.Dtos
         public string SubFacing { get; set; }
         public string HeatLot { get; set; }
         public string Bars { get; set; }
+        public string MachType { get; set; }
         
     }
 }

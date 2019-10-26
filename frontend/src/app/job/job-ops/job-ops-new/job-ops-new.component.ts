@@ -33,13 +33,13 @@ export class JobOpsNewComponent implements OnInit {
   ngOnInit(){
     this.jobServ.fetchJob(this.jobNumber).subscribe((job)=>{
       this.jobInUse = job;
+      this.mach.fetchAllMachines()
+      .subscribe(machines => {
+        this.machines = machines;
+        this.initForm();
+      });
     })
     this.canInput = this.auth.isAuthenticated;
-    this.mach.fetchAllMachines()
-    .subscribe(machines => {
-      this.machines = machines;
-      this.initForm();
-    });
   }
     
   private initForm() {

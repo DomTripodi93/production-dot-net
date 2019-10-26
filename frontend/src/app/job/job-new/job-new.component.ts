@@ -65,6 +65,7 @@ export class JobNewComponent implements OnInit {
 
   
   onSubmit(){
+    console.log(this.jobForm.value)
     this.andCalculate = "None";
     this.newJob(this.jobForm.value);
   }

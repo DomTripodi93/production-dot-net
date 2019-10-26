@@ -18,6 +18,7 @@ export class JobComponent implements OnDestroy {
     this.subscriptions.push(
       this.route.params.subscribe((params: Params) => {
         this.auth.machType = params["machType"];
+        this.auth.machTypeChanged.next();
       })
     ) 
   }
