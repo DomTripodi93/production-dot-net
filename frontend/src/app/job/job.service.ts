@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { map, tap } from "rxjs/operators";
-import { HttpClient, HttpHeaders, HttpEventType, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpParams } from '@angular/common/http';
 import { AuthService } from '../shared/auth.service';
 import { Subject, Observable } from 'rxjs';
 import { Job } from './job.model';
 import { PaginatedResult } from '../shared/pagination';
-import { Change } from '../shared/change.model';
 
 @Injectable({providedIn: 'root'})
 export class JobService {

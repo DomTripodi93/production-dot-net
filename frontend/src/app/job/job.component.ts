@@ -9,7 +9,7 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./job.component.css']
 })
 export class JobComponent implements OnDestroy {
-  subscriptions: Subscription[];
+  subscriptions: Subscription[] = [];
 
   constructor(
     public auth: AuthService,
