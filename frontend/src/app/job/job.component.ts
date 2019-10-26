@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
+import { JobService } from './job.service';
 
 @Component({
   selector: 'app-job',
@@ -13,12 +14,13 @@ export class JobComponent implements OnDestroy {
 
   constructor(
     public auth: AuthService,
+    private jobServ: JobService,
     private route: ActivatedRoute
   ) {
     this.subscriptions.push(
       this.route.params.subscribe((params: Params) => {
         this.auth.machType = params["machType"];
-        this.auth.machTypeChanged.next();
+        this.jobServ.jobChanged.next()
       })
     ) 
   }

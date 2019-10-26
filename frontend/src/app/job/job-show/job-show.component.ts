@@ -21,16 +21,10 @@ export class JobShowComponent implements OnInit {
   pagination: Pagination;
 
   constructor(
-    private jobServ: JobService,
-    private auth: AuthService
+    private jobServ: JobService
   ) { }
 
   ngOnInit() {
-    this.subscriptions.push(this.auth.machTypeChanged.subscribe(()=>{
-      this.pageNum = 1;
-      this.jobs = [];
-      this.getJobs();
-    }))
     this.getJobs();
     this.subscriptions.push(
       this.jobServ.jobChanged.subscribe(
