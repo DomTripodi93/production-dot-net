@@ -81,13 +81,6 @@ export class JobOpsNewComponent implements OnInit {
       this.isError = true;
       this.error = error;
     });
-    setTimeout(()=>{
-      if (this.isError){
-        this.error = "That op already exsists for that job!";
-      } else {
-        this.opServ.opsChanged.next()
-      }
-    }, 100);
   }
 
   onCancel(){
