@@ -3,6 +3,7 @@ import { Job } from '../../job.model';
 import { Subscription } from 'rxjs';
 import { JobService } from '../../job.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-job-find-show',
@@ -23,7 +24,8 @@ export class JobFindShowComponent implements OnInit {
 
   constructor(
     private jobServ: JobService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public auth: AuthService
   ) { }
 
   ngOnInit() {
