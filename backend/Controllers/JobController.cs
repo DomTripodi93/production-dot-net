@@ -84,6 +84,18 @@ namespace BackEnd.Controllers
             return Ok(jobForReturn);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAnyJobs(int userId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            IEnumerable<Job> directJobs = await _repo.GetAnyJobs(userId);
+
+            var jobs = _mapper.Map<IEnumerable<JobForReturnDto>>(directJobs);
+
+            return Ok(jobs);
+        }
 
         [HttpGet("type={machType}")]
         public async Task<IActionResult> GetJobs(int userId, [FromQuery]PagingParams jobParams, string machType)

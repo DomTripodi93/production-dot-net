@@ -59,7 +59,7 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
         machines.forEach((mach)=>{
           this.machines.push(mach.machine)
         });
-        this.jobServ.fetchAllJobs().subscribe(paginatedResponse =>{
+        this.jobServ.fetchJobsByType().subscribe(paginatedResponse =>{
           let goneThrough = 1;
           let response = paginatedResponse.result;
           if (response.length==0){

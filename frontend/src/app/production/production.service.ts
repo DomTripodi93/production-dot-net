@@ -55,8 +55,24 @@ export class ProductionService {
           })
         )
     } 
-  
+
     fetchAllProduction() {
+        return this.http.get(
+          this.auth.apiUrl + '/production/'
+        )
+        .pipe(
+          map((responseData: Production[]) => {
+            responseData.forEach((lot)=>{
+              lot.opNumber = this.dayServ.dashToSlash(lot.opNumber);
+              lot.machine = this.auth.rejoin(lot.machine);
+            })
+            const proHold: Production [] = responseData;
+          return proHold;
+          })
+        )
+    } 
+  
+    fetchProductionByType() {
         return this.http.get(
           this.auth.apiUrl + '/production/type=' + this.auth.machType
         )

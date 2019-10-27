@@ -31,7 +31,7 @@ export class ProductionListComponent implements OnInit {
   }
 
   getProduction(){
-    this.subscriptions.push(this.pro.fetchAllProduction()
+    this.subscriptions.push(this.pro.fetchProductionByType()
     .subscribe(production => {
       this.ids = [];
       production.forEach((lot) =>{

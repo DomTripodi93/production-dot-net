@@ -35,12 +35,23 @@ export class JobService {
     )
     .pipe(
       map((responseData: Job[]) => {
-      return responseData;
+        return responseData;
       })
     )
   } 
 
-  fetchAllJobs(page?, itemsPerPage?): Observable<PaginatedResult<Job[]>> {
+  fetchAllJobs() {
+    return this.http.get(
+      this.auth.apiUrl + '/job/'
+    )
+    .pipe(
+      map((responseData: Job[]) => {
+        return responseData;
+      })
+    )
+  } 
+
+  fetchJobsByType(page?, itemsPerPage?): Observable<PaginatedResult<Job[]>> {
     const paginatedResult: PaginatedResult<Job[]> = new PaginatedResult<Job[]>();
 
     let params = new HttpParams();

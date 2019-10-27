@@ -30,7 +30,7 @@ export class PartShowComponent implements OnInit, OnDestroy{
   }
 
   getParts(){
-    this.subscriptions.push(this.partServ.fetchAllParts()
+    this.subscriptions.push(this.partServ.fetchPartsByType()
     .subscribe(parts => {
       this.parts = parts;
       this.isFetching = false;

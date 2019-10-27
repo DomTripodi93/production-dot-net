@@ -37,7 +37,7 @@ export class JobShowComponent implements OnInit {
     );
   }
 
-  getJobs(){this.jobServ.fetchAllJobs(this.pageNum, this.pageSize)
+  getJobs(){this.jobServ.fetchJobsByType(this.pageNum, this.pageSize)
     .subscribe(jobs => {
       this.pageNum++
       this.pagination = jobs.pagination;

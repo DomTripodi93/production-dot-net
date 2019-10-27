@@ -31,7 +31,7 @@ export class JobNewComponent implements OnInit {
   ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
     this.auth.hideButton(0);
-    this.partServ.fetchAllParts()
+    this.partServ.fetchPartsByType()
     .subscribe(parts => {
       this.parts = parts;
       this.initForm();

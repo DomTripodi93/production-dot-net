@@ -31,7 +31,7 @@ export class JobEditComponent implements OnInit {
     this.jobServ.fetchJob(this.jobNum)
     .subscribe(job => {
       this.job = job;
-      this.partServ.fetchAllParts()
+      this.partServ.fetchPartsByType()
       .subscribe(parts => {
         this.parts = parts;
         this.initForm();

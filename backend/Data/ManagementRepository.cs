@@ -85,6 +85,15 @@ namespace BackEnd.Data
             return partToReturn;
         }
 
+        public  async Task<IEnumerable<Part>> GetAnyParts(int userId)
+        {
+            var parts = await _context.Parts
+                .Where(p => p.userId == userId)
+                .ToListAsync();
+                
+            return parts;
+        }
+
         public  async Task<IEnumerable<Part>> GetParts(int userId, string machType)
         {
             var parts = await _context.Parts
@@ -112,6 +121,16 @@ namespace BackEnd.Data
             var job = await _context.Jobs        
                 .Where(j => j.userId == userId)
                 .FirstOrDefaultAsync(j => j.JobNumber == jobNum);
+
+            return job;
+        }
+
+        public async Task<IEnumerable<Job>> GetAnyJobs(int userId)
+        {
+
+            var job = await _context.Jobs        
+                .Where(j => j.userId == userId)
+                .ToListAsync();
 
             return job;
         }
@@ -166,6 +185,15 @@ namespace BackEnd.Data
             var production = await _context.Production.FirstOrDefaultAsync(p => p.Id == id);
             
             return production;
+        }
+
+        public async Task<IEnumerable<Production>> GetAnyProduction(int userId)
+        {
+            var prodForReturn = await _context.Production
+                .Where(o => o.userId == userId)
+                .ToListAsync();
+
+            return prodForReturn;
         }
 
         public async Task<PagedList<Production>> GetProductionSet(int userId, PagingParams prodParams, string machType)

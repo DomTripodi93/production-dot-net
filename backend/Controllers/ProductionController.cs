@@ -98,6 +98,19 @@ namespace BackEnd.Controllers
             return Ok(prodForReturn);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAnyProductionSet(int userId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            IEnumerable<Production> directProductions = await _repo.GetAnyProduction(userId);
+
+            var productionForReturn = _mapper.Map<IEnumerable<ProdForReturnDto>>(directProductions);
+
+            return Ok(productionForReturn);
+        }
+
         [HttpGet("type={machType}")]
         public async Task<IActionResult> GetProductionSet(int userId, [FromQuery]PagingParams prodParams, string machType)
         {

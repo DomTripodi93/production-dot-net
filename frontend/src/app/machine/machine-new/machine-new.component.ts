@@ -33,7 +33,7 @@ export class MachineNewComponent implements OnInit {
   
   ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
-    this.jobServ.fetchAllJobs().subscribe(paginatedResponse =>{
+    this.jobServ.fetchJobsByType().subscribe(paginatedResponse =>{
       let goneThrough = 1;
       let response = paginatedResponse.result;
       if (response.length==0){

@@ -87,10 +87,9 @@ export class TutorialComponent implements OnInit, OnDestroy {
 
   checkJobs(){
     this.jobServ.fetchAllJobs()
-      .subscribe(paginatedJobs => {
-        let jobSet = paginatedJobs.result;
-        if (jobSet.length > 0){
-          this.job = jobSet[0].jobNumber
+      .subscribe(jobs => {
+        if (jobs.length > 0){
+          this.job = jobs[0].jobNumber
           this.jobs = true;
           this.checkOps();
         }
