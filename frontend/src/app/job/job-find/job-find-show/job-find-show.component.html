@@ -1,10 +1,13 @@
 <div *ngIf='oneJob'>
   <div class="border">
     <div *ngIf="!editJob">
-      <div class="grid2">
-        <button *ngIf="!oneJob.possibleQuantity" class='btn btn-primary' routerLink="/jobs/calculator/job/{{oneJob.jobNumber}}">Length Calc</button>
-        <button *ngIf="oneJob.possibleQuantity" class='btn btn-info' routerLink="/jobs/calculator/{{oneJob.jobNumber}}">Remaining Bars</button>
-        <button *ngIf="!oneJob.weightQuantity" class='btn btn-success' routerLink="/jobs/calculator/weight/{{oneJob.jobNumber}}">Weight Calc</button>
+      <div class="grid" *ngIf="auth.machType == 'lathe'">
+        <button *ngIf="!oneJob.possibleQuantity" class='btn btn-primary' routerLink="/{{auth.machType}}/jobs/calculator/job/{{oneJob.jobNumber}}">Length Calc</button>
+        <button *ngIf="oneJob.possibleQuantity" class='btn btn-info' routerLink="/{{auth.machType}}/jobs/calculator/{{oneJob.jobNumber}}">Remaining Bars</button>
+        <button *ngIf="!oneJob.weightQuantity" class='btn btn-success' routerLink="/{{auth.machType}}/jobs/calculator/weight/{{oneJob.jobNumber}}">Weight Calc</button>
+      </div>
+      <div class="grid2" *ngIf="auth.machType == 'mill'">
+        <button *ngIf="!oneJob.possibleQuantity" class='btn btn-primary' routerLink="/{{auth.machType}}/jobs/calculator/job/{{oneJob.jobNumber}}">Set Mat Recieved</button>
       </div>
       <div routerLink="/{{auth.machType}}/jobs/{{oneJob.jobNumber}}">
         <br>
@@ -24,7 +27,7 @@
         </h4> 
         <br><br>
       </div>
-      <div class="grid2">
+      <div class="grid">
           <button class='btn btn-primary' (click)="onEdit()">Edit Job</button>
           <button class='btn btn-danger' (click)="onDelete(oneJob.jobNumber, oneJob.id)">Delete Job</button>
       </div>
@@ -45,12 +48,15 @@
 <div *ngIf='jobs'>
   <div *ngFor="let job of jobs; let i=index">  
     <div class="border">
-      <div class="grid2">
-        <button *ngIf="!job.possibleQuantity" class='btn btn-primary' routerLink="jobs/calculator/job/{{job.jobNumber}}">Length Calc</button>
-        <button *ngIf="job.possibleQuantity" class='btn btn-info' routerLink="jobs/calculator/{{job.jobNumber}}">Remaining Bars</button>
-        <button *ngIf="!job.weightQuantity" class='btn btn-success' routerLink="jobs/calculator/weight/{{job.jobNumber}}">Weight Calc</button>
+      <div class="grid" *ngIf="auth.machType == 'lathe'">
+        <button *ngIf="!job.possibleQuantity" class='btn btn-primary' routerLink="/{{auth.machType}}/jobs/calculator/job/{{job.jobNumber}}">Length Calc</button>
+        <button *ngIf="job.possibleQuantity" class='btn btn-info' routerLink="/{{auth.machType}}/jobs/calculator/{{job.jobNumber}}">Remaining Bars</button>
+        <button *ngIf="!job.weightQuantity" class='btn btn-success' routerLink="/{{auth.machType}}/jobs/calculator/weight/{{job.jobNumber}}">Weight Calc</button>
       </div>
-      <div routerLink="/jobs/{{job.jobNumber}}">
+      <div class="grid2" *ngIf="auth.machType == 'mill'">
+        <button *ngIf="!job.possibleQuantity" class='btn btn-primary' routerLink="/{{auth.machType}}/jobs/calculator/job/{{job.jobNumber}}">Set Mat Recieved</button>
+      </div>
+      <div routerLink="/{{auth.machType}}/jobs/{{job.jobNumber}}">
         <br>
         <h3>Job#: <strong>{{job.jobNumber}}</strong></h3>
         <h4>Part#: <br> {{job.partNum}}</h4>
@@ -68,7 +74,7 @@
         </h4> 
         <br><br>
       </div>
-      <div class="grid2">
+      <div class="grid">
           <button class='btn btn-primary' routerLink="edit/{{job.jobNumber}}">Edit Job</button>
           <button class='btn btn-danger' (click)="onDelete(job.jobNumber, job.id)">Delete Job</button>
       </div>

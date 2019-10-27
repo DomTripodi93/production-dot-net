@@ -40,6 +40,8 @@ export class JobFindShowComponent implements OnInit {
     } else {
       this.subscriptions.push( 
         this.route.params.subscribe((params: Params) =>{
+          this.oneJob = null;
+          this.jobs = [];
           this.job = params['job'];
           this.getJob();
         })
