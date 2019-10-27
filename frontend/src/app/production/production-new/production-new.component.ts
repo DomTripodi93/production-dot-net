@@ -43,7 +43,7 @@ export class ProductionNewComponent implements OnInit {
     if (!this.dayServe.today){
       this.dayServe.resetDate();
     }
-    this.mach.fetchMachineJobs().subscribe((machines: Machine[]) => {
+    this.mach.fetchMachinesByType().subscribe((machines: Machine[]) => {
       this.fullMach = machines;
       machines.forEach((mach)=>{
         if (mach.currentOp !== "None"){

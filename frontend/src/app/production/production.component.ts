@@ -38,7 +38,16 @@ export class ProductionComponent implements OnDestroy {
         this.pro.proChanged.next();
       })
     )
-    this.mach.fetchMachineJobs()
+    this.setMachineSelect();
+    this.pro.proChanged.subscribe(()=>{
+      this.fullMach = [];
+      this.machines = [];
+      this.setMachineSelect();
+    })
+  }
+
+  setMachineSelect(){
+    this.mach.fetchMachinesByType()
     .subscribe((machines: Machine[]) => {
       this.fullMach = machines;
       machines.forEach((mach)=>{

@@ -54,7 +54,7 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
       )
     );
     this.subscriptions.push(
-      this.mach.fetchMachineJobs()
+      this.mach.fetchMachinesByType()
       .subscribe(machines => {
         machines.forEach((mach)=>{
           this.machines.push(mach.machine)
