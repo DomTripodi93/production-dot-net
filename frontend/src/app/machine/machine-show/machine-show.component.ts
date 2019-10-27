@@ -35,7 +35,7 @@ export class MachineShowComponent implements OnInit, OnDestroy{
   getMachines(){
     this.editMode = [];
     this.subscriptions.push(
-      this.mach.fetchAllMachines()
+      this.mach.fetchMachinesByType()
         .subscribe(machines => {
           this.machines = machines;
           machines.forEach(()=>{

@@ -75,11 +75,11 @@ export class JobOpsNewComponent implements OnInit {
   newOp(data: Operation) {
     this.error= null;
     this.isError = false;
-    this.opServ.opsChanged.next();
-    this.opServ.addOp(data).subscribe(() => {},
-      (error) =>{
-        this.isError = true;
-        this.error = error;
+    this.opServ.addOp(data).subscribe(() => {
+      this.opServ.opsChanged.next();
+    },(error) =>{
+      this.isError = true;
+      this.error = error;
     });
     setTimeout(()=>{
       if (this.isError){

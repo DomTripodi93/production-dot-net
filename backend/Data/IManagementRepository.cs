@@ -12,6 +12,7 @@ namespace BackEnd.Data
         Task<bool> SaveAll();
         Task<User> GetUser(int id);
         Task<Mach> GetMachine(int userId, string mach);
+        Task<IEnumerable<Mach>> GetAllMachines(int userId);
         Task<IEnumerable<Mach>> GetMachines(int userId, string machType);
         Task<IEnumerable<Mach>> GetMachinesByJob(int userId);
         Task<Part> GetPart(int userId, string part);

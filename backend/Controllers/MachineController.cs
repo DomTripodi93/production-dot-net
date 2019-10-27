@@ -88,6 +88,20 @@ namespace BackEnd.Controllers
             return Ok(machines);
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllMachines(int userId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            IEnumerable<Mach> directMachines = await _repo.GetAllMachines(userId);
+
+            var machines = _mapper.Map<IEnumerable<MachForReturnDto>>(directMachines);
+
+            return Ok(machines);
+        }
+
         [HttpGet("jobs")]
         public async Task<IActionResult> GetMachinesByJob(int userId)
         {

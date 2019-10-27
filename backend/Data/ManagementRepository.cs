@@ -48,6 +48,15 @@ namespace BackEnd.Data
             return machine;
         }
 
+        public async Task<IEnumerable<Mach>> GetAllMachines(int userId)
+        {
+            var machines = await _context.Machines
+                .Where(m => m.userId == userId)
+                .ToListAsync();
+                
+            return machines;
+        }
+
         public async Task<IEnumerable<Mach>> GetMachines(int userId, string machType)
         {
             var machines = await _context.Machines

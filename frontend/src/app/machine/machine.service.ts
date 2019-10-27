@@ -44,6 +44,18 @@ export class MachineService {
   
     fetchAllMachines() {
         return this.http.get(
+          this.auth.apiUrl + '/machine'
+        )
+        .pipe(
+          map((responseData: Machine[]) => {
+            const machHold: Machine [] = responseData;
+          return machHold;
+          })
+        )
+    }
+  
+    fetchMachinesByType() {
+        return this.http.get(
           this.auth.apiUrl + '/machine/type=' + this.auth.machType
         )
         .pipe(
