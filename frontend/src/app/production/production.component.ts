@@ -53,7 +53,7 @@ export class ProductionComponent implements OnDestroy {
 
   onNew(){
     this.dayServ.resetDate();
-    this.router.navigate(["/production/new"])
+    this.router.navigate([this.auth.machType + "/production/new"])
   }
 
   chooseMach(){
