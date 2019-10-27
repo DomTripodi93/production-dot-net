@@ -82,13 +82,13 @@ namespace BackEnd.Controllers
             throw new Exception($"Updating hourly count {id} failed on save");
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<IActionResult> GetAnyHourly(int userId)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            Hourly hourly = await _repo.GetHourly(userId);
+            Hourly hourly = await _repo.GetAnyHourly(userId);
             HourlyForReturnDto hourlyForReturn = _mapper.Map<HourlyForReturnDto>(hourly);
             return Ok(hourlyForReturn);
         }

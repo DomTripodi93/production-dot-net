@@ -243,7 +243,8 @@ namespace BackEnd.Data
 
         public async Task<Hourly> GetHourly(int id)
         {
-            var hourly = await _context.Hourlys.FirstOrDefaultAsync(p => p.Id == id);
+            var hourly = await _context.Hourlys
+            .FirstOrDefaultAsync(p => p.Id == id);
             
             return hourly;
         }
