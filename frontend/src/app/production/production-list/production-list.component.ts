@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductionService } from '../production.service';
 import { Subscription } from 'rxjs';
 import { DaysService } from '../../shared/days/days.service';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-production-list',
@@ -17,7 +18,8 @@ export class ProductionListComponent implements OnInit {
 
   constructor(
     private pro: ProductionService,
-    private dayServ: DaysService
+    private dayServ: DaysService,
+    public auth: AuthService
   ) { }
 
   ngOnInit() {
