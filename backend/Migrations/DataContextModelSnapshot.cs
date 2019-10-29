@@ -105,6 +105,8 @@ namespace backend.Migrations
 
                     b.Property<string>("RemainingQuantity");
 
+                    b.Property<string>("ScrapCount");
+
                     b.Property<string>("SubFacing");
 
                     b.Property<string>("WeightLength");

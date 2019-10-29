@@ -23,6 +23,7 @@ namespace BackEnd.Models
         public string HeatLot { get; set; }
         public string Bars { get; set; }
         public string MachType { get; set; }
+        public string ScrapCount { get; set; }
         public ICollection<Operation> Operation { get; set; }
         
     }

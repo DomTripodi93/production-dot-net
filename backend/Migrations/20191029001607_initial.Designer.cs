@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191024000955_initial")]
+    [Migration("20191029001607_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,6 +106,8 @@ namespace backend.Migrations
                     b.Property<string>("PossibleQuantity");
 
                     b.Property<string>("RemainingQuantity");
+
+                    b.Property<string>("ScrapCount");
 
                     b.Property<string>("SubFacing");
 

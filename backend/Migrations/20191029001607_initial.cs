@@ -131,7 +131,8 @@ namespace backend.Migrations
                     SubFacing = table.Column<string>(nullable: true),
                     HeatLot = table.Column<string>(nullable: true),
                     Bars = table.Column<string>(nullable: true),
-                    MachType = table.Column<string>(nullable: true)
+                    MachType = table.Column<string>(nullable: true),
+                    ScrapCount = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
