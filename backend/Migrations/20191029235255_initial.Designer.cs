@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191029001607_initial")]
+    [Migration("20191029235255_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,6 +81,8 @@ namespace backend.Migrations
 
                     b.Property<string>("JobNumber");
 
+                    b.Property<string>("Active");
+
                     b.Property<string>("Bars");
 
                     b.Property<string>("CutOff");
@@ -92,6 +94,8 @@ namespace backend.Migrations
                     b.Property<string>("MainFacing");
 
                     b.Property<string>("MatRecieved");
+
+                    b.Property<string>("MonthReq");
 
                     b.Property<string>("Oal");
 

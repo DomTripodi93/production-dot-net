@@ -79,6 +79,8 @@ namespace backend.Migrations
 
                     b.Property<string>("JobNumber");
 
+                    b.Property<string>("Active");
+
                     b.Property<string>("Bars");
 
                     b.Property<string>("CutOff");
@@ -90,6 +92,8 @@ namespace backend.Migrations
                     b.Property<string>("MainFacing");
 
                     b.Property<string>("MatRecieved");
+
+                    b.Property<string>("MonthReq");
 
                     b.Property<string>("Oal");
 

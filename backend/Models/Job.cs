@@ -24,6 +24,8 @@ namespace BackEnd.Models
         public string Bars { get; set; }
         public string MachType { get; set; }
         public string ScrapCount { get; set; }
+        public string Active { get; set; }
+        public string MonthReq { get; set; }
         public ICollection<Operation> Operation { get; set; }
         
     }
