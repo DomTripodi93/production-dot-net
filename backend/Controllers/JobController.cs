@@ -36,6 +36,8 @@ namespace BackEnd.Controllers
 
             var job = _mapper.Map<Job>(jobForCreationDto);
 
+            job.Active = "Active";
+
             var partInfo = await _repo.GetPart(userId, jobForCreationDto.PartNum);
 
             job.PartNum = partInfo.PartNumber;

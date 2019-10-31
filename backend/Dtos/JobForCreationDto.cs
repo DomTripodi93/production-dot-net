@@ -22,6 +22,9 @@ namespace BackEnd.Dtos
         public string HeatLot { get; set; }
         public string Bars { get; set; }
         public string MachType { get; set; }
+        public string ScrapCount { get; set; }
+        public string Active { get; set; }
+        public string MonthReq { get; set; }
         
     }
 }
