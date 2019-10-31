@@ -110,7 +110,7 @@ namespace BackEnd.Data
                 .FirstOrDefaultAsync(j => j.JobNumber == jobNum);
 
             var parts = await _context.Parts
-                .FirstOrDefaultAsync(p => p.PartNumber == job.PartNum);
+                .FirstOrDefaultAsync(p => p.PartNumber == job.PartNumber);
                 
             return parts;
         }
@@ -147,12 +147,12 @@ namespace BackEnd.Data
             return await PagedList<Job>.CreateAsync(jobsForReturn, jobParams.PageNumber, jobParams.PageSize);
         }
 
-        public async Task<IEnumerable<Job>> GetJobsByPart(int userId, string partNum)
+        public async Task<IEnumerable<Job>> GetJobsByPart(int userId, string partNumber)
         {
             var jobs = await _context.Jobs
                 .Include(x => x.Operation)
                 .Where(j => j.userId == userId)
-                .Where(p => p.PartNum == partNum)
+                .Where(p => p.PartNumber == partNumber)
                 .ToListAsync();
 
             return jobs;

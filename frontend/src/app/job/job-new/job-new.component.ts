@@ -51,7 +51,7 @@ export class JobNewComponent implements OnInit {
 
     this.jobForm = new FormGroup({
       'jobNumber': new FormControl(job, Validators.required),
-      'partNum': new FormControl(part, Validators.required),
+      'partNumber': new FormControl(part, Validators.required),
       'cycleTime': new FormControl(cycleTime),
       "orderQuantity": new FormControl(orderQuantity),
       "weightRecieved": new FormControl(weightRecieved),

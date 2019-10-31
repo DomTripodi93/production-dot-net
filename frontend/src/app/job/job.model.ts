@@ -1,7 +1,7 @@
 export interface Job{
     id: number;
     jobNumber: string;
-    partNum: string;
+    partNumber: string;
     orderQuantity: string;
     possibleQuantity: string;
     remainingQuantity: string;

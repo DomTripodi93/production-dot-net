@@ -115,9 +115,7 @@ namespace backend.Migrations
                 {
                     userId = table.Column<int>(nullable: false),
                     JobNumber = table.Column<string>(nullable: false),
-                    PartuserId = table.Column<int>(nullable: true),
                     PartNumber = table.Column<string>(nullable: true),
-                    PartNum = table.Column<string>(nullable: true),
                     OrderQuantity = table.Column<string>(nullable: true),
                     PossibleQuantity = table.Column<string>(nullable: true),
                     RemainingQuantity = table.Column<string>(nullable: true),
@@ -146,8 +144,8 @@ namespace backend.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Jobs_Parts_PartuserId_PartNumber",
-                        columns: x => new { x.PartuserId, x.PartNumber },
+                        name: "FK_Jobs_Parts_userId_PartNumber",
+                        columns: x => new { x.userId, x.PartNumber },
                         principalTable: "Parts",
                         principalColumns: new[] { "userId", "PartNumber" },
                         onDelete: ReferentialAction.Restrict);
@@ -261,9 +259,9 @@ namespace backend.Migrations
                 columns: new[] { "userId", "JobNumber", "OpNumber" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jobs_PartuserId_PartNumber",
+                name: "IX_Jobs_userId_PartNumber",
                 table: "Jobs",
-                columns: new[] { "PartuserId", "PartNumber" });
+                columns: new[] { "userId", "PartNumber" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Production_userId_JobNumber_OpNumber",

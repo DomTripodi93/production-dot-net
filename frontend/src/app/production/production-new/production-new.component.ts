@@ -88,7 +88,7 @@ export class ProductionNewComponent implements OnInit {
       return mach.machine == this.productionForm.value.machine;
     });
     this.jobServ.fetchJob(prodMach.currentJob).subscribe((job)=>{
-      this.productionForm.value.partNumber = job.partNum;
+      this.productionForm.value.partNumber = job.partNumber;
       this.productionForm.value.jobNumber = prodMach.currentJob;
       this.productionForm.value.opNumber = prodMach.currentOp;
       this.newProductionPlus(this.productionForm.value);
@@ -102,7 +102,7 @@ export class ProductionNewComponent implements OnInit {
       return mach.machine == this.productionForm.value.machine;
     });
     this.jobServ.fetchJob(prodMach.currentJob).subscribe((job)=>{
-      this.productionForm.value.partNumber = job.partNum;
+      this.productionForm.value.partNumber = job.partNumber;
       this.productionForm.value.jobNumber = prodMach.currentJob;
       this.productionForm.value.opNumber = prodMach.currentOp;
       this.newProduction(this.productionForm.value);

@@ -2,7 +2,7 @@ namespace BackEnd.Dtos
 {
     public class JobForReturnDto
     {
-        public string PartNum { get; set; }
+        public string PartNumber { get; set; }
         public string JobNumber { get; set; }
         public string OrderQuantity { get; set; }
         public string PossibleQuantity { get; set; }

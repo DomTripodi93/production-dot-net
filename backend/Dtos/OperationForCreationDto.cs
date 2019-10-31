@@ -4,7 +4,7 @@ namespace BackEnd.Dtos
 {
     public class OperationForCreationDto
     {
-        public string PartNum { get; set; }
+        public string PartNumber { get; set; }
 
         [Required]
         public string JobNumber { get; set; }

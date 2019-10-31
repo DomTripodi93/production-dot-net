@@ -11,10 +11,10 @@
         >
       </div>
       <div *ngIf="parts" class="form-group">
-        <label for="partNum">Part#</label>
+        <label for="partNumber">Part#</label>
         <select
-          formControlName='partNum'
-          id="partNum" 
+          formControlName='partNumber'
+          id="partNumber" 
           class="form-control">
           <option *ngFor = "let part of parts">{{part.partNumber}}</option>
         </select>

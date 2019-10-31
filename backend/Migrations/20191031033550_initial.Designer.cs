@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191029235255_initial")]
+    [Migration("20191031033550_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,11 +101,7 @@ namespace backend.Migrations
 
                     b.Property<string>("OrderQuantity");
 
-                    b.Property<string>("PartNum");
-
                     b.Property<string>("PartNumber");
-
-                    b.Property<int?>("PartuserId");
 
                     b.Property<string>("PossibleQuantity");
 
@@ -123,7 +119,7 @@ namespace backend.Migrations
 
                     b.HasKey("userId", "JobNumber");
 
-                    b.HasIndex("PartuserId", "PartNumber");
+                    b.HasIndex("userId", "PartNumber");
 
                     b.ToTable("Jobs");
                 });
@@ -275,7 +271,7 @@ namespace backend.Migrations
 
                     b.HasOne("BackEnd.Models.Part", "Part")
                         .WithMany("Jobs")
-                        .HasForeignKey("PartuserId", "PartNumber");
+                        .HasForeignKey("userId", "PartNumber");
                 });
 
             modelBuilder.Entity("BackEnd.Models.Mach", b =>

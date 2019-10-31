@@ -17,7 +17,7 @@ export class PartFindShowComponent implements OnInit {
   isError = false;
   error = '';
   part: Part;
-  partNum = "";
+  partNumber = "";
   id = '';
   subscriptions: Subscription[] = [];
 
@@ -29,12 +29,12 @@ export class PartFindShowComponent implements OnInit {
 
   ngOnInit() {
     if (this.partInput){
-      this.partNum = this.partInput;
+      this.partNumber = this.partInput;
       this.getPart();
     } else {
       this.subscriptions.push(
         this.route.params.subscribe((params: Params) =>{
-          this.partNum = params['part'];
+          this.partNumber = params['part'];
           this.getPart();
         })
       );      
@@ -56,7 +56,7 @@ export class PartFindShowComponent implements OnInit {
 
   getPart() {
     this.isFetching = true;
-    this.partServ.fetchPart(this.partNum)
+    this.partServ.fetchPart(this.partNumber)
       .subscribe(part => {
         this.part = part;
         this.dayServ.dates = [];

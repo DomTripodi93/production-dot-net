@@ -22,7 +22,7 @@ namespace BackEnd.Data
         Task<Job> GetJob(int userId, string jobNum);
         Task<IEnumerable<Job>> GetAnyJobs(int userId);
         Task<PagedList<Job>> GetJobs(int userId, PagingParams jobParams, string machType);
-        Task<IEnumerable<Job>> GetJobsByPart(int userId, string partNum);
+        Task<IEnumerable<Job>> GetJobsByPart(int userId, string partNumber);
         Task<Operation> GetOp(int userId, string jobNum, string opNum);
         Task<IEnumerable<Operation>> GetOpsByJob(int userId, string jobNum);
         Task<Production> GetProduction(int id);

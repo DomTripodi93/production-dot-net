@@ -38,9 +38,9 @@ namespace BackEnd.Controllers
 
             job.Active = "Active";
 
-            var partInfo = await _repo.GetPart(userId, jobForCreationDto.PartNum);
+            var partInfo = await _repo.GetPart(userId, jobForCreationDto.PartNumber);
 
-            job.PartNum = partInfo.PartNumber;
+            job.PartNumber = partInfo.PartNumber;
             job.userId = userId;
 
             _repo.Add(job);
@@ -114,13 +114,13 @@ namespace BackEnd.Controllers
             return Ok(jobs);
         }
 
-        [HttpGet("part={partNum}")]
-        public async Task<IActionResult> GetJobsByJob(int userId, string partNum)
+        [HttpGet("part={partNumber}")]
+        public async Task<IActionResult> GetJobsByJob(int userId, string partNumber)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            IEnumerable<Job> directJobs = await _repo.GetJobsByPart(userId, partNum);
+            IEnumerable<Job> directJobs = await _repo.GetJobsByPart(userId, partNumber);
 
             var jobs = _mapper.Map<IEnumerable<JobForReturnDto>>(directJobs);
 

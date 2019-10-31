@@ -12,7 +12,7 @@
       <div routerLink="/{{auth.machType}}/jobs/{{oneJob.jobNumber}}">
         <br>
         <h3>Job#: <strong>{{oneJob.jobNumber}}</strong></h3>
-        <h4>Part#: <br class="mobile"> <strong>{{oneJob.partNum}}</strong></h4>
+        <h4>Part#: <br class="mobile"> <strong>{{oneJob.partNumber}}</strong></h4>
         <h4 *ngIf="!oneJob.possibleQuantity && !oneJob.weightQuantity && oneJob.orderQuantity">
           Order Quantity: <br class="mobile"> <strong>{{oneJob.orderQuantity}}</strong>
         </h4>
@@ -59,7 +59,7 @@
       <div routerLink="/{{auth.machType}}/jobs/{{job.jobNumber}}">
         <br>
         <h3>Job#: <strong>{{job.jobNumber}}</strong></h3>
-        <h4>Part#: <br> {{job.partNum}}</h4>
+        <h4>Part#: <br> {{job.partNumber}}</h4>
         <h4 *ngIf="!job.possibleQuantity && !job.weightQuantity && job.orderQuantity">
           Possible Quantity: <strong>{{job.orderQuantity}}</strong>
         </h4>
