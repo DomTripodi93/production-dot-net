@@ -28,9 +28,9 @@ namespace BackEnd.Data
             _context.Remove(entity);
         }
 
-        public Task<bool> SaveAll()
+        public async Task<bool> SaveAll()
         {
-            throw new System.NotImplementedException();
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<User> GetUser(int id)
