@@ -26,27 +26,22 @@ export class SigninComponent {
     this.isError = false;
     this.user = this.signinForm.value;
     this.auth.signinUser(this.user)
-      .subscribe(
-        (responseData) => {
-          this.auth.token = responseData.body['token'];
-          localStorage.setItem('token', responseData.body['token']);
-          this.auth.user = responseData.body["id"]
-          localStorage.setItem('id', responseData.body["id"]);
-          if (this.auth.user) {
-            this.auth.isAuthenticated = true;
-            this.auth.authChanged.next();
-          }
-        },() => {
-          this.isError = true
-          this.error = "This Email and Password combination is invalid!";
+    .subscribe(
+      (responseData) => {
+        this.auth.token = responseData.body['token'];
+        localStorage.setItem('token', responseData.body['token']);
+        this.auth.user = responseData.body["id"]
+        localStorage.setItem('id', responseData.body["id"]);
+        if (this.auth.user) {
+          this.auth.isAuthenticated = true;
+          this.auth.authChanged.next();
+          this.router.navigate([".."], {relativeTo: this.route});
         }
-      );
-    setTimeout(
-      ()=>{if (!this.isError){
-        this.router.navigate([".."], {relativeTo: this.route
-        });
-      } 
-    }, 50);
+      },() => {
+        this.isError = true
+        this.error = "This Email and Password combination is invalid!";
+      }
+    );
   }
 
 

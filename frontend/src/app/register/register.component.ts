@@ -30,17 +30,12 @@ export class RegisterComponent {
     this.user = this.signupForm.value;
     this.auth.registerUser(this.user)
     .subscribe(() => {
+      this.router.navigate(["../login"], {relativeTo: this.route})
     },
     () => {
       this.isError = true
       this.error = "an account with that email already exists!";
     });
-    setTimeout(
-      ()=>{if (this.isError == false){
-        this.router.navigate(["../login"], {relativeTo: this.route
-        });
-      }
-    }, 50)
     this.signupForm.reset();
   }
 
