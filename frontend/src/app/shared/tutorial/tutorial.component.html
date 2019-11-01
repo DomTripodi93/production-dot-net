@@ -2,27 +2,27 @@
 <h2 class="centered">Lets Get Started!</h2>
 <br>
 <h4 *ngIf="!machines" class="centered">
-  Start by adding a <a routerLink="/machine/new">Machine</a>. It's not 
+  Start by adding a <a routerLink="/lathe/machine/new">Lathe</a>. It's not 
   going to give you any options for the job or op field, but that is perfectly 
   normal. 
 <br>
 </h4>
 <h4 *ngIf="!machines" class="centered">
-  You will need to have at least 1 <a routerLink="lathe/machine/new">Lathe</a> and 1 <a routerLink="lathe/parts/new">Lathe Part</a> to be able to add a 
-  <a routerLink="lathe/jobs/new">Lathe Job</a>, and at least 1 <a routerLink="lathe/jobs/new">Lathe Job</a> to assign a <a routerLink="lathe/jobs">Lathe Operation</a> to.
+  You will need to have at least 1 <a routerLink="/lathe/machine/new">Lathe</a> and 1 <a routerLink="/lathe/parts/new">Lathe Part</a> to be able to add a 
+  <a routerLink="/lathe/jobs/new">Lathe Job</a>, and at least 1 <a routerLink="/lathe/jobs/new">Lathe Job</a> to assign a <a routerLink="/lathe/jobs">Lathe Operation</a> to.
 <br>
 </h4>
 <h4 *ngIf="machines && !parts" class="centered">
   Now that you have created a machine, lets add your first part! 
-  A <a routerLink="/parts/new">Part</a> only needs to have a "part number." 
-  The same <a routerLink="/parts/new">Part</a> can be used on as many jobs as you need it for.
+  A <a routerLink="/lathe/parts/new">Lathe Part</a> only needs to have a "part number." 
+  The same <a routerLink="/lathe/parts/new">Lathe Part</a> can be used on as many jobs as you need it for.
   <br>
-  You will need to have at least 1 <a routerLink="/parts/new">Part</a> to be able to add a 
-  <a routerLink="/jobs/new">Job</a>
+  You will need to have at least 1 <a routerLink="/lathe/parts/new">Part</a> to be able to add a 
+  <a routerLink="/lathe/jobs/new">Lathe Job</a>
 <br>
 </h4>
 <h4  *ngIf="parts && !jobs" class="centered">
-  Now that you have created your first part, we can add our first <a routerLink="/jobs/new">Job</a>. A job 
+  Now that you have created your first part, we can add our first <a routerLink="/lathe/jobs/new">Lathe Job</a>. A job 
   holds all of your information for the material recieved for the job. 
   <br> 
   By inputing information for the first lathe operation, you will be able to calculate a maximum production 
@@ -33,7 +33,7 @@
   Now that you have created your first job, you will be able to use the production
   calculator features for that job. 
   <br>
-  Now lets add an <a routerLink="/jobs">Operation</a> to the job below, which will let us create production lots 
+  Now lets add an <a routerLink="/lathe/jobs">Lathe Operation</a> to the job below, which will let us create production lots 
   and hourly production, after we assign a job and op to our machine. 
 <br>
 </h4>
@@ -48,16 +48,16 @@
 </h4>
 <h4 *ngIf="hourly && !production" class="centered">
   Now that we have our first hourly production count, lets try adding a 
-  <a routerLink="/production/new">Production Lot</a>. Your production lots will be used to track 
+  <a routerLink="/lathe/production/new">Lathe Production Lot</a>. Your production lots will be used to track 
   how many parts have been made to an operation on the job so far.
 <br>
 </h4>
 <h4 *ngIf="production" class="centered">
-  After adding <a routerLink="/production/new">Multiple Production Lots</a> for one job, the 
-  <a routerLink="/production/op={{op}}&job={{job}}">Production By Job and Op</a> page will show total parts 
+  After adding <a routerLink="/lathe/production/new">Multiple Lathe Production Lots</a> for one job, the 
+  <a routerLink="/lathe/production/op={{op}}&job={{job}}">Lathe Production By Job and Op</a> page will show total parts 
   to date for the operation. This can also be reached by using the dropdown on the 
-  <a routerLink="/production">Production</a> page, and checking the production for the current
-  job and operation on the selected machine.
+  <a routerLink="/lathe/production">Lathe Production</a> page, and checking the production for the current
+  job and operation on the selected lathe.
 <br>
 </h4>
 <br>
