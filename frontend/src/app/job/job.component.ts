@@ -25,6 +25,11 @@ export class JobComponent implements OnDestroy {
     ) 
   }
 
+  switchActive(){
+    this.jobServ.onlyActive = !this.jobServ.onlyActive;
+    this.jobServ.jobChanged.next();
+  }
+
   ngOnDestroy(){
     this.subscriptions.forEach(sub=>{
       sub.unsubscribe();

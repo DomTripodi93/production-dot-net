@@ -14,4 +14,7 @@ export interface Job{
     subFacing: string;
     heatLot: string;
     bars: string;
+    active: string;
+    monthReq: string;
+    scrapCount: string;
 }

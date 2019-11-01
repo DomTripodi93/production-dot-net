@@ -25,19 +25,44 @@ export class JobShowComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getJobs();
+    if (this.jobServ.onlyActive == true){
+      this.getActiveJobs();
+    } else {
+      this.getAllJobs();
+    }
     this.subscriptions.push(
       this.jobServ.jobChanged.subscribe(
         ()=>{
           this.pageNum = 1;
           this.jobs = [];
-          setTimeout(()=>{this.getJobs()}, 50);
+          setTimeout(()=>{
+            if (this.jobServ.onlyActive == true){
+              this.getActiveJobs();
+            } else {
+              this.getAllJobs();
+            }
+          }, 50);
         }
       )
     );
   }
 
-  getJobs(){this.jobServ.fetchJobsByType(this.pageNum, this.pageSize)
+  getActiveJobs(){this.jobServ.fetchJobsByType(this.pageNum, this.pageSize)
+    .subscribe(jobs => {
+      this.pageNum++
+      this.pagination = jobs.pagination;
+      jobs.result.forEach((job)=>{
+        this.jobs.push(job);
+      })
+      this.isFetching = false;
+    }, error => {
+      this.isFetching = false;
+      this.isError = true;
+      this.error = error.message
+    });
+  }
+
+  getAllJobs(){this.jobServ.fetchAllJobsByType(this.pageNum, this.pageSize)
     .subscribe(jobs => {
       this.pageNum++
       this.pagination = jobs.pagination;
@@ -53,7 +78,11 @@ export class JobShowComponent implements OnInit {
   }
 
   showMore(){
-    this.getJobs();
+    if (this.jobServ.onlyActive == true){
+      this.getActiveJobs();
+    } else {
+      this.getAllJobs();
+    }
   }
 
   ngOnDestroy(){

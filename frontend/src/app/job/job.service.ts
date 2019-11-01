@@ -12,6 +12,7 @@ export class JobService {
   jobHold: Job;
   jobsHold: Job[];
   model = "Job";
+  onlyActive = true;
 
   constructor(
       private http: HttpClient,
