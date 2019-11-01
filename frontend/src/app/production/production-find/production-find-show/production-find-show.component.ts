@@ -66,6 +66,7 @@ export class ProductionFindShowComponent implements OnInit {
     this.isFetching = true;
     this.pro.fetchProduction(this.search)
       .subscribe(production => {
+        console.log(production)
         this.production = production;
         this.dayServ.dates = [];
         this.total = 0;

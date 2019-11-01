@@ -136,6 +136,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
       .subscribe(prod => {
         if (prod.length > 0){
           this.production = true;
+          this.op = prod[0].opNumber
         }
       }
     )
