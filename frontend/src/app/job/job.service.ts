@@ -75,6 +75,30 @@ export class JobService {
       )
   }
 
+  fetchAllJobsByType(page?, itemsPerPage?): Observable<PaginatedResult<Job[]>> {
+    const paginatedResult: PaginatedResult<Job[]> = new PaginatedResult<Job[]>();
+
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null){
+      params = params.append("pageNumber", page);
+      params = params.append("pageSize", itemsPerPage);
+    }
+
+      return this.http.get(
+        this.auth.apiUrl + '/job/all&type=' + this.auth.machType, {observe: "response", params}
+      )
+      .pipe(
+        map((responseData: any) => {
+          paginatedResult.result = responseData.body;
+          if (responseData.headers.get("Pagination") != null){
+            paginatedResult.pagination = JSON.parse(responseData.headers.get("Pagination"));
+          }
+            return paginatedResult;
+        })
+      )
+  }
+
   addJob(data: Job){
     return this.http.post(
       this.auth.apiUrl + '/job/', data

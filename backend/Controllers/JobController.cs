@@ -114,6 +114,21 @@ namespace BackEnd.Controllers
             return Ok(jobs);
         }
 
+        [HttpGet("all&type={machType}")]
+        public async Task<IActionResult> GetAllJobsByType(int userId, [FromQuery]PagingParams jobParams, string machType)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            PagedList<Job> directJobs = await _repo.GetAllJobsByType(userId, jobParams, machType);
+
+            var jobs = _mapper.Map<IEnumerable<JobForReturnDto>>(directJobs);
+
+            Response.AddPagination(directJobs.CurrentPage, directJobs.PageSize, directJobs.TotalCount, directJobs.TotalPages);
+
+            return Ok(jobs);
+        }
+
         [HttpGet("part={partNumber}")]
         public async Task<IActionResult> GetJobsByJob(int userId, string partNumber)
         {

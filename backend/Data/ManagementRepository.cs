@@ -140,6 +140,19 @@ namespace BackEnd.Data
             var jobs = _context.Jobs
                 .Include(x => x.Operation)
                 .Where(j => j.userId == userId)
+                .Where(j => j.Active == "Active")
+                .Where(j => j.MachType == machType);
+
+            var jobsForReturn = jobs.OrderByDescending(j => j.JobNumber);
+
+            return await PagedList<Job>.CreateAsync(jobsForReturn, jobParams.PageNumber, jobParams.PageSize);
+        }
+
+        public async Task<PagedList<Job>> GetAllJobsByType(int userId, PagingParams jobParams, string machType)
+        {
+            var jobs = _context.Jobs
+                .Include(x => x.Operation)
+                .Where(j => j.userId == userId)
                 .Where(j => j.MachType == machType);
 
             var jobsForReturn = jobs.OrderByDescending(j => j.JobNumber);
