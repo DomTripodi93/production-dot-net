@@ -36,6 +36,8 @@ export class DaysComponent{
   constructor(
     public dayServ: DaysService,
     public auth: AuthService
-    ) { }
+    ) { 
+      this.auth.machType = "Lathe";
+    }
 
 }

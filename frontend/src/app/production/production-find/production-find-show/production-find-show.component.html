@@ -42,7 +42,7 @@
                     <h4>Machine: <strong>{{lot.machine}}</strong></h4>
                 </div>
                 <div class='grid'>
-                    <button class='btn btn-info pull-right' routerLink="/production/op={{lot.opNumber}}&job={{lot.jobNumber}}">Job/Op <br> Production</button>
+                    <button class='btn btn-info pull-right' routerLink="/{{auth.machType}}/production/op={{lot.opNumber}}&job={{lot.jobNumber}}">Job/Op <br> Production</button>
                     <button class='btn btn-primary pull-right' routerLink="/day/{{dayServ.dates[i]}}">Day <br> Production</button>
                 </div>
                 <br>
@@ -61,7 +61,7 @@
             <button class='btn btn-primary' (click)="onEdit()">Edit <br> This Lot</button>
         </div>
         <br>
-        <div routerLink="/production/single/{{singleProd.id}}">
+        <div routerLink="/{{auth.machType}}/production/single/{{singleProd.id}}">
             <h4>Date: <strong>{{singleProd.date}}</strong></h4>
             <h4>Job #: <strong>{{singleProd.jobNumber}}</strong></h4>
             <h4 *ngIf="singleProd.partNumber">Part #: <strong>{{singleProd.partNumber}}</strong></h4>
@@ -71,7 +71,7 @@
             <h4>Machine: <strong>{{singleProd.machine}}</strong></h4>
         </div>
         <div class='grid'>
-            <button class='btn btn-info pull-right' routerLink="/production/op={{singleProd.opNumber}}&job={{singleProd.jobNumber}}">Job/Op <br> Production</button>
+            <button class='btn btn-info pull-right' routerLink="/{{auth.machType}}/production/op={{singleProd.opNumber}}&job={{singleProd.jobNumber}}">Job/Op <br> Production</button>
             <button class='btn btn-primary pull-right' routerLink="/day/{{date}}">Day <br> Production</button>
         </div>
         <br>
@@ -82,7 +82,7 @@
             <button class='btn btn-primary' (click)="onEdit()">Edit <br> This Lot </button>
         </div>
         <br>
-        <div routerLink="/production/single/{{singleProd.id}}">
+        <div routerLink="/{{auth.machType}}/production/single/{{singleProd.id}}">
             <h4>Date: <strong>{{singleProd.date}}</strong></h4>
             <h4>Job #: <strong>{{singleProd.jobNumber}}</strong></h4>
             <h4 *ngIf="singleProd.partNumber">Part #: <strong>{{singleProd.partNumber}}</strong></h4>
@@ -92,7 +92,7 @@
             <h4>Machine: <strong>{{singleProd.machine}}</strong></h4>
         </div>
         <div class='grid'>
-            <button class='btn btn-info pull-right' routerLink="/production/op={{singleProd.opNumber}}&job={{singleProd.jobNumber}}">Job/Op <br> Production</button>
+            <button class='btn btn-info pull-right' routerLink="/{{auth.machType}}/production/op={{singleProd.opNumber}}&job={{singleProd.jobNumber}}">Job/Op <br> Production</button>
             <button class='btn btn-primary pull-right' routerLink="/day/{{date}}">Day <br> Production</button>
         </div>
         <br>

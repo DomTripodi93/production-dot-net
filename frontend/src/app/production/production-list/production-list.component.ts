@@ -3,6 +3,7 @@ import { ProductionService } from '../production.service';
 import { Subscription } from 'rxjs';
 import { DaysService } from '../../shared/days/days.service';
 import { AuthService } from 'src/app/shared/auth.service';
+import { Production } from '../production.model';
 
 @Component({
   selector: 'app-production-list',
@@ -11,14 +12,13 @@ import { AuthService } from 'src/app/shared/auth.service';
 })
 export class ProductionListComponent implements OnInit {
   subscriptions: Subscription[] = [];
+  productionLots: Production [];
   isFetching = false;
   isError = false;
   error = '';
-  ids = [];
 
   constructor(
     private pro: ProductionService,
-    private dayServ: DaysService,
     public auth: AuthService
   ) { }
 
@@ -33,18 +33,17 @@ export class ProductionListComponent implements OnInit {
   }
 
   getProduction(){
-    this.subscriptions.push(this.pro.fetchProductionByType()
-    .subscribe(production => {
-      this.ids = [];
-      production.forEach((lot) =>{
-        this.ids.push(lot.id);
-      });
-      this.isFetching = false;
-    }, error => {
-      this.isFetching = false;
-      this.isError = true;
-      this.error = error.message;
-    }));
+    this.subscriptions.push(
+      this.pro.fetchProductionByType()
+      .subscribe(production => {
+        this.productionLots = production
+        this.isFetching = false;
+      }, error => {
+        this.isFetching = false;
+        this.isError = true;
+        this.error = error.message;
+      })
+    );
   }
 
 }

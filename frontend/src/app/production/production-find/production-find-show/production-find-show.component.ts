@@ -12,12 +12,11 @@ import { DaysService } from 'src/app/shared/days/days.service';
   styleUrls: ['./production-find-show.component.css']
 })
 export class ProductionFindShowComponent implements OnInit {
-  @Input() inputId: number;
+  @Input() singleProd: Production;
   isFetching = false;
   isError = false;
   error: string = '';
   production: Production[] = [];
-  singleProd: Production;
   id: string = '';
   search: string[];
   subscriptions: Subscription[] = []
@@ -39,24 +38,24 @@ export class ProductionFindShowComponent implements OnInit {
 
   ngOnInit() {
     this.dayServ.dates = [];
-    if (this.inputId){
-      this.getSingleProduction();
-    } else {
+    if (!this.singleProd){
       this.subscriptions.push(
         this.route.params.subscribe((params: Params) => {
           this.search = params["search"];
           this.getJobProduction();
         })
       )
+    } else {
+      this.setSingleProduction();
     }
     this.subscriptions.push(
       this.pro.proChanged.subscribe(()=>{
-        if (this.inputId){
-          this.getSingleProduction();
-          this.editMode = false;
-        } else {
+        if (!this.singleProd){
           this.editMulti = [];
           this.getJobProduction();
+        } else {
+          this.setSingleProduction();
+          this.editMode = false;
         }
       })
     )
@@ -66,7 +65,6 @@ export class ProductionFindShowComponent implements OnInit {
     this.isFetching = true;
     this.pro.fetchProduction(this.search)
       .subscribe(production => {
-        console.log(production)
         this.production = production;
         this.dayServ.dates = [];
         this.total = 0;
@@ -85,21 +83,11 @@ export class ProductionFindShowComponent implements OnInit {
       })
   }  
 
-  getSingleProduction() {
-    this.isFetching = true;
-    this.pro.fetchProductionBySearch(this.inputId)
-      .subscribe(production => {
-        this.singleProd = production;
-        let beginning = this.singleProd.date.substring(5,10);
-        this.singleProd.date = beginning + "-" + this.singleProd.date.substring(0,4);
-        this.total = +this.singleProd.quantity + this.total;
-        this.date = this.dayServ.dashToSlash(this.singleProd.date);
-        this.isFetching = false;
-      }, error => {
-        this.isFetching = false;
-        this.isError = true;
-        this.error = error.message;
-      })
+  setSingleProduction() {
+    let beginning = this.singleProd.date.substring(5,10);
+    this.singleProd.date = beginning + "-" + this.singleProd.date.substring(0,4);
+    this.total = +this.singleProd.quantity + this.total;
+    this.date = this.dayServ.dashToSlash(this.singleProd.date);
   }  
 
   onEdit(){

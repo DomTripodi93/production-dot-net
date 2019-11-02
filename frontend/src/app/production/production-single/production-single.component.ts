@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ProductionService } from 'src/app/production/production.service';
+import { Production } from '../production.model';
 
 @Component({
   selector: 'app-production-single',
@@ -8,7 +9,7 @@ import { ProductionService } from 'src/app/production/production.service';
   styleUrls: ['./production-single.component.css']
 })
 export class ProductionSingleComponent implements OnInit {
-  id = '';
+  production: Production;
 
   constructor(
     private route: ActivatedRoute,
@@ -18,13 +19,15 @@ export class ProductionSingleComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) =>{
-      this.id = params['id'];
+      this.pro.fetchProductionBySearch(params['id']).subscribe(production =>{
+        this.production = production
+      })
     });
   } 
 
   onDelete(){
     if (confirm("Are you sure you want to delete this lot?")){
-      this.pro.deleteProduction(this.id).subscribe();
+      this.pro.deleteProduction(this.production.id).subscribe();
       this.pro.proChanged.next();
       this.router.navigate(["../.."], {relativeTo: this.route})
     }

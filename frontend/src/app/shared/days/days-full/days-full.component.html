@@ -1,5 +1,5 @@
 <div class="grid">
-    <div *ngFor="let id of ids" >
-        <app-production-find-show  [inputId]="id"></app-production-find-show>
+    <div *ngFor="let lot of productionLots" >
+        <app-production-find-show [singleProd]="lot"></app-production-find-show>
     </div>
 </div>

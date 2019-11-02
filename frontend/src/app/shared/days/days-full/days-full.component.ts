@@ -12,10 +12,9 @@ import { DaysService } from '../days.service';
 })
 export class DaysFullComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-  ids = [];
   searchHold = [];
   search = '';
-  production: Production[] = [];
+  productionLots: Production[] = [];
   isFetching = false;
   isError=false;
   error = '';
@@ -53,10 +52,7 @@ export class DaysFullComponent implements OnInit, OnDestroy {
   getProduction(){
     this.pro.fetchProduction("date="+this.search)
     .subscribe(production => {
-      this.ids = [];
-      production.forEach((lot)=>{
-        this.ids.push(lot.id);
-      })
+      this.productionLots = production;
       this.isFetching = false;
     }, error => {
       this.isFetching = false;
