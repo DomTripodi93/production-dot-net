@@ -62,24 +62,24 @@ export class JobFindShowComponent implements OnInit {
     this.isFetching = true;
     if (this.job.includes("part")){
       this.jobServ.fetchJobByPart(this.job)
-        .subscribe(jobs => {
-          this.jobs = jobs;
-          this.isFetching = false;
-        }, error => {
-          this.isFetching = false;
-          this.isError = true;
-          this.error = error.message
-        });
+      .subscribe(jobs => {
+        this.jobs = jobs;
+        this.isFetching = false;
+      }, error => {
+        this.isFetching = false;
+        this.isError = true;
+        this.error = error.message
+      });
     } else {
       this.jobServ.fetchJob(this.job)
-        .subscribe(job => {
-          this.oneJob = job;
-          this.isFetching = false;
-        }, error => {
-          this.isFetching = false;
-          this.isError = true;
-          this.error = error.message
-        });
+      .subscribe(job => {
+        this.oneJob = job;
+        this.isFetching = false;
+      }, error => {
+        this.isFetching = false;
+        this.isError = true;
+        this.error = error.message
+      });
     }
   } 
 
