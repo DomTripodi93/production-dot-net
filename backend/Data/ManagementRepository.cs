@@ -193,6 +193,17 @@ namespace BackEnd.Data
             return operations;
         }
 
+        public async Task<IEnumerable<Operation>> GetOpsByMach(int userId, string jobNum, string mach)
+        {
+            var operations = await _context.Operations
+                .Where(m => m.userId == userId)
+                .Where(o => o.JobNumber == jobNum)
+                .Where(o => o.Machine == mach)
+                .ToListAsync();
+
+            return operations;
+        }
+
         public async Task<Production> GetProduction(int id)
         {
             var production = await _context.Production.FirstOrDefaultAsync(p => p.Id == id);

@@ -106,6 +106,19 @@ namespace BackEnd.Controllers
             return Ok(ops);
         }
 
+        [HttpGet("mach={mach}&job={jobNum}")]
+        public async Task<IActionResult> GetOperationsByMach(int userId, string jobNum,  string mach)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            IEnumerable<Operation> directOperations = await _repo.GetOpsByMach(userId, jobNum,  mach);
+
+            var ops = _mapper.Map<IEnumerable<OperationForReturnDto>>(directOperations);
+
+            return Ok(ops);
+        }
+
         [HttpDelete("op={opNum}&job={jobNum}")]
         public async Task<IActionResult> DeleteOperation(int userId, string jobNum, string opNum)
         {
