@@ -75,7 +75,7 @@ namespace BackEnd.Controllers
             throw new Exception($"Updating job lot {jobNum} failed on save");
         }
 
-        [HttpPut("Active&{jobNum}")]
+        [HttpPut("active&{jobNum}")]
         public async Task<IActionResult> UpdateActiveJob(int userId, string jobNum, UpdateActiveDto jobForUpdateDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))

@@ -5,6 +5,7 @@ import { AuthService } from '../shared/auth.service';
 import { Subject, Observable } from 'rxjs';
 import { Job } from './job.model';
 import { PaginatedResult } from '../shared/pagination';
+import { Active } from '../shared/active.model';
 
 @Injectable({providedIn: 'root'})
 export class JobService {
@@ -139,5 +140,14 @@ export class JobService {
       );
   }
 
-      
+  changeActive(data: Active, jobNum){
+    this.fetchJob(jobNum).subscribe((object)=>{
+      let oldValues = ""+JSON.stringify(object);
+      this.auth.logChanges(oldValues, this.model, "Update", jobNum).subscribe();
+    })
+      return this.http.put(
+        this.auth.apiUrl + '/job/active&' + jobNum + "/", data
+      );
+  }
+        
 }

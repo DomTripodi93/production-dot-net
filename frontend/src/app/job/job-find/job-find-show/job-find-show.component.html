@@ -9,6 +9,10 @@
       <div class="grid2" *ngIf="auth.machType == 'mill'">
         <button *ngIf="!oneJob.possibleQuantity" class='btn btn-primary' routerLink="/{{auth.machType}}/jobs/calculator/job/{{oneJob.jobNumber}}">Set Mat Recieved</button>
       </div>
+      <div class="grid2">
+        <button *ngIf="oneJob.active == 'Active'" class='btn btn-danger' (click)="changeActive()">Set Job Inactive</button>
+        <button *ngIf="oneJob.active != 'Active'" class='btn btn-success' (click)="changeActive()">Set Job Active</button>
+      </div>
       <div routerLink="/{{auth.machType}}/jobs/{{oneJob.jobNumber}}">
         <br>
         <h3>Job#: <strong>{{oneJob.jobNumber}}</strong></h3>

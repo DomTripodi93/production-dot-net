@@ -83,6 +83,24 @@ export class JobFindShowComponent implements OnInit {
     }
   } 
 
+  changeActive(){
+    if (this.oneJob.active == 'Active'){
+      let active = {
+        active: 'Inactive'
+      }
+      this.jobServ.changeActive(active, this.oneJob.jobNumber).subscribe(()=>{
+        this.jobServ.jobChanged.next()
+      })
+    } else{
+      let active = {
+        active: 'Active'
+      }
+      this.jobServ.changeActive(active, this.oneJob.jobNumber).subscribe(()=>{
+        this.jobServ.jobChanged.next()
+      })
+    }
+  }
+
   onEdit(){
     this.editJob = true;
   }

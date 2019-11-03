@@ -117,6 +117,26 @@ namespace BackEnd.Controllers
             return Ok(part);
         }
 
+        [HttpPut("active&{partNum}")]
+        public async Task<IActionResult> UpdateActiveJob(int userId, string partNum, UpdateActiveDto partForUpdateDto)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var partFromRepo = await _repo.GetPart(userId, partNum);
+
+            _mapper.Map(partForUpdateDto, partFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetJob", new {partNum = partFromRepo.PartNumber}, partForUpdateDto);
+
+            var newData = _mapper.Map(partForUpdateDto, partFromRepo);
+
+            if (partFromRepo == newData)
+                return Ok(partForUpdateDto);
+
+            throw new Exception($"Updating job lot {partNum} failed on save");
+        }
 
         [HttpDelete("{part}")]
         public async Task<IActionResult> DeletePart(int userId, string part)
