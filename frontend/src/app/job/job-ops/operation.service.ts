@@ -52,6 +52,23 @@ export class OpService {
       )
     }
 
+    fetchOpByMachAndJob(search) {
+      return this.http.get(
+        this.auth.apiUrl + '/operation/mach=' + search
+      )
+      .pipe(
+        map((responseData: Operation[]) => {
+          responseData.forEach((lot)=>{
+            lot.machine = this.auth.rejoin(lot.machine);
+            if (lot.opNumber.includes("-")){
+              lot.opNumber = this.dayServ.dashToSlash(lot.opNumber)
+            }
+          })
+        return responseData;
+        })
+      )
+    }
+
     addOp(data: Operation){
       data.machine = this.auth.splitJoin(data.machine);
       data.opNumber = this.slashToDash(data.opNumber);

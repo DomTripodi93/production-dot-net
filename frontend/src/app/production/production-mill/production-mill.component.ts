@@ -5,6 +5,7 @@ import { OpService } from 'src/app/job/job-ops/operation.service';
 import { JobService } from 'src/app/job/job.service';
 import { DaysService } from 'src/app/shared/days/days.service';
 import { Machine } from 'src/app/machine/machine.model';
+import { MillSet } from './mill-set.model';
 
 @Component({
   selector: 'app-production-mill',
@@ -13,11 +14,11 @@ import { Machine } from 'src/app/machine/machine.model';
 })
 export class ProductionMillComponent implements OnInit {
   machines: Machine[] = [];
+  millSets: MillSet[][] = []
 
   constructor(
     private dayServ: DaysService,
     private machServ: MachineService,
-    private proServ: ProductionService,
     private jobServ: JobService,
     private opServ: OpService
   ) { }
@@ -27,16 +28,29 @@ export class ProductionMillComponent implements OnInit {
   }
 
   getProduction(){
-    this.machServ.fetchMachinesByType().subscribe((machines)=>{
+    this.machServ.fetchMachinesByType().subscribe(machines=>{
+      this.jobServ.fetchJobsByType().subscribe((jobs=>{
+        machines.forEach(machine=>{
+          let millSetsHold: MillSet[] = []
+          let used = 1;
+          jobs.result.forEach(job=>{
+            this.opServ.fetchOpByMachAndJob(machine.machine+"&job="+job.jobNumber)
+            .subscribe(ops=>{
+              let millSetHold: MillSet = {
+                jobNumber: job.jobNumber,
+                partNumber: job.partNumber,
+                ops: ops
+              }
+              millSetsHold.push(millSetHold)
+            })
+            if (used == jobs.result.length){
+              this.millSets.push(millSetsHold);
+              console.log(this.millSets)
+            }
+          })
+        })
+      }))
       this.machines = machines;
-      machines.forEach(mach =>{
-        this.opServ.fetchOp(this.opServ.slashToDash(mach.currentOp)+"&job="+mach.currentJob).subscribe((op)=>{
-          console.log(op)
-          if (op.partsToDate == null){
-            op.partsToDate = "0";
-          }
-        });
-      });
     });
   }
   //display part totals in each operation by machine they are running on, 
