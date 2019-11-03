@@ -109,6 +109,17 @@ namespace BackEnd.Data
             var parts = await _context.Parts
                 .Where(p => p.userId == userId)
                 .Where(p => p.MachType == machType)
+                .Where(p => p.Active == "Active")
+                .ToListAsync();
+                
+            return parts;
+        }
+
+        public  async Task<IEnumerable<Part>> GetAllParts(int userId, string machType)
+        {
+            var parts = await _context.Parts
+                .Where(p => p.userId == userId)
+                .Where(p => p.MachType == machType)
                 .ToListAsync();
                 
             return parts;

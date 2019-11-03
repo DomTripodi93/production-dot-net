@@ -14,7 +14,20 @@
                 >
                 </div>
                 <div></div>
-                <div></div>
+                <button 
+                    *ngIf="partServ.onlyActive"
+                    class='btn btn-primary'
+                    (click)="switchActive()"
+                >
+                    Show All Parts
+                </button>
+                <button 
+                    *ngIf="!partServ.onlyActive"
+                    class='btn btn-primary'
+                    (click)="switchActive()"
+                >
+                    Show Only Active Parts
+                </button>
                 <div></div>
                 <button 
                     *ngIf="!auth.buttonHidden[1]"

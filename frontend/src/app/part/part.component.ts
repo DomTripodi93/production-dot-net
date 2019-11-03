@@ -14,7 +14,7 @@ export class PartComponent implements OnDestroy {
 
   constructor(
     public auth: AuthService,
-    private partServ: PartService,
+    public partServ: PartService,
     private route: ActivatedRoute
   ) {
     this.subscriptions.push(
@@ -23,6 +23,11 @@ export class PartComponent implements OnDestroy {
         this.partServ.partChanged.next();
       })
     ) 
+  }
+
+  switchActive(){
+    this.partServ.onlyActive = !this.partServ.onlyActive;
+    this.partServ.partChanged.next();
   }
 
   ngOnDestroy(){

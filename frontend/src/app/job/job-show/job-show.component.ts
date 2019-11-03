@@ -47,7 +47,8 @@ export class JobShowComponent implements OnInit {
     );
   }
 
-  getActiveJobs(){this.jobServ.fetchJobsByType(this.pageNum, this.pageSize)
+  getActiveJobs(){
+    this.jobServ.fetchJobsByType(this.pageNum, this.pageSize)
     .subscribe(jobs => {
       this.pageNum++
       this.pagination = jobs.pagination;
@@ -62,7 +63,8 @@ export class JobShowComponent implements OnInit {
     });
   }
 
-  getAllJobs(){this.jobServ.fetchAllJobsByType(this.pageNum, this.pageSize)
+  getAllJobs(){
+    this.jobServ.fetchAllJobsByType(this.pageNum, this.pageSize)
     .subscribe(jobs => {
       this.pageNum++
       this.pagination = jobs.pagination;

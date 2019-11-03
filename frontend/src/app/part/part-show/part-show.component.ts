@@ -23,14 +23,36 @@ export class PartShowComponent implements OnInit, OnDestroy{
   ) { }
 
   ngOnInit() {
-    this.getParts();
+    if (this.partServ.onlyActive == true){
+      this.getParts();
+    } else {
+      this.getAllParts();
+    }
     this.subscriptions.push(this.partServ.partChanged.subscribe(()=>{
-      setTimeout(()=>{this.getParts()}, 50);
+      setTimeout(()=>{
+        if (this.partServ.onlyActive == true){
+          this.getParts();
+        } else {
+          this.getAllParts();
+        }
+      }, 50);
     }));
   }
 
   getParts(){
     this.subscriptions.push(this.partServ.fetchPartsByType()
+    .subscribe(parts => {
+      this.parts = parts;
+      this.isFetching = false;
+    }, error => {
+      this.isFetching = false;
+      this.isError = true;
+      this.error = error.message
+    }));
+  }
+
+  getAllParts(){
+    this.subscriptions.push(this.partServ.fetchAllPartsByType()
     .subscribe(parts => {
       this.parts = parts;
       this.isFetching = false;

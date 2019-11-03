@@ -12,7 +12,7 @@ import { DaysService } from '../../../shared/days/days.service';
   styleUrls: ['./part-find-show.component.css']
 })
 export class PartFindShowComponent implements OnInit {
-  @Input() partInput;
+  @Input() partInput: Part;
   isFetching = false;
   isError = false;
   error = '';
@@ -29,8 +29,8 @@ export class PartFindShowComponent implements OnInit {
 
   ngOnInit() {
     if (this.partInput){
-      this.partNumber = this.partInput;
-      this.getPart();
+      this.partNumber = this.partInput.partNumber;
+      this.part = this.partInput
     } else {
       this.subscriptions.push(
         this.route.params.subscribe((params: Params) =>{
@@ -68,5 +68,23 @@ export class PartFindShowComponent implements OnInit {
       }
     );
   } 
+
+  changeActive(){
+    if (this.part.active == 'Active'){
+      let active = {
+        active: 'Inactive'
+      }
+      this.partServ.changeActive(active, this.part.partNumber).subscribe(()=>{
+        this.partServ.partChanged.next()
+      })
+    } else{
+      let active = {
+        active: 'Active'
+      }
+      this.partServ.changeActive(active, this.part.partNumber).subscribe(()=>{
+        this.partServ.partChanged.next()
+      })
+    }
+  }
 
 }

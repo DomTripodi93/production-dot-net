@@ -4,12 +4,14 @@ import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
 import { AuthService } from '../shared/auth.service';
 import { Subject } from 'rxjs';
 import { Part } from './part.model';
+import { Active } from '../shared/active.model';
 
 @Injectable({providedIn: 'root'})
 export class PartService {
   partChanged = new Subject();
   partHold: Part;
   model = "Part";
+  onlyActive = true;
 
   constructor(
       private http: HttpClient,
@@ -58,6 +60,18 @@ export class PartService {
     )
   }
 
+  fetchAllPartsByType() {
+    return this.http.get(
+      this.auth.apiUrl + '/part/all&type=' + this.auth.machType
+    )
+    .pipe(
+      map((responseData: Part[]) => {
+        const partHold: Part [] = responseData;
+      return partHold;
+      })
+    )
+  }
+
   addPart(data: Part){
       return this.http.post(
         this.auth.apiUrl + '/part/', data
@@ -95,6 +109,16 @@ export class PartService {
             }
         })
     );
+  }
+
+  changeActive(data: Active, partNum){
+    this.fetchPart(partNum).subscribe((object)=>{
+      let oldValues = ""+JSON.stringify(object);
+      this.auth.logChanges(oldValues, this.model, "Update", partNum).subscribe();
+    })
+      return this.http.put(
+        this.auth.apiUrl + '/part/active&' + partNum + "/", data
+      );
   }
 
 }
