@@ -61,6 +61,19 @@ namespace BackEnd.Controllers
             return Ok(partForReturn);
         }
 
+        [HttpGet("search={part}")]
+        public async Task<IActionResult> GetPartsByNumber(int userId, string part)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var partFromRepo = await _repo.GetPartsByNumber(userId, part);
+
+            PartForReturnDto partForReturn = _mapper.Map<PartForReturnDto>(partFromRepo);
+
+            return Ok(partForReturn);
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> GetParts(int userId)

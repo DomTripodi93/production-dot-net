@@ -85,6 +85,16 @@ namespace BackEnd.Data
             return partToReturn;
         }
 
+        public async Task<IEnumerable<Part>> GetPartsByNumber(int userId, string part)
+        {
+            var partsToReturn = await _context.Parts
+                .Where(p => p.userId == userId)
+                .Where(p => p.PartNumber.Contains(part))
+                .ToListAsync();
+
+            return partsToReturn;
+        }
+
         public  async Task<IEnumerable<Part>> GetAnyParts(int userId)
         {
             var parts = await _context.Parts
