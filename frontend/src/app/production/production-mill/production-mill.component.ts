@@ -6,6 +6,7 @@ import { JobService } from 'src/app/job/job.service';
 import { DaysService } from 'src/app/shared/days/days.service';
 import { Machine } from 'src/app/machine/machine.model';
 import { MillSet } from './mill-set.model';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-production-mill',
@@ -20,7 +21,8 @@ export class ProductionMillComponent implements OnInit {
     private dayServ: DaysService,
     private machServ: MachineService,
     private jobServ: JobService,
-    private opServ: OpService
+    private opServ: OpService,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
@@ -31,22 +33,29 @@ export class ProductionMillComponent implements OnInit {
     this.machServ.fetchMachinesByType().subscribe(machines=>{
       this.jobServ.fetchJobsByType().subscribe((jobs=>{
         machines.forEach(machine=>{
+          if (machine.machine.includes(" ")){
+            machine.machine = this.auth.splitJoin(machine.machine);
+          }
+          console.log(machine.machine)
           let millSetsHold: MillSet[] = []
-          let used = 1;
+          let used = 0;
           jobs.result.forEach(job=>{
             this.opServ.fetchOpByMachAndJob(machine.machine+"&job="+job.jobNumber)
             .subscribe(ops=>{
-              let millSetHold: MillSet = {
-                jobNumber: job.jobNumber,
-                partNumber: job.partNumber,
-                ops: ops
+              if (ops.length > 0){
+                let millSetHold: MillSet = {
+                  jobNumber: job.jobNumber,
+                  partNumber: job.partNumber,
+                  ops: ops
+                }
+                millSetsHold.push(millSetHold)
               }
-              millSetsHold.push(millSetHold)
+              used += 1;
+              if (used == jobs.result.length){
+                this.millSets.push(millSetsHold);
+                console.log(this.millSets)
+              }
             })
-            if (used == jobs.result.length){
-              this.millSets.push(millSetsHold);
-              console.log(this.millSets)
-            }
           })
         })
       }))
