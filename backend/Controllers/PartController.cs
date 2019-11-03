@@ -37,6 +37,8 @@ namespace BackEnd.Controllers
 
             part.userId = userId;
 
+            part.Active = "Active";
+
             _repo.Add(part);
 
             if (await _repo.SaveAll())
