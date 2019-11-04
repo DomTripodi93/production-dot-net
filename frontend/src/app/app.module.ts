@@ -62,6 +62,7 @@ import { HourlySetTimeComponent } from './hourly/hourly-set-time/hourly-set-time
 import { ChangeValueComponent } from './shared/settings/change-value/change-value.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { ProductionMillComponent } from './production/production-mill/production-mill.component';
+import { ProductionTotalComponent } from './production/production-total/production-total.component';
 
 @NgModule({
   declarations: [
@@ -122,6 +123,7 @@ import { ProductionMillComponent } from './production/production-mill/production
     ChangeValueComponent,
     FooterComponent,
     ProductionMillComponent,
+    ProductionTotalComponent,
   ],
   imports: [
     BrowserModule,

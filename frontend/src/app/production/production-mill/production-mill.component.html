@@ -21,13 +21,10 @@
             </div>
           </div>
           <div *ngIf="editMode">
-            x
+            <app-production-total partsToDate="{{op.partsToDate}}" opNumber="{{op.opNumber}}" jobNumber="{{part.jobNumber}}"></app-production-total>
           </div>
           <div class="grid2">
             <button *ngIf="!editMode" class="btn btn-primary" (click)="changeEdit()">
-              <h6>Update</h6>
-            </button>
-            <button *ngIf="editMode" class="btn btn-success" (click)="changeEdit()">
               <h6>Update</h6>
             </button>
           </div>

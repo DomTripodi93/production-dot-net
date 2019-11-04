@@ -7,6 +7,10 @@ h2, h3, h4, h5, h6{
     text-align: center;
 }
 
+h6{
+    line-height: 30%;
+}
+
 .grid2 { 
     display: grid;
     grid-template-columns: 100%;

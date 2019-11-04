@@ -32,6 +32,7 @@ namespace BackEnd.Helpers
             CreateMap<Operation, OperationForReturnDto>();
             CreateMap<OperationForCreationDto, Operation>().ReverseMap();
             CreateMap<OperationForUpdateDto, Operation>().ReverseMap();
+            CreateMap<OpPartsToDateDto, Operation>().ReverseMap();
             CreateMap<OperationForRemainingDto, Operation>().ReverseMap();
         }
     }

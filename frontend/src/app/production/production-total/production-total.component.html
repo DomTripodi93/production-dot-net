@@ -1,0 +1,26 @@
+<form *ngIf="editTotalForm" [formGroup]="editTotalForm" (ngSubmit)='onSubmit()'>
+  <div class='form-group'>
+    <div class="form-group">
+      <input 
+        formControlName='partsToDate'
+        type="number" 
+        id="partsToDate" 
+        class="form-control">
+    </div>
+    <div class='grid'>
+      <button 
+        class="btn btn-success" 
+        type="submit"
+        [disabled]="!editTotalForm.valid"
+      ><h6>
+        Edit
+      </h6></button>
+      <button 
+        type='button' 
+        class='btn btn-danger' 
+        (click)='onCancel()'
+      ><h6>
+        Cancel
+      </h6></button>
+    </div>
+  </div>

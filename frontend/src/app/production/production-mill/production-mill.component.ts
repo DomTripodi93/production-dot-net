@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MachineService } from 'src/app/machine/machine.service';
-import { ProductionService } from '../production.service';
 import { OpService } from 'src/app/job/job-ops/operation.service';
 import { JobService } from 'src/app/job/job.service';
-import { DaysService } from 'src/app/shared/days/days.service';
 import { Machine } from 'src/app/machine/machine.model';
 import { MillSet } from './mill-set.model';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -14,12 +12,10 @@ import { AuthService } from 'src/app/shared/auth.service';
   styleUrls: ['./production-mill.component.css']
 })
 export class ProductionMillComponent implements OnInit {
-  machines: Machine[] = [];
   millSets: MillSet[][] = [];
   editMode = false;
 
   constructor(
-    private dayServ: DaysService,
     private machServ: MachineService,
     private jobServ: JobService,
     private opServ: OpService,
@@ -27,6 +23,11 @@ export class ProductionMillComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.opServ.opsChanged.subscribe(()=>{
+      this.editMode = false;
+      this.millSets = [];
+      this.getProduction();
+    })
     this.getProduction();
   }
 
@@ -42,6 +43,7 @@ export class ProductionMillComponent implements OnInit {
           jobs.result.forEach(job=>{
             this.opServ.fetchOpByMachAndJob(machine.machine+"&job="+job.jobNumber)
             .subscribe(ops=>{
+              console.log(ops)
               if (ops.length > 0){
                 let millSetHold: MillSet = {
                   machine: this.auth.rejoin(machine.machine),
@@ -59,7 +61,6 @@ export class ProductionMillComponent implements OnInit {
           })
         })
       }))
-      this.machines = machines;
     });
   }
   //display part totals in each operation by machine they are running on, 
