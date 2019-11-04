@@ -1,3 +1,38 @@
-<p>
-  production-mill works!
-</p>
+<div *ngFor="let set of millSets">
+  <div class="cover">
+    <h2 class="bold">{{set[0].machine}}</h2>
+    <div *ngFor="let part of set">
+      <h3 class="bold">Part Number: {{part.partNumber}}</h3>
+      <div class="grid">
+        <div class="border">
+          <h4>Job</h4>
+          <h4 class="bold">{{part.jobNumber}}</h4>
+        </div>
+        <div class="border" *ngFor="let op of part.ops">
+          <h4>Op Number</h4>
+          <h4 class="bold">{{op.opNumber}}</h4>
+          <h4>Parts To Date:</h4>
+          <div *ngIf="!editMode">
+            <div *ngIf="op.partsToDate">
+                <h4 class="bold">{{op.partsToDate}}</h4>
+            </div>
+            <div *ngIf="!op.partsToDate">
+                <h4 class="bold">0</h4>
+            </div>
+          </div>
+          <div *ngIf="editMode">
+            x
+          </div>
+          <div class="grid2">
+            <button *ngIf="!editMode" class="btn btn-primary" (click)="changeEdit()">
+              <h6>Update</h6>
+            </button>
+            <button *ngIf="editMode" class="btn btn-success" (click)="changeEdit()">
+              <h6>Update</h6>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

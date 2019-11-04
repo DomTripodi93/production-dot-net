@@ -1,0 +1,23 @@
+.grid { 
+    display: grid;
+    grid-template-columns: 14.2% 14.2% 14.2% 14.2% 14.2% 14.2% 14.2%;
+}
+
+h2, h3, h4, h5, h6{
+    text-align: center;
+}
+
+.grid2 { 
+    display: grid;
+    grid-template-columns: 100%;
+}
+
+.bold{
+    font-weight: 700;
+}
+
+.cover{
+    border-style: solid;
+    border-color: black;
+    background-color: rgb(187, 187, 187);
+}

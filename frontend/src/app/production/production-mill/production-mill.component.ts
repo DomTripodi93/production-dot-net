@@ -15,7 +15,8 @@ import { AuthService } from 'src/app/shared/auth.service';
 })
 export class ProductionMillComponent implements OnInit {
   machines: Machine[] = [];
-  millSets: MillSet[][] = []
+  millSets: MillSet[][] = [];
+  editMode = false;
 
   constructor(
     private dayServ: DaysService,
@@ -36,7 +37,6 @@ export class ProductionMillComponent implements OnInit {
           if (machine.machine.includes(" ")){
             machine.machine = this.auth.splitJoin(machine.machine);
           }
-          console.log(machine.machine)
           let millSetsHold: MillSet[] = []
           let used = 0;
           jobs.result.forEach(job=>{
@@ -44,6 +44,7 @@ export class ProductionMillComponent implements OnInit {
             .subscribe(ops=>{
               if (ops.length > 0){
                 let millSetHold: MillSet = {
+                  machine: this.auth.rejoin(machine.machine),
                   jobNumber: job.jobNumber,
                   partNumber: job.partNumber,
                   ops: ops
@@ -53,7 +54,6 @@ export class ProductionMillComponent implements OnInit {
               used += 1;
               if (used == jobs.result.length){
                 this.millSets.push(millSetsHold);
-                console.log(this.millSets)
               }
             })
           })
@@ -64,5 +64,10 @@ export class ProductionMillComponent implements OnInit {
   }
   //display part totals in each operation by machine they are running on, 
   // and remaining hours for op on the job, and on the monthly requirement  
+
+  changeEdit(){
+    this.editMode = !this.editMode;
+  }
+
 
 }

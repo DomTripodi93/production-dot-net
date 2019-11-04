@@ -98,6 +98,16 @@ export class OpService {
         );
     }
 
+    changeOpPartsToDate(data, info){
+      this.fetchOp(info).subscribe((object)=>{
+        let oldValues = ""+JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Update", info).subscribe();
+      })
+        return this.http.put(
+          this.auth.apiUrl + '/operation/toDate/op=' + info, data
+        );
+    }
+
     deleteOp(info){
       this.fetchOp(info).subscribe((object)=>{
         let oldValues = ""+JSON.stringify(object);

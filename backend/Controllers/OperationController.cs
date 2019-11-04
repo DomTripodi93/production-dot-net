@@ -82,6 +82,22 @@ namespace BackEnd.Controllers
             throw new Exception($"Updating op operation {opNum} for {jobNum} failed on save");
         }
 
+        [HttpPut("toDate/op={opNum}&job={jobNum}")]
+        public async Task<IActionResult> UpdateOperationPartsToDate(int userId, string jobNum, string opNum, OpPartsToDateDto opPartsToDateDto)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var opFromRepo = await _repo.GetOp(userId, jobNum, opNum);
+
+            _mapper.Map(opPartsToDateDto, opFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetOp", new {jobNum = opFromRepo.JobNumber, opNum = opFromRepo.OpNumber}, opPartsToDateDto);
+
+            throw new Exception($"Updating op operation {opNum} for {jobNum} failed on save");
+        }
+
         [HttpGet("op={opNum}&job={jobNum}", Name = "GetOp")]
         public async Task<IActionResult> GetOp(string jobNum, string opNum, int userId)
         {
