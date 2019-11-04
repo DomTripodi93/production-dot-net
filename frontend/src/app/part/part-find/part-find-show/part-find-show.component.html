@@ -2,6 +2,10 @@
   <div>
     <ul class='border list-group'>
       <li class="list-group-item" >
+        <div class="grid">
+          <button *ngIf="part.active == 'Active'" class='btn btn-danger' (click)="changeActive()">Set Part Inactive</button>
+          <button *ngIf="part.active != 'Active'" class='btn btn-success' (click)="changeActive()">Set Part Active</button>
+        </div>
         <h3>Part #: {{part.partNumber}}</h3>
         <br><br>
         <div class="grid">

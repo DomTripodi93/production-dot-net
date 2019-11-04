@@ -41,7 +41,9 @@ export class PartFindShowComponent implements OnInit {
     }
     this.subscriptions.push(
       this.partServ.partChanged.subscribe(()=>{
-        this.getPart();
+        if (!this.partInput){
+          this.getPart();
+        }
       })
     )
   }
@@ -75,14 +77,14 @@ export class PartFindShowComponent implements OnInit {
         active: 'Inactive'
       }
       this.partServ.changeActive(active, this.part.partNumber).subscribe(()=>{
-        this.partServ.partChanged.next()
+        this.partServ.partChanged.next();
       })
     } else{
       let active = {
         active: 'Active'
       }
       this.partServ.changeActive(active, this.part.partNumber).subscribe(()=>{
-        this.partServ.partChanged.next()
+        this.partServ.partChanged.next();
       })
     }
   }

@@ -130,7 +130,7 @@ namespace BackEnd.Controllers
         }
 
         [HttpPut("active&{partNum}")]
-        public async Task<IActionResult> UpdateActiveJob(int userId, string partNum, UpdateActiveDto partForUpdateDto)
+        public async Task<IActionResult> UpdateActivePart(int userId, string partNum, UpdateActiveDto partForUpdateDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
@@ -140,7 +140,7 @@ namespace BackEnd.Controllers
             _mapper.Map(partForUpdateDto, partFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetJob", new {partNum = partFromRepo.PartNumber}, partForUpdateDto);
+                return CreatedAtRoute("GetPart", new {part = partFromRepo.PartNumber}, partForUpdateDto);
 
             var newData = _mapper.Map(partForUpdateDto, partFromRepo);
 
