@@ -1,0 +1,12 @@
+<div *ngIf="ops.length > 0">
+  <h3 class="bold">Part Number: {{job.partNumber}}</h3>
+  <div class="grid">
+    <div class="border">
+      <h4>Job</h4>
+      <h4 class="bold">{{job.jobNumber}}</h4>
+    </div>
+    <div class="border" *ngFor="let op of ops">
+      <app-production-mill-op [op]="op" jobNumber="{{job.jobNumber}}"></app-production-mill-op>
+    </div>
+  </div>
+</div>

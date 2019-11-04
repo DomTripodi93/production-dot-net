@@ -1,0 +1,19 @@
+<h4>Op Number</h4>
+<h4 class="bold">{{op.opNumber}}</h4>
+<h4>Parts To Date:</h4>
+<div *ngIf="!editMode">
+  <div *ngIf="op.partsToDate">
+      <h4 class="bold">{{op.partsToDate}}</h4>
+  </div>
+  <div *ngIf="!op.partsToDate">
+      <h4 class="bold">0</h4>
+  </div>
+</div>
+<div *ngIf="editMode">
+  <app-production-total partsToDate="{{op.partsToDate}}" opNumber="{{op.opNumber}}" jobNumber="{{jobNumber}}"></app-production-total>
+</div>
+<div class="grid">
+  <button *ngIf="!editMode" class="btn btn-primary" (click)="changeEdit()">
+    <h6>Update</h6>
+  </button>
+</div>

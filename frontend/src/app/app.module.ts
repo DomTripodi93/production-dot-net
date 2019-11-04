@@ -63,6 +63,9 @@ import { ChangeValueComponent } from './shared/settings/change-value/change-valu
 import { FooterComponent } from './shared/footer/footer.component';
 import { ProductionMillComponent } from './production/production-mill/production-mill.component';
 import { ProductionTotalComponent } from './production/production-total/production-total.component';
+import { ProductionMillMachComponent } from './production/production-mill/production-mill-mach/production-mill-mach.component';
+import { ProductionMillJobComponent } from './production/production-mill/production-mill-job/production-mill-job.component';
+import { ProductionMillOpComponent } from './production/production-mill/production-mill-op/production-mill-op.component';
 
 @NgModule({
   declarations: [
@@ -124,6 +127,9 @@ import { ProductionTotalComponent } from './production/production-total/producti
     FooterComponent,
     ProductionMillComponent,
     ProductionTotalComponent,
+    ProductionMillMachComponent,
+    ProductionMillJobComponent,
+    ProductionMillOpComponent,
   ],
   imports: [
     BrowserModule,

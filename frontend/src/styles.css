@@ -17,6 +17,10 @@ h1, h2, h3, h4, h5, h6{
     background-color: rgb(235, 235, 235);
 }
 
+.bold{
+    font-weight: 700;
+}
+
 
 @media only screen and (max-width: 768px) {
     h2{

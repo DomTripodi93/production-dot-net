@@ -1,0 +1,17 @@
+.grid { 
+    display: grid;
+    grid-template-columns: 14.2% 14.2% 14.2% 14.2% 14.2% 14.2% 14.2%;
+}
+
+h3, h4, h6{
+    text-align: center;
+}
+
+h6{
+    line-height: 30%;
+}
+
+.grid2 { 
+    display: grid;
+    grid-template-columns: 100%;
+}

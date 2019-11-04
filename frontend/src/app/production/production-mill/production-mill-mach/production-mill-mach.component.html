@@ -1,0 +1,7 @@
+<div class="cover">
+  <h2 class="bold">{{machine}}</h2>
+  <div *ngFor="let job of jobs">
+    <app-production-mill-job [machine]="machine" [job]="job"></app-production-mill-job>
+  </div>
+  <br>
+</div>

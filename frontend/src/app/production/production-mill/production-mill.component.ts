@@ -13,13 +13,14 @@ import { AuthService } from 'src/app/shared/auth.service';
 })
 export class ProductionMillComponent implements OnInit {
   millSets: MillSet[][] = [];
+  machines = [];
   editMode = false;
 
   constructor(
     private machServ: MachineService,
     private jobServ: JobService,
     private opServ: OpService,
-    private auth: AuthService
+    public auth: AuthService
   ) { }
 
   ngOnInit() {
@@ -33,6 +34,7 @@ export class ProductionMillComponent implements OnInit {
 
   getProduction(){
     this.machServ.fetchMachinesByType().subscribe(machines=>{
+      this.machines = machines
       this.jobServ.fetchJobsByType().subscribe((jobs=>{
         machines.forEach(machine=>{
           if (machine.machine.includes(" ")){
