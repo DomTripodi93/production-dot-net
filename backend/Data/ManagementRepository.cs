@@ -64,7 +64,7 @@ namespace BackEnd.Data
                 .Where(m => m.MachType == machType)
                 .ToListAsync();
                 
-            return machines;
+            return machines.OrderBy(m => m.Machine);
         }
 
         public async Task<IEnumerable<Mach>> GetMachinesByJob(int userId)

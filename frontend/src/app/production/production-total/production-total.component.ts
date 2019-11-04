@@ -18,7 +18,9 @@ export class ProductionTotalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.opNumber + "&job=" + this.jobNumber)
+    this.opServ.partsToDateSubmit.subscribe(()=>{
+      this.onSubmit();
+    })
     this.initForm();
   }
 
@@ -30,10 +32,21 @@ export class ProductionTotalComponent implements OnInit {
   }
 
   onSubmit(){
-    this.opServ.changeOpPartsToDate(this.editTotalForm.value, this.opNumber + "&job=" + this.jobNumber)
-    .subscribe(()=>{
-      this.opServ.opsChanged.next();
-    })
+    if (this.opNumber.includes("/")){
+      this.opNumber = this.opServ.slashToDash(this.opNumber);
+    }
+    if (+this.partsToDate != this.editTotalForm.value.partsToDate){
+      this.partsToDate = "" +this.editTotalForm.value.partsToDate
+      this.opServ.changeOpPartsToDate(
+        this.editTotalForm.value, 
+        this.opNumber + "&job=" + this.jobNumber
+        ).subscribe()
+    }
+  }
+
+  submitAll(){
+    this.opServ.partsToDateSubmit.next();
+    setTimeout(()=>{this.opServ.opsChanged.next()}, 50);
   }
 
   onCancel(){

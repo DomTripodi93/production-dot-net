@@ -1,6 +1,6 @@
 .grid { 
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 100%;
 }
 
 input.ng-invalid.ng-touched {
@@ -8,5 +8,5 @@ input.ng-invalid.ng-touched {
 }
 
 h6, button{
-    line-height: 15%;
+    line-height: 30%;
 }

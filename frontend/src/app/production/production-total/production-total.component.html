@@ -1,4 +1,4 @@
-<form *ngIf="editTotalForm" [formGroup]="editTotalForm" (ngSubmit)='onSubmit()'>
+<form *ngIf="editTotalForm" [formGroup]="editTotalForm" (ngSubmit)='submitAll()'>
   <div class='form-group'>
     <div class="form-group">
       <input 
@@ -11,10 +11,9 @@
       <button 
         class="btn btn-success" 
         type="submit"
-        [disabled]="!editTotalForm.valid"
-      ><h6>
-        Edit
-      </h6></button>
+        [disabled]="!editTotalForm.valid">
+        <h6>Update</h6>
+      </button>
       <button 
         type='button' 
         class='btn btn-danger' 

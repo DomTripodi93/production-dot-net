@@ -43,7 +43,6 @@ export class ProductionMillComponent implements OnInit {
           jobs.result.forEach(job=>{
             this.opServ.fetchOpByMachAndJob(machine.machine+"&job="+job.jobNumber)
             .subscribe(ops=>{
-              console.log(ops)
               if (ops.length > 0){
                 let millSetHold: MillSet = {
                   machine: this.auth.rejoin(machine.machine),
@@ -69,6 +68,5 @@ export class ProductionMillComponent implements OnInit {
   changeEdit(){
     this.editMode = !this.editMode;
   }
-
 
 }
