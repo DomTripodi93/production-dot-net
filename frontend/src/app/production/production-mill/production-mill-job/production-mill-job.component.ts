@@ -21,6 +21,9 @@ export class ProductionMillJobComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.opServ.opsChanged.subscribe(()=>{
+      this.getOps();
+    })
     this.getOps();
   }
 
