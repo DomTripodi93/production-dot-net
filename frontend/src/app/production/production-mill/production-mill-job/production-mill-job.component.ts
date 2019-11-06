@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { OpService } from 'src/app/job/job-ops/operation.service';
 import { MillSet } from '../mill-set.model';
 import { Job } from 'src/app/job/job.model';
@@ -21,11 +21,14 @@ export class ProductionMillJobComponent implements OnInit {
 
   constructor(
     private opServ: OpService,
-    private auth: AuthService
+    private auth: AuthService,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     this.opServ.opsChanged.subscribe(()=>{
+      this.hours = 0;
+      this.minutes = 0;
       this.getOps();
     })
     this.getOps();
@@ -45,6 +48,7 @@ export class ProductionMillJobComponent implements OnInit {
     } else {
       this.hourFormat = "Hours"
     }
+    this.cdRef.detectChanges();
   }
 
   minuteAdder($event){
@@ -63,6 +67,7 @@ export class ProductionMillJobComponent implements OnInit {
     } else {
       this.hourFormat = "Hours"
     }
+    this.cdRef.detectChanges();
   }
 
 }

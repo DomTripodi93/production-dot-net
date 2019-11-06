@@ -12,6 +12,7 @@ export class ProductionTotalComponent implements OnInit {
   @Input() jobNumber: string;
   @Input() opNumber: string;
   editTotalForm: FormGroup;
+  difference: number;
   
   constructor(
     private opServ: OpService
@@ -36,11 +37,19 @@ export class ProductionTotalComponent implements OnInit {
       this.opNumber = this.opServ.slashToDash(this.opNumber);
     }
     if (+this.partsToDate != this.editTotalForm.value.partsToDate){
-      this.partsToDate = "" +this.editTotalForm.value.partsToDate
+      this.difference = this.editTotalForm.value.partsToDate - +this.partsToDate;
+      this.partsToDate = "" +this.editTotalForm.value.partsToDate;
       this.opServ.changeOpPartsToDate(
         this.editTotalForm.value, 
         this.opNumber + "&job=" + this.jobNumber
         ).subscribe()
+      this.opServ.fetchOp(this.opNumber + "&job=" + this.jobNumber).subscribe(op=>{
+        let rem = {remainingQuantity: +op.remainingQuantity - this.difference};
+        this.opServ.changeOpRemaining(
+          rem, 
+          this.opNumber + "&job=" + this.jobNumber
+          ).subscribe()
+      })
     }
   }
 
