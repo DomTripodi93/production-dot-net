@@ -12,6 +12,9 @@
 <div *ngIf="editMode">
   <app-production-total partsToDate="{{op.partsToDate}}" opNumber="{{op.opNumber}}" jobNumber="{{jobNumber}}"></app-production-total>
 </div>
+<div *ngIf="op.remainingQuantity && op.cycleTime">
+  <h5 class="bold">{{hours}} Hours<br>{{minutes}} Minutes Remaining</h5>
+</div>
 <div class="grid">
   <button *ngIf="!editMode" class="btn btn-primary" (click)="changeEdit()">
     <h6>Update</h6>

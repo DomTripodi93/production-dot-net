@@ -10,10 +10,14 @@ export class ProductionMillOpComponent implements OnInit {
   @Input() op: Operation
   @Input() jobNumber: string;
   editMode = false;
+  hours: number;
+  minutes: number;
 
   constructor() { }
 
   ngOnInit() {
+    this.hours = Math.floor((+this.op.remainingQuantity*+this.op.cycleTime)/3600)
+    this.minutes = Math.floor((+this.op.remainingQuantity*+this.op.cycleTime)/60%60)
   }
 
   changeEdit(){
