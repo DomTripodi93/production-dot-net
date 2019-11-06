@@ -14,6 +14,10 @@ export class ProductionMillJobComponent implements OnInit {
   @Input() machine: string;
   @Input() job: Job;
   ops: Operation[] = [];
+  hours = 0;
+  minutes = 0;
+  minFormat = "Minutes"
+  hourFormat = "Hours"
 
   constructor(
     private opServ: OpService,
@@ -32,6 +36,33 @@ export class ProductionMillJobComponent implements OnInit {
     .subscribe(ops=>{
       this.ops = ops;
     })
+  }
+
+  hourAdder($event){
+    this.hours += $event;
+    if (this.hours == 1){
+      this.hourFormat = "Hour"
+    } else {
+      this.hourFormat = "Hours"
+    }
+  }
+
+  minuteAdder($event){
+    this.minutes += $event;
+    if (this.minutes > 60){
+      this.minutes -= 60;
+      this.hours += 1;
+    }
+    if (this.minutes == 1){
+      this.minFormat = "Minute"
+    } else {
+      this.minFormat = "Minutes"
+    }
+    if (this.hours == 1){
+      this.hourFormat = "Hour"
+    } else {
+      this.hourFormat = "Hours"
+    }
   }
 
 }

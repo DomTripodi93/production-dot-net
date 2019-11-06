@@ -4,9 +4,17 @@
     <div class="border">
       <h4>Job</h4>
       <h4 class="bold">{{job.jobNumber}}</h4>
+      <div *ngIf="hours + minutes > 0">
+        <br><br>
+        <h5 class="bold">{{hours}} {{hourFormat}}<br>{{minutes}} {{minFormat}} Remaining</h5>
+      </div>
     </div>
     <div class="border" *ngFor="let op of ops">
-      <app-production-mill-op [op]="op" jobNumber="{{job.jobNumber}}"></app-production-mill-op>
+      <app-production-mill-op
+        (hour)="hourAdder($event)"
+        (minute)="minuteAdder($event)"
+        [op]="op" 
+        jobNumber="{{job.jobNumber}}"></app-production-mill-op>
     </div>
   </div>
 </div>
