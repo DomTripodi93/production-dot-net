@@ -5,6 +5,7 @@ import { JobService } from '../job.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { PartService } from 'src/app/part/part.service';
 import { Part } from 'src/app/part/part.model';
+import { OpService } from '../job-ops/operation.service';
 
 @Component({
   selector: 'app-job-edit',
@@ -23,7 +24,8 @@ export class JobEditComponent implements OnInit {
   constructor(
     private jobServ: JobService,
     private auth: AuthService,
-    private partServ: PartService
+    private partServ: PartService,
+    private opServ: OpService
   ) { }
 
   ngOnInit() {
@@ -62,6 +64,20 @@ export class JobEditComponent implements OnInit {
   onSubmit(){
     this.job = this.editJobForm.value;
     this.editJob(this.job);
+    if (this.editJobForm.value.orderQuantity > 0){
+      this.opServ.fetchOpByJob(this.jobNum).subscribe(ops=>{
+        ops.forEach(op=>{
+          if (op.partsToDate){
+            let rem = {remainingQuantity: this.editJobForm.value.orderQuantity - +op.partsToDate};
+            this.opServ.changeOpRemaining(rem, op.opNumber + "&job=" + op.jobNumber).subscribe();
+          } else {
+            let rem = {remainingQuantity: this.editJobForm.value.orderQuantity};
+            this.opServ.changeOpRemaining(rem, op.opNumber + "&job=" + op.jobNumber).subscribe();
+          }
+          this.opServ.opsChanged.next();
+        })
+      })
+    }
   }
 
   editJob(data: Job) {
