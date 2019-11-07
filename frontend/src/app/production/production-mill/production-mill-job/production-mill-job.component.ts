@@ -70,4 +70,8 @@ export class ProductionMillJobComponent implements OnInit {
     this.cdRef.detectChanges();
   }
 
+  catchRemains($event){
+    this.job.remainingQuantity = $event;
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { OpService } from 'src/app/job/job-ops/operation.service';
 import { JobService } from 'src/app/job/job.service';
@@ -9,6 +9,7 @@ import { JobService } from 'src/app/job/job.service';
   styleUrls: ['./production-total.component.css']
 })
 export class ProductionTotalComponent implements OnInit {
+  @Output() remainingQ= new EventEmitter<string>();
   @Input() partsToDate: string;
   @Input() jobNumber: string;
   @Input() opNumber: string;
@@ -64,7 +65,7 @@ export class ProductionTotalComponent implements OnInit {
                     remainingQuantity: remains
                   }
                   this.jobServ.changeJobRemaining(remainingData, op.jobNumber).subscribe();
-                  this.jobServ.jobChanged.next()
+                  this.remainingQ.emit(""+remains)
                 }
               })
             })
