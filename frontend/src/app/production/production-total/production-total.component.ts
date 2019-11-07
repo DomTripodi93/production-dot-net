@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { OpService } from 'src/app/job/job-ops/operation.service';
+import { JobService } from 'src/app/job/job.service';
 
 @Component({
   selector: 'app-production-total',
@@ -15,7 +16,8 @@ export class ProductionTotalComponent implements OnInit {
   difference: number;
   
   constructor(
-    private opServ: OpService
+    private opServ: OpService,
+    private jobServ: JobService
   ) { }
 
   ngOnInit() {
@@ -48,7 +50,25 @@ export class ProductionTotalComponent implements OnInit {
         this.opServ.changeOpRemaining(
           rem, 
           this.opNumber + "&job=" + this.jobNumber
-          ).subscribe()
+          ).subscribe(()=>{
+            this.opServ.fetchOpByJob(this.jobNumber).subscribe(ops=>{
+              let remains = +ops[0].remainingQuantity;
+              let used = 0;
+              ops.forEach(op=>{
+                used ++
+                if (remains < +op.remainingQuantity){
+                  remains = +op.remainingQuantity;
+                }
+                if (used == ops.length){
+                  let remainingData = {
+                    remainingQuantity: remains
+                  }
+                  this.jobServ.changeJobRemaining(remainingData, op.jobNumber).subscribe();
+                  this.jobServ.jobChanged.next()
+                }
+              })
+            })
+          })
       })
     }
   }

@@ -24,6 +24,7 @@ namespace BackEnd.Helpers
             CreateMap<Job, JobForReturnDto>();
             CreateMap<JobForCreationDto, Job>().ReverseMap();
             CreateMap<JobForUpdateDto, Job>().ReverseMap();
+            CreateMap<RemainingDto, Job>().ReverseMap();
             CreateMap<UpdateActiveDto, Job>().ReverseMap();
             CreateMap<ChangeLog, ChangelogForReturnDto>();
             CreateMap<ChangelogForCreationDto, ChangeLog>().ReverseMap();
@@ -33,7 +34,7 @@ namespace BackEnd.Helpers
             CreateMap<OperationForCreationDto, Operation>().ReverseMap();
             CreateMap<OperationForUpdateDto, Operation>().ReverseMap();
             CreateMap<OpPartsToDateDto, Operation>().ReverseMap();
-            CreateMap<OperationForRemainingDto, Operation>().ReverseMap();
+            CreateMap<RemainingDto, Operation>().ReverseMap();
         }
     }
 }

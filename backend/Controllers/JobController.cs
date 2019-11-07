@@ -75,6 +75,28 @@ namespace BackEnd.Controllers
             throw new Exception($"Updating job lot {jobNum} failed on save");
         }
 
+
+        [HttpPut("remaining/{jobNum}")]
+        public async Task<IActionResult> UpdateJobRemaining(int userId, string jobNum, RemainingDto jobForRemainingDto)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var jobFromRepo = await _repo.GetJob(userId, jobNum);
+
+            _mapper.Map(jobForRemainingDto, jobFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetJob", new {jobNum = jobFromRepo.JobNumber}, jobForRemainingDto);
+
+            var newData = _mapper.Map(jobForRemainingDto, jobFromRepo);
+
+            if (jobFromRepo == newData)
+                return Ok(jobForRemainingDto);
+
+            throw new Exception($"Updating job lot {jobNum} failed on save");
+        }
+
         [HttpPut("active&{jobNum}")]
         public async Task<IActionResult> UpdateActiveJob(int userId, string jobNum, UpdateActiveDto jobForUpdateDto)
         {

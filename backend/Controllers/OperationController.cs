@@ -67,7 +67,7 @@ namespace BackEnd.Controllers
         }
 
         [HttpPut("remaining/op={opNum}&job={jobNum}")]
-        public async Task<IActionResult> UpdateOperationRemaining(int userId, string jobNum, string opNum, OperationForRemainingDto opForRemainingDto)
+        public async Task<IActionResult> UpdateOperationRemaining(int userId, string jobNum, string opNum, RemainingDto opForRemainingDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
