@@ -81,11 +81,11 @@ export class JobNewComponent implements OnInit {
     });
     setTimeout(()=>{
       if (this.isError){
-        this.error = "That job already exsists on that machine!";
+        this.error = "That job already exists on that machine!";
       } else if (this.andCalculate == "length"){
-        this.router.navigate(["calculator/job"], {relativeTo: this.route})
+        this.router.navigate(["../calculator/job/" + this.jobForm.value.jobNumber], {relativeTo: this.route})
       } else if (this.andCalculate == "weight"){
-        this.router.navigate(["calculator/weight"], {relativeTo: this.route})
+        this.router.navigate(["../calculator/weight/" + this.jobForm.value.jobNumber], {relativeTo: this.route})
       } else {
         this.router.navigate([".."], {relativeTo: this.route})
       }
