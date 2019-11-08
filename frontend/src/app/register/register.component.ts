@@ -12,9 +12,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  @ViewChild('data') signupForm: NgForm;
   error = "";
   isError = false;
-  @ViewChild('data') signupForm: NgForm;
   submitted = false;
   user: User;
   

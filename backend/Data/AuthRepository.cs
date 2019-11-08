@@ -52,7 +52,9 @@ namespace BackEnd.Data
             user.PasswordSalt = passwordSalt;
 
             SettingsForCreationDto settingsForCreation = new SettingsForCreationDto{
-                IsNew = true
+                IsNew = true,
+                SkipLathe = false,
+                SkipMill = false
             };
 
             Settings settings = _mapper.Map<Settings>(settingsForCreation);
