@@ -3,12 +3,12 @@
     grid-template-columns: 14.2% 14.2% 14.2% 14.2% 14.2% 14.2% 14.2%;
 }
 
-h3, h4, h5, h6{
+h3, h5, h5, h6{
     text-align: center;
 }
 
-h6{
-    line-height: 30%;
+h4{
+    line-height: 10%;
 }
 
 .grid2 { 

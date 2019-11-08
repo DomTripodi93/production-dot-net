@@ -2,16 +2,19 @@
   <h3 class="bold">Part Number: {{job.partNumber}}</h3>
   <div class="grid">
     <div class="border">
-      <h4>Job</h4>
-      <h4 class="bold">{{job.jobNumber}}</h4>
-      <h4>Order Quantity:</h4>
-      <h4 class="bold">{{job.orderQuantity}}</h4>
-      <div *ngIf="job.remainingQuantity">
-          <h4>Remaining Quantity:</h4>
-          <h4 class="bold">{{job.remainingQuantity}}</h4>
+      <h5>Job #:</h5>
+      <h5 class="bold">{{job.jobNumber}}</h5>
+      <div *ngIf="job.orderQuantity">
+          <h5>Ordered:</h5>
+          <h5 class="bold">{{job.orderQuantity}}</h5>
       </div>
+      <div *ngIf="job.remainingQuantity">
+          <h5>Remaining:</h5>
+          <h5 class="bold">{{job.remainingQuantity}}</h5>
+      </div>
+      <h4><br></h4>
       <div *ngIf="hours + minutes > 0">
-        <h5 class="bold">{{hours}} {{hourFormat}}<br>{{minutes}} {{minFormat}}<br>Remaining</h5>
+        <h6 class="bold">{{hours}} {{hourFormat}}<br>{{minutes}} {{minFormat}}<br>Remaining</h6>
       </div>
     </div>
     <div class="border" *ngFor="let op of ops">

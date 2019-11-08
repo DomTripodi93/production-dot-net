@@ -1,22 +1,25 @@
-<h4>Op Number</h4>
-<h4 class="bold">{{op.opNumber}}</h4>
-<h4>Parts To Date:</h4>
+<h5>Op #:</h5>
+<h5 class="bold">{{op.opNumber}}</h5>
+<h4><br></h4>
+<h5>Parts To Date:</h5>
 <div *ngIf="!editMode">
   <div *ngIf="op.partsToDate">
-      <h4 class="bold">{{op.partsToDate}}</h4>
+      <h5 class="bold">{{op.partsToDate}}</h5>
   </div>
   <div *ngIf="!op.partsToDate">
-      <h4 class="bold">0</h4>
+      <h5 class="bold">0</h5>
   </div>
 </div>
+<h4><br></h4>
 <div *ngIf="editMode">
   <app-production-total (remainingQ)="emitRemains($event)" partsToDate="{{op.partsToDate}}" opNumber="{{op.opNumber}}" jobNumber="{{jobNumber}}"></app-production-total>
 </div>
 <div *ngIf="op.remainingQuantity && op.cycleTime">
-  <h5 class="bold">{{hours}} {{hourFormat}}<br>{{minutes}} {{minFormat}}<br>Remaining</h5>
+  <h6 class="bold">{{hours}} {{hourFormat}}<br>{{minutes}} {{minFormat}}<br>Remaining</h6>
 </div>
 <div class="grid">
+  <br>
   <button *ngIf="!editMode" class="btn btn-primary" (click)="changeEdit()">
-    <h6>Update</h6>
+    <h6 class="short">Update</h6>
   </button>
 </div>
