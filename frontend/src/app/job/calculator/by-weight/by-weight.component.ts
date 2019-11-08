@@ -12,7 +12,6 @@ import { AuthService } from 'src/app/shared/auth.service';
 })
 export class ByWeightComponent implements OnInit, OnDestroy {
   type =["Round ⌀", "Hex"];
-  jobNum: string;
 
 
   constructor(
@@ -24,15 +23,12 @@ export class ByWeightComponent implements OnInit, OnDestroy {
 
   ngOnInit(){
     this.route.params.subscribe((params: Params) =>{
-      this.jobNum = params['jobNum'];
-    });
-    setTimeout(()=>{
-      this.jobServ.fetchJob(this.jobNum)
+      this.jobServ.fetchJob(params['jobNum'])
       .subscribe(job => {
         this.jobServ.jobHold = job;
         this.initForm();
       });
-    },20);
+    });
   }
   
   private initForm() {

@@ -65,7 +65,6 @@ export class JobNewComponent implements OnInit {
 
   
   onSubmit(){
-    console.log(this.jobForm.value)
     this.andCalculate = "None";
     this.newJob(this.jobForm.value);
   }
@@ -93,13 +92,11 @@ export class JobNewComponent implements OnInit {
   }
 
   onAddThenCalcByLength(){
-    this.jobServ.jobHold = this.jobForm.value;
     this.andCalculate = "length";
     this.newJob(this.jobForm.value);
   }
 
   onAddThenCalcByWeight(){
-    this.jobServ.jobHold = this.jobForm.value;
     this.andCalculate = "weight";
     this.newJob(this.jobForm.value);
   }

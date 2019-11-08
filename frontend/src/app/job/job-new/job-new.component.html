@@ -27,45 +27,47 @@
           id="orderQuantity" 
           class="form-control">
       </div>
-      <div class="form-group">
-        <label for="weightRecieved">Weight Recieved (Optional)</label>
-        <input 
-          formControlName='weightRecieved'
-          type="number" 
-          id="weightRecieved" 
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="oal">Overall Length of Job (Optional)</label>
-        <input 
-          formControlName='oal'
-          type="number" 
-          id="oal" 
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="cutOff">Cut Off Size (Optional)</label>
-        <input 
-          formControlName='cutOff'
-          type="number" 
-          id="cutOff" 
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="mainFacing">Amount Faced on Main Spindle (Optional)</label>
-        <input 
-          formControlName='mainFacing'
-          type="number" 
-          id="mainFacing" 
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="subFacing">Amount Faced on Sub Spindle (Optional)</label>
-        <input 
-          formControlName='subFacing'
-          type="number" 
-          id="subFacing" 
-          class="form-control">
+      <div *ngIf="auth.machType == 'lathe'">
+        <div class="form-group">
+          <label for="weightRecieved">Weight Recieved (Optional)</label>
+          <input 
+            formControlName='weightRecieved'
+            type="number" 
+            id="weightRecieved" 
+            class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="oal">Overall Length of Job (Optional)</label>
+          <input 
+            formControlName='oal'
+            type="number" 
+            id="oal" 
+            class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="cutOff">Cut Off Size (Optional)</label>
+          <input 
+            formControlName='cutOff'
+            type="number" 
+            id="cutOff" 
+            class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="mainFacing">Amount Faced on Main Spindle (Optional)</label>
+          <input 
+            formControlName='mainFacing'
+            type="number" 
+            id="mainFacing" 
+            class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="subFacing">Amount Faced on Sub Spindle (Optional)</label>
+          <input 
+            formControlName='subFacing'
+            type="number" 
+            id="subFacing" 
+            class="form-control">
+        </div>
       </div>
       <br><br>
       <div class='grid'>
@@ -84,23 +86,25 @@
           Cancel
         </button>
         <br><br>
-        <button 
-          class="btn btn-success" 
-          type="button"
-          [disabled]="!jobForm.valid"
-          (click)='onAddThenCalcByLength()'
-        >
-          Add Job and Calculate Production by Length
-        </button>
-        <br><br>
-        <button 
-          class="btn btn-success" 
-          type="button"
-          [disabled]="!jobForm.valid"
-          (click)='onAddThenCalcByWeight()'
-        >
-          Add Job and Calculate Production by Weight
-        </button>
+        <div *ngIf="auth.machType == 'lathe'">
+          <button 
+            class="btn btn-success" 
+            type="button"
+            [disabled]="!jobForm.valid"
+            (click)='onAddThenCalcByLength()'
+          >
+            Add Job and Calculate Production by Length
+          </button>
+          <br><br>
+          <button 
+            class="btn btn-success" 
+            type="button"
+            [disabled]="!jobForm.valid"
+            (click)='onAddThenCalcByWeight()'
+          >
+            Add Job and Calculate Production by Weight
+          </button>
+        </div>
       </div>
       <br><br>
       <div *ngIf="isError">
