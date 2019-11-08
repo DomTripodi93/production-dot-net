@@ -6,8 +6,15 @@
           <button *ngIf="part.active == 'Active'" class='btn btn-danger' (click)="changeActive()">Set Part Inactive</button>
           <button *ngIf="part.active != 'Active'" class='btn btn-success' (click)="changeActive()">Set Part Active</button>
         </div>
-        <h3>Part #: {{part.partNumber}}</h3>
-        <br><br>
+        <h3>Part #:</h3>
+        <h3 class="bold">{{part.partNumber}}</h3>
+        <div *ngIf="part.rev">
+          <h3>Rev: <strong>{{part.rev}}</strong></h3>
+        </div>
+        <div *ngIf="!part.rev">
+          <h3><br></h3>
+        </div>
+        <h4><br></h4>
         <div class="grid">
           <button class='btn btn-danger' (click)="onDelete(part.partNumber)">Delete Part</button>
         </div>

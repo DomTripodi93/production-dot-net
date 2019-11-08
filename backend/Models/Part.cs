@@ -11,6 +11,7 @@ namespace BackEnd.Models
         public string PartNumber { get; set; }
         public string MachType { get; set; }
         public string Active { get; set; }
+        public string Rev { get; set; }
         public ICollection<Job> Jobs { get; set; }
     }
 }

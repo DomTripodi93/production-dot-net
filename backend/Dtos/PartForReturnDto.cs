@@ -4,6 +4,7 @@ namespace BackEnd.Dtos
     {
         public string PartNumber { get; set; }
         public string Active { get; set; }
+        public string Rev { get; set; }
         
     }
 }
