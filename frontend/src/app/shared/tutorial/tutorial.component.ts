@@ -14,12 +14,18 @@ import { JobService } from '../../job/job.service';
   styleUrls: ['./tutorial.component.css']
 })
 export class TutorialComponent implements OnInit, OnDestroy {
-  machines = false;
-  parts = false;
-  jobs = false;
-  ops = false;
+  lathes = false;
+  mills = false;
+  latheParts = false;
+  millParts = false;
+  latheJobs = false;
+  millJobs = false;
+  latheOps = false;
+  millOps = false;
   hourly = false;
-  production = false;  
+  latheProduction = false;  
+  millProduction = false;  
+  millJob = "";
   job = "";
   op = "";
   subscriptions: Subscription[] = [];
@@ -35,6 +41,24 @@ export class TutorialComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    if (this.auth.skipLathe){
+      this.lathes = true;
+      this.hourly = true;
+      this.latheJobs = true;
+      this.latheOps = true;
+      this.latheParts = true;
+      this.latheProduction = true;
+      this.auth.machType = "Mill"
+    } else if (this.auth.skipMill){
+      this.mills = true;
+      this.millJobs = true;
+      this.millOps = true;
+      this.millParts = true;
+      this.millProduction = true;
+      this.auth.machType = "Lathe"
+    } else {
+      this.auth.machType = "Lathe"
+    }
     this.checkMachines();
     //Checks if user has created any machines, and starts a chain 
     // reaction to check subsequent model creations to initially set
@@ -49,7 +73,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
       setTimeout(()=>{this.checkJobs();},50)}
     ));
     this.subscriptions.push(this.opServ.opsChanged.subscribe(()=>{
-      setTimeout(()=>{this.checkOps();},50)}
+      setTimeout(()=>{this.checkLatheOps(); this.checkMillOps();},50)}
     ));
     this.subscriptions.push(this.hourlyServ.hourlyChanged.subscribe(()=>{
       setTimeout(()=>{this.checkHourly();},50)}
@@ -60,11 +84,16 @@ export class TutorialComponent implements OnInit, OnDestroy {
   }
 
   checkMachines(){
-    this.mach.fetchAllMachines()
+    this.mach.fetchMachinesByType()
       .subscribe(machine => {
         if (machine.length > 0){
-          this.checkParts();
-          this.machines = true;
+          if (this.auth.machType == "Lathe"){
+            this.lathes = true;
+            this.checkParts();
+          } else {
+            this.mills = true;
+            this.checkParts();
+          }
         }
       }
     );
@@ -73,11 +102,16 @@ export class TutorialComponent implements OnInit, OnDestroy {
   // to check the next relevant model, parts
 
   checkParts(){
-    this.partServ.fetchAllParts()
+    this.partServ.fetchPartsByType()
       .subscribe(part => {
         if (part.length > 0){
-          this.checkJobs();
-          this.parts = true;
+          if (this.auth.machType == "Lathe"){
+            this.latheParts = true;
+            this.checkJobs();
+          } else{
+            this.millParts = true;
+            this.checkJobs();
+          }
         }
       }
     );
@@ -89,9 +123,15 @@ export class TutorialComponent implements OnInit, OnDestroy {
     this.jobServ.fetchAllJobs()
       .subscribe(jobs => {
         if (jobs.length > 0){
-          this.job = jobs[0].jobNumber
-          this.jobs = true;
-          this.checkOps();
+          if (this.auth.machType == "Lathe"){
+            this.job = jobs[0].jobNumber
+            this.latheJobs = true;
+            this.checkLatheOps();
+          } else {
+            this.millJob = jobs[0].jobNumber
+            this.millJobs = true;
+            this.checkMillOps();
+          }
         }
       }
     )
@@ -100,17 +140,32 @@ export class TutorialComponent implements OnInit, OnDestroy {
   // to check the next relevant model, Ops, also sets job number
   // for multiple production lots link
 
-  checkOps(){
+  checkLatheOps(){
     this.opServ.fetchOpByJob(this.job)
       .subscribe(ops => {
         if (ops.length > 0){
-          this.checkHourly();
-          this.op = ops[0].opNumber;
-          if (this.op.includes("/")){
-            this.op = this.opServ.slashToDash(this.op);
+          this.latheOps = true;
+          if (ops[0].opNumber.includes("/")){
+            this.op = this.opServ.slashToDash(ops[0].opNumber);
+          } else {
+            this.op = ops[0].opNumber;
           }
-          this.ops = true;
+          this.checkHourly();
         }
+      }
+    )
+  }
+  //Checks if user has created any Ops, and if they have, moves
+  // to check the next relevant model, Hourly, also sets op number
+  // for multiple production lots link
+
+  checkMillOps(){
+    this.opServ.fetchOpByJob(this.millJob)
+      .subscribe(ops => {
+        if (ops.length > 0){
+          this.millOps = true;
+          this.checkProduction();
+        } 
       }
     )
   }
@@ -132,14 +187,24 @@ export class TutorialComponent implements OnInit, OnDestroy {
   // to check the next relevant model, Production
 
   checkProduction(){
-    this.prodServ.fetchAllProduction()
-      .subscribe(prod => {
+    if (this.auth.machType == "Lathe"){
+      this.prodServ.fetchAllProduction()
+        .subscribe(prod => {
         if (prod.length > 0){
-          this.production = true;
-          this.op = prod[0].opNumber
+            this.latheProduction = true;
+            this.op = prod[0].opNumber
+          } 
         }
-      }
-    )
+      );
+    } else {
+      this.opServ.fetchOpByJob(this.millJob)
+        .subscribe(ops => {
+          if (+ops[0].partsToDate > 0){
+            this.millProduction = true;
+          } 
+        }
+      );
+    }
   }
   //Checks if user has created any Production Lots
 
