@@ -66,6 +66,40 @@ namespace BackEnd.Controllers
             throw new Exception($"Updating settings for {userId} failed on save");
         }
 
+        [HttpPut("lathe")]
+        public async Task<IActionResult> UpdateSettingsLathe(int userId, SettingsForCreationDto settingsForUpdateDto)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var settingsFromRepo = await _repo.GetSettings(userId);
+
+            settingsFromRepo.SkipLathe = settingsForUpdateDto.SkipLathe;
+
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetSettings", new {id = settingsFromRepo.userId}, settingsForUpdateDto);
+
+            throw new Exception($"Updating settings for {userId} failed on save");
+        }
+
+        [HttpPut("mill")]
+        public async Task<IActionResult> UpdateSettingsMill(int userId, SettingsForCreationDto settingsForUpdateDto)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var settingsFromRepo = await _repo.GetSettings(userId);
+
+            settingsFromRepo.SkipMill = settingsForUpdateDto.SkipMill;
+
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetSettings", new {id = settingsFromRepo.userId}, settingsForUpdateDto);
+
+            throw new Exception($"Updating settings for {userId} failed on save");
+        }
+
         [HttpPut("time")]
         public async Task<IActionResult> UpdateSettingsStartTime(int userId, SettingsForCreationDto settingsForUpdateDto)
         {

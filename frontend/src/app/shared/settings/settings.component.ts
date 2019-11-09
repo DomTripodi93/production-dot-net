@@ -9,6 +9,8 @@ import { AuthService } from '../auth.service';
 })
 export class SettingsComponent implements OnInit, OnDestroy {
   tutorialStatus = "";
+  latheStatus = "";
+  millStatus = "";
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -26,10 +28,20 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   checkStatus(){
     this.auth.checkSettings().subscribe(()=>{
-      if (this.auth.isNew === true){
-        this.tutorialStatus = "Currently displaying tutorials."
+      if (this.auth.isNew){
+        this.tutorialStatus = "Currently displaying any tutorials."
       } else {
         this.tutorialStatus = "Currently not displaying tutorials."
+      }
+      if (this.auth.skipLathe){
+        this.latheStatus = "Currently displaying tutorials."
+      } else {
+        this.latheStatus = "Currently not displaying tutorials."
+      }
+      if (this.auth.skipMill){
+        this.millStatus = "Currently displaying tutorials."
+      } else {
+        this.millStatus = "Currently not displaying tutorials."
       }
     });
   }
@@ -38,11 +50,45 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 
   changeTutorial() {
-    if (confirm("Are you sure you want to hide these tutorials?")){
-      this.auth.changeNew();
+    if (this.auth.isNew == true){
+      if (confirm("Are you sure you want to hide these tutorials?")){
+        this.auth.changeNew();
+      }
+    } else {
+      if (confirm("Are you sure you want to show tutorials?")){
+        this.auth.changeNew();
+      }
     }
   }
-  //Confirms decision to change Tutorial activation status, and sends 
+  //Confirms decision to change All Tutorial activation status, and sends 
+  // change data to backend API
+
+  changeLathe() {
+    if (this.auth.isNew == true){
+      if (confirm("Are you sure you want to hide these tutorials?")){
+        this.auth.changeLathe();
+      }
+    } else {
+      if (confirm("Are you sure you want to show tutorials?")){
+        this.auth.changeLathe();
+      }
+    }
+  }
+  //Confirms decision to change Lathe Tutorial activation status, and sends 
+  // change data to backend API
+
+  changeMill() {
+    if (this.auth.isNew == true){
+      if (confirm("Are you sure you want to hide these tutorials?")){
+        this.auth.changeMill();
+      }
+    } else {
+      if (confirm("Are you sure you want to show tutorials?")){
+        this.auth.changeMill();
+      }
+    }
+  }
+  //Confirms decision to change Mill Tutorial activation status, and sends 
   // change data to backend API
 
   onChangeStartTime(){

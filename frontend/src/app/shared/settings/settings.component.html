@@ -1,8 +1,9 @@
 <div class="border">
+  <h3 class="bold float-mid">Toggle Tutorials</h3>
   <br>
   <h4 class="grid">
     <div class="float-mid">
-      Toggle Tutorials:
+      All Tutorials:
     </div>
     <div class="float-mid">
       <strong>{{tutorialStatus}}</strong>
@@ -12,15 +13,61 @@
       *ngIf="auth.isNew" 
       (click)="changeTutorial()"
       class="btn btn-primary">
-      <strong>Hide Tutorial</strong>
+      <strong>Hide Tutorials</strong>
     </button>
     <button
       *ngIf="!auth.isNew" 
       (click)="changeTutorial()"
       class="btn btn-primary">
-      <strong>Show Tutorial</strong>
+      <strong>Show Tutorials</strong>
     </button>
   </h4>
+  <div *ngIf="auth.isNew">
+    <h6><br></h6>
+    <h4 class="grid">
+      <div class="float-mid">
+        Lathe Tutorials:
+      </div>
+      <div class="float-mid">
+        <strong>{{latheStatus}}</strong>
+      </div>
+      <div></div>
+      <button
+        *ngIf="auth.skipLathe" 
+        (click)="changeLathe()"
+        class="btn btn-primary">
+        <strong>Hide Tutorial</strong>
+      </button>
+      <button
+        *ngIf="!auth.skipLathe" 
+        (click)="changeLathe()"
+        class="btn btn-primary">
+        <strong>Show Tutorial</strong>
+      </button>
+    </h4>
+    <h6><br></h6>
+    <h4 class="grid">
+      <div class="float-mid">
+        Mill Tutorials:
+      </div>
+      <div class="float-mid">
+        <strong>{{millStatus}}</strong>
+      </div>
+      <div></div>
+      <button
+        *ngIf="auth.skipMill" 
+        (click)="changeMill()"
+        class="btn btn-primary">
+        <strong>Hide Tutorial</strong>
+      </button>
+      <button
+        *ngIf="!auth.skipMill" 
+        (click)="changeMill()"
+        class="btn btn-primary">
+        <strong>Show Tutorial</strong>
+      </button>
+    </h4>
+  </div>
 </div>
 <br>
 <div class="border">

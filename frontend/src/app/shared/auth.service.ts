@@ -27,11 +27,25 @@ export class AuthService {
   authChanged = new Subject();
   machTypeChanged = new Subject();
   machType = "";  
+  skipLathe = false;
+  skipMill = false;
   makeOld = {
     isNew: false
   };
   makeNew = {
     isNew: true
+  };
+  latheShow = {
+    skipLathe: false
+  };
+  latheHide = {
+    skipLathe: true
+  };
+  millShow = {
+    skipMill: false
+  };
+  millHide = {
+    skipMill: true
   };
 
   constructor(
@@ -93,6 +107,8 @@ export class AuthService {
     .pipe(
       map((responseData: User) => {
         this.isNew = responseData.isNew;
+        this.skipLathe = responseData.skipLathe;
+        this.skipMill = responseData.skipMill;
         if (responseData.defaultBarCut){
           this.defaultBarCut = responseData.defaultBarCut;            
         }
@@ -160,7 +176,35 @@ export class AuthService {
       });
     }
   }
-  //Checks if tutorials are active, and either activates or deactivates them for the 
+  //Checks if all tutorials are active, and either activates or deactivates them for the 
+  // current user
+
+  changeLathe(){
+    if (this.skipLathe == true){
+      this.changeSetting("lathe", this.latheShow).subscribe(()=>{
+        this.authChanged.next();
+      });
+    } else {
+      this.changeSetting("lathe", this.latheHide).subscribe(()=>{
+        this.authChanged.next();
+      });
+    }
+  }
+  //Checks if lathe tutorials are active, and either activates or deactivates them for the 
+  // current user
+
+  changeMill(){
+    if (this.skipMill == true){
+      this.changeSetting("mill", this.millShow).subscribe(()=>{
+        this.authChanged.next();
+      });
+    } else {
+      this.changeSetting("mill", this.millHide).subscribe(()=>{
+        this.authChanged.next();
+      });
+    }
+  }
+  //Checks if mill tutorials are active, and either activates or deactivates them for the 
   // current user
 
   changeSetting(path, data){

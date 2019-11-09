@@ -4,6 +4,8 @@ export interface User {
     password: string;
     id?: string;
     isNew: boolean;
+    skipLathe: boolean;
+    skipMill: boolean;
     defaultStartTime: string;
     defaultBarEnd: string;
     defaultBarCut: string;
