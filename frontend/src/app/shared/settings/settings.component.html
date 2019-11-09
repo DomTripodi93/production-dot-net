@@ -71,10 +71,11 @@
 </div>
 <br>
 <div class="border">
+  <h3 class="bold float-mid">Defaults</h3>
   <br>
   <h4 *ngIf="!auth.setStartTime" class="grid">
     <div class="float-mid">
-      Default Start Time: 
+      Start Time: 
     </div>
     <div class="float-mid">
       <strong>{{auth.defaultStartTimeString}}</strong> 
@@ -87,13 +88,11 @@
   <div *ngIf="auth.setStartTime">
     <app-change-value [time]="auth.defaultStartTime" [type]="'time'"></app-change-value>
   </div>
-</div>
-<br>
-<div class="border">
+  <br>
   <br>
   <h4 *ngIf="!auth.setBarEnd" class="grid">
     <div class="float-mid">
-      Default Bar End Size: 
+      Bar End: 
     </div>
     <div class="float-mid">
       <strong>{{auth.defaultBarEnd}}</strong> 
@@ -106,13 +105,11 @@
   <div *ngIf="auth.setBarEnd">
     <app-change-value [size]="auth.defaultBarEnd" [type]="'end'"></app-change-value>
   </div>
-</div>
-<br>
-<div class="border">
+  <br>
   <br>
   <h4 *ngIf="!auth.setBarCut" class="grid">
     <div class="float-mid">
-      Default Bar Cut Size: 
+      Bar Cut: 
     </div>
     <div class="float-mid">
       <strong>{{auth.defaultBarCut}}</strong>
