@@ -48,9 +48,15 @@ export class PartService {
   }
 
 
-  fetchPartsByType() {
+  fetchPartsByType(type?) {
+    let mach = "";
+    if (type){
+      mach = type;
+    } else {
+      mach = this.auth.machType;
+    }
     return this.http.get(
-      this.auth.apiUrl + '/part/type=' + this.auth.machType
+      this.auth.apiUrl + '/part/type=' + mach
     )
     .pipe(
       map((responseData: Part[]) => {

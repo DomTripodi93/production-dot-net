@@ -42,18 +42,13 @@ export class JobService {
     )
   } 
 
-  fetchAllJobs() {
-    return this.http.get(
-      this.auth.apiUrl + '/job/'
-    )
-    .pipe(
-      map((responseData: Job[]) => {
-        return responseData;
-      })
-    )
-  } 
-
-  fetchJobsByType(page?, itemsPerPage?): Observable<PaginatedResult<Job[]>> {
+  fetchJobsByType(page?, itemsPerPage?, type?): Observable<PaginatedResult<Job[]>>{
+    let mach = "";
+    if (type){
+      mach = type;
+    } else {
+      mach = this.auth.machType;
+    }
     const paginatedResult: PaginatedResult<Job[]> = new PaginatedResult<Job[]>();
 
     let params = new HttpParams();
@@ -64,7 +59,7 @@ export class JobService {
     }
 
       return this.http.get(
-        this.auth.apiUrl + '/job/type=' + this.auth.machType, {observe: "response", params}
+        this.auth.apiUrl + '/job/type=' + mach, {observe: "response", params}
       )
       .pipe(
         map((responseData: any) => {

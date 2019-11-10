@@ -29,6 +29,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
   latheJob = "";
   op = "";
   subscriptions: Subscription[] = [];
+  checking = "";
 
   constructor(
     private auth: AuthService,
@@ -48,16 +49,16 @@ export class TutorialComponent implements OnInit, OnDestroy {
       this.latheOps = true;
       this.latheParts = true;
       this.latheProduction = true;
-      this.auth.machType = "mill"
+      this.checking = "mill"
     } else if (this.auth.skipMill){
       this.mills = true;
       this.millJobs = true;
       this.millOps = true;
       this.millParts = true;
       this.millProduction = true;
-      this.auth.machType = "lathe"
+      this.checking = "lathe"
     } else {
-      this.auth.machType = "lathe"
+      this.checking = "lathe"
     }
     this.checkMachines();
     //Checks if user has created any machines, and starts a chain 
@@ -84,17 +85,17 @@ export class TutorialComponent implements OnInit, OnDestroy {
   }
 
   checkMachines(){
-    this.mach.fetchMachinesByType()
+    this.mach.fetchMachinesByType(this.checking)
       .subscribe(machine => {
         if (machine.length > 0){
-          if (this.auth.machType == "lathe"){
+          if (this.checking == "lathe"){
             this.lathes = true;
             this.checkParts();
           } else {
             this.mills = true;
             this.checkParts();
           }
-        } else if (this.auth.machType == "lathe" && !this.auth.skipLathe){
+        } else if (this.checking == "lathe" && !this.auth.skipLathe){
           this.lathes = false;
         } else if (!this.auth.skipMill) {
           this.mills = false;
@@ -106,17 +107,17 @@ export class TutorialComponent implements OnInit, OnDestroy {
   // to check the next relevant model, parts
 
   checkParts(){
-    this.partServ.fetchPartsByType()
+    this.partServ.fetchPartsByType(this.checking)
       .subscribe(part => {
         if (part.length > 0){
-          if (this.auth.machType == "lathe"){
+          if (this.checking == "lathe"){
             this.latheParts = true;
             this.checkJobs();
           } else{
             this.millParts = true;
             this.checkJobs();
           }
-        } else if (this.auth.machType == "lathe" && !this.auth.skipLathe){
+        } else if (this.checking == "lathe" && !this.auth.skipLathe){
           this.latheParts = false;
         } else if (!this.auth.skipMill) {
           this.millParts = false;
@@ -128,15 +129,16 @@ export class TutorialComponent implements OnInit, OnDestroy {
   // to check the next relevant Model, Jobs
 
   checkJobs(){
-    this.jobServ.fetchAllJobs()
+    this.jobServ.fetchJobsByType(1, 6, this.checking)
       .subscribe(jobs => {
-        if (jobs.length > 0){
-          if (this.auth.machType == "lathe"){
-            this.latheJob = jobs[0].jobNumber
+        console.log(jobs.result)
+        if (jobs.result.length > 0){
+          if (this.checking == "lathe"){
+            this.latheJob = jobs.result[0].jobNumber
             this.latheJobs = true;
             this.checkLatheOps();
           } else {
-            this.millJob = jobs[0].jobNumber
+            this.millJob = jobs.result[0].jobNumber
             this.millJobs = true;
             this.checkMillOps();
           }
@@ -195,12 +197,13 @@ export class TutorialComponent implements OnInit, OnDestroy {
   // to check the next relevant model, Production
 
   checkProduction(){
-    if (this.auth.machType == "lathe"){
+    if (this.checking == "lathe"){
       this.prodServ.fetchAllProduction()
         .subscribe(prod => {
         if (prod.length > 0){
             this.latheProduction = true;
             this.op = prod[0].opNumber;
+            this.checking = "mill";
             this.checkMachines();
           } 
         }

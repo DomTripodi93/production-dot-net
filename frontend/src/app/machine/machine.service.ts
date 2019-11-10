@@ -54,9 +54,15 @@ export class MachineService {
         )
     }
   
-    fetchMachinesByType() {
+    fetchMachinesByType(type?) {
+      let mach = "";
+      if (type){
+        mach = type;
+      } else {
+        mach = this.auth.machType;
+      }
         return this.http.get(
-          this.auth.apiUrl + '/machine/type=' + this.auth.machType
+          this.auth.apiUrl + '/machine/type=' + mach
         )
         .pipe(
           map((responseData: Machine[]) => {
