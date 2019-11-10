@@ -26,7 +26,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
   latheProduction = false;  
   millProduction = false;  
   millJob = "";
-  job = "";
+  latheJob = "";
   op = "";
   subscriptions: Subscription[] = [];
 
@@ -48,16 +48,16 @@ export class TutorialComponent implements OnInit, OnDestroy {
       this.latheOps = true;
       this.latheParts = true;
       this.latheProduction = true;
-      this.auth.machType = "Mill"
+      this.auth.machType = "mill"
     } else if (this.auth.skipMill){
       this.mills = true;
       this.millJobs = true;
       this.millOps = true;
       this.millParts = true;
       this.millProduction = true;
-      this.auth.machType = "Lathe"
+      this.auth.machType = "lathe"
     } else {
-      this.auth.machType = "Lathe"
+      this.auth.machType = "lathe"
     }
     this.checkMachines();
     //Checks if user has created any machines, and starts a chain 
@@ -87,13 +87,17 @@ export class TutorialComponent implements OnInit, OnDestroy {
     this.mach.fetchMachinesByType()
       .subscribe(machine => {
         if (machine.length > 0){
-          if (this.auth.machType == "Lathe"){
+          if (this.auth.machType == "lathe"){
             this.lathes = true;
             this.checkParts();
           } else {
             this.mills = true;
             this.checkParts();
           }
+        } else if (this.auth.machType == "lathe" && !this.auth.skipLathe){
+          this.lathes = false;
+        } else if (!this.auth.skipMill) {
+          this.mills = false;
         }
       }
     );
@@ -105,13 +109,17 @@ export class TutorialComponent implements OnInit, OnDestroy {
     this.partServ.fetchPartsByType()
       .subscribe(part => {
         if (part.length > 0){
-          if (this.auth.machType == "Lathe"){
+          if (this.auth.machType == "lathe"){
             this.latheParts = true;
             this.checkJobs();
           } else{
             this.millParts = true;
             this.checkJobs();
           }
+        } else if (this.auth.machType == "lathe" && !this.auth.skipLathe){
+          this.latheParts = false;
+        } else if (!this.auth.skipMill) {
+          this.millParts = false;
         }
       }
     );
@@ -123,8 +131,8 @@ export class TutorialComponent implements OnInit, OnDestroy {
     this.jobServ.fetchAllJobs()
       .subscribe(jobs => {
         if (jobs.length > 0){
-          if (this.auth.machType == "Lathe"){
-            this.job = jobs[0].jobNumber
+          if (this.auth.machType == "lathe"){
+            this.latheJob = jobs[0].jobNumber
             this.latheJobs = true;
             this.checkLatheOps();
           } else {
@@ -141,7 +149,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
   // for multiple production lots link
 
   checkLatheOps(){
-    this.opServ.fetchOpByJob(this.job)
+    this.opServ.fetchOpByJob(this.latheJob)
       .subscribe(ops => {
         if (ops.length > 0){
           this.latheOps = true;
@@ -187,13 +195,12 @@ export class TutorialComponent implements OnInit, OnDestroy {
   // to check the next relevant model, Production
 
   checkProduction(){
-    if (this.auth.machType == "Lathe"){
+    if (this.auth.machType == "lathe"){
       this.prodServ.fetchAllProduction()
         .subscribe(prod => {
         if (prod.length > 0){
             this.latheProduction = true;
             this.op = prod[0].opNumber;
-            this.auth.machType = "Mill";
             this.checkMachines();
           } 
         }

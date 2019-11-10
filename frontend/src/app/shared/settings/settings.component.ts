@@ -33,12 +33,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
       } else {
         this.tutorialStatus = "Currently not displaying tutorials."
       }
-      if (this.auth.skipLathe){
+      if (!this.auth.skipLathe){
         this.latheStatus = "Currently displaying tutorials."
       } else {
         this.latheStatus = "Currently not displaying tutorials."
       }
-      if (this.auth.skipMill){
+      if (!this.auth.skipMill){
         this.millStatus = "Currently displaying tutorials."
       } else {
         this.millStatus = "Currently not displaying tutorials."

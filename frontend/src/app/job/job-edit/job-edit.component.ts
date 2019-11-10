@@ -64,7 +64,7 @@ export class JobEditComponent implements OnInit {
   onSubmit(){
     this.job = this.editJobForm.value;
     this.editJob(this.job);
-    if (this.auth.machType == "Mill"){
+    if (this.auth.machType == "mill"){
       if (this.editJobForm.value.orderQuantity > 0){
         this.opServ.fetchOpByJob(this.jobNum).subscribe(ops=>{
           ops.forEach(op=>{

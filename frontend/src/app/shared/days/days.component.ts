@@ -37,7 +37,7 @@ export class DaysComponent{
     public dayServ: DaysService,
     public auth: AuthService
     ) { 
-      this.auth.machType = "Lathe";
+      this.auth.machType = "lathe";
     }
 
 }

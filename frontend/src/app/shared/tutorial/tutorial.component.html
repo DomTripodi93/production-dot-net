@@ -1,60 +1,71 @@
 <br>
 <h2 class="centered">Lets Get Started!</h2>
 <br>
-<h4 *ngIf="!machines" class="centered">
-  Start by adding a <a routerLink="/lathe/machine/new">Lathe</a>. It's not 
+<h4 *ngIf="!lathes" class="centered">
+  Start by adding your first <a routerLink="/lathe/machine/new">Lathe</a>. It's not 
   going to give you any options for the job or op field, but that is perfectly 
-  normal. 
+  normal, it can be added with only a name. 
 <br>
 </h4>
-<h4 *ngIf="!machines" class="centered">
-  You will need to have at least 1 <a routerLink="/lathe/machine/new">Lathe</a> and 1 <a routerLink="/lathe/parts/new">Lathe Part</a> to be able to add a 
-  <a routerLink="/lathe/jobs/new">Lathe Job</a>, and at least 1 <a routerLink="/lathe/jobs/new">Lathe Job</a> to assign a <a routerLink="/lathe/jobs">Lathe Operation</a> to.
+<h4 *ngIf="!lathes" class="centered">
+  You will also need to have at least 1 <a routerLink="/lathe/parts/new">Lathe Part</a> to be able to add a 
+  <a routerLink="/lathe/jobs/new">Lathe Job</a>, with a <a routerLink="/lathe/jobs">Lathe Operation</a>.
 <br>
 </h4>
-<h4 *ngIf="machines && !parts" class="centered">
-  Now that you have created a machine, lets add your first part! 
-  A <a routerLink="/lathe/parts/new">Lathe Part</a> only needs to have a "part number." 
+<h4 *ngIf="lathes && !latheParts" class="centered">
+  Now that you have added a machine, lets add your first part! 
+  A <a routerLink="/lathe/parts/new">Part</a> needs to have a "part number", and a revision level. 
+  Parts cannot be changed once they are created, they can only be deleted and re-input, 
+  or added again with a different revision level. This is intentional to maintain consistancy of 
+  which revision of a part was made in a specific job, to collect accurate production information.
   The same <a routerLink="/lathe/parts/new">Lathe Part</a> can be used on as many jobs as you need it for.
   <br>
   You will need to have at least 1 <a routerLink="/lathe/parts/new">Part</a> to be able to add a 
   <a routerLink="/lathe/jobs/new">Lathe Job</a>
 <br>
 </h4>
-<h4  *ngIf="parts && !jobs" class="centered">
-  Now that you have created your first part, we can add our first <a routerLink="/lathe/jobs/new">Lathe Job</a>. A job 
-  holds all of your information for the material recieved for the job. 
-  <br> 
-  By inputing information for the first lathe operation, you will be able to calculate a maximum production 
-  for the material recieved.
+<h4  *ngIf="latheParts && !latheJobs" class="centered">
+  Now that you have created your first part, we can add our first <a routerLink="/lathe/jobs/new">Lathe Job</a>. 
+  <br>
+  A lathe job can hold information for the size of a part and material recieved for the job, so that maximum yield
+  can be calculated. 
 <br>
 </h4>
-<h4  *ngIf="jobs && !ops" class="centered">
+<h4  *ngIf="latheJobs && !latheOps" class="centered">
   Now that you have created your first job, you will be able to use the production
   calculator features for that job. 
   <br>
-  Now lets add an <a routerLink="/lathe/jobs">Lathe Operation</a> to the job below, which will let us create production lots 
-  and hourly production, after we assign a job and op to our machine. 
+  Now lets add an <a routerLink="/lathe/jobs">Lathe Operation</a> to the job below by clicking the "Add New Operation" button. 
+  <br>
+  Once you have a job and operation, you can assign them to your machine which 
+  will allow you to create production lots, and input hourly production. 
 <br>
 </h4>
-<h4  *ngIf="ops && !hourly" class="centered">
-  Now that you have created your first job and operation, you will be able to use the production 
-  tracking features for that job.
+<h4  *ngIf="latheOps && !hourly" class="centered">
+  Now that you have created your first job and operation, you can assign a job and operation to your lathe.
   <br>
-  Lets start by using the <a routerLink="/hourly">Hourly Tracking</a> where you will see a button that allows 
-  you to asign a job and op to your machine if you have not already done so. Once a job is assigned, you can add a 
-  production count by clicking on "<strong>quick input</strong>."
+  After your lathe can a current job and op, you will be able to create production lots,
+  and hourly production inputs.
+  <br>
+  From the <a routerLink="/lathe/machine">Lathes</a> page, or the <a routerLink="/hourly">Hourly Tracking</a> page
+  you will be able to asign a job and op to your lathe if you have not already done so. 
+  <br>
+  Once a job is assigned, you can add an hourly production count by clicking on 
+  "<strong>Quick Input</strong>." from the <a routerLink="/hourly">Hourly Tracking</a> page.
   <br>
 </h4>
-<h4 *ngIf="hourly && !production" class="centered">
+<h4 *ngIf="hourly && !latheProduction" class="centered">
   Now that we have our first hourly production count, lets try adding a 
   <a routerLink="/lathe/production/new">Lathe Production Lot</a>. Your production lots will be used to track 
-  how many parts have been made to an operation on the job so far.
+  how many parts have been made to an operation on the job so far. 
+  <br>
+  The production lot will be attributed to the current job and op of the selected machine on the production 
+  creation form.
 <br>
 </h4>
-<h4 *ngIf="production" class="centered">
+<h4 *ngIf="latheProduction" class="centered">
   After adding <a routerLink="/lathe/production/new">Multiple Lathe Production Lots</a> for one job, the 
-  <a routerLink="/lathe/production/op={{op}}&job={{job}}">Lathe Production By Job and Op</a> page will show total parts 
+  <a routerLink="/lathe/production/op={{op}}&job={{latheJob}}">Lathe Production By Job and Op</a> page will show total parts 
   to date for the operation. This can also be reached by using the dropdown on the 
   <a routerLink="/lathe/production">Lathe Production</a> page, and checking the production for the current
   job and operation on the selected lathe.
@@ -69,7 +80,7 @@
     <strong>Skip Lathe Tutorials</strong>
   </button>
   <div *ngIf="auth.skipLathe"></div>
-  <div *ngIf="!latheProduction && auth.skipLathe"></div>
+  <div *ngIf="latheProduction && !auth.skipLathe"></div>
   <button 
     (click)="notNew()"
     class="btn btn-warning">

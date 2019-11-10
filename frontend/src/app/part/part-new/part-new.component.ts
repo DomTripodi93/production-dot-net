@@ -50,16 +50,17 @@ export class PartNewComponent implements OnInit {
   newPart(data: Part) {
     this.error= null;
     this.isError = false;
-    this.partServ.partChanged.next();
     this.partServ.addPart(data).subscribe(() => {},
       (error) =>{
         this.isError = true;
         this.error = error;
-    });
+      }
+    );
     setTimeout(()=>{
       if (this.isError){
         this.error = "That part already exists!";
       } else {
+        this.partServ.partChanged.next();
         this.router.navigate([".."], {relativeTo: this.route})
       }
     }, 50);
