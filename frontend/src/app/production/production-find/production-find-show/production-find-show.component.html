@@ -92,7 +92,7 @@
             <h4>Machine: <strong>{{singleProd.machine}}</strong></h4>
         </div>
         <div class='grid'>
-            <button class='btn btn-info pull-right' routerLink="/{{auth.machType}}/production/op={{singleProd.opNumber}}&job={{singleProd.jobNumber}}">Job/Op <br> Production</button>
+            <button class='btn btn-info pull-right' routerLink="/{{auth.machType}}/production/op={{opServ.slashToDash(singleProd.opNumber)}}&job={{singleProd.jobNumber}}">Job/Op <br> Production</button>
             <button class='btn btn-primary pull-right' routerLink="/day/{{date}}">Day <br> Production</button>
         </div>
         <br>

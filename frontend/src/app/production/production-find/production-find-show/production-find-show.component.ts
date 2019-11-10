@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { ProductionService } from '../../production.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DaysService } from 'src/app/shared/days/days.service';
+import { OpService } from 'src/app/job/job-ops/operation.service';
 
 @Component({
   selector: 'app-production-find-show',
@@ -33,7 +34,8 @@ export class ProductionFindShowComponent implements OnInit {
     private pro: ProductionService,
     private route: ActivatedRoute,
     public dayServ: DaysService,
-    public auth: AuthService
+    public auth: AuthService,
+    public opServ: OpService
   ) { }
 
   ngOnInit() {

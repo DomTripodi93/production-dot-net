@@ -74,7 +74,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
       setTimeout(()=>{this.checkJobs();},50)}
     ));
     this.subscriptions.push(this.opServ.opsChanged.subscribe(()=>{
-      setTimeout(()=>{this.checkLatheOps(); this.checkMillOps();},50)}
+      setTimeout(()=>{this.checkJobs();},50)}
     ));
     this.subscriptions.push(this.hourlyServ.hourlyChanged.subscribe(()=>{
       setTimeout(()=>{this.checkHourly();},50)}
@@ -131,7 +131,6 @@ export class TutorialComponent implements OnInit, OnDestroy {
   checkJobs(){
     this.jobServ.fetchJobsByType(1, 6, this.checking)
       .subscribe(jobs => {
-        console.log(jobs.result)
         if (jobs.result.length > 0){
           if (this.checking == "lathe"){
             this.latheJob = jobs.result[0].jobNumber
@@ -202,7 +201,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
         .subscribe(prod => {
         if (prod.length > 0){
             this.latheProduction = true;
-            this.op = prod[0].opNumber;
+            this.op = this.opServ.slashToDash(prod[0].opNumber);
             this.checking = "mill";
             this.checkMachines();
           } 
