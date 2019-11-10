@@ -50,7 +50,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 
   changeTutorial() {
-    if (this.auth.isNew == true){
+    if (this.auth.isNew){
       if (confirm("Are you sure you want to hide these tutorials?")){
         this.auth.changeNew();
       }
@@ -64,7 +64,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   // change data to backend API
 
   changeLathe() {
-    if (this.auth.isNew == true){
+    if (!this.auth.skipLathe){
       if (confirm("Are you sure you want to hide these tutorials?")){
         this.auth.changeLathe();
       }
@@ -78,7 +78,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   // change data to backend API
 
   changeMill() {
-    if (this.auth.isNew == true){
+    if (!this.auth.skipMill){
       if (confirm("Are you sure you want to hide these tutorials?")){
         this.auth.changeMill();
       }

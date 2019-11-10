@@ -192,16 +192,20 @@ export class TutorialComponent implements OnInit, OnDestroy {
         .subscribe(prod => {
         if (prod.length > 0){
             this.latheProduction = true;
-            this.op = prod[0].opNumber
+            this.op = prod[0].opNumber;
+            this.auth.machType = "Mill";
+            this.checkMachines();
           } 
         }
       );
     } else {
       this.opServ.fetchOpByJob(this.millJob)
         .subscribe(ops => {
-          if (+ops[0].partsToDate > 0){
-            this.millProduction = true;
-          } 
+          ops.forEach(op=>{
+            if (+op.partsToDate > 0){
+              this.millProduction = true;
+            } 
+          })
         }
       );
     }
@@ -215,6 +219,28 @@ export class TutorialComponent implements OnInit, OnDestroy {
   }
   //Confirms hiding of tutorials, and sets user settings for tutorial 
   // view on confirmation
+
+  switchLathe() {
+    if (!this.auth.skipLathe){
+      if (confirm("Are you sure you want to hide these tutorials?")){
+        this.auth.changeLathe();
+        this.latheProduction = true;
+      }
+    }
+  }
+  //Confirms decision to change Lathe Tutorial activation status, and sends 
+  // change data to backend API
+
+  switchMill() {
+    if (!this.auth.skipMill){
+      if (confirm("Are you sure you want to hide these tutorials?")){
+        this.auth.changeMill();
+        this.millProduction = true;
+      }
+    } 
+  }
+  //Confirms decision to change Mill Tutorial activation status, and sends 
+  // change data to backend API
 
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{

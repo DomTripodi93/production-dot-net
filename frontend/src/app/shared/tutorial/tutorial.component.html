@@ -62,9 +62,25 @@
 </h4>
 <br>
 <div class="center-grid">
-  <div></div>
+  <button  
+    *ngIf="!latheProduction && !auth.skipLathe"
+    (click)="switchLathe()"
+    class="btn btn-danger">
+    <strong>Skip Lathe Tutorials</strong>
+  </button>
+  <div *ngIf="auth.skipLathe"></div>
+  <div *ngIf="!latheProduction && auth.skipLathe"></div>
   <button 
-  (click)="notNew()"
-  class="btn btn-warning"><strong>Hide Tutorial Messages</strong></button><br>
-  <div></div>
+    (click)="notNew()"
+    class="btn btn-warning">
+    <strong>Hide Tutorial Messages</strong>
+  </button>
+  <button  
+    *ngIf="latheProduction && !millProduction && !auth.skipMill"
+    (click)="switchMill()"
+    class="btn btn-danger">
+    <strong>Skip Mill Tutorials</strong>
+  </button>
+  <div *ngIf="auth.skipMill"></div>
+  <div *ngIf="!latheProduction && auth.skipMill"></div>
 </div>
