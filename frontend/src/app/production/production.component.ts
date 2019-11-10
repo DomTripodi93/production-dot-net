@@ -66,17 +66,15 @@ export class ProductionComponent implements OnDestroy {
   }
 
   chooseMach(){
-    this.pro.proChanged.next();
-    let machToSet = this.fullMach.find((mach: Machine) =>{
-      return mach.machine == this.chooseMachForm.value.machine
-    });
-    let job = machToSet.currentJob;
-    let op = machToSet.currentOp;
-    if (op.includes("/")){
-      op = this.opServ.slashToDash(op);
-    }
-    this.pro.setMach = this.chooseMachForm.value.machine;
-    this.router.navigate(["/production/op=" + op + "&job=" + job])
+    this.mach.fetchMachineByName(this.chooseMachForm.value.machine).subscribe(newMach=>{
+      let job = newMach.currentJob;
+      let op = newMach.currentOp;
+      if (op.includes("/")){
+        op = this.opServ.slashToDash(op);
+      }
+      this.pro.setMach = this.chooseMachForm.value.machine;
+      this.router.navigate(["/lathe/production/op=" + op + "&job=" + job])
+    })
   }
 
   ngOnDestroy(){
