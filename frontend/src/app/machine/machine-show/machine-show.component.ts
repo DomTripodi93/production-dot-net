@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Machine } from '../machine.model';
 import { Subscription } from 'rxjs';
 import { MachineService } from 'src/app/machine/machine.service';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-machine-show',
@@ -18,6 +19,7 @@ export class MachineShowComponent implements OnInit, OnDestroy{
 
   constructor(
     private mach: MachineService,
+    public auth: AuthService
   ) { }
 
   ngOnInit() {

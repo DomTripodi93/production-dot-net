@@ -1,5 +1,6 @@
 <br>
-<h2 class="centered">Lets Get Started!</h2>
+<h2 class="centered" *ngIf="!complete">Lets Get Started!</h2>
+<h2 class="centered" *ngIf="complete">Congratulations!</h2>
 <br>
 <h4 *ngIf="!lathes" class="centered">
   Start by adding your first <a routerLink="/lathe/machine/new">Lathe</a>. It's not 
@@ -18,7 +19,7 @@
   Parts cannot be changed once they are created, they can only be deleted and re-input, 
   or added again with a different revision level. This is intentional to maintain consistancy of 
   which revision of a part was made in a specific job, to collect accurate production information.
-  The same <a routerLink="/lathe/parts/new">Lathe Part</a> can be used on as many jobs as you need it for.
+  The same <a routerLink="/lathe/parts/new">Lathe Part</a> can be used on an unlimited number of jobs.
   <br>
   You will need to have at least 1 <a routerLink="/lathe/parts/new">Part</a> to be able to add a 
   <a routerLink="/lathe/jobs/new">Lathe Job</a>
@@ -84,8 +85,65 @@
   <br>
 </h4>
 <h4 *ngIf="checking == 'mill' && !mills" class="centered">
-  Start by adding your first <a routerLink="/mill/machine/new">Mill</a>.
+  Start by adding your first <a routerLink="/mill/machine/new">Mill</a>
+  Unlike lathes, a mill only has a name(no current job/op). 
   <br>
+  This is because most mills can run more than one part/operation at a time.
+  <br>
+</h4>
+<h4 *ngIf="checking == 'mill' && !mills" class="centered">
+  You will also need to have at least 1 <a routerLink="/mill/parts/new">Mill Part</a> to be able to add a 
+  <a routerLink="/mill/jobs/new">Mill Job</a>, with a <a routerLink="/mill/jobs">Mill Operation</a>.
+<br>
+</h4>
+<h4 *ngIf="mills && !millParts" class="centered">
+  Now that you have added a machine, lets add your first part! 
+  A <a routerLink="/mill/parts/new">Mill Part</a> needs to have a "part number", and a revision level. 
+  Parts cannot be changed once they are created, they can only be deleted and re-input, 
+  or added again with a different revision level. 
+  <br>
+  This is intentional to maintain consistancy of which revision of a part was made in a 
+  specific job, to collect accurate production information, however, the same 
+  <a routerLink="/mill/parts/new">Mill Part</a> can be used on an unlimited number of jobs.
+  <br>
+  You will need to have at least 1 <a routerLink="/mill/parts/new">Part</a> to be able to add a 
+  <a routerLink="/mill/jobs/new">Mill Job</a>
+<br>
+</h4>
+<h4  *ngIf="millParts && !millJobs" class="centered">
+  Now that you have created your first part, we can add our first <a routerLink="/mill/jobs/new">Mill Job</a>. 
+  <br>
+  A mill job number will be used to identify parts that are counted for production. The order quantity
+  will give a basis for how many more parts need to be made for the job after the parts counted to date.
+<br>
+</h4>
+<h4  *ngIf="millJobs && !millOps" class="centered">
+  Now that you have created your first job the next step is to add a <a routerLink="/mill/jobs">Mill Operation</a> 
+  to that job by clicking the 
+  <br>
+  "Add New Operation" button from the <a routerLink="/mill/jobs">Mill Jobs</a> page. 
+  <br>
+  The cycle time will be used to track how 
+  much machine time is remaining on the job.
+  <br>
+  Once you have a job and operation, you can input production counts for the parts.
+<br>
+</h4>
+<h4 *ngIf="millOps && !millProduction" class="centered">
+  Now that you have created your first job and operation, lets try adding a 
+  <a routerLink="/mill/production">Mill Production Count</a>. Your production counts 
+  will be used to track how many parts have been made to an operation on the job so far. 
+  <br>
+<br>
+</h4>
+<h4 *ngIf="complete" class="centered">
+  You have successfully completed the My Production Manager tutorial!
+  <br><br>
+  If you have any other questions about using the app to its fullest, feel free to reach 
+  out to me personally via email at: 
+  <br>
+  <h4 class="bold">DTripodi93@gmail.com</h4>
+<br>
 </h4>
 <br>
 <div class="center-grid">

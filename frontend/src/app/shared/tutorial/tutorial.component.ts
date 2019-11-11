@@ -26,6 +26,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
   latheProduction = false;  
   latheProductionMulti = false;  
   millProduction = false;  
+  complete = false;
   millJob = "";
   latheJob = "";
   op = "";
@@ -231,8 +232,10 @@ export class TutorialComponent implements OnInit, OnDestroy {
           ops.forEach(op=>{
             if (+op.partsToDate > 0){
               this.millProduction = true;
+              this.complete = true;
             } else {
               this.millProduction = false;
+              this.complete = false;
             }
           })
         }

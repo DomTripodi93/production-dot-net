@@ -1,19 +1,25 @@
 <div class='grid' >
   <div *ngFor="let machine of machines; let i=index"> 
     <div class="border">
-      <h3>{{machine.machine}}</h3>
-      <div *ngIf="!editMode[i]">
-        <h4 *ngIf="machine.currentJob">Current Job: {{machine.currentJob}}</h4>
-        <h4 class="white-text" *ngIf="!machine.currentJob">0</h4>
-        <h4 *ngIf="machine.currentOp">Current Operation: {{machine.currentOp}}</h4>
-        <h4 class="white-text" *ngIf="!machine.currentOp">0</h4>
-        <div class="grid2">
-          <button class='btn btn-primary' (click)="onEdit(i)">Edit</button>
-          <button class='btn btn-danger' (click)="onDelete(machine.machine)">Delete</button>
+      <h3 class="bold">{{machine.machine}}</h3>
+      <div *ngIf="auth.machType == 'lathe'">
+        <div *ngIf="!editMode[i]">
+          <h4 *ngIf="machine.currentJob">Current Job: {{machine.currentJob}}</h4>
+          <h4 class="white-text" *ngIf="!machine.currentJob">0</h4>
+          <h4 *ngIf="machine.currentOp">Current Operation: {{machine.currentOp}}</h4>
+          <h4 class="white-text" *ngIf="!machine.currentOp">0</h4>
+          <div class="grid2">
+            <button class='btn btn-primary' (click)="onEdit(i)">Edit</button>
+            <button class='btn btn-danger' (click)="onDelete(machine.machine)">Delete</button>
+          </div>
+        </div>
+        <div *ngIf="editMode[i]">
+          <app-machine-edit [machName]="machine.machine"></app-machine-edit>
         </div>
       </div>
-      <div *ngIf="editMode[i]">
-        <app-machine-edit [machName]="machine.machine"></app-machine-edit>
+      <div class="grid3" *ngIf="auth.machType == 'mill'">
+        <br>
+        <button class='btn btn-danger' (click)="onDelete(machine.machine)">Delete</button>
       </div>
     </div>
     <div></div>
