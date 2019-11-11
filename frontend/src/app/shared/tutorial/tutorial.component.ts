@@ -80,7 +80,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
       setTimeout(()=>{this.checkHourly();},50)}
     ));
     this.subscriptions.push(this.prodServ.proChanged.subscribe(()=>{
-      setTimeout(()=>{this.checkProduction();},50)}
+      setTimeout(()=>{this.checkJobs();},50)}
     ));
   }
 
@@ -113,7 +113,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
           if (this.checking == "lathe"){
             this.latheParts = true;
             this.checkJobs();
-          } else{
+          } else {
             this.millParts = true;
             this.checkJobs();
           }
@@ -133,11 +133,11 @@ export class TutorialComponent implements OnInit, OnDestroy {
       .subscribe(jobs => {
         if (jobs.result.length > 0){
           if (this.checking == "lathe"){
-            this.latheJob = jobs.result[0].jobNumber
+            this.latheJob = jobs.result[0].jobNumber;
             this.latheJobs = true;
             this.checkLatheOps();
           } else {
-            this.millJob = jobs.result[0].jobNumber
+            this.millJob = jobs.result[0].jobNumber;
             this.millJobs = true;
             this.checkMillOps();
           }
@@ -196,6 +196,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
   // to check the next relevant model, Production
 
   checkProduction(){
+    console.log(this.millOps)
     if (this.checking == "lathe"){
       this.prodServ.fetchAllProduction()
         .subscribe(prod => {

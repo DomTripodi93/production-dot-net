@@ -94,7 +94,7 @@ export class ProductionEditComponent implements OnInit, OnDestroy {
   }
 
   changeOps(option: String){
-    this.ops = []
+    this.ops = [];
     if (option != "None"){
       this.opServ.fetchOpByJob(option).subscribe((ops)=>{
         ops.forEach((op)=>{
