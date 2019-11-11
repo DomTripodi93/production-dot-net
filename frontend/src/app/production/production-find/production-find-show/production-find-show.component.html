@@ -11,7 +11,7 @@
                     <button class='btn btn-primary' (click)="onEditMulti(i)">Edit <br>This Lot</button>
                 </div>
                 <br>
-                <div routerLink="/production/single/{{lot.id}}">
+                <div routerLink="/{{auth.machType}}/production/single/{{lot.id}}">
                     <h4>Date: <strong>{{lot.date}}</strong></h4>
                     <h4>Job #: <strong>{{lot.jobNumber}}</strong></h4>
                     <h4 *ngIf="lot.partNumber">Part #: <strong>{{lot.partNumber}}</strong></h4>
@@ -32,7 +32,7 @@
                     <button class='btn btn-primary' (click)="onEditMulti(i)">Edit <br> This Lot</button>
                 </div>
                 <br>
-                <div routerLink="/production/single/{{lot.id}}">
+                <div routerLink="/{{auth.machType}}/production/single/{{lot.id}}">
                     <h4>Date: <strong>{{lot.date}}</strong></h4>
                     <h4>Job #: <strong>{{lot.jobNumber}}</strong></h4>
                     <h4 *ngIf="lot.partNumber">Part #: <strong>{{lot.partNumber}}</strong></h4>

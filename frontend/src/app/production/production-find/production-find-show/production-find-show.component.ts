@@ -54,6 +54,7 @@ export class ProductionFindShowComponent implements OnInit {
       this.pro.proChanged.subscribe(()=>{
         if (!this.singleProd){
           this.editMulti = [];
+          this.production = [];
           this.getJobProduction();
         } else {
           this.setSingleProduction();
@@ -64,7 +65,6 @@ export class ProductionFindShowComponent implements OnInit {
   }
 
   getJobProduction() {
-    console.log("x")
     this.isFetching = true;
     this.pro.fetchProduction(this.search)
       .subscribe(production => {

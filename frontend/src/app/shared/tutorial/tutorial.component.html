@@ -63,12 +63,20 @@
   creation form.
 <br>
 </h4>
-<h4 *ngIf="latheProduction" class="centered">
-  After adding <a routerLink="/lathe/production/new">Multiple Lathe Production Lots</a> for one job, the 
-  <a routerLink="/lathe/production/op={{op}}&job={{latheJob}}">Lathe Production By Job and Op</a> page will show total parts 
-  to date for the operation. This can also be reached by using the dropdown on the 
-  <a routerLink="/lathe/production">Lathe Production</a> page, and checking the production for the current
-  job and operation on the selected lathe.
+<h4 *ngIf="latheProduction && !latheProductionMulti" class="centered">
+  Now try adding a second <a routerLink="/lathe/production/new">Lathe Production Lots</a> for one job. 
+  once you have more than one lot for the same job and op, you will be able to view all lots for the operation,
+  as well as a total to date for the operation. 
+<br>
+</h4>
+<h4 *ngIf="latheProductionMulti" class="centered">
+  Now that you have multiple lots for the operation, the 
+  <a routerLink="/lathe/production/op={{op}}&job={{latheJob}}">Lathe Production By Job and Op</a> 
+  page will show total parts to date for the operation. This can also be reached by 
+  using the dropdown on the <a routerLink="/lathe/production">Lathe Production</a> 
+  page, and checking the production for the current job and operation on the selected 
+  lot, or by using the "Change Machine" button, to navigate to the production for the current
+  job and op on that machine.
 <br>
 </h4>
 <br>

@@ -24,6 +24,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
   millOps = false;
   hourly = false;
   latheProduction = false;  
+  latheProductionMulti = false;  
   millProduction = false;  
   millJob = "";
   latheJob = "";
@@ -141,6 +142,10 @@ export class TutorialComponent implements OnInit, OnDestroy {
             this.millJobs = true;
             this.checkMillOps();
           }
+        } else if (this.checking == "lathe" && !this.auth.skipLathe){
+          this.latheJobs = false;
+        } else if (!this.auth.skipMill) {
+          this.millJobs = false;
         }
       }
     )
@@ -160,7 +165,9 @@ export class TutorialComponent implements OnInit, OnDestroy {
             this.op = ops[0].opNumber;
           }
           this.checkHourly();
-        }
+        } else {
+          this.latheOps = false;
+        } 
       }
     )
   }
@@ -174,7 +181,9 @@ export class TutorialComponent implements OnInit, OnDestroy {
         if (ops.length > 0){
           this.millOps = true;
           this.checkProduction();
-        } 
+        } else {
+          this.millOps = false;
+        }
       }
     )
   }
@@ -188,6 +197,8 @@ export class TutorialComponent implements OnInit, OnDestroy {
         if (hour){
           this.checkProduction();
           this.hourly = true;
+        } else {
+          this.hourly = false;
         }
       }
     );
@@ -200,10 +211,16 @@ export class TutorialComponent implements OnInit, OnDestroy {
       this.prodServ.fetchAllProduction()
         .subscribe(prod => {
         if (prod.length > 0){
-            this.latheProduction = true;
-            this.op = this.opServ.slashToDash(prod[0].opNumber);
-            this.checking = "mill";
-            this.checkMachines();
+          if (prod.length > 1){
+            this.latheProductionMulti = true;
+          } else {
+            this.latheProductionMulti = false;
+          }
+          this.latheProduction = true;
+          this.op = this.opServ.slashToDash(prod[0].opNumber);
+          this.checkMachines();
+          } else {
+            this.latheProduction = false;
           } 
         }
       );
@@ -213,7 +230,9 @@ export class TutorialComponent implements OnInit, OnDestroy {
           ops.forEach(op=>{
             if (+op.partsToDate > 0){
               this.millProduction = true;
-            } 
+            } else {
+              this.millProduction = false;
+            }
           })
         }
       );
