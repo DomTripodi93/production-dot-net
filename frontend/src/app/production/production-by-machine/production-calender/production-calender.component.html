@@ -1,0 +1,24 @@
+
+<h1 class="centered">{{machine}}</h1>
+<div class="grid">
+  <div class="border"><h5 class="centered">{{days[0]}}</h5></div>
+  <div class="border"><h5 class="centered">{{days[1]}}</h5></div>
+  <div class="border"><h5 class="centered">{{days[2]}}</h5></div>
+  <div class="border"><h5 class="centered">{{days[3]}}</h5></div>
+  <div class="border"><h5 class="centered">{{days[4]}}</h5></div>
+  <div class="border"><h5 class="centered">{{days[5]}}</h5></div>
+  <div class="border"><h5 class="centered">{{days[6]}}</h5></div>
+  <div *ngFor="let date of firstDayOfMonth">
+    <div class="border"><h5 class="white-text">{{date}}</h5></div>
+  </div>  
+  <div *ngFor="let set of proDates">
+    <div *ngIf="set.date !== today"  (click)="onViewDate(['day', year, month+1, set.date])" class="border">
+      <h5>{{set.date}}</h5>
+      <h5 *ngFor="let prod of set.production">{{prod.shift}}: {{prod.quantity}}</h5>
+    </div>
+    <div *ngIf="set.date == today" (click)="onViewDate(['day', year, month+1, set.date])" class="today-border">
+      <h5>{{set.date}}</h5>
+      <h5 *ngFor="let prod of set.production">{{prod.shift}}: {{prod.quantity}}</h5>
+    </div>
+  </div>  
+</div>

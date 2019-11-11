@@ -39,6 +39,7 @@ import { JobFindComponent } from './job/job-find/job-find.component';
 import { JobFindShowComponent } from './job/job-find/job-find-show/job-find-show.component';
 import { ProductionFindComponent } from './production/production-find/production-find.component';
 import { ProductionFindShowComponent } from './production/production-find/production-find-show/production-find-show.component';
+import { ProductionByMachineComponent } from './production/production-by-machine/production-by-machine.component';
 
 const appRoutes: Routes = [
     {path: '', component: CalenderComponent, pathMatch: 'full' },
@@ -82,7 +83,7 @@ const appRoutes: Routes = [
                 {path: ":job", component: JobFindShowComponent},
             ]},
             {path: 'production', component: ProductionComponent, children:[
-                {path: '', component: ProductionListComponent},
+                {path: '', component: ProductionByMachineComponent},
                 {path: 'new', component: ProductionNewComponent},
                 {path: 'find', component: ProductionFindComponent},
                 {path: 'single/:id', component: ProductionSingleComponent},

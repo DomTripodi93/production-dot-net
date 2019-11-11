@@ -6,12 +6,12 @@
   Start by adding your first <a routerLink="/lathe/machine/new">Lathe</a>. It's not 
   going to give you any options for the job or op field, but that is perfectly 
   normal, it can be added with only a name. 
-<br>
+  <br>
 </h4>
 <h4 *ngIf="!lathes" class="centered">
   You will also need to have at least 1 <a routerLink="/lathe/parts/new">Lathe Part</a> to be able to add a 
   <a routerLink="/lathe/jobs/new">Lathe Job</a>, with a <a routerLink="/lathe/jobs">Lathe Operation</a>.
-<br>
+  <br>
 </h4>
 <h4 *ngIf="lathes && !latheParts" class="centered">
   Now that you have added a machine, lets add your first part! 
@@ -23,14 +23,14 @@
   <br>
   You will need to have at least 1 <a routerLink="/lathe/parts/new">Part</a> to be able to add a 
   <a routerLink="/lathe/jobs/new">Lathe Job</a>
-<br>
+  <br>
 </h4>
 <h4  *ngIf="latheParts && !latheJobs" class="centered">
   Now that you have created your first part, we can add our first <a routerLink="/lathe/jobs/new">Lathe Job</a>. 
   <br>
   A lathe job can hold information for the size of a part and material recieved for the job, so that maximum yield
   can be calculated. 
-<br>
+  <br>
 </h4>
 <h4  *ngIf="latheJobs && !latheOps" class="centered">
   Now that you have created your first job, you will be able to use the production
@@ -40,7 +40,7 @@
   <br>
   Once you have a job and operation, you can assign them to your machine which 
   will allow you to create production lots, and input hourly production. 
-<br>
+  <br>
 </h4>
 <h4  *ngIf="latheOps && !hourly" class="centered">
   Now that you have created your first job and operation, you can assign a job and operation to your lathe.
@@ -62,13 +62,13 @@
   <br>
   The production lot will be attributed to the current job and op of the selected machine on the production 
   creation form.
-<br>
+  <br>
 </h4>
 <h4 *ngIf="latheProduction && !latheProductionMulti" class="centered">
   Now try adding a second <a routerLink="/lathe/production/new">Lathe Production Lots</a> for one job. 
   once you have more than one lot for the same job and op, you will be able to view all lots for the operation,
   as well as a total to date for the operation. 
-<br>
+  <br>
 </h4>
 <h4 *ngIf="latheProductionMulti && checking != 'mill'" class="centered">
   Now that you have multiple lots for the operation, the 
@@ -94,7 +94,7 @@
 <h4 *ngIf="checking == 'mill' && !mills" class="centered">
   You will also need to have at least 1 <a routerLink="/mill/parts/new">Mill Part</a> to be able to add a 
   <a routerLink="/mill/jobs/new">Mill Job</a>, with a <a routerLink="/mill/jobs">Mill Operation</a>.
-<br>
+  <br>
 </h4>
 <h4 *ngIf="mills && !millParts" class="centered">
   Now that you have added a machine, lets add your first part! 
@@ -108,14 +108,14 @@
   <br>
   You will need to have at least 1 <a routerLink="/mill/parts/new">Part</a> to be able to add a 
   <a routerLink="/mill/jobs/new">Mill Job</a>
-<br>
+  <br>
 </h4>
 <h4  *ngIf="millParts && !millJobs" class="centered">
   Now that you have created your first part, we can add our first <a routerLink="/mill/jobs/new">Mill Job</a>. 
   <br>
   A mill job number will be used to identify parts that are counted for production. The order quantity
   will give a basis for how many more parts need to be made for the job after the parts counted to date.
-<br>
+  <br>
 </h4>
 <h4  *ngIf="millJobs && !millOps" class="centered">
   Now that you have created your first job the next step is to add a <a routerLink="/mill/jobs">Mill Operation</a> 
@@ -127,23 +127,24 @@
   much machine time is remaining on the job.
   <br>
   Once you have a job and operation, you can input production counts for the parts.
-<br>
+  <br>
 </h4>
 <h4 *ngIf="millOps && !millProduction" class="centered">
   Now that you have created your first job and operation, lets try adding a 
   <a routerLink="/mill/production">Mill Production Count</a>. Your production counts 
   will be used to track how many parts have been made to an operation on the job so far. 
   <br>
-<br>
+  <br>
 </h4>
 <h4 *ngIf="complete" class="centered">
   You have successfully completed the My Production Manager tutorial!
-  <br><br>
-  If you have any other questions about using the app to its fullest, feel free to reach 
-  out to me personally via email at: 
-  <br>
-  <h4 class="bold">DTripodi93@gmail.com</h4>
-<br>
+  <h4>
+    If you have any other questions about using the app to its fullest, feel free to reach 
+    out to me personally via email at: 
+  </h4>
+  <h4 class="bold">
+    DTripodi93@gmail.com
+  </h4>
 </h4>
 <br>
 <div class="center-grid">

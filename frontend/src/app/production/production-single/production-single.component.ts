@@ -22,13 +22,13 @@ export class ProductionSingleComponent implements OnInit {
     this.deleted = false;
     this.pro.proChanged.subscribe(()=>{
       if (!this.deleted){
-        this.pro.fetchProductionBySearch(this.production.id).subscribe(production=>{
+        this.pro.fetchProductionById(this.production.id).subscribe(production=>{
           this.production = production;
         })
       }
     })
     this.route.params.subscribe((params: Params) =>{
-      this.pro.fetchProductionBySearch(params['id']).subscribe(production =>{
+      this.pro.fetchProductionById(params['id']).subscribe(production =>{
         this.production = production;
       })
     });

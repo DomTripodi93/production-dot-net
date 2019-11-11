@@ -1,0 +1,28 @@
+.grid { 
+    display: grid;
+    grid-template-columns: 14.285714286% 14.285714286% 14.285714286% 14.285714286% 14.285714286% 14.285714286% 14.285714286%;
+}
+
+.today-border{
+    border-style: solid;
+    border-color: black;
+    background-color: rgb(255, 255, 175);
+}
+
+.white-text{
+    color: rgb(235, 235, 235);
+}
+
+h5, h2{
+    font-weight: bold;
+    font-style: Helvetica;
+}
+
+.padded{
+    padding-left: 10px;
+    padding-bottom: 50px;
+}
+
+.centered{
+    text-align: center;
+}

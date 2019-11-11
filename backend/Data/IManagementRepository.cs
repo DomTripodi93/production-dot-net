@@ -34,8 +34,7 @@ namespace BackEnd.Data
         Task<PagedList<Production>> GetProductionSet(int userId, PagingParams prodParams, string machType);
         Task<IEnumerable<Production>> GetProductionSetByJob(int userId, string job);
         Task<IEnumerable<Production>> GetProductionSetByOp(int userId, string job, string Op);
-        Task<IEnumerable<Production>> GetProductionSetByJobAndMachine(int userId, string job, string mach);
-        Task<IEnumerable<Production>> GetProductionSetByMachine(int userId, string mach);
+        Task<IEnumerable<Production>> GetProductionSetByJobOpAndMachine(int userId, string job, string op, string mach);
         Task<IEnumerable<Production>> GetProductionSetByDate(int userId, string date);
         Task<Hourly> GetAnyHourly(int userId);
         Task<Hourly> GetHourly(int id);

@@ -43,7 +43,7 @@ export class ProductionService {
         )
     } 
 
-    fetchProductionBySearch(search) {
+    fetchProductionById(search) {
         return this.http.get(
           this.auth.apiUrl + '/production/' + search 
         )
@@ -138,7 +138,7 @@ export class ProductionService {
     }
 
     changeProduction(data: Production, id){
-      this.fetchProductionBySearch(id).subscribe((object)=>{
+      this.fetchProductionById(id).subscribe((object)=>{
         let oldValues = ""+JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "Update", id).subscribe();
       })
@@ -149,7 +149,7 @@ export class ProductionService {
     }
 
     setInQuestion(data, id){
-      this.fetchProductionBySearch(id).subscribe((object)=>{
+      this.fetchProductionById(id).subscribe((object)=>{
         let oldValues = JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "In Question", id).subscribe();
       })
@@ -159,7 +159,7 @@ export class ProductionService {
     }
 
     deleteProduction(id){
-      this.fetchProductionBySearch(id).subscribe((object)=>{
+      this.fetchProductionById(id).subscribe((object)=>{
         let oldValues = JSON.stringify(object);
         this.auth.logChanges(oldValues, this.model, "Delete", id).subscribe();
       })

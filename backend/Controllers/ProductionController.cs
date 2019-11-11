@@ -126,13 +126,13 @@ namespace BackEnd.Controllers
             return Ok(productionForReturn);
         }
 
-        [HttpGet("machine={mach}")]
-        public async Task<IActionResult> GetProductionSetByMachine(int userId, string mach)
+        [HttpGet("mach={mach}&job={job}&op={op}")]
+        public async Task<IActionResult> GetProductionSetByJobOpAndMachine(int userId, string job, string op, string mach)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            IEnumerable<Production> directProductions = await _repo.GetProductionSetByMachine(userId, mach);
+            IEnumerable<Production> directProductions = await _repo.GetProductionSetByJobOpAndMachine(userId, job, op, mach);
 
             var productionSet = _mapper.Map<IEnumerable<ProdForReturnDto>>(directProductions);
 

@@ -274,25 +274,16 @@ namespace BackEnd.Data
             return prodForReturn.OrderByDescending(p => p.Date);
         }
 
-        public async Task<IEnumerable<Production>> GetProductionSetByJobAndMachine(int userId, string job, string mach)
+        public async Task<IEnumerable<Production>> GetProductionSetByJobOpAndMachine(int userId, string job, string op, string mach)
         {
             var prodForReturn = await _context.Production
                 .Where(j => j.userId == userId)
                 .Where(p => p.JobNumber == job)
+                .Where(p => p.OpNumber == op)
                 .Where(p => p.Machine == mach)
                 .ToListAsync();
 
-            return prodForReturn.OrderByDescending(p => p.Date);
-        }
-
-        public async Task<IEnumerable<Production>> GetProductionSetByMachine(int userId, string mach)
-        {
-            var prodForReturn = await _context.Production
-                .Where(j => j.userId == userId)
-                .Where(p => p.Machine == mach)
-                .ToListAsync();
-
-            return prodForReturn.OrderByDescending(p => p.Date);
+            return prodForReturn.OrderBy(p => p.Shift).OrderBy(p => p.Date);
         }
 
         public async Task<IEnumerable<Production>> GetProductionSetByDate(int userId, string date)
