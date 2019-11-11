@@ -3,6 +3,11 @@
     grid-template-columns: 14.285714286% 14.285714286% 14.285714286% 14.285714286% 14.285714286% 14.285714286% 14.285714286%;
 }
 
+.grid2 { 
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+}
+
 .today-border{
     border-style: solid;
     border-color: black;
@@ -13,7 +18,7 @@
     color: rgb(235, 235, 235);
 }
 
-h5, h2{
+h5, h3, h2{
     text-align: center;
     font-style: Helvetica;
 }
