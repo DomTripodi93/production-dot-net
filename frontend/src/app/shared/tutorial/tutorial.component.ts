@@ -196,7 +196,6 @@ export class TutorialComponent implements OnInit, OnDestroy {
   // to check the next relevant model, Production
 
   checkProduction(){
-    console.log(this.millOps)
     if (this.checking == "lathe"){
       this.prodServ.fetchAllProduction()
         .subscribe(prod => {

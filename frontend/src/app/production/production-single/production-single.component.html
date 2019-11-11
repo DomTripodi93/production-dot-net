@@ -1,4 +1,6 @@
-<app-production-find-show  [singleProd]="production"></app-production-find-show>
-<div class="grid">
-    <button (click)="onDelete()" class="btn btn-danger"> Delete This Lot</button>
+<div *ngIf="production">
+    <app-production-find-show [singleProd]="production"></app-production-find-show>
+    <div class="grid">
+        <button (click)="onDelete()" class="btn btn-danger"> Delete This Lot</button>
+    </div>
 </div>

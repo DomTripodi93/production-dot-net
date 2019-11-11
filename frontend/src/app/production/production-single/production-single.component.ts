@@ -18,9 +18,14 @@ export class ProductionSingleComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.pro.proChanged.subscribe(()=>{
+      this.pro.fetchProductionBySearch(this.production.id).subscribe(production=>{
+        this.production = production;
+      })
+    })
     this.route.params.subscribe((params: Params) =>{
       this.pro.fetchProductionBySearch(params['id']).subscribe(production =>{
-        this.production = production
+        this.production = production;
       })
     });
   } 

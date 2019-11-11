@@ -64,6 +64,7 @@ export class ProductionFindShowComponent implements OnInit {
   }
 
   getJobProduction() {
+    console.log("x")
     this.isFetching = true;
     this.pro.fetchProduction(this.search)
       .subscribe(production => {
