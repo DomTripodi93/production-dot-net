@@ -38,6 +38,13 @@ export class ProductionCalenderComponent implements OnInit {
   firstDayOfMonth = []
   firstDay: Date;
   proDates: ProductionDate[] = [];
+  dayShift = [];
+  nightShift = [];
+  overNight = [];
+  dayAvg: number;
+  nightAvg: number;
+  overNightAvg: number;
+  total: number
 
 
 
@@ -70,9 +77,30 @@ export class ProductionCalenderComponent implements OnInit {
       }
       this.proDates.push(proDate)
       if (+day == this.monthDays.length-1){
+        this.total = 0;
+        let used = 0;
         this.production.forEach(pro=>{
+          this.total += +pro.quantity;
+          used += 1;
+          if (pro.shift == "Day"){
+            this.dayShift.push(pro.quantity)
+          } else if (pro.shift == "Night"){
+            this.nightShift.push(pro.quantity)
+          } else {
+            this.overNight.push(pro.quantity)
+          }
           this.proDates[+pro.date.substring(8,10) -1].production.push(pro);
-          console.log(this.proDates)
+          if (used == this.production.length){
+            this.dayAvg = +(this.dayShift.reduce((a,b)=>{
+              return +a + +b;
+            }, 0) / this.dayShift.length).toFixed(0);
+            this.nightAvg = +(this.nightShift.reduce((a,b)=>{
+              return +a + +b;
+            }, 0) / this.nightShift.length).toFixed(0);
+            this.overNightAvg = +(this.overNight.reduce((a,b)=>{
+              return +a + +b;
+            }, 0) / this.overNight.length).toFixed(0);
+          }
         })
       }
     }
