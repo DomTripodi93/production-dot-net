@@ -10,26 +10,28 @@
         class="form-control"
       >
     </div>
-    <div class="form-group">
-      <label for="currentJob">Job</label>
-      <select
-        formControlName='currentJob'
-        type="text" 
-        id="currentJob" 
-        class="form-control"
-        (change)="changeOps($event.target.value)">
-        <option *ngFor = "let job of jobs">{{job}}</option>
-      </select>     
-    </div>
-    <div class="form-group">
-      <label for="currentOp">Op</label>
-      <select
-        formControlName='currentOp'
-        type="text" 
-        id="currentOp" 
-        class="form-control">
-        <option *ngFor = "let op of ops">{{op}}</option>
-      </select>    
+    <div *ngIf="auth.machType == 'lathe'">
+      <div class="form-group">
+        <label for="currentJob">Job</label>
+        <select
+          formControlName='currentJob'
+          type="text" 
+          id="currentJob" 
+          class="form-control"
+          (change)="changeOps($event.target.value)">
+          <option *ngFor = "let job of jobs">{{job}}</option>
+        </select>     
+      </div>
+      <div class="form-group">
+        <label for="currentOp">Op</label>
+        <select
+          formControlName='currentOp'
+          type="text" 
+          id="currentOp" 
+          class="form-control">
+          <option *ngFor = "let op of ops">{{op}}</option>
+        </select>    
+      </div>
     </div>
       <br><br>
       <button 

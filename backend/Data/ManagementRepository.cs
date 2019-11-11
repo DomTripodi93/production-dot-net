@@ -149,7 +149,8 @@ namespace BackEnd.Data
         public async Task<IEnumerable<Job>> GetAnyJobs(int userId)
         {
 
-            var job = await _context.Jobs        
+            var job = await _context.Jobs
+                .Where(j => j.Active == "Active")
                 .Where(j => j.userId == userId)
                 .ToListAsync();
 

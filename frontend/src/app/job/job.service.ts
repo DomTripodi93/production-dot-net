@@ -42,6 +42,17 @@ export class JobService {
     )
   } 
 
+  fetchAllJobs() {
+    return this.http.get(
+      this.auth.apiUrl + '/job/'
+    )
+    .pipe(
+      map((responseData: Job[]) => {
+        return responseData;
+      })
+    )
+  } 
+
   fetchJobsByType(page?, itemsPerPage?, type?): Observable<PaginatedResult<Job[]>>{
     let mach = "";
     if (type){

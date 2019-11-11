@@ -50,6 +50,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
       this.latheOps = true;
       this.latheParts = true;
       this.latheProduction = true;
+      this.latheProductionMulti = true;
       this.checking = "mill"
     } else if (this.auth.skipMill){
       this.mills = true;
@@ -213,12 +214,12 @@ export class TutorialComponent implements OnInit, OnDestroy {
         if (prod.length > 0){
           if (prod.length > 1){
             this.latheProductionMulti = true;
+            this.checkMachines();
           } else {
             this.latheProductionMulti = false;
           }
           this.latheProduction = true;
           this.op = this.opServ.slashToDash(prod[0].opNumber);
-          this.checkMachines();
           } else {
             this.latheProduction = false;
           } 
@@ -250,7 +251,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
 
   switchLathe() {
     if (!this.auth.skipLathe){
-      if (confirm("Are you sure you want to hide these tutorials?")){
+      if (confirm("Are you sure you want to hide lathe tutorials?")){
         this.auth.changeLathe();
         this.latheProduction = true;
       }
@@ -261,7 +262,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
 
   switchMill() {
     if (!this.auth.skipMill){
-      if (confirm("Are you sure you want to hide these tutorials?")){
+      if (confirm("Are you sure you want to hide mill tutorials?")){
         this.auth.changeMill();
         this.millProduction = true;
       }
@@ -269,6 +270,11 @@ export class TutorialComponent implements OnInit, OnDestroy {
   }
   //Confirms decision to change Mill Tutorial activation status, and sends 
   // change data to backend API
+
+  changeToMill(){
+    this.checking = "mill";
+    this.switchLathe();
+  }
 
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{

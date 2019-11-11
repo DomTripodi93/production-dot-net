@@ -69,7 +69,7 @@
   as well as a total to date for the operation. 
 <br>
 </h4>
-<h4 *ngIf="latheProductionMulti" class="centered">
+<h4 *ngIf="latheProductionMulti && checking != 'mill'" class="centered">
   Now that you have multiple lots for the operation, the 
   <a routerLink="/lathe/production/op={{op}}&job={{latheJob}}">Lathe Production By Job and Op</a> 
   page will show total parts to date for the operation. This can also be reached by 
@@ -77,12 +77,20 @@
   page, and checking the production for the current job and operation on the selected 
   lot, or by using the "Change Machine" button, to navigate to the production for the current
   job and op on that machine.
-<br>
+  <br>
+</h4>
+<h4 *ngIf="latheProductionMulti && !auth.skipMill && checking != 'mill'" class="centered">
+  When you're ready to start the mill tutorial, click <a (click)="changeToMill()">Here</a>.
+  <br>
+</h4>
+<h4 *ngIf="checking == 'mill' && !mills" class="centered">
+  Start by adding your first <a routerLink="/mill/machine/new">Mill</a>.
+  <br>
 </h4>
 <br>
 <div class="center-grid">
   <button  
-    *ngIf="!latheProduction && !auth.skipLathe"
+    *ngIf="!latheProductionMulti && !auth.skipLathe"
     (click)="switchLathe()"
     class="btn btn-danger">
     <strong>Skip Lathe Tutorials</strong>
