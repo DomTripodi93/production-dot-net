@@ -45,6 +45,9 @@ export class ProductionByMachineComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.proServ.proChanged.subscribe(()=>{
+      this.setProduction();
+    })
     this.setProduction();
   }
 
@@ -52,7 +55,9 @@ export class ProductionByMachineComponent implements OnInit {
   setProduction(){
     this.machServ.fetchMachinesByType()
     .subscribe((machines: Machine[]) => {
+      this.ready = false;
       this.fullMach = [];
+      this.prodLots = [];
       let used = 0;
       machines.forEach((mach)=>{
         used += 1;
