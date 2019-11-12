@@ -34,6 +34,7 @@ export class ProductionByMachineComponent implements OnInit {
   ];
   date = new Date();
   month = this.date.getMonth();
+  ready = false;
 
 
   constructor(
@@ -56,15 +57,21 @@ export class ProductionByMachineComponent implements OnInit {
       machines.forEach((mach)=>{
         used += 1;
         if (mach.currentOp !== "None"){
+          this.prodLots.push([])
           this.fullMach.push(mach);
         }
         if (used == machines.length){
+          let set = 0;
           this.fullMach.forEach(machine=>{
             let search = "mach=" + this.auth.splitJoin(machine.machine) 
               + "&job=" + machine.currentJob 
               + "&op=" + this.opServ.slashToDash(machine.currentOp);
             this.proServ.fetchProduction(search).subscribe(prod=>{
-              this.prodLots.push(prod);
+              this.prodLots[set] = prod;
+              set += 1
+              if (set == this.prodLots.length){
+                this.ready = true;
+              }
             })
           })
         }
