@@ -5,3 +5,6 @@
     <app-production-calender [production]="lot" [month]="month" [machine]="lot[0].machine"></app-production-calender>  
   </div>
 </div>
+<div *ngIf="auth.machType == 'mill'">
+    <app-production-mill></app-production-mill>
+</div>
