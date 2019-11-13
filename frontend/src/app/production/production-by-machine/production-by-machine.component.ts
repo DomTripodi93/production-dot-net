@@ -46,11 +46,13 @@ export class ProductionByMachineComponent implements OnInit {
 
   ngOnInit() {
     if (this.auth.machType == "lathe"){
-      this.proServ.proChanged.subscribe(()=>{
-        this.setProduction();
-      })
       this.setProduction();
     }
+    this.proServ.proChanged.subscribe(()=>{
+      if (this.auth.machType == "lathe"){
+        this.setProduction();
+      }
+    })
   }
 
 
