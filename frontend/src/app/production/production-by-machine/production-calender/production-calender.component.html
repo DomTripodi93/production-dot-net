@@ -24,7 +24,7 @@
         <h5 *ngFor="let prod of set.production; let i=index">{{prod.shift}}: <br><strong>{{prod.quantity}}</strong></h5>
         <h5 *ngIf="set.production.length < 1"><br><br></h5>
         <h5 *ngIf="set.production.length < 3"><br><br></h5>
-        <h5 *ngIf="set.production.length < 3"><br><br><br></h5>
+        <h5 *ngIf="set.production.length <= 3"><br><br><br></h5>
       </div>
     </div>
     <div *ngIf="set.date == today" (click)="onViewDate(['day', year, month+1, set.date])" class="today-border">
@@ -33,7 +33,7 @@
         <h5 *ngFor="let prod of set.production; let i=index">{{prod.shift}}: <br><strong>{{prod.quantity}}</strong></h5>
         <h5 *ngIf="set.production.length < 1"><br><br></h5>
         <h5 *ngIf="set.production.length < 3"><br><br></h5>
-        <h5 *ngIf="set.production.length < 3"><br><br><br></h5>
+        <h5 *ngIf="set.production.length <= 3"><br><br><br></h5>
       </div>
     </div>
   </div>  

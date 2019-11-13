@@ -49,6 +49,9 @@ export class ProductionByMachineComponent implements OnInit {
       this.setProduction();
     }
     this.proServ.proChanged.subscribe(()=>{
+      this.ready = false;
+      this.fullMach = [];
+      this.prodLots = [];
       if (this.auth.machType == "lathe"){
         this.setProduction();
       }
@@ -59,16 +62,13 @@ export class ProductionByMachineComponent implements OnInit {
   setProduction(){
     this.machServ.fetchMachinesByType()
     .subscribe((machines: Machine[]) => {
-      this.ready = false;
-      this.fullMach = [];
-      this.prodLots = [];
       let used = 0;
       machines.forEach((mach)=>{
-        used += 1;
         if (mach.currentOp !== "None"){
-          this.prodLots.push([])
+          this.prodLots.push([]);
           this.fullMach.push(mach);
         }
+        used += 1;
         if (used == machines.length){
           let set = 0;
           this.fullMach.forEach(machine=>{
@@ -79,6 +79,7 @@ export class ProductionByMachineComponent implements OnInit {
               this.prodLots[set] = prod;
               set += 1
               if (set == this.prodLots.length){
+                this.prodLots.sort()
                 this.ready = true;
               }
             })

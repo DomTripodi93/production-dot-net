@@ -1,8 +1,0 @@
-<div *ngIf="auth.machType == 'lathe'" class="grid">
-    <div *ngFor="let lot of productionLots" >
-        <app-production-find-show  [singleProd]="lot"></app-production-find-show>
-    </div>
-</div>
-<div *ngIf="auth.machType == 'mill'">
-    <app-production-mill></app-production-mill>
-</div>

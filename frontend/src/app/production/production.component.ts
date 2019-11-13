@@ -15,7 +15,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./production.component.css']
 })
 export class ProductionComponent implements OnDestroy {
-  @ViewChild('chooseMachine') chooseMachForm: NgForm;
   machines = [];
   fullMach: Machine[] = [];
   job = '';
@@ -63,18 +62,6 @@ export class ProductionComponent implements OnDestroy {
   onNew(){
     this.dayServ.resetDate();
     this.router.navigate([this.auth.machType + "/production/new"])
-  }
-
-  chooseMach(){
-    this.mach.fetchMachineByName(this.chooseMachForm.value.machine).subscribe(newMach=>{
-      let job = newMach.currentJob;
-      let op = newMach.currentOp;
-      if (op.includes("/")){
-        op = this.opServ.slashToDash(op);
-      }
-      this.pro.setMach = this.chooseMachForm.value.machine;
-      this.router.navigate(["/lathe/production/op=" + op + "&job=" + job])
-    })
   }
 
   ngOnDestroy(){
