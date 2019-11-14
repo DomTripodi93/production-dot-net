@@ -79,7 +79,7 @@ export class ProductionByMachineComponent implements OnInit {
               this.prodLots[set] = prod;
               set += 1
               if (set == this.prodLots.length){
-                this.prodLots.sort()
+                this.prodLots.sort();
                 this.ready = true;
               }
             })
