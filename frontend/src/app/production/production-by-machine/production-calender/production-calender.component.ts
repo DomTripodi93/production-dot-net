@@ -95,15 +95,27 @@ export class ProductionCalenderComponent implements OnInit {
             this.proDates[+pro.date.substring(8,10) -1].production.push(pro);
           }
           if (used == this.production.length){
-            this.dayAvg = +(this.dayShift.reduce((a,b)=>{
-              return +a + +b;
-            }, 0) / this.dayShift.length).toFixed(0);
-            this.nightAvg = +(this.nightShift.reduce((a,b)=>{
-              return +a + +b;
-            }, 0) / this.nightShift.length).toFixed(0);
-            this.overNightAvg = +(this.overNight.reduce((a,b)=>{
-              return +a + +b;
-            }, 0) / this.overNight.length).toFixed(0);
+            if (this.dayShift.length > 0){
+              this.dayAvg = +(this.dayShift.reduce((a,b)=>{
+                return +a + +b;
+              }, 0) / this.dayShift.length).toFixed(0);
+            } else {
+              this.dayAvg = 0;
+            }
+            if (this.nightShift.length > 0){
+              this.nightAvg = +(this.nightShift.reduce((a,b)=>{
+                return +a + +b;
+              }, 0) / this.nightShift.length).toFixed(0);
+            } else {
+              this.nightAvg = 0;
+            }
+            if (this.overNight.length > 0){
+              this.overNightAvg = +(this.overNight.reduce((a,b)=>{
+                return +a + +b;
+              }, 0) / this.overNight.length).toFixed(0);
+            } else {
+              this.overNightAvg = 0;
+            }
           }
         })
       }
