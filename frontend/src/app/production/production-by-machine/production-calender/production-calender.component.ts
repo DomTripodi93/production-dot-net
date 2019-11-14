@@ -89,7 +89,9 @@ export class ProductionCalenderComponent implements OnInit {
           } else {
             this.overNight.push(pro.quantity)
           }
-          this.proDates[+pro.date.substring(8,10) -1].production.push(pro);
+          if (+pro.date.substring(5,7) == this.month + 1){
+            this.proDates[+pro.date.substring(8,10) -1].production.push(pro);
+          }
           if (used == this.production.length){
             this.dayAvg = +(this.dayShift.reduce((a,b)=>{
               return +a + +b;
