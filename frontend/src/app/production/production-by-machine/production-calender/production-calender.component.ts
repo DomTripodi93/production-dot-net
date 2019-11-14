@@ -82,12 +82,14 @@ export class ProductionCalenderComponent implements OnInit {
         this.production.forEach(pro=>{
           this.total += +pro.quantity;
           used += 1;
-          if (pro.shift == "Day"){
-            this.dayShift.push(pro.quantity)
-          } else if (pro.shift == "Night"){
-            this.nightShift.push(pro.quantity)
-          } else {
-            this.overNight.push(pro.quantity)
+          if (pro.average){
+            if (pro.shift == "Day"){
+              this.dayShift.push(pro.quantity)
+            } else if (pro.shift == "Night"){
+              this.nightShift.push(pro.quantity)
+            } else if (pro.shift == "Over-Night"){
+              this.overNight.push(pro.quantity)
+            }
           }
           if (+pro.date.substring(5,7) == this.month + 1){
             this.proDates[+pro.date.substring(8,10) -1].production.push(pro);
