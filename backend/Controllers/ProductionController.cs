@@ -40,7 +40,7 @@ namespace BackEnd.Controllers
 
             production.userId = userId;
             production.InQuestion = false;
-            production.OpNumber = opInfo.OpNumber;
+            production.Average = true;
 
             _repo.Add(production);
 

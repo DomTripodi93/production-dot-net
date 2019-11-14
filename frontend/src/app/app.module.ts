@@ -14,7 +14,6 @@ import { SignoutComponent } from './register/signout/signout.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { ProductionNewComponent } from './production/production-new/production-new.component';
 import { ProductionEditComponent } from './production/production-edit/production-edit.component';
-import { ProductionListComponent } from './production/production-list/production-list.component';
 import { HourlyComponent } from './hourly/hourly.component';
 import { HourlyNewComponent } from './hourly/hourly-new/hourly-new.component';
 import { HourlyShowComponent } from './hourly/hourly-show/hourly-show.component';
@@ -81,7 +80,6 @@ import { ProductionCalenderComponent } from './production/production-by-machine/
     HeaderComponent,
     ProductionNewComponent,
     ProductionEditComponent,
-    ProductionListComponent,
     HourlyComponent,
     HourlyNewComponent,
     HourlyShowComponent,

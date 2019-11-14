@@ -13,6 +13,7 @@ namespace BackEnd.Dtos
         public string Quantity { get; set; }
         public DateTime Date { get; set; }
         public bool InQuestion { get; set; }
+        public bool Average { get; set; }
         
     }
 }

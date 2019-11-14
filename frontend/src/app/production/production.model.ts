@@ -8,4 +8,5 @@ export interface Production {
     machine: string;
     shift: string;
     inQuestion: boolean;
+    average: boolean;
 }

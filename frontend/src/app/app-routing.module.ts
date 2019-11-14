@@ -7,7 +7,6 @@ import { SigninComponent } from './register/signin/signin.component';
 import { SignoutComponent } from './register/signout/signout.component';
 import { ProductionComponent } from './production/production.component';
 import { ProductionNewComponent } from './production/production-new/production-new.component';
-import { ProductionListComponent } from './production/production-list/production-list.component';
 import { ProductionSingleComponent } from './production/production-single/production-single.component';
 import { MachineComponent } from './machine/machine.component';
 import { MachineShowComponent } from './machine/machine-show/machine-show.component';
