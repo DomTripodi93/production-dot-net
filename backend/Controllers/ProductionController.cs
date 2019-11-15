@@ -85,6 +85,22 @@ namespace BackEnd.Controllers
             throw new Exception($"Updating production lot {id} failed on save");
         }
 
+        [HttpPut("average/{id}")]
+        public async Task<IActionResult> UpdateProductionAverage(int userId, int id, ProdForAverageDto prodForUpdateDto)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var prodFromRepo = await _repo.GetProduction(id);
+
+            _mapper.Map(prodForUpdateDto, prodFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetProd", new {id = prodFromRepo.Id}, prodForUpdateDto);
+
+            throw new Exception($"Updating production lot {id} failed on save");
+        }
+
         [HttpGet("{id}", Name = "GetProd")]
         public async Task<IActionResult> GetProduction(int id, int userId)
         {
