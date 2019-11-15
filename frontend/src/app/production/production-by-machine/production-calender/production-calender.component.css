@@ -28,6 +28,10 @@ h5, h3, h2{
     font-style: Helvetica;
 }
 
+h6{
+    line-height: 30%;
+}
+
 .padded{
     padding-left: 10px;
     padding-bottom: 50px;

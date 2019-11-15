@@ -21,7 +21,15 @@
     <div *ngIf="set.date !== today"  (click)="onViewDate(['day', year, month+1, set.date])" class="border">
       <h5 class="bold">{{set.date}}</h5>
       <div class="grid3">
-        <h5 *ngFor="let prod of set.production; let i=index">{{prod.shift}}: <br><strong>{{prod.quantity}}</strong></h5>
+        <h5 *ngFor="let prod of set.production; let i=index">
+          {{prod.shift}}: <br><strong>{{prod.quantity}}</strong> {{prod.average}}
+          <button *ngIf="!prod.average" class='btn btn-success'>
+            <h6>Avg</h6>
+          </button>
+          <button *ngIf="prod.average" class='btn btn-warning'>
+            <h6>Avg</h6>
+          </button>
+        </h5>
         <h5 *ngIf="set.production.length < 1"><br><br></h5>
         <h5 *ngIf="set.production.length < 3"><br><br></h5>
         <h5 *ngIf="set.production.length <= 3"><br><br><br></h5>

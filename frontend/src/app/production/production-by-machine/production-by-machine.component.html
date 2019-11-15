@@ -1,8 +1,8 @@
 <h1>{{months[month]}}</h1>
 <br><br>
 <div *ngIf="ready">
-  <div *ngFor="let lot of prodLots">
-    <app-production-calender [production]="lot" [month]="month" [machine]="lot[0].machine"></app-production-calender>  
+  <div *ngFor="let lot of prodLots; let i = index">
+    <app-production-calender [production]="lot" [month]="month" [machine]="fullMach[i].machine"></app-production-calender>  
   </div>
 </div>
 <div *ngIf="auth.machType == 'mill'">

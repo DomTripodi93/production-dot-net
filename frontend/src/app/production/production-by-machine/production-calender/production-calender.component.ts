@@ -95,6 +95,7 @@ export class ProductionCalenderComponent implements OnInit {
             this.proDates[+pro.date.substring(8,10) -1].production.push(pro);
           }
           if (used == this.production.length){
+            console.log(this.proDates)
             if (this.dayShift.length > 0){
               this.dayAvg = +(this.dayShift.reduce((a,b)=>{
                 return +a + +b;
