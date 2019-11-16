@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MachineService } from 'src/app/machine/machine.service';
-import { OpService } from 'src/app/job/job-ops/operation.service';
-import { JobService } from 'src/app/job/job.service';
 import { Machine } from 'src/app/machine/machine.model';
-import { MillSet } from './mill-set.model';
 import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
@@ -12,7 +9,6 @@ import { AuthService } from 'src/app/shared/auth.service';
   styleUrls: ['./production-mill.component.css']
 })
 export class ProductionMillComponent implements OnInit {
-  millSets: MillSet[][] = [];
   machines = [];
 
   constructor(
@@ -29,5 +25,6 @@ export class ProductionMillComponent implements OnInit {
       this.machines = machines
     });
   }
+  //Fetches all Mills, which are used as input models for each Mill-Machine Component
 
 }
