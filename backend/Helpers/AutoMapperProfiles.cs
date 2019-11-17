@@ -16,6 +16,7 @@ namespace BackEnd.Helpers
             CreateMap<ProdForUpdateDto, Production>().ReverseMap();
             CreateMap<ProdForQuestionDto, Production>().ReverseMap();
             CreateMap<ProdForAverageDto, Production>().ReverseMap();
+            CreateMap<ProdForQuantityDto, Production>().ReverseMap();
             CreateMap<Part, PartForReturnDto>();
             CreateMap<PartForCreationDto, Part>().ReverseMap();
             CreateMap<UpdateActiveDto, Part>().ReverseMap();
