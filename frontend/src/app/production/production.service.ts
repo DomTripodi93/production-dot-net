@@ -158,6 +158,16 @@ export class ProductionService {
         );
     }
 
+    setAverage(data, id){
+      this.fetchProductionById(id).subscribe((object)=>{
+        let oldValues = JSON.stringify(object);
+        this.auth.logChanges(oldValues, this.model, "Average", id).subscribe();
+      })
+        return this.http.put(
+          this.auth.apiUrl + "/production/average/" + id, data
+        );
+    }
+
     deleteProduction(id){
       this.fetchProductionById(id).subscribe((object)=>{
         let oldValues = JSON.stringify(object);
