@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { DaysService } from 'src/app/shared/days/days.service';
 import { Production } from '../../production.model';
 import { ProductionDate } from '../../productionDate.model';
+import { ProductionService } from '../../production.service';
 
 @Component({
   selector: 'app-production-calender',
@@ -52,6 +53,7 @@ export class ProductionCalenderComponent implements OnInit {
     public auth: AuthService,
     private router: Router,
     public dayServ: DaysService,
+    private proServ: ProductionService
   ) { }
 
   ngOnInit() {
@@ -95,7 +97,6 @@ export class ProductionCalenderComponent implements OnInit {
             this.proDates[+pro.date.substring(8,10) -1].production.push(pro);
           }
           if (used == this.production.length){
-            console.log(this.proDates)
             if (this.dayShift.length > 0){
               this.dayAvg = +(this.dayShift.reduce((a,b)=>{
                 return +a + +b;
@@ -123,6 +124,15 @@ export class ProductionCalenderComponent implements OnInit {
     }
     this.firstDay = new Date(this.year, this.month, 1);
     this.firstDayOfMonth = _.range(0, this.firstDay.getDay());
+  }
+
+  changeAvg(avg: boolean, id){
+    let newAvg = {
+      average: !avg
+    };
+    this.proServ.setAverage(newAvg, id).subscribe(()=>{
+      this.proServ.proChanged.next();
+    });
   }
 
   changeDate(){

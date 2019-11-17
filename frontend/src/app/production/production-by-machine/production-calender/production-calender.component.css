@@ -13,6 +13,11 @@
     grid-template-columns: 50% 50%;
 }
 
+.grid100 { 
+    display: grid;
+    grid-template-columns: 100%;
+}
+
 .today-border{
     border-style: solid;
     border-color: black;
@@ -28,9 +33,6 @@ h5, h3, h2{
     font-style: Helvetica;
 }
 
-h6{
-    line-height: 30%;
-}
 
 .padded{
     padding-left: 10px;
@@ -39,4 +41,13 @@ h6{
 
 .centered{
     text-align: center;
+}
+
+.short{
+    padding: 10% 0% 0% 0%;
+    line-height: 0%;
+}
+
+.border-height{
+    height: 315px
 }

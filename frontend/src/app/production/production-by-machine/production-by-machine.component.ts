@@ -80,7 +80,7 @@ export class ProductionByMachineComponent implements OnInit {
               set += 1
               if (set == this.prodLots.length){
                 if (this.prodLots.length > 1){
-                  this.prodLots.sort();
+                  this.prodLots.sort((a, b) => ((a[0].machine > b[0].machine)? 1 : -1));
                 }
                 this.ready = true;
               }

@@ -1,6 +1,5 @@
-<h1>{{months[month]}}</h1>
-<br><br>
 <div *ngIf="ready">
+  <h1 class="bold">{{months[month]}}</h1>
   <div *ngFor="let lot of prodLots; let i = index">
     <app-production-calender [production]="lot" [month]="month" [machine]="fullMach[i].machine"></app-production-calender>  
   </div>
