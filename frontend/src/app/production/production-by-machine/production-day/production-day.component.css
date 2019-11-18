@@ -1,0 +1,9 @@
+h5{
+    text-align: center;
+    font-style: Helvetica;
+}
+
+.grid3 { 
+    display: grid;
+    grid-template-columns: 50% 50%;
+}

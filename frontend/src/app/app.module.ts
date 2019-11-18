@@ -67,6 +67,7 @@ import { ProductionMillJobComponent } from './production/production-mill/product
 import { ProductionMillOpComponent } from './production/production-mill/production-mill-op/production-mill-op.component';
 import { ProductionByMachineComponent } from './production/production-by-machine/production-by-machine.component';
 import { ProductionCalenderComponent } from './production/production-by-machine/production-calender/production-calender.component';
+import { ProductionDayComponent } from './production/production-by-machine/production-day/production-day.component';
 
 @NgModule({
   declarations: [
@@ -132,6 +133,7 @@ import { ProductionCalenderComponent } from './production/production-by-machine/
     ProductionMillOpComponent,
     ProductionByMachineComponent,
     ProductionCalenderComponent,
+    ProductionDayComponent,
   ],
   imports: [
     BrowserModule,

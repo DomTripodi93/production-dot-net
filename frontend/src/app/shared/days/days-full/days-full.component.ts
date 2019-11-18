@@ -42,6 +42,7 @@ export class DaysFullComponent implements OnInit, OnDestroy {
       }
       this.searchHold.push(this.dayServ.today);
       this.search = this.searchHold.join("-");
+      console.log(this.search)
       this.getProduction();
     }));
     this.subscriptions.push(this.pro.proChanged.subscribe(()=>{

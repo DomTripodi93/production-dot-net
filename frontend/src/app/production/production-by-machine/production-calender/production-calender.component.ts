@@ -7,6 +7,7 @@ import { DaysService } from 'src/app/shared/days/days.service';
 import { Production } from '../../production.model';
 import { ProductionDate } from '../../productionDate.model';
 import { ProductionService } from '../../production.service';
+import { Machine } from 'src/app/machine/machine.model';
 
 @Component({
   selector: 'app-production-calender',
@@ -15,12 +16,13 @@ import { ProductionService } from '../../production.service';
 })
 export class ProductionCalenderComponent implements OnInit {
   @Input() production: Production[];
-  @Input() machine: string;
+  @Input() machine: Machine;
   @Input() month: number;
   @ViewChild('newMonth') newMonthForm: NgForm;
   date = new Date();
   today = this.date.getDate();
-  monthHold = ""+(this.month+1);
+  monthNum: number;
+  monthHold: string;
   year = this.date.getFullYear();
   day = this.date.getDay();
   defaultMonth = ""; 
@@ -53,15 +55,20 @@ export class ProductionCalenderComponent implements OnInit {
     public auth: AuthService,
     private router: Router,
     public dayServ: DaysService,
-    private proServ: ProductionService
+    public proServ: ProductionService
   ) { }
 
   ngOnInit() {
+    this.monthNum = this.month + 1;
+    this.monthHold = "" + this.monthNum;
     if (this.month < 9){
       this.monthHold ="0"+this.monthHold;
     }
     this.defaultMonth = this.year + "-" + this.monthHold;
     this.setDate();
+    this.proServ.proChanged.subscribe(()=>{
+      this.setAverage();
+    })
   }
 
   daysInMonth(year: number, month: number){
@@ -72,71 +79,50 @@ export class ProductionCalenderComponent implements OnInit {
     this.proDates = [];
     this.daysInMonth(this.year, this.month+1);
     this.monthDays = _.range(1, this.numberOfDays + 1);
-    for (let day in this.monthDays){
-      let proDate: ProductionDate = {
-        date: +day + 1,
-        production: []
-      }
-      this.proDates.push(proDate)
-      if (+day == this.monthDays.length-1){
-        this.total = 0;
-        let used = 0;
-        this.production.forEach(pro=>{
-          this.total += +pro.quantity;
-          used += 1;
-          if (pro.average){
-            if (pro.shift == "Day"){
-              this.dayShift.push(pro.quantity)
-            } else if (pro.shift == "Night"){
-              this.nightShift.push(pro.quantity)
-            } else if (pro.shift == "Over-Night"){
-              this.overNight.push(pro.quantity)
-            }
-          }
-          if (+pro.date.substring(5,7) == this.month + 1){
-            this.proDates[+pro.date.substring(8,10) -1].production.push(pro);
-          }
-          if (used == this.production.length){
-            this.setAverage();
-          }
-        })
-      }
-    }
     this.firstDay = new Date(this.year, this.month, 1);
     this.firstDayOfMonth = _.range(0, this.firstDay.getDay());
+    this.setAverage();
   }
 
   setAverage(){
-    if (this.dayShift.length > 0){
-      this.dayAvg = +(this.dayShift.reduce((a,b)=>{
-        return +a + +b;
-      }, 0) / this.dayShift.length).toFixed(0);
-    } else {
-      this.dayAvg = 0;
-    }
-    if (this.nightShift.length > 0){
-      this.nightAvg = +(this.nightShift.reduce((a,b)=>{
-        return +a + +b;
-      }, 0) / this.nightShift.length).toFixed(0);
-    } else {
-      this.nightAvg = 0;
-    }
-    if (this.overNight.length > 0){
-      this.overNightAvg = +(this.overNight.reduce((a,b)=>{
-        return +a + +b;
-      }, 0) / this.overNight.length).toFixed(0);
-    } else {
-      this.overNightAvg = 0;
-    }
-  }
-
-  changeAvg(avg: boolean, id){
-    let newAvg = {
-      average: !avg
-    };
-    this.proServ.setAverage(newAvg, id).subscribe(()=>{
-      this.proServ.proChanged.next();
-    });
+    this.total = 0;
+    let used = 0;
+    this.production.forEach(pro=>{
+      this.total += +pro.quantity;
+      used += 1;
+      if (pro.average){
+        if (pro.shift == "Day"){
+          this.dayShift.push(pro.quantity)
+        } else if (pro.shift == "Night"){
+          this.nightShift.push(pro.quantity)
+        } else if (pro.shift == "Over-Night"){
+          this.overNight.push(pro.quantity)
+        }
+      }
+      if (used == this.production.length){
+        if (this.dayShift.length > 0){
+          this.dayAvg = +(this.dayShift.reduce((a,b)=>{
+            return +a + +b;
+          }, 0) / this.dayShift.length).toFixed(0);
+        } else {
+          this.dayAvg = 0;
+        }
+        if (this.nightShift.length > 0){
+          this.nightAvg = +(this.nightShift.reduce((a,b)=>{
+            return +a + +b;
+          }, 0) / this.nightShift.length).toFixed(0);
+        } else {
+          this.nightAvg = 0;
+        }
+        if (this.overNight.length > 0){
+          this.overNightAvg = +(this.overNight.reduce((a,b)=>{
+            return +a + +b;
+          }, 0) / this.overNight.length).toFixed(0);
+        } else {
+          this.overNightAvg = 0;
+        }
+      }
+    })
   }
 
   changeDate(){

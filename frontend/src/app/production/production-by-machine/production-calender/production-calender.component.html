@@ -1,5 +1,5 @@
 
-<h2 class="bold">{{machine}}</h2>
+<h2 class="bold">{{machine.machine}}</h2>
 <h3>Parts Made To Operation on This Machine: <br><strong>{{total}}</strong></h3>
 <div class="grid2">
   <h3>Day Shift Average: <br><strong>{{dayAvg}}</strong></h3>
@@ -18,45 +18,23 @@
     <div class="border border-height">
     </div>
   </div>  
-  <div *ngFor="let set of proDates">
-    <div *ngIf="set.date !== today" class="border border-height">
+  <div *ngFor="let day of monthDays">
+    <div *ngIf="day != today" class="border border-height">
       <div class="grid100"> 
-        <button (click)="onViewDate(['day', year, month+1, set.date])" class="btn btn-primary">
+        <button (click)="onViewDate(['day', year, month+1, day])" class="btn btn-primary">
           <h6>View Day</h6>
         </button>
       </div>
-      <h5 class="bold short">{{set.date}}</h5>
-      <div class="grid3">
-        <h5 *ngFor="let prod of set.production; let i=index">
-          {{prod.shift}}: <div *ngIf="prod.shift != 'Over-Night'"><br></div><strong>{{prod.quantity}}</strong>
-          <button *ngIf="!prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-success'>
-            Avg
-          </button>
-          <button *ngIf="prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-danger'>
-            Avg
-          </button>
-        </h5>
-      </div>
+      <h5 class="bold short">{{day}}</h5>
+      <app-production-day [mach]="machine" [date]="year+'-'+monthHold+'-'+day"></app-production-day>
     </div>
-    <div *ngIf="set.date == today" class="today-border border-height">
+    <div *ngIf="day == today" class="today-border border-height">
       <div class="grid100"> 
-        <button (click)="onViewDate(['day', year, month+1, set.date])" class="btn btn-primary">
+        <button (click)="onViewDate(['day', year, month+1, day])" class="btn btn-primary">
           <h6>View Day</h6>
         </button>
       </div>
-      <h5 class="bold short">{{set.date}}</h5>
-      <div class="grid3">
-        <h5 *ngFor="let prod of set.production; let i=index">
-          {{prod.shift}}: <div *ngIf="prod.shift != 'Over-Night'"><br></div><strong>{{prod.quantity}}</strong>
-          <br>
-          <button *ngIf="!prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-success'>
-            Avg
-          </button>
-          <button *ngIf="prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-danger'>
-            Avg
-          </button>
-        </h5>
-      </div>
+      <h5 class="bold short">{{day}}</h5>
     </div>
-  </div>  
+  </div>
 </div>

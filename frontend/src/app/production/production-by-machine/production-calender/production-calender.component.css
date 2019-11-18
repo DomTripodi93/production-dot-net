@@ -8,11 +8,6 @@
     grid-template-columns: 33.33% 33.33% 33.33%;
 }
 
-.grid3 { 
-    display: grid;
-    grid-template-columns: 50% 50%;
-}
-
 .grid100 { 
     display: grid;
     grid-template-columns: 100%;
@@ -33,14 +28,9 @@ h5, h3, h2{
     font-style: Helvetica;
 }
 
-
 .padded{
     padding-left: 10px;
     padding-bottom: 50px;
-}
-
-.centered{
-    text-align: center;
 }
 
 .short{
