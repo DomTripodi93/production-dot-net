@@ -52,7 +52,6 @@ export class ProductionByMachineComponent implements OnInit {
   setMachines(){
     this.machServ.fetchMachinesByType()
     .subscribe((machines: Machine[]) => {
-      console.log(machines)
       if (this.auth.machType == "lathe"){
         let used = 0;
         machines.forEach((mach)=>{

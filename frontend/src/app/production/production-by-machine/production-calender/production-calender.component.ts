@@ -5,7 +5,6 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { Router } from '@angular/router';
 import { DaysService } from 'src/app/shared/days/days.service';
 import { Production } from '../../production.model';
-import { ProductionDate } from '../../productionDate.model';
 import { ProductionService } from '../../production.service';
 import { Machine } from 'src/app/machine/machine.model';
 import { OpService } from 'src/app/job/job-ops/operation.service';
