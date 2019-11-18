@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { OpService } from 'src/app/job/job-ops/operation.service';
-import { MillSet } from '../mill-set.model';
 import { Job } from 'src/app/job/job.model';
 import { Operation } from 'src/app/job/job-ops/operation.model';
 import { AuthService } from 'src/app/shared/auth.service';

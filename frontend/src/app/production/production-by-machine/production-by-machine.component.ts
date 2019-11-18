@@ -42,9 +42,7 @@ export class ProductionByMachineComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.auth.machType == "lathe"){
-      this.setMachines();
-    }
+    this.setMachines();
     this.machServ.machChanged.subscribe(()=>{
       this.setMachines();
     })
@@ -54,16 +52,22 @@ export class ProductionByMachineComponent implements OnInit {
   setMachines(){
     this.machServ.fetchMachinesByType()
     .subscribe((machines: Machine[]) => {
-      let used = 0;
-      machines.forEach((mach)=>{
-        if (mach.currentOp !== "None"){
-          this.fullMach.push(mach);
-        }
-        used += 1;
-        if (used == machines.length){
-          this.ready = true;
-        }
-      });
+      console.log(machines)
+      if (this.auth.machType == "lathe"){
+        let used = 0;
+        machines.forEach((mach)=>{
+          if (mach.currentOp !== "None"){
+            this.fullMach.push(mach);
+          }
+          used += 1;
+          if (used == machines.length){
+            this.ready = true;
+          }
+        });
+      } else {
+        this.fullMach = machines;
+        this.ready = true;
+      }
     });
   }
 
