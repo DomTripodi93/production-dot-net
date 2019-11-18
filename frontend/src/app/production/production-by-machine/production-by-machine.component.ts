@@ -17,7 +17,6 @@ import { Production } from '../production.model';
 })
 export class ProductionByMachineComponent implements OnInit {
   fullMach: Machine[] = [];
-  prodLots: Production[][] = [];
   months = [
     "January",
     "February",
@@ -39,53 +38,30 @@ export class ProductionByMachineComponent implements OnInit {
 
   constructor(
     public auth: AuthService,
-    private machServ: MachineService,
-    private proServ: ProductionService,
-    private opServ: OpService
+    private machServ: MachineService
   ) { }
 
   ngOnInit() {
     if (this.auth.machType == "lathe"){
-      this.setProduction();
+      this.setMachines();
     }
-    this.proServ.proChanged.subscribe(()=>{
-      this.ready = false;
-      this.fullMach = [];
-      this.prodLots = [];
-      if (this.auth.machType == "lathe"){
-        this.setProduction();
-      }
+    this.machServ.machChanged.subscribe(()=>{
+      this.setMachines();
     })
   }
 
 
-  setProduction(){
+  setMachines(){
     this.machServ.fetchMachinesByType()
     .subscribe((machines: Machine[]) => {
       let used = 0;
       machines.forEach((mach)=>{
         if (mach.currentOp !== "None"){
-          this.prodLots.push([]);
           this.fullMach.push(mach);
         }
         used += 1;
         if (used == machines.length){
-          let set = 0;
-          this.fullMach.forEach(machine=>{
-            let search = "mach=" + this.auth.splitJoin(machine.machine) 
-              + "&job=" + machine.currentJob 
-              + "&op=" + this.opServ.slashToDash(machine.currentOp);
-            this.proServ.fetchProduction(search).subscribe(prod=>{
-              this.prodLots[set] = prod;
-              set += 1
-              if (set == this.prodLots.length){
-                if (this.prodLots.length > 1){
-                  this.prodLots.sort((a, b) => ((a[0].machine > b[0].machine)? 1 : -1));
-                }
-                this.ready = true;
-              }
-            })
-          })
+          this.ready = true;
         }
       });
     });

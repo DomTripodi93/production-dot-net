@@ -3,6 +3,7 @@ import { ProductionService } from '../../production.service';
 import { Production } from '../../production.model';
 import { Machine } from 'src/app/machine/machine.model';
 import { OpService } from 'src/app/job/job-ops/operation.service';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-production-day',
@@ -16,17 +17,17 @@ export class ProductionDayComponent implements OnInit {
 
   constructor(
     private proServ: ProductionService,
-    private opServ: OpService
+    private opServ: OpService,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
     this.proServ.proChanged.subscribe(()=>{
-      this.production = [];
       this.getProduction();
     })
     this.getProduction();
   }
-  
+
   changeAvg(avg: boolean, id){
     let newAvg = {
       average: !avg
@@ -37,7 +38,10 @@ export class ProductionDayComponent implements OnInit {
   }
 
   getProduction(){
-    let search = "formach=" + this.mach.machine + "&job=" + this.mach.currentJob + "&op=" + this.opServ.slashToDash(this.mach.currentOp) + "&date=" + this.date;
+    let search = "formach=" + this.auth.splitJoin(this.mach.machine) 
+      + "&job=" + this.mach.currentJob 
+      + "&op=" + this.opServ.slashToDash(this.mach.currentOp) 
+      + "&date=" + this.date;
     this.proServ.fetchProduction(search)
       .subscribe((prod)=>{
         this.production = prod

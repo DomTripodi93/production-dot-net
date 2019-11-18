@@ -8,6 +8,7 @@ import { Production } from '../../production.model';
 import { ProductionDate } from '../../productionDate.model';
 import { ProductionService } from '../../production.service';
 import { Machine } from 'src/app/machine/machine.model';
+import { OpService } from 'src/app/job/job-ops/operation.service';
 
 @Component({
   selector: 'app-production-calender',
@@ -15,10 +16,10 @@ import { Machine } from 'src/app/machine/machine.model';
   styleUrls: ['./production-calender.component.css']
 })
 export class ProductionCalenderComponent implements OnInit {
-  @Input() production: Production[];
   @Input() machine: Machine;
   @Input() month: number;
   @ViewChild('newMonth') newMonthForm: NgForm;
+  production: Production[];
   date = new Date();
   today = this.date.getDate();
   monthNum: number;
@@ -38,12 +39,7 @@ export class ProductionCalenderComponent implements OnInit {
   ]
   numberOfDays: number;
   monthDays = []
-  firstDayOfMonth = []
-  firstDay: Date;
-  proDates: ProductionDate[] = [];
-  dayShift = [];
-  nightShift = [];
-  overNight = [];
+  firstDayOfMonth = [];
   dayAvg: number;
   nightAvg: number;
   overNightAvg: number;
@@ -55,7 +51,8 @@ export class ProductionCalenderComponent implements OnInit {
     public auth: AuthService,
     private router: Router,
     public dayServ: DaysService,
-    public proServ: ProductionService
+    public proServ: ProductionService,
+    private opServ: OpService
   ) { }
 
   ngOnInit() {
@@ -66,58 +63,70 @@ export class ProductionCalenderComponent implements OnInit {
     }
     this.defaultMonth = this.year + "-" + this.monthHold;
     this.setDate();
+    this.getProduction();
     this.proServ.proChanged.subscribe(()=>{
+      this.getProduction();
+    })
+  }
+
+  getProduction(){
+    let search = "mach=" + this.auth.splitJoin(this.machine.machine) 
+      + "&job=" + this.machine.currentJob 
+      + "&op=" + this.opServ.slashToDash(this.machine.currentOp);
+    this.proServ.fetchProduction(search).subscribe(prod=>{
+      this.production = prod;
       this.setAverage();
     })
+  }
+
+  setDate(){
+    this.daysInMonth(this.year, this.month+1);
+    this.monthDays = _.range(1, this.numberOfDays + 1);
+    let firstDay = new Date(this.year, this.month, 1);
+    this.firstDayOfMonth = _.range(0, firstDay.getDay());
   }
 
   daysInMonth(year: number, month: number){
     this.numberOfDays = new Date(year, month, 0).getDate();
   }
 
-  setDate(){
-    this.proDates = [];
-    this.daysInMonth(this.year, this.month+1);
-    this.monthDays = _.range(1, this.numberOfDays + 1);
-    this.firstDay = new Date(this.year, this.month, 1);
-    this.firstDayOfMonth = _.range(0, this.firstDay.getDay());
-    this.setAverage();
-  }
-
   setAverage(){
     this.total = 0;
+    let dayShift = [];
+    let nightShift = [];
+    let overNight = [];
     let used = 0;
     this.production.forEach(pro=>{
       this.total += +pro.quantity;
       used += 1;
       if (pro.average){
         if (pro.shift == "Day"){
-          this.dayShift.push(pro.quantity)
+          dayShift.push(pro.quantity)
         } else if (pro.shift == "Night"){
-          this.nightShift.push(pro.quantity)
+          nightShift.push(pro.quantity)
         } else if (pro.shift == "Over-Night"){
-          this.overNight.push(pro.quantity)
+          overNight.push(pro.quantity)
         }
       }
       if (used == this.production.length){
-        if (this.dayShift.length > 0){
-          this.dayAvg = +(this.dayShift.reduce((a,b)=>{
+        if (dayShift.length > 0){
+          this.dayAvg = +(dayShift.reduce((a,b)=>{
             return +a + +b;
-          }, 0) / this.dayShift.length).toFixed(0);
+          }, 0) / dayShift.length).toFixed(0);
         } else {
           this.dayAvg = 0;
         }
-        if (this.nightShift.length > 0){
-          this.nightAvg = +(this.nightShift.reduce((a,b)=>{
+        if (nightShift.length > 0){
+          this.nightAvg = +(nightShift.reduce((a,b)=>{
             return +a + +b;
-          }, 0) / this.nightShift.length).toFixed(0);
+          }, 0) / nightShift.length).toFixed(0);
         } else {
           this.nightAvg = 0;
         }
-        if (this.overNight.length > 0){
-          this.overNightAvg = +(this.overNight.reduce((a,b)=>{
+        if (overNight.length > 0){
+          this.overNightAvg = +(overNight.reduce((a,b)=>{
             return +a + +b;
-          }, 0) / this.overNight.length).toFixed(0);
+          }, 0) / overNight.length).toFixed(0);
         } else {
           this.overNightAvg = 0;
         }
