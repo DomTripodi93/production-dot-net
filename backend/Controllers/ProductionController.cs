@@ -184,6 +184,19 @@ namespace BackEnd.Controllers
             return Ok(productionSet);
         }
 
+        [HttpGet("mach={mach}&date={date}")]
+        public async Task<IActionResult> GetProductionSetByMachineAndDate(int userId, string mach, string date)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            IEnumerable<Production> directProductions = await _repo.GetProductionSetByMachineAndDate(userId, date, mach);
+
+            var productionSet = _mapper.Map<IEnumerable<ProdForReturnDto>>(directProductions);
+
+            return Ok(productionSet);
+        }
+
         [HttpGet("op={op}&job={job}")]
         public async Task<IActionResult> GetProductionSetByOp(int userId, string job, string op)
         {

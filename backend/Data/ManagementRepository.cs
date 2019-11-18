@@ -298,6 +298,25 @@ namespace BackEnd.Data
             return prodForReturn.OrderByDescending(p => p.Date);
         }
 
+        public async Task<IEnumerable<Production>> GetProductionSetByMachineAndDate(int userId, string date, string mach)
+        {
+            DateTime DateAsDate = DateTime.Parse(date);
+
+            var machForProc = await _context.Machines
+                .Where(m => m.userId == userId)
+                .Where(m => m.Machine == mach)
+                .FirstOrDefaultAsync();
+
+            var prodForReturn = await _context.Production
+                .Where(p => p.userId == userId)
+                .Where(p => p.JobNumber == machForProc.CurrentJob)
+                .Where(p => p.OpNumber == machForProc.CurrentOp)
+                .Where(p => p.Date == DateAsDate)
+                .ToListAsync();
+
+            return prodForReturn.OrderByDescending(p => p.Date);
+        }
+
         public async Task<Hourly> GetAnyHourly(int userId)
         {
             var hourly = await _context.Hourlys
@@ -327,5 +346,6 @@ namespace BackEnd.Data
 
             return hourlyForReturn.OrderBy(o => o.Time);
         }
+
     }
 }
