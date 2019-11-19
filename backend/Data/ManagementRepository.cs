@@ -308,9 +308,27 @@ namespace BackEnd.Data
                 .Where(p => p.OpNumber == op)
                 .Where(p => p.Machine == mach)
                 .Where(p => p.Date == DateAsDate)
+                .Where(p => p.Shift != "Found")
+                .ToListAsync();
+                
+            return prodForReturn.OrderBy(p => p.Shift);
+        }
+
+        public async Task<IEnumerable<Production>> GetProductionFoundByMachineAndDate(int userId, string date, string op, string job, string mach)
+        {
+            DateTime DateAsDate = DateTime.Parse(date);
+
+            var prodFound = await _context.Production
+                .Where(p => p.userId == userId)
+                .Where(p => p.Shift == "Found")
+                .Where(p => p.JobNumber == job)
+                .Where(p => p.OpNumber == op)
+                .Where(p => p.Machine == mach)
+                .Where(p => p.Date == DateAsDate)
                 .ToListAsync();
 
-            return prodForReturn.OrderByDescending(p => p.Date);
+                
+            return prodFound;
         }
 
         public async Task<Hourly> GetAnyHourly(int userId)

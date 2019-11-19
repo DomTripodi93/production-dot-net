@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -192,7 +193,9 @@ namespace BackEnd.Controllers
 
             IEnumerable<Production> directProductions = await _repo.GetProductionSetByMachineAndDate(userId, date, op, job, mach);
 
-            var productionSet = _mapper.Map<IEnumerable<ProdForReturnDto>>(directProductions);
+            IEnumerable<Production> directFoundProductions = await _repo.GetProductionFoundByMachineAndDate(userId, date, op, job, mach);
+
+            var productionSet = _mapper.Map<IEnumerable<ProdForReturnDto>>(directProductions.Concat(directFoundProductions));
 
             return Ok(productionSet);
         }
