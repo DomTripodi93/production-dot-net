@@ -42,6 +42,7 @@ export class ProductionCalenderComponent implements OnInit {
   dayAvg: number;
   nightAvg: number;
   overNightAvg: number;
+  machTotal: number
   total: number
 
 
@@ -63,8 +64,10 @@ export class ProductionCalenderComponent implements OnInit {
     this.defaultMonth = this.year + "-" + this.monthHold;
     this.setDate();
     this.getProduction();
+    this.getTotal();
     this.proServ.proChanged.subscribe(()=>{
       this.getProduction();
+      this.getTotal();
     })
   }
 
@@ -75,6 +78,17 @@ export class ProductionCalenderComponent implements OnInit {
     this.proServ.fetchProduction(search).subscribe(prod=>{
       this.production = prod;
       this.setAverage();
+    })
+  }
+
+  getTotal(){
+    let search = "op=" + this.opServ.slashToDash(this.machine.currentOp)
+      + "&job=" + this.machine.currentJob;
+    this.proServ.fetchProduction(search).subscribe(prod=>{
+      this.total = 0;
+      prod.forEach((set)=>{
+        this.total += +set.quantity;
+      })
     })
   }
 
@@ -90,13 +104,14 @@ export class ProductionCalenderComponent implements OnInit {
   }
 
   setAverage(){
+    this.machTotal = 0;
     this.total = 0;
     let dayShift = [];
     let nightShift = [];
     let overNight = [];
     let used = 0;
     this.production.forEach(pro=>{
-      this.total += +pro.quantity;
+      this.machTotal += +pro.quantity;
       used += 1;
       if (pro.average){
         if (pro.shift == "Day"){

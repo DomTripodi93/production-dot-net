@@ -3,10 +3,10 @@
     <h5 class="middle">{{prod.shift}}</h5>
     <h5 class="short"><strong>{{prod.quantity}}</strong>
       <button *ngIf="!prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-success smaller'>
-        Avg
+        <h6 class="in-button">Avg</h6>
       </button>
       <button *ngIf="prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-danger smaller'>
-        Avg
+        <h6 class="in-button">Avg</h6>
       </button>
     </h5>
   </div>
