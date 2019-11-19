@@ -4,6 +4,7 @@ import { Production } from '../../production.model';
 import { Machine } from 'src/app/machine/machine.model';
 import { OpService } from 'src/app/job/job-ops/operation.service';
 import { AuthService } from 'src/app/shared/auth.service';
+import { JobService } from 'src/app/job/job.service';
 
 @Component({
   selector: 'app-production-day',
@@ -19,7 +20,8 @@ export class ProductionDayComponent implements OnInit {
   constructor(
     private proServ: ProductionService,
     private opServ: OpService,
-    private auth: AuthService
+    private auth: AuthService,
+    private jobServ: JobService
   ) { }
 
   ngOnInit() {
