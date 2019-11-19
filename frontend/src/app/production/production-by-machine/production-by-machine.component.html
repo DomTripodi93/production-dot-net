@@ -1,4 +1,4 @@
-<div *ngIf="auth.machType == 'lathe'">
+<div *ngIf="auth.machType == 'lathe' && ready">
   <h1 class="bold">{{months[month]}}</h1>
   <div *ngFor="let mach of fullMach; let i = index">
     <app-production-calender [month]="month" [machine]="mach"></app-production-calender>  

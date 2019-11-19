@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './shared/auth.service';
 import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ export class AppComponent implements OnInit {
 
   public constructor(
     public auth: AuthService,
-    private titleService: Title
+    private titleService: Title,
+    private router: Router
   ){}
 
   ngOnInit(){
@@ -48,6 +50,7 @@ export class AppComponent implements OnInit {
           this.auth.authChanged.next();
         }, ()=>{
           this.auth.logout();
+          this.router.navigate(["/"]);
         }
       );
       //Sets user settings options to those stored in the database, or logs out if 

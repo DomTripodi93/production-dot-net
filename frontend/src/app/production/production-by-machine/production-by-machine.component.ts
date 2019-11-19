@@ -44,6 +44,7 @@ export class ProductionByMachineComponent implements OnInit {
   ngOnInit() {
     this.setMachines();
     this.machServ.machChanged.subscribe(()=>{
+      this.ready = false;
       this.setMachines();
     })
   }
@@ -53,6 +54,7 @@ export class ProductionByMachineComponent implements OnInit {
     this.machServ.fetchMachinesByType()
     .subscribe((machines: Machine[]) => {
       if (this.auth.machType == "lathe"){
+        this.fullMach = [];
         let used = 0;
         machines.forEach((mach)=>{
           if (mach.currentOp !== "None"){
