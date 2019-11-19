@@ -6,10 +6,16 @@
 </div>
 <div class="grid50split">
     <h3>Parts Made On Machine: <br><strong>{{machTotal}}</strong></h3>
-    <div class="grid100">
-      <div class='short'><br></div>
-      <button *ngIf="!editMode" class='btn btn-info smaller' (click)="editProd()"><h3 class="middle">Update</h3></button>
-      <button *ngIf="editMode" class='btn btn-success smaller' (click)="submitAll()"><h3 class="middle">Submit</h3></button>
+    <div *ngIf="!editMode" class="grid100">
+        <div class='short'><br></div>
+        <button *ngIf="!editMode" class='btn btn-info smaller' (click)="editProd()"><h3 class="middle">Update</h3></button>
+    </div>
+    <div *ngIf="editMode">
+        <div class='short'><br></div>
+        <div class="grid50">
+          <button *ngIf="editMode" class='btn btn-success smaller' (click)="submitAll()"><h4 class="middle">Submit</h4></button>
+          <button *ngIf="editMode" class='btn btn-danger smaller' (click)="cancel()"><h4 class="middle">Cancel</h4></button>
+        </div>
     </div>
     <h3>Parts Made To Operation: <br><strong>{{total}}</strong></h3>
 </div>

@@ -100,7 +100,12 @@ export class ProductionCalenderComponent implements OnInit {
   }
 
   submitAll(){
-    this.proServ.proChanged.next();
+    this.proServ.proSubmit.next();
+    setTimeout(()=>{this.proServ.proChanged.next();},200);
+  }
+
+  cancel(){
+    this.editMode = false;
   }
 
   setDate(){

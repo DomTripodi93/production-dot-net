@@ -13,6 +13,11 @@
     grid-template-columns: 100%;
 }
 
+.grid50 { 
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
 .grid50split { 
     display: grid;
     grid-template-columns: 37% 26% 37%;
