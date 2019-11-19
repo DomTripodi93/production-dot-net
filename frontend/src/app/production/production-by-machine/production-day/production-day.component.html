@@ -1,13 +1,11 @@
-<div *ngFor="let prod of production">
-  <div class="grid3">
-    <h5 *ngFor="let prod of production; let i=index">
-      {{prod.shift}}: <div *ngIf="prod.shift != 'Over-Night'"><br></div><strong>{{prod.quantity}}</strong>
-      <button *ngIf="!prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-success'>
-        Avg
-      </button>
-      <button *ngIf="prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-danger'>
-        Avg
-      </button>
-    </h5>
-  </div>
+<div class="grid3">
+  <h5 *ngFor="let prod of production; let i=index">
+    {{prod.shift}}: <div *ngIf="prod.shift != 'Over-Night'"><br></div><strong>{{prod.quantity}}</strong>
+    <button *ngIf="!prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-success'>
+      Avg
+    </button>
+    <button *ngIf="prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-danger'>
+      Avg
+    </button>
+  </h5>
 </div>

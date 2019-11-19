@@ -44,6 +44,7 @@ export class ProductionDayComponent implements OnInit {
       + "&date=" + this.date;
     this.proServ.fetchProduction(search)
       .subscribe((prod)=>{
+        console.log(prod)
         this.production = prod
       }
     );
