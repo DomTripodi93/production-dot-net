@@ -1,5 +1,5 @@
 <h5 *ngFor="let prod of production; let i=index">
-  <div class="grid3 short">
+  <div *ngIf="!editMode" class="grid3 short">
     <h5 class="middle">{{prod.shift}}</h5>
     <h5 class="short"><strong>{{prod.quantity}}</strong>
       <button *ngIf="!prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-success smaller'>
@@ -9,5 +9,9 @@
         <h6 class="in-button">Avg</h6>
       </button>
     </h5>
+  </div>
+  <div *ngIf="editMode">
+    <h6 class="small-break"><br></h6>
+    <app-production-quantity [quantity]="prod.quantity" [id]="prod.id"></app-production-quantity>
   </div>
 </h5>

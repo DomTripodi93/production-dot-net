@@ -44,6 +44,7 @@ export class ProductionCalenderComponent implements OnInit {
   overNightAvg: number;
   machTotal: number
   total: number
+  editMode = false;
 
 
 
@@ -56,6 +57,7 @@ export class ProductionCalenderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.editMode = false;
     this.monthNum = this.month + 1;
     this.monthHold = "" + this.monthNum;
     if (this.month < 9){
@@ -66,6 +68,7 @@ export class ProductionCalenderComponent implements OnInit {
     this.getProduction();
     this.getTotal();
     this.proServ.proChanged.subscribe(()=>{
+      this.editMode = false;
       this.getProduction();
       this.getTotal();
     })
@@ -90,6 +93,14 @@ export class ProductionCalenderComponent implements OnInit {
         this.total += +set.quantity;
       })
     })
+  }
+
+  editProd(){
+    this.editMode = true;
+  }
+
+  submitAll(){
+    this.proServ.proChanged.next();
   }
 
   setDate(){

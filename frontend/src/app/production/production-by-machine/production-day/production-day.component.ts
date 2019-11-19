@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/shared/auth.service';
   styleUrls: ['./production-day.component.css']
 })
 export class ProductionDayComponent implements OnInit {
+  @Input() editMode: boolean;
   @Input() date: string;
   @Input() mach: Machine;
   production: Production[] = [];

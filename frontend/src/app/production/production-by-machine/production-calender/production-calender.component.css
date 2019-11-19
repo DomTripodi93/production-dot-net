@@ -13,9 +13,9 @@
     grid-template-columns: 100%;
 }
 
-.grid50 { 
+.grid50split { 
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 37% 26% 37%;
 }
 
 .today-border{
@@ -38,9 +38,18 @@ h5, h3, h2{
     padding-bottom: 50px;
 }
 
+.middle{
+    text-align: center;
+    margin: auto;
+}
+
 .short{
     padding: 10% 0% 0% 0%;
     line-height: 0%;
+}
+
+.smaller{
+    height: 65px;
 }
 
 .border-height{
