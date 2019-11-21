@@ -17,41 +17,31 @@
 </h5> -->
 <div *ngIf="ready" class="grid3 short">
   <h5 class="middle">Day</h5>
-  <h5 *ngIf="!editMode && day" class="short">
-    <strong>{{day.quantity}}</strong><br>
-    <button *ngIf="!day.average" (click)="changeAvg(day.average, day.id)" class='btn btn-success smaller'>
-      <h6 class="in-button">Avg</h6>
-    </button>
-    <button *ngIf="day.average" (click)="changeAvg(day.average, day.id)" class='btn btn-danger smaller'>
-      <h6 class="in-button">Avg</h6>
-    </button>
+  <h5 *ngIf="day" class="short">
+    <app-production-shift [prod]="day" [editMode]="editMode"></app-production-shift>
   </h5>
-  <div *ngIf="editMode && day">
-    <h6 class="small-break"><br></h6>
-    <app-production-quantity [quantity]="day.quantity" [id]="day.id"></app-production-quantity>
-  </div>
-  <h5 *ngIf="!editMode && !day" class="short">
-    <strong>0</strong><br>
-    <button (click)="addProd()" class='btn btn-success smaller'>
-      <h6 class="in-button">Add</h6>
-    </button>
+  <h5 *ngIf="!day" class="short">
+    <app-production-shift [editMode]="editMode" [mach]="mach"></app-production-shift>
   </h5>
-  <div *ngIf="editMode && !day">
-    <h6 class="small-break"><br></h6>
-    <app-production-quantity [quantity]="0"></app-production-quantity>
-  </div>
   <h5 class="middle">Night</h5>
-  <h5 *ngIf="!editMode && night" class="short">
-    <strong>{{night.quantity}}</strong>
-    <button *ngIf="!night.average" (click)="changeAvg(night.average, night.id)" class='btn btn-success smaller'>
-      <h6 class="in-button">Avg</h6>
-    </button>
-    <button *ngIf="night.average" (click)="changeAvg(night.average, night.id)" class='btn btn-danger smaller'>
-      <h6 class="in-button">Avg</h6>
-    </button>
+  <h5 *ngIf="night" class="short">
+    <app-production-shift [prod]="night" [editMode]="editMode"></app-production-shift>
   </h5>
-  <div *ngIf="editMode && night">
-    <h6 class="small-break"><br></h6>
-    <app-production-quantity [quantity]="night.quantity" [id]="night.id"></app-production-quantity>
-  </div>
+  <h5 *ngIf="!night" class="short">
+    <app-production-shift [editMode]="editMode" [mach]="mach"></app-production-shift>
+  </h5>
+  <h5 class="middle">Over-Night</h5>
+  <h5 *ngIf="oNight" class="short">
+    <app-production-shift [prod]="oNight" [editMode]="editMode"></app-production-shift>
+  </h5>
+  <h5 *ngIf="!oNight" class="short">
+    <app-production-shift [editMode]="editMode" [mach]="mach"></app-production-shift>
+  </h5>
+  <h5 class="middle">Found</h5>
+  <h5 *ngIf="found" class="short">
+    <app-production-shift [prod]="found" [editMode]="editMode"></app-production-shift>
+  </h5>
+  <h5 *ngIf="!found" class="short">
+    <app-production-shift [editMode]="editMode" [mach]="mach"></app-production-shift>
+  </h5>
 </div>

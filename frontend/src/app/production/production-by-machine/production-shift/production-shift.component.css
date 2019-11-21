@@ -1,0 +1,18 @@
+.short{
+    padding: 0% 0% 0% 0%;
+    margin: 0% 0% 0% 0%;
+}
+
+.smaller{
+    height: 30px;
+    width: 45px;
+}
+
+.small-break{
+    line-height: 0;
+}
+
+.in-button{
+    float: right;
+    margin: auto;
+}
