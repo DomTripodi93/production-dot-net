@@ -4,7 +4,6 @@ import { Production } from '../../production.model';
 import { Machine } from 'src/app/machine/machine.model';
 import { OpService } from 'src/app/job/job-ops/operation.service';
 import { AuthService } from 'src/app/shared/auth.service';
-import { JobService } from 'src/app/job/job.service';
 
 @Component({
   selector: 'app-production-day',
@@ -16,16 +15,21 @@ export class ProductionDayComponent implements OnInit {
   @Input() date: string;
   @Input() mach: Machine;
   production: Production[] = [];
+  day: Production;
+  night: Production;
+  oNight: Production;
+  found: Production;
+  ready = false;
 
   constructor(
     private proServ: ProductionService,
     private opServ: OpService,
-    private auth: AuthService,
-    private jobServ: JobService
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
     this.proServ.proChanged.subscribe(()=>{
+      this.ready = false;
       this.getProduction();
     })
     this.getProduction();
@@ -48,6 +52,26 @@ export class ProductionDayComponent implements OnInit {
     this.proServ.fetchProduction(search)
       .subscribe((prod)=>{
         this.production = prod
+        let used = 0;
+        if (prod.length > 0){
+          prod.forEach(pro=>{
+            if (pro.shift == "Day"){
+              this.day = pro;
+            } else if (pro.shift == "Night"){
+              this.night = pro;
+            } else if (pro.shift == "Over-Night"){
+              this.oNight = pro;
+            } else {
+              this.found = pro;
+            }
+            used += 1;
+            if (used == prod.length){
+              this.ready = true;
+            }
+          })
+        } else {
+          this.ready = true;
+        }
       }
     );
   }

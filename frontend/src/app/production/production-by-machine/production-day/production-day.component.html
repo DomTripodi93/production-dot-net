@@ -1,4 +1,4 @@
-<h5 *ngFor="let prod of production; let i=index">
+<!-- <h5 *ngFor="let prod of production; let i=index">
   <div class="grid3 short">
     <h5 class="middle">{{prod.shift}}</h5>
     <h5 *ngIf="!editMode" class="short"><strong>{{prod.quantity}}</strong>
@@ -14,4 +14,44 @@
       <app-production-quantity [quantity]="prod.quantity" [id]="prod.id"></app-production-quantity>
     </div>
   </div>
-</h5>
+</h5> -->
+<div *ngIf="ready" class="grid3 short">
+  <h5 class="middle">Day</h5>
+  <h5 *ngIf="!editMode && day" class="short">
+    <strong>{{day.quantity}}</strong><br>
+    <button *ngIf="!day.average" (click)="changeAvg(day.average, day.id)" class='btn btn-success smaller'>
+      <h6 class="in-button">Avg</h6>
+    </button>
+    <button *ngIf="day.average" (click)="changeAvg(day.average, day.id)" class='btn btn-danger smaller'>
+      <h6 class="in-button">Avg</h6>
+    </button>
+  </h5>
+  <div *ngIf="editMode && day">
+    <h6 class="small-break"><br></h6>
+    <app-production-quantity [quantity]="day.quantity" [id]="day.id"></app-production-quantity>
+  </div>
+  <h5 *ngIf="!editMode && !day" class="short">
+    <strong>0</strong><br>
+    <button (click)="addProd()" class='btn btn-success smaller'>
+      <h6 class="in-button">Add</h6>
+    </button>
+  </h5>
+  <div *ngIf="editMode && !day">
+    <h6 class="small-break"><br></h6>
+    <app-production-quantity [quantity]="0"></app-production-quantity>
+  </div>
+  <h5 class="middle">Night</h5>
+  <h5 *ngIf="!editMode && night" class="short">
+    <strong>{{night.quantity}}</strong>
+    <button *ngIf="!night.average" (click)="changeAvg(night.average, night.id)" class='btn btn-success smaller'>
+      <h6 class="in-button">Avg</h6>
+    </button>
+    <button *ngIf="night.average" (click)="changeAvg(night.average, night.id)" class='btn btn-danger smaller'>
+      <h6 class="in-button">Avg</h6>
+    </button>
+  </h5>
+  <div *ngIf="editMode && night">
+    <h6 class="small-break"><br></h6>
+    <app-production-quantity [quantity]="night.quantity" [id]="night.id"></app-production-quantity>
+  </div>
+</div>
