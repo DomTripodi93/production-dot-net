@@ -21,27 +21,27 @@
     <app-production-shift [prod]="day" [editMode]="editMode"></app-production-shift>
   </h5>
   <h5 *ngIf="!day" class="short">
-    <app-production-shift [date]="date" [editMode]="editMode" [mach]="mach"></app-production-shift>
+    <app-production-shift shift="Day" [date]="date" [editMode]="editMode" [mach]="mach"></app-production-shift>
   </h5>
   <h5 class="middle">Night</h5>
   <h5 *ngIf="night" class="short">
-    <app-production-shift  [prod]="night" [editMode]="editMode"></app-production-shift>
+    <app-production-shift [prod]="night" [editMode]="editMode"></app-production-shift>
   </h5>
   <h5 *ngIf="!night" class="short">
-    <app-production-shift [date]="date" [editMode]="editMode" [mach]="mach"></app-production-shift>
+    <app-production-shift shift="Night" [date]="date" [editMode]="editMode" [mach]="mach"></app-production-shift>
   </h5>
   <h5 class="middle">Over-Night</h5>
   <h5 *ngIf="oNight" class="short">
     <app-production-shift [prod]="oNight" [editMode]="editMode"></app-production-shift>
   </h5>
   <h5 *ngIf="!oNight" class="short">
-    <app-production-shift [date]="date" [editMode]="editMode" [mach]="mach"></app-production-shift>
+    <app-production-shift shift="Over-Night" [date]="date" [editMode]="editMode" [mach]="mach"></app-production-shift>
   </h5>
   <h5 class="middle">Found</h5>
   <h5 *ngIf="found" class="short">
     <app-production-shift [prod]="found" [editMode]="editMode"></app-production-shift>
   </h5>
   <h5 *ngIf="!found" class="short">
-    <app-production-shift [date]="date" [editMode]="editMode" [mach]="mach"></app-production-shift>
+    <app-production-shift shift="Found" [date]="date" [editMode]="editMode" [mach]="mach"></app-production-shift>
   </h5>
 </div>

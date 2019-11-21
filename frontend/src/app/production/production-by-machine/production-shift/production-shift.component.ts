@@ -13,6 +13,7 @@ export class ProductionShiftComponent implements OnInit {
   @Input() editMode: boolean;
   @Input() mach: Machine;
   @Input() date: string;
+  @Input() shift: string;
 
   constructor(
     private proServ: ProductionService

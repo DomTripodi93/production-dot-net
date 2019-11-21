@@ -17,6 +17,7 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
   @Input() id: string;
   @Input() mach: Machine;
   @Input() date: string;
+  @Input() shift: string;
   subscriptions: Subscription[] = [];
   editQuantityForm: FormGroup;
   difference: number;
@@ -57,13 +58,14 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
         this.production = {
           quantity: this.editQuantityForm.value.quantity,
           date: this.date,
-          shift: "Day",
+          shift: this.shift,
           machine: this.auth.splitJoin(this.mach.machine),
           jobNumber: this.mach.currentJob,
           opNumber: this.opServ.slashToDash(this.mach.currentOp),
           partNumber: job.partNumber,
           machType: this.auth.machType
         }
+        console.log(this.production)
         this.proServ.addProduction(this.production).subscribe();
       })
     }
