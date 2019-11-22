@@ -32,9 +32,11 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.proServ.proSubmit.subscribe(()=>{
-      this.onSubmit();
-    })
+    this.subscriptions.push(
+      this.proServ.proSubmit.subscribe(()=>{
+        this.onSubmit();
+      })
+    )
     this.initForm();
   }
 

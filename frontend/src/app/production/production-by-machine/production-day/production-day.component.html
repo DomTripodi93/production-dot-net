@@ -1,20 +1,3 @@
-<!-- <h5 *ngFor="let prod of production; let i=index">
-  <div class="grid3 short">
-    <h5 class="middle">{{prod.shift}}</h5>
-    <h5 *ngIf="!editMode" class="short"><strong>{{prod.quantity}}</strong>
-      <button *ngIf="!prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-success smaller'>
-        <h6 class="in-button">Avg</h6>
-      </button>
-      <button *ngIf="prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-danger smaller'>
-        <h6 class="in-button">Avg</h6>
-      </button>
-    </h5>
-    <div *ngIf="editMode">
-      <h6 class="small-break"><br></h6>
-      <app-production-quantity [quantity]="prod.quantity" [id]="prod.id"></app-production-quantity>
-    </div>
-  </div>
-</h5> -->
 <div *ngIf="ready" class="grid3 short">
   <h5 class="middle">Day</h5>
   <h5 *ngIf="day" class="short">
