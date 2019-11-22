@@ -36,4 +36,9 @@ export class ProductionShiftComponent implements OnInit {
     this.editMode = true;
   }
 
+  updateProduction($event){
+    this.editMode = false;
+    this.prod = $event;
+  }
+
 }

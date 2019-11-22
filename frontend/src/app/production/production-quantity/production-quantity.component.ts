@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ProductionService } from '../production.service';
 import { Subscription } from 'rxjs';
@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { JobService } from 'src/app/job/job.service';
 import { Machine } from 'src/app/machine/machine.model';
 import { OpService } from 'src/app/job/job-ops/operation.service';
+import { Production } from '../production.model';
 
 @Component({
   selector: 'app-production-quantity',
@@ -13,6 +14,7 @@ import { OpService } from 'src/app/job/job-ops/operation.service';
   styleUrls: ['./production-quantity.component.css']
 })
 export class ProductionQuantityComponent implements OnInit, OnDestroy {
+  @Output() updatedProduction = new EventEmitter<Production>();
   @Input() quantity: string;
   @Input() id: string;
   @Input() mach: Machine;
@@ -56,6 +58,7 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
         this.proServ.deleteProduction(this.id).subscribe();
       }
     } else if (this.editQuantityForm.value.quantity != 0) {
+      this.quantity = this.editQuantityForm.value.quantity;
       this.jobServ.fetchJob(this.mach.currentJob).subscribe((job)=>{
         this.production = {
           quantity: this.editQuantityForm.value.quantity,
@@ -68,8 +71,9 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
           machType: this.auth.machType
         }
         this.proServ.addProduction(this.production).subscribe();
+        this.updatedProduction.emit(this.production);
       })
-    }
+    } 
   }
 
   submitAll(){

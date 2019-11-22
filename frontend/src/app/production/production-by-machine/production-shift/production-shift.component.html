@@ -19,8 +19,8 @@
 </h5>
 <div *ngIf="editMode && !prod && shift !='Day'">
   <p class="small-break"></p>
-  <app-production-quantity [shift]="shift" [quantity]="0" [date]="date" [mach]="mach"></app-production-quantity>
+  <app-production-quantity (updatedProduction)="updateProduction($event)" [shift]="shift" [quantity]="0" [date]="date" [mach]="mach"></app-production-quantity>
 </div>
 <div *ngIf="editMode && !prod && shift =='Day'">
-  <app-production-quantity [shift]="shift" [quantity]="0" [date]="date" [mach]="mach"></app-production-quantity>
+  <app-production-quantity (updatedProduction)="updateProduction($event)" [shift]="shift" [quantity]="0" [date]="date" [mach]="mach"></app-production-quantity>
 </div>
