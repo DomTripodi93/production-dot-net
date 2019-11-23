@@ -13,6 +13,7 @@ import { DaysService } from '../shared/days/days.service';
 @Injectable({providedIn: 'root'})
 export class ProductionService {
   proChanged = new Subject();
+  proChangedAvg = new Subject();
   proSubmit = new Subject();
   model = "Production"
   setMach = "";

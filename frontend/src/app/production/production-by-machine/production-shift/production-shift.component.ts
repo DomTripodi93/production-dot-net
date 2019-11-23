@@ -29,7 +29,7 @@ export class ProductionShiftComponent implements OnInit {
       average: !avg
     };
     this.proServ.setAverage(newAvg, id).subscribe(()=>{
-      this.proServ.proChanged.next();
+      this.proServ.proChangedAvg.next();
     });
   }
 

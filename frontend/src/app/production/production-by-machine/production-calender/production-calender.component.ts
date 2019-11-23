@@ -72,6 +72,10 @@ export class ProductionCalenderComponent implements OnInit {
       this.getProduction();
       this.getTotal();
     })
+    this.proServ.proChangedAvg.subscribe(()=>{
+      this.editMode = false;
+      this.getProduction();
+    })
   }
 
   getProduction(){
@@ -85,6 +89,7 @@ export class ProductionCalenderComponent implements OnInit {
   }
 
   getTotal(){
+    this.total = 0;
     let search = "op=" + this.opServ.slashToDash(this.machine.currentOp)
       + "&job=" + this.machine.currentJob;
     this.proServ.fetchProduction(search).subscribe(prod=>{
@@ -121,7 +126,6 @@ export class ProductionCalenderComponent implements OnInit {
 
   setAverage(){
     this.machTotal = 0;
-    this.total = 0;
     let dayShift = [];
     let nightShift = [];
     let overNight = [];
