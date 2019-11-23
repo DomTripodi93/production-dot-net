@@ -28,10 +28,6 @@ export class ProductionDayComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.proServ.proChanged.subscribe(()=>{
-    //   this.ready = false;
-    //   this.getProduction();
-    // })
     this.getProduction();
   }
 

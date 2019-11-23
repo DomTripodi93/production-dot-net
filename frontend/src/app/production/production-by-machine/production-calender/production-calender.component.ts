@@ -79,7 +79,6 @@ export class ProductionCalenderComponent implements OnInit {
       + "&job=" + this.machine.currentJob 
       + "&op=" + this.opServ.slashToDash(this.machine.currentOp);
     this.proServ.fetchProduction(search).subscribe(prod=>{
-      console.log(prod)
       this.production = prod;
       this.setAverage();
     })

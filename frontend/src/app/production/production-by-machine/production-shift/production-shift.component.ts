@@ -24,6 +24,7 @@ export class ProductionShiftComponent implements OnInit {
 
 
   changeAvg(avg: boolean, id){
+    this.prod.average = !this.prod.average;
     let newAvg = {
       average: !avg
     };

@@ -70,8 +70,10 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
           partNumber: job.partNumber,
           machType: this.auth.machType
         }
-        this.proServ.addProduction(this.production).subscribe();
-        this.updatedProduction.emit(this.production);
+        this.proServ.addProduction(this.production).subscribe((response: Production)=>{
+          this.production = response;
+          this.updatedProduction.emit(this.production);
+        });
       })
     } 
   }
