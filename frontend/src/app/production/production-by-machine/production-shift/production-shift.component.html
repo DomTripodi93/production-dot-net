@@ -14,7 +14,7 @@
   </button>
 </h5>
 <div *ngIf="editMode && prod">
-  <app-production-quantity [quantity]="prod.quantity" [id]="prod.id"></app-production-quantity>
+  <app-production-quantity (updatedProduction)="updateProduction($event)" [quantity]="prod.quantity" [id]="prod.id"></app-production-quantity>
 </div>
 <div *ngIf="editMode && !prod && shift !='Day'">
   <p class="small-break"></p>

@@ -39,7 +39,11 @@ export class ProductionShiftComponent implements OnInit {
 
   updateProduction($event){
     this.editMode = false;
-    this.prod = $event;
+    if ($event.quantity > 0){
+      this.prod = $event;
+    } else {
+      this.prod = null;
+    }
   }
 
 }
