@@ -23,6 +23,11 @@
     grid-template-columns: 37% 26% 37%;
 }
 
+.grid100{
+    display: grid;
+    grid-template-columns: 100%;
+}
+
 .today-border{
     border-style: solid;
     border-color: black;

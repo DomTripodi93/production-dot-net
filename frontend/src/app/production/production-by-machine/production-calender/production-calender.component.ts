@@ -153,6 +153,19 @@ export class ProductionCalenderComponent implements OnInit {
     this.numberOfDays = new Date(year, month, 0).getDate();
   }
 
+  addOldWeek(){
+    let first = this.monthDays[0];
+    if (first - 7 > 0){
+      let range = _.range(first - 7, first);
+      this.monthDays = range.concat(this.monthDays);
+    } else {
+      let firstDay = new Date(this.year, this.month, 1);
+      this.firstDayOfMonth = _.range(0, firstDay.getDay());
+      let range = _.range(1, first);
+      this.monthDays = range.concat(this.monthDays);
+    }
+  }
+
   setAverage(){
     this.machTotal = 0;
     let dayShift = [];
