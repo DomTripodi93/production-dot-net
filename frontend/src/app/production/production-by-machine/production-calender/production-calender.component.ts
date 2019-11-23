@@ -137,15 +137,15 @@ export class ProductionCalenderComponent implements OnInit {
     }
     if (this.firstDayOfMonth.length + this.firstProDay > 7){
       this.monthDays = this.monthDays.splice(7-this.firstDayOfMonth.length ,this.monthDays.length -1)
+      this.removeUnusedWeeksBeginning(this.firstDayOfMonth.length, 14)
       this.firstDayOfMonth = [];
-      this.removeUnusedWeeksBeginning(14)
     }
   }
 
-  removeUnusedWeeksBeginning(start: number){
+  removeUnusedWeeksBeginning(extra, start: number){
     if (this.firstDayOfMonth.length + this.firstProDay > start){
       this.monthDays = this.monthDays.splice(7 ,this.monthDays.length -1)
-      this.removeUnusedWeeksBeginning(start + 7)
+      this.removeUnusedWeeksBeginning(extra, start + 7)
     }
   }
 
