@@ -57,11 +57,14 @@
 </h4>
 <h4 *ngIf="hourly && !latheProduction" class="centered">
   Now that we have our first hourly production count, lets try adding a 
-  <a routerLink="/lathe/production/new">Lathe Production Lot</a>. Your production lots will be used to track 
+  <a routerLink="/lathe/production/">Lathe Production Lot</a>. Your production lots will be used to track 
   how many parts have been made to an operation on the job so far. 
   <br>
   The production lot will be attributed to the current job and op of the selected machine on the production 
   creation form.
+  <br>
+  Click "Update" below to open up the forms to input production for the past week, or use the add button on the day
+  and shift you wish to add production to.
   <br>
 </h4>
 <h4 *ngIf="latheProduction && !latheProductionMulti" class="centered">
@@ -72,12 +75,9 @@
 </h4>
 <h4 *ngIf="latheProductionMulti && checking != 'mill'" class="centered">
   Now that you have multiple lots for the operation, the 
-  <a routerLink="/lathe/production/op={{op}}&job={{latheJob}}">Lathe Production By Job and Op</a> 
-  page will show total parts to date for the operation. This can also be reached by 
-  using the dropdown on the <a routerLink="/lathe/production">Lathe Production</a> 
-  page, and checking the production for the current job and operation on the selected 
-  lot, or by using the "Change Machine" button, to navigate to the production for the current
-  job and op on that machine.
+  <a routerLink="/lathe/production">Lathe Production Page</a>  will show you information
+  like the total parts made to the operation, how many were produced on that machine
+  averages for each shift, and the average production in a full day.
   <br>
 </h4>
 <h4 *ngIf="latheProductionMulti && !auth.skipMill && checking != 'mill'" class="centered">

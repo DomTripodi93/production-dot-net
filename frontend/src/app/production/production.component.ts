@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
 import { MachineService } from '../machine/machine.service';
 import { Subscription } from 'rxjs';
@@ -15,7 +15,8 @@ export class ProductionComponent implements OnDestroy {
   constructor(
     private mach: MachineService,
     public auth: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ){
     this.subscriptions.push(
       this.route.params.subscribe((params: Params) => {
@@ -29,6 +30,10 @@ export class ProductionComponent implements OnDestroy {
     this.subscriptions.forEach(sub=>{
       sub.unsubscribe();
     })
+  }
+
+  onNew(){
+    this.router.navigate(["/"+this.auth.machType + "/production/new"])
   }
 
 }
