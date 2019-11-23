@@ -3,9 +3,9 @@
     grid-template-columns: 14.285714286% 14.285714286% 14.285714286% 14.285714286% 14.285714286% 14.285714286% 14.285714286%;
 }
 
-.grid2 { 
+.grid25 { 
     display: grid;
-    grid-template-columns: 33.33% 33.33% 33.33%;
+    grid-template-columns: 25% 25% 25% 25%;
 }
 
 .grid100 { 

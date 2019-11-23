@@ -1,9 +1,9 @@
 <h5 *ngIf="!editMode && prod" class="short">
   <strong>{{prod.quantity}}</strong><br>
-  <button *ngIf="!prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-success smaller'>
+  <button *ngIf="!prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-danger smaller'>
     <h6 class="in-button">Avg</h6>
   </button>
-  <button *ngIf="prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-danger smaller'>
+  <button *ngIf="prod.average" (click)="changeAvg(prod.average, prod.id)" class='btn btn-success smaller'>
     <h6 class="in-button">Avg</h6>
   </button>
 </h5>

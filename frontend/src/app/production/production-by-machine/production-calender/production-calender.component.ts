@@ -45,6 +45,8 @@ export class ProductionCalenderComponent implements OnInit {
   machTotal: number
   total: number
   editMode = false;
+  firstProDay: number;
+  lastProDay: number;
 
 
 
@@ -83,6 +85,9 @@ export class ProductionCalenderComponent implements OnInit {
       + "&job=" + this.machine.currentJob 
       + "&op=" + this.opServ.slashToDash(this.machine.currentOp);
     this.proServ.fetchProduction(search).subscribe(prod=>{
+      this.firstProDay = +(prod[0].date.substring(8,10))
+      this.lastProDay = +(prod[prod.length -1].date.substring(8,10))
+      console.log(this.lastProDay)
       this.production = prod;
       this.setAverage();
     })
