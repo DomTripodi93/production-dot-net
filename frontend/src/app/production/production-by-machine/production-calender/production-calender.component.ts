@@ -46,7 +46,7 @@ export class ProductionCalenderComponent implements OnInit {
   total: number
   editMode = false;
   firstProDay: number;
-  lastProDay: number;
+  displayMax: number;
 
 
 
@@ -66,7 +66,6 @@ export class ProductionCalenderComponent implements OnInit {
       this.monthHold ="0"+this.monthHold;
     }
     this.defaultMonth = this.year + "-" + this.monthHold;
-    this.setDate();
     this.getProduction();
     this.getTotal();
     this.proServ.proChanged.subscribe(()=>{
@@ -85,10 +84,13 @@ export class ProductionCalenderComponent implements OnInit {
       + "&job=" + this.machine.currentJob 
       + "&op=" + this.opServ.slashToDash(this.machine.currentOp);
     this.proServ.fetchProduction(search).subscribe(prod=>{
-      this.firstProDay = +(prod[0].date.substring(8,10))
-      this.lastProDay = +(prod[prod.length -1].date.substring(8,10))
-      console.log(this.lastProDay)
+      if (prod.length > 0){
+        this.firstProDay = +(prod[0].date.substring(8,10))
+      } else {
+        this.firstProDay = this.today
+      }
       this.production = prod;
+      this.setDate();
       this.setAverage();
     })
   }
@@ -120,9 +122,31 @@ export class ProductionCalenderComponent implements OnInit {
 
   setDate(){
     this.daysInMonth(this.year, this.month+1);
-    this.monthDays = _.range(1, this.numberOfDays + 1);
     let firstDay = new Date(this.year, this.month, 1);
     this.firstDayOfMonth = _.range(0, firstDay.getDay());
+    this.displayMax = this.today+this.firstDayOfMonth.length
+    if (this.displayMax%7 != 0){
+      let totalDays = ((Math.floor(this.displayMax/7) + 1)*7)- this.firstDayOfMonth.length
+      if (totalDays < this.numberOfDays){
+        this.monthDays = _.range(1, totalDays + 1);
+      } else {
+        this.monthDays = _.range(1, this.numberOfDays + 1);
+      }
+    } else {
+      this.monthDays = _.range(1, this.today+ 1);
+    }
+    if (this.firstDayOfMonth.length + this.firstProDay > 7){
+      this.monthDays = this.monthDays.splice(7-this.firstDayOfMonth.length ,this.monthDays.length -1)
+      this.firstDayOfMonth = [];
+      this.removeUnusedWeeksBeginning(14)
+    }
+  }
+
+  removeUnusedWeeksBeginning(start: number){
+    if (this.firstDayOfMonth.length + this.firstProDay > start){
+      this.monthDays = this.monthDays.splice(7 ,this.monthDays.length -1)
+      this.removeUnusedWeeksBeginning(start + 7)
+    }
   }
 
   daysInMonth(year: number, month: number){
