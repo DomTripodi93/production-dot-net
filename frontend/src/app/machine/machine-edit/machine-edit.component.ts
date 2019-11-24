@@ -19,10 +19,10 @@ export class MachineEditComponent implements OnInit {
   @Input() id: number;
   editMachineForm: FormGroup;
   machine: Machine;
-  canInput = false;
-  jobs = ["None"]
+  canInput: boolean = false;
+  jobs = ["None"];
   ops = ["None"];
-  info: number = 1;
+  page: number = 1;
   moreJobs: boolean = true;
   
   constructor(
@@ -35,15 +35,20 @@ export class MachineEditComponent implements OnInit {
 
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
+    this.pickMachine();
+  }
+
+  pickMachine(){
     this.mach.fetchMachineByName(this.machName)
     .subscribe(machine => {
       this.machine = machine;
       this.getJobs();
     });
   }
+  //Gets machine to set current values for form defaults
 
   getJobs(){
-    this.jobServ.fetchJobsByType(this.info, 6).subscribe(paginatedResponse =>{
+    this.jobServ.fetchJobsByType(this.page, 6).subscribe(paginatedResponse =>{
       let goneThrough = 0;
       let response = paginatedResponse.result;
       if (paginatedResponse.pagination.totalPages == paginatedResponse.pagination.currentPage){
@@ -63,6 +68,7 @@ export class MachineEditComponent implements OnInit {
       }
     });    
   }
+  //Gets a set of 6 active jobs based on the current page
 
 
   private initForm() {
@@ -72,33 +78,13 @@ export class MachineEditComponent implements OnInit {
       "machType": new FormControl(this.auth.machType)
     });
   }
-
-  onSubmit(){
-    this.editMachine(this.editMachineForm.value);
-  }
-
-  editMachine(data) {
-    this.mach.setCurrentJob(data, this.machName).subscribe(()=>{
-      this.mach.machChanged.next();
-      this.hourServ.hourlyChanged.next();
-    },()=>{
-      this.mach.machChanged.next();
-      this.hourServ.hourlyChanged.next();
-    });
-  }
-
-  onCancel(){
-    this.mach.machChanged.next();
-    if (this.id > -1){
-      this.hourServ.isJob[this.id] = false;
-      this.hourServ.quick[this.id] = false;
-    }
-  }
+  //Initializes form and sets default values for editing
 
   addJobs(){
-    this.info = this.info + 1;
+    this.page = this.page + 1;
     this.getJobs();
   }
+  //Changes current page to get the next set of 6 active jobs
 
   changeOps(option: String){
     this.ops = ["None"]
@@ -110,6 +96,29 @@ export class MachineEditComponent implements OnInit {
       })
     }
   }
+  //Sets options for operation input selector based on the ops for the currently 
+  // selected job
+
+  onSubmit(){
+    this.mach.setCurrentJob(this.editMachineForm.value, this.machName).subscribe(()=>{
+      this.mach.machChanged.next();
+      this.hourServ.hourlyChanged.next();
+    },()=>{
+      this.mach.machChanged.next();
+      this.hourServ.hourlyChanged.next();
+    });
+  }
+  //Sends edited values for update, and signal to retrieve updated values to
+  // relevant components
+
+  onCancel(){
+    this.mach.machChanged.next();
+    if (this.id > -1){
+      this.hourServ.isJob[this.id] = false;
+      this.hourServ.quick[this.id] = false;
+    }
+  }
+  //Turns off editing in related components
 
   onDelete(){
     if (confirm("Are you sure you want to delete " +this.machine.machine+ "?")){
@@ -119,4 +128,5 @@ export class MachineEditComponent implements OnInit {
       }, 50)
     }
   }
+  //Deletes specified machines upon verification, and updates from machine view
 }
