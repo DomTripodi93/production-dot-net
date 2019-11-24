@@ -33,6 +33,11 @@ export class MachineNewComponent implements OnInit {
   
   ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
+    this.auth.hideButton(0);
+    this.getJobs();
+  }
+
+  getJobs(){
     this.jobServ.fetchJobsByType().subscribe(paginatedResponse =>{
       let goneThrough = 1;
       let response = paginatedResponse.result;
@@ -49,8 +54,8 @@ export class MachineNewComponent implements OnInit {
         });
       }
     });
-    this.auth.hideButton(0);
   }
+  //Gets Jobs for current job and op selection, and initializes form
     
   private initForm() {
     let machine = '';
@@ -61,10 +66,19 @@ export class MachineNewComponent implements OnInit {
       "machType": new FormControl(this.auth.machType)
     });
   }
+  //initializes
   
   onSubmit(){
-    this.newMachine(this.machineForm.value);
+    this.mach.addMachine(this.machineForm.value).subscribe(()=>{
+      this.mach.machChanged.next();
+      setTimeout(()=>{this.router.navigate([".."], {relativeTo: this.route})},50);
+    }, () =>{
+      this.error = "This machine already exists!";
+      this.isError = true;
+    });
   }
+  //Submits new machine to API and sends update signal to machine components
+  // sets, and displays message if there is an error
 
   changeOps(option: String){
     this.ops = ["None"]
@@ -76,29 +90,16 @@ export class MachineNewComponent implements OnInit {
       })
     }
   }
-
-  newMachine(data: Machine) {
-    this.mach.addMachine(data).subscribe(()=>{
-      this.mach.machChanged.next();
-    }, () =>
-      this.error = "This machine already exists"
-    );
-    if (this.error){
-      this.isError = true;
-    }else{
-      setTimeout(()=>{
-      this.router.navigate([".."], {relativeTo: this.route})},50);
-    }
-    
-
-  }
+  //Sets values for operation based on selected job
 
   onCancel(){
     window.history.back();
   }
+  //Returns to previous page when new machine addition is cancelled
 
   ngOnDestroy(){
     this.auth.showButton(0);
   }
+  //Shows 'add new machine' button when component is destroyed
 
 }

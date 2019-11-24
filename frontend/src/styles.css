@@ -25,6 +25,17 @@ h1, h2, h3, h4, h5, h6{
     text-align: center;
 }
 
+.error{
+    background: red;
+    text-emphasis: 600;
+    text-align: center;
+    color: white;
+    border-style: solid;
+    border-color: black;
+    height: 600;
+    margin: auto;
+}
+
 @media only screen and (max-width: 768px) {
     h2{
         word-wrap: break-word;
