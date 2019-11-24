@@ -34,7 +34,6 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    console.log(this.date)
     this.subscriptions.push(
       this.proServ.proSubmit.subscribe(()=>{
         this.onSubmit();
@@ -76,6 +75,7 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
         this.proServ.addProduction(this.production).subscribe((response: Production)=>{
           this.production = response;
           this.updatedProduction.emit(this.production);
+          this.proServ.proChanged.next();
         });
       })
     } 

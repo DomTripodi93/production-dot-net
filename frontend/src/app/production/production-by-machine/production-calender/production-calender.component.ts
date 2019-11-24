@@ -144,11 +144,14 @@ export class ProductionCalenderComponent implements OnInit {
       this.monthDays = _.range(1, this.today+ 1);
     }
     if (this.firstProMonth == this.month + 1){
+      this.lastMonthDays = [];
       if (this.firstDayOfMonth.length + this.firstProDay > 7){
         this.monthDays = this.monthDays.splice(7-this.firstDayOfMonth.length ,this.monthDays.length -1)
         this.removeUnusedWeeksBeginning(this.firstDayOfMonth.length, 14)
         this.firstDayOfMonth = [];
       }
+    } else if (this.lastMonthDays.length > 0){
+      this.firstDayOfMonth = [];
     }
   }
 
