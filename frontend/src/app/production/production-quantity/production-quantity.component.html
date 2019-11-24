@@ -1,18 +1,18 @@
 <form *ngIf="editQuantityForm" [formGroup]="editQuantityForm" (ngSubmit)='submitAll()'>
-    <div class='form-group'>
-      <div class="form-group">
-        <input 
-          formControlName='quantity'
-          type="number" 
-          id="quantity" 
-          class="form-control">
-      </div>
-      <div class='grid'>
-        <button 
-          class="hidden" 
-          type="submit"
-          [disabled]="!editQuantityForm.valid">
-          <h6>Update</h6>
-        </button>
-      </div>
+  <div class='form-group'>
+    <div class="form-group">
+      <input 
+        formControlName='quantity'
+        type="number" 
+        id="quantity" 
+        class="form-control">
     </div>
+    <div class='grid'>
+      <button 
+        class="hidden" 
+        type="submit"
+        [disabled]="!editQuantityForm.valid">
+        <h6>Update</h6>
+      </button>
+    </div>
+  </div>

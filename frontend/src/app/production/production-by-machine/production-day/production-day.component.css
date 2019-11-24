@@ -9,11 +9,11 @@ h5{
 }
 
 .short{
-    padding: 0% 0% 0% 0%;
-    margin: 0% 0% 0% 0%;
+    height: 54px
 }
 
 .middle{
+    vertical-align: middle;
     text-align: center;
     margin: auto;
 }
@@ -21,6 +21,10 @@ h5{
 .smaller{
     height: 30px;
     width: 45px;
+}
+
+.div54{
+    height: 54px
 }
 
 .small-break{
