@@ -22,6 +22,8 @@ export class MachineEditComponent implements OnInit {
   canInput = false;
   jobs = ["None"]
   ops = ["None"];
+  info: number = 1;
+  moreJobs: boolean = true;
   
   constructor(
     private mach: MachineService,
@@ -36,23 +38,30 @@ export class MachineEditComponent implements OnInit {
     this.mach.fetchMachineByName(this.machName)
     .subscribe(machine => {
       this.machine = machine;
-      this.jobServ.fetchJobsByType().subscribe(paginatedResponse =>{
-        let goneThrough = 1;
-        let response = paginatedResponse.result;
-        if (response.length==0){
-          this.initForm();
-        } else {
-          response.forEach(job => {
-            this.jobs.push(job.jobNumber);
-            goneThrough++;
-            if (goneThrough == response.length+1){
-              this.changeOps(machine.currentJob);
-              this.initForm();
-            }
-          });
-        }
-      });
+      this.getJobs();
     });
+  }
+
+  getJobs(){
+    this.jobServ.fetchJobsByType(this.info, 6).subscribe(paginatedResponse =>{
+      let goneThrough = 0;
+      let response = paginatedResponse.result;
+      if (paginatedResponse.pagination.totalPages == paginatedResponse.pagination.currentPage){
+        this.moreJobs = false;
+      }
+      if (response.length==0){
+        this.initForm();
+      } else {
+        response.forEach(job => {
+          this.jobs.push(job.jobNumber);
+          goneThrough++;
+          if (goneThrough == response.length){
+            this.changeOps(this.machine.currentJob);
+            this.initForm();
+          }
+        });
+      }
+    });    
   }
 
 
@@ -84,6 +93,11 @@ export class MachineEditComponent implements OnInit {
       this.hourServ.isJob[this.id] = false;
       this.hourServ.quick[this.id] = false;
     }
+  }
+
+  addJobs(){
+    this.info = this.info + 1;
+    this.getJobs();
   }
 
   changeOps(option: String){

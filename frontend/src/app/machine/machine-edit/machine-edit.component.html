@@ -16,6 +16,7 @@
             {{job}}
           </option>
       </select>     
+      <a *ngIf="moreJobs" (click)="addJobs()">Show More Jobs</a>
     </div>
     <div class="form-group">
       <label for="currentOp">Op</label>
