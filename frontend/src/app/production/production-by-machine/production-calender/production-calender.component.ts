@@ -21,8 +21,8 @@ export class ProductionCalenderComponent implements OnInit {
   production: Production[];
   date = new Date();
   today = this.date.getDate();
-  monthNum: number;
   monthHold: string;
+  lastMonthHold: string;
   year = this.date.getFullYear();
   day = this.date.getDay();
   defaultMonth = ""; 
@@ -38,6 +38,7 @@ export class ProductionCalenderComponent implements OnInit {
   ]
   numberOfDays: number;
   monthDays = []
+  lastMonthDays = []
   firstDayOfMonth = [];
   dayAvg: number;
   nightAvg: number;
@@ -46,6 +47,7 @@ export class ProductionCalenderComponent implements OnInit {
   total: number
   editMode = false;
   firstProDay: number;
+  firstProMonth: number;
   displayMax: number;
 
 
@@ -60,10 +62,15 @@ export class ProductionCalenderComponent implements OnInit {
 
   ngOnInit() {
     this.editMode = false;
-    this.monthNum = this.month + 1;
-    this.monthHold = "" + this.monthNum;
+    let monthNum = this.month + 1;
+    this.monthHold = "" + monthNum;
+    let lastMonthNum = this.month;
+    this.lastMonthHold = "" + lastMonthNum;
     if (this.month < 9){
       this.monthHold ="0"+this.monthHold;
+    }
+    if (this.month < 8){
+      this.lastMonthHold ="0"+this.lastMonthHold;
     }
     this.defaultMonth = this.year + "-" + this.monthHold;
     this.getProduction();
@@ -86,6 +93,7 @@ export class ProductionCalenderComponent implements OnInit {
     this.proServ.fetchProduction(search).subscribe(prod=>{
       if (prod.length > 0){
         this.firstProDay = +(prod[0].date.substring(8,10))
+        this.firstProMonth = +(prod[0].date.substring(5,7))
       } else {
         this.firstProDay = this.today
       }
@@ -135,10 +143,12 @@ export class ProductionCalenderComponent implements OnInit {
     } else {
       this.monthDays = _.range(1, this.today+ 1);
     }
-    if (this.firstDayOfMonth.length + this.firstProDay > 7){
-      this.monthDays = this.monthDays.splice(7-this.firstDayOfMonth.length ,this.monthDays.length -1)
-      this.removeUnusedWeeksBeginning(this.firstDayOfMonth.length, 14)
-      this.firstDayOfMonth = [];
+    if (this.firstProMonth == this.month + 1){
+      if (this.firstDayOfMonth.length + this.firstProDay > 7){
+        this.monthDays = this.monthDays.splice(7-this.firstDayOfMonth.length ,this.monthDays.length -1)
+        this.removeUnusedWeeksBeginning(this.firstDayOfMonth.length, 14)
+        this.firstDayOfMonth = [];
+      }
     }
   }
 
@@ -154,15 +164,27 @@ export class ProductionCalenderComponent implements OnInit {
   }
 
   addOldWeek(){
-    let first = this.monthDays[0];
-    if (first - 7 > 0){
-      let range = _.range(first - 7, first);
-      this.monthDays = range.concat(this.monthDays);
+    if (this.firstDayOfMonth.length > 0){
+      this.firstDayOfMonth = [];
+    }
+    if (this.lastMonthDays.length == 0){
+      let first = this.monthDays[0];
+      if (first - 7 > 0){
+        let range = _.range(first - 7, first);
+        this.monthDays = range.concat(this.monthDays);
+      } else {
+        let firstDay = new Date(this.year, this.month, 1).getDay();
+        this.daysInMonth(this.year, this.month);
+        this.lastMonthDays = _.range(this.numberOfDays-firstDay, this.numberOfDays)
+        let range = _.range(1, first);
+        this.monthDays = range.concat(this.monthDays);
+      }
     } else {
-      let firstDay = new Date(this.year, this.month, 1);
-      this.firstDayOfMonth = _.range(0, firstDay.getDay());
-      let range = _.range(1, first);
-      this.monthDays = range.concat(this.monthDays);
+      let first = this.lastMonthDays[0];
+      if (first - 7 > 0){
+        let range = _.range(first - 7, first);
+        this.lastMonthDays = range.concat(this.lastMonthDays);
+      }
     }
   }
 
@@ -208,13 +230,6 @@ export class ProductionCalenderComponent implements OnInit {
         }
       }
     })
-  }
-
-  changeDate(){
-    let hold = this.newMonthForm.value.date.split("-")
-    this.year = +hold[0];
-    this.month = +hold[1] - 1;
-    this.setDate();
   }
 
   onViewDate(arr){

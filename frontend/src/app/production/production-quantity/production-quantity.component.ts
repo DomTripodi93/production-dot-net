@@ -34,6 +34,7 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    console.log(this.date)
     this.subscriptions.push(
       this.proServ.proSubmit.subscribe(()=>{
         this.onSubmit();

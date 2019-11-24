@@ -28,6 +28,7 @@ export class ProductionDayComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.date)
     this.getProduction();
   }
 

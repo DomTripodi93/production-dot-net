@@ -36,7 +36,18 @@
   <div *ngFor="let date of firstDayOfMonth">
     <div class="border border-height">
     </div>
-  </div>  
+  </div> 
+  <div *ngFor="let day of lastMonthDays">
+    <div class="border border-height">
+      <div class="grid100"> 
+        <button (click)="onViewDate(['day', year, month, day])" class="btn btn-primary">
+          <h6>View Day</h6>
+        </button>
+      </div>
+      <h5 class="bold short">{{day}}</h5>
+      <app-production-day [mach]="machine" [editMode]="editMode" [date]="year+'-'+lastMonthHold+'-'+day"></app-production-day>
+    </div>
+  </div>
   <div *ngFor="let day of monthDays">
     <div *ngIf="day != today" class="border border-height">
       <div class="grid100"> 
