@@ -24,6 +24,7 @@ export class MachineEditComponent implements OnInit {
   ops = ["None"];
   page: number = 1;
   moreJobs: boolean = true;
+  machType: string;
   
   constructor(
     private mach: MachineService,
@@ -48,7 +49,12 @@ export class MachineEditComponent implements OnInit {
   //Gets machine to set current values for form defaults
 
   getJobs(){
-    this.jobServ.fetchJobsByType(this.page, 6).subscribe(paginatedResponse =>{
+    if (this.auth.machType){
+      this.machType = this.auth.machType;
+    } else {
+      this.machType = "lathe";
+    }
+    this.jobServ.fetchJobsByType(this.page, 6, this.machType).subscribe(paginatedResponse =>{
       let goneThrough = 0;
       let response = paginatedResponse.result;
       if (paginatedResponse.pagination.totalPages == paginatedResponse.pagination.currentPage){
