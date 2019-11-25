@@ -30,6 +30,34 @@ export class HourlyFindShowComponent implements OnInit {
   lastDate: Date;
   prodTime = [];
   startTime = ""
+
+  constructor(
+    private auth: AuthService,
+    private hourServ: HourlyService,
+    private route: ActivatedRoute,
+    private dayServ: DaysService
+  ) { }
+
+  ngOnInit() {
+    this.subscriptions.push(
+      this.route.params.subscribe(
+        (params: Params) =>{
+          this.search = params['search'];
+          if (this.search.includes("date")){
+            
+          }
+          this.getHourly();
+        }
+      )
+    );
+    this.subscriptions.push(
+      this.auth.authChanged.subscribe(
+        ()=>{
+          this.id = this.auth.user
+        }
+      )
+    );
+  }
   
   splitByMachine(){
     this.hourly.forEach( 
@@ -54,14 +82,6 @@ export class HourlyFindShowComponent implements OnInit {
     );
   }
 
-
-  constructor(
-    private auth: AuthService,
-    private hourServ: HourlyService,
-    private route: ActivatedRoute,
-    private dayServ: DaysService
-  ) { }
-
   splitByDate(){
     this.hourly.forEach( 
       (lot) =>{
@@ -82,27 +102,6 @@ export class HourlyFindShowComponent implements OnInit {
           this.hourlyHold.push(lot);
         }
       }
-    );
-  }
-
-  ngOnInit() {
-    this.subscriptions.push(
-      this.route.params.subscribe(
-        (params: Params) =>{
-          this.search = params['search'];
-          if (this.search.includes("date")){
-            
-          }
-          this.getHourly();
-        }
-      )
-    );
-    this.subscriptions.push(
-      this.auth.authChanged.subscribe(
-        ()=>{
-          this.id = this.auth.user
-        }
-      )
     );
   }
 

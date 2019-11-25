@@ -99,7 +99,7 @@ export class DaysHourlyComponent implements OnInit, OnDestroy {
   // a designated machine
 
   getMachines(){
-    this.subscriptions.push(this.mach.fetchAllMachines()
+    this.subscriptions.push(this.mach. fetchMachinesByType('lathe')
     .subscribe(machines => {
       this.isJob = [];
       this.isJob.push(false);

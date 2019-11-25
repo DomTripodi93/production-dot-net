@@ -66,7 +66,7 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
   }
 
   getMachines(){
-    this.subscriptions.push(this.mach.fetchAllMachines()
+    this.subscriptions.push(this.mach. fetchMachinesByType('lathe')
     .subscribe(machines => {
       this.hourServ.isJob = [];
       this.hourServ.setTime = [];

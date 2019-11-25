@@ -61,7 +61,7 @@ export class HourlyFindComponent implements OnInit, OnDestroy{
     };
     this.startDate = this.dayServe.year +"-"+this.dayServe.stringMonth+"-"+this.dayServe.today;  
     this.auth.hideButton(1);
-    this.mach.fetchAllMachines()
+    this.mach.fetchMachinesByType("lathe")
     .subscribe(machines => {
       machines.forEach((mach)=>{
         this.machines.push(mach.machine);

@@ -24,9 +24,6 @@ export class MachineShowComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.getMachines();
-    this.subscriptions.push(this.mach.machChanged.subscribe(()=>{
-      this.getMachines();
-    }))
     this.subscriptions.push(
       this.mach.machChanged.subscribe(()=>{
         setTimeout(()=>{this.getMachines();}, 50);
@@ -47,27 +44,31 @@ export class MachineShowComponent implements OnInit, OnDestroy{
         }, error => {
           this.isFetching = false;
           this.isError = true;
-          this.error = error.message
-      })
+          this.error = error.message;
+        }
+      )
     );
   }
+  //Sets Machines for display, and hold values for in-page machine editing switch
 
   onDelete(machine){
     if (confirm("Are you sure you want to delete " +machine+ "?")){
       this.mach.deleteMachine(machine).subscribe(()=>{
-        setTimeout(()=>{this.mach.machChanged.next()}, 50);
+        this.mach.machChanged.next();
       });
     }
   }
+  //Activated by delete click, shows confirmation dialogue box before sending delete
+  // signal to API, updates machine list
 
   onEdit(index){
     this.editMode[index] = true;
   }
+  //Switches value to start editing selected machine in-page
 
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{
       sub.unsubscribe();
     });
   }
-
 }

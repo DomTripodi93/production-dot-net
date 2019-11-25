@@ -36,7 +36,7 @@ export class HourlyNewComponent implements OnInit {
   
   ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
-    this.mach.fetchAllMachines()
+    this.mach. fetchMachinesByType('lathe')
     .subscribe(machines => {
       this.machines = machines;
       this.jobServ.fetchAllJobs().subscribe(response =>{

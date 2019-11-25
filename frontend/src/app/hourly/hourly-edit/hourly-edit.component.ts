@@ -37,7 +37,7 @@ export class HourlyEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
-    this.subscriptions.push(this.mach.fetchAllMachines()
+    this.subscriptions.push(this.mach.fetchMachinesByType("lathe")
     .subscribe(machines => {
       this.machines = machines;
     }));

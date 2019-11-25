@@ -18,6 +18,10 @@ export class MachineComponent implements OnDestroy{
     private machServ: MachineService,
     private route: ActivatedRoute
   ) {
+    this.getMachType();
+  }
+
+  getMachType(){
     this.subscriptions.push(
       this.route.params.subscribe((params: Params) => {
         this.auth.machType = params["machType"];
@@ -25,11 +29,12 @@ export class MachineComponent implements OnDestroy{
       })
     );
   }
+  //Gets machine type from url params, and updates machine components 
+  // when it changes
 
   ngOnDestroy(){
     this.subscriptions.forEach(sub=>{
       sub.unsubscribe();
     })
   }
-
 }
