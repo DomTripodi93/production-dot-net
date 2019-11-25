@@ -16,6 +16,7 @@ import { DaysService } from 'src/app/shared/days/days.service';
 })
 export class HourlyEditComponent implements OnInit, OnDestroy {
   @Input() id: number;
+  @Input() startTime: string;
   editHourlyForm: FormGroup;
   hourly: Hourly;
   canInput = false;
@@ -44,10 +45,8 @@ export class HourlyEditComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.hourlyServ.fetchHourlyById(this.id)
     .subscribe(lot => {
       let beginning = lot.date.substring(5,10);
-      console.log(beginning)
       lot.date = beginning + "-" + lot.date.substring(0,4);
       this.hourly = lot;
-      console.log(this.hourly)
       this.initForm();
     }));
   }
@@ -61,12 +60,25 @@ export class HourlyEditComponent implements OnInit, OnDestroy {
       'time': new FormControl(this.hourly.time, Validators.required),
       'machine': new FormControl(this.hourly.machine, Validators.required),
       'jobNumber': new FormControl(this.hourly.jobNumber, Validators.required),
-      'opNumber': new FormControl(this.hourly.opNumber, Validators.required)
+      'opNumber': new FormControl(this.hourly.opNumber, Validators.required),
+      'startTime': new FormControl(this.startTime, Validators.required)
     });
   }
 
   onSubmit(){
-    this.editHourly(this.editHourlyForm.value);
+    if (this.hourly.quantity == this.editHourlyForm.value.quantity){
+      if (this.hourly.time == this.editHourlyForm.value.time){
+        if (this.hourly.counterQuantity == this.editHourlyForm.value.counterQuantity){
+          this.hourlyServ.hourlyChanged.next();
+        } else {
+          this.editHourly(this.editHourlyForm.value);
+        }
+      } else {
+        this.editHourly(this.editHourlyForm.value);
+      }
+    } else {
+      this.editHourly(this.editHourlyForm.value);
+    }
   }
 
   editHourly(data: Hourly) {

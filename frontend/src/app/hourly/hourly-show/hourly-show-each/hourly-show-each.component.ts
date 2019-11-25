@@ -15,6 +15,7 @@ import { OpService } from 'src/app/job/job-ops/operation.service';
 export class HourlyShowEachComponent implements OnInit, OnDestroy {
   @Input() machine: Machine;
   @Input() index: number;
+  @Input() startTime: string;
   hourly: Hourly[] = [];
   subscriptions: Subscription[]=[];
   isFetching = false;
@@ -77,6 +78,7 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
                   if (runMin < 0){
                     runMin = runMin + 60;
                   };
+                  runMin = runMin + (runHours * 60);
                   this.alwaysUp.push(+((runMin*60)/this.cycleTime).toFixed(0));
                   if (runMin == 0){
                     runMinString = "00";

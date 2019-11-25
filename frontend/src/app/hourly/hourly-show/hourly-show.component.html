@@ -59,7 +59,7 @@
                 <div *ngIf="hourServ.quick[i] && hourServ.setTime[i] && !editMode" class="list-group-item">
                     <app-hourly-set-time [machName]="mach.machine" [index]="i"></app-hourly-set-time>
                 </div>
-                <app-hourly-show-each [machine]="mach" [index]="i">
+                <app-hourly-show-each [machine]="mach" [index]="i" [startTime]="hourServ.startTimes[i]">
                 </app-hourly-show-each>
             </ul>
         </li>
