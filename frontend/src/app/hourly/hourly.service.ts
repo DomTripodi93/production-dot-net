@@ -87,7 +87,7 @@ export class HourlyService {
       data.opNumber = this.opServ.slashToDash(data.opNumber);
       data.machine = this.auth.splitJoin(data.machine);
         return this.http.put(
-          this.auth.apiUrl + '/hourly/startTime/' + id, data
+          this.auth.apiUrl + '/hourly/' + id, data
         );
     }
 

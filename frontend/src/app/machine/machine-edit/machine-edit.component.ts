@@ -54,6 +54,8 @@ export class MachineEditComponent implements OnInit {
     } else {
       this.machType = "lathe";
     }
+    //Checks if machine type is set, and explicitly specifies it for hourly job/op 
+    // editing access
     this.jobServ.fetchJobsByType(this.page, 6, this.machType).subscribe(paginatedResponse =>{
       let goneThrough = 0;
       let response = paginatedResponse.result;

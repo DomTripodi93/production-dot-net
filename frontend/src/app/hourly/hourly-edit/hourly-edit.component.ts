@@ -43,9 +43,11 @@ export class HourlyEditComponent implements OnInit, OnDestroy {
     }));
     this.subscriptions.push(this.hourlyServ.fetchHourlyById(this.id)
     .subscribe(lot => {
-      let beginning = lot.date.substring(6,10);
+      let beginning = lot.date.substring(5,10);
+      console.log(beginning)
       lot.date = beginning + "-" + lot.date.substring(0,4);
       this.hourly = lot;
+      console.log(this.hourly)
       this.initForm();
     }));
   }
