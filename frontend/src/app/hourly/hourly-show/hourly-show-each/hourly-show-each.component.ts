@@ -75,8 +75,11 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
                   let runHours = +(lot.time[0]+lot.time[1]) - +(lot.startTime[0]+lot.startTime[1]);
                   let runMin = +(lot.time[3]+lot.time[4]) - +(lot.startTime[3]+lot.startTime[4]);
                   let runMinString: string;
-                  if (runMin < 0){
-                    runMin = runMin + 60;
+                  if (runMin < 0 && runHours > 0){
+                    runMin += 60;
+                    runHours -= 1;
+                  } else if (runMin < 0){
+                    runMin = 0;
                   };
                   runMin = runMin + (runHours * 60);
                   this.alwaysUp.push(+((runMin*60)/this.cycleTime).toFixed(0));
