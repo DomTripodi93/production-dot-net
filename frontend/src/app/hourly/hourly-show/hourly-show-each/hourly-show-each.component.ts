@@ -81,8 +81,7 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
                   } else if (runMin < 0){
                     runMin = 0;
                   };
-                  runMin = runMin + (runHours * 60);
-                  this.alwaysUp.push(+((runMin*60)/this.cycleTime).toFixed(0));
+                  this.alwaysUp.push(+(((runMin + (runHours * 60))*60)/this.cycleTime).toFixed(0));
                   if (runMin == 0){
                     runMinString = "00";
                   } else if (runMin < 10){
@@ -123,9 +122,10 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
       if (+this.dayServ.month < 10 && this.dayServ.stringMonth.length <2){
         this.dayServ.stringMonth = "0"+this.dayServ.month
       };
-
     }
   }
+
+
 
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
