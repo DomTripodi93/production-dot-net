@@ -34,12 +34,9 @@ export class HourlySetTimeComponent implements OnInit {
           });
         }
       );
-    } else {
-      this.hourlyForm = new FormGroup({
-        'startTime': new FormControl(this.auth.defaultStartTime, Validators.required)
-      });
     }
   }
+  //Initialized form for start time with default value as first hourly start time value 
 
   onSubmit(){
     let date = this.dayServ.stringMonth+"-"+this.dayServ.today+"-"+this.dayServ.year;
@@ -54,10 +51,13 @@ export class HourlySetTimeComponent implements OnInit {
     );
     this.onCancel();
   }
+  //Updates start time for all values under the related machine and day
 
   onCancel(){
     this.hourServ.quick[this.index]=false;
     this.hourServ.setTime[this.index]=false;
   }
+  //Switches back from edit component being displayed on hourly show component 
+  // without making any changes
 
 }
