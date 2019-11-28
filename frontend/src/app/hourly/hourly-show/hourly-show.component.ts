@@ -48,25 +48,24 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
     this.hourServ.machine = this.machines[index];
     this.hourServ.quick[index] = true;
   }
+  //Activates Quick Input for specific machine by machine index, and 
+  // passes base values for form to hourly service
 
   quickPlus(index){
     this.hourServ.isJob[index] = true
     this.quickInput(index);
   }
-
-  quickTime(index){
-    this.hourServ.setTime[index] = true
-    this.quickInput(index);
-  }
+  //Activates form for changing current job and op on machine
 
   quickTimeEdit(index){
     this.hourServ.editMode[index] = true;
     this.hourServ.setTime[index] = true
     this.quickInput(index);
   }
+  //Activates form for changeing start time for hourly counts on machine
 
   getMachines(){
-    this.subscriptions.push(this.mach. fetchMachinesByType('lathe')
+    this.subscriptions.push(this.mach.fetchMachinesByType('lathe')
     .subscribe(machines => {
       this.hourServ.isJob = [];
       this.hourServ.setTime = [];
@@ -92,17 +91,14 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
     }));
   }
 
-  newHourly(i) {
-    this.hourServ.quick[i]=false;
-  }
-
   onCancel(i){
     this.hourServ.quick[i]=false;
   }
+  //Cancels Quick Input for specific machine by machine index
 
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
   }
-
+  //Removes hourly changed subscription
 
 }
