@@ -40,14 +40,10 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getHourly();
-    this.subscriptions.push(
-      this.hourServ.hourlyChanged.subscribe(
-        ()=>{
-          setTimeout(()=>{
-            this.getHourly();
-        },50);
-      })
-    );
+    this.hourServ.hourlyChanged.subscribe(
+      ()=>{
+        this.getHourly();
+    })
   }
 
   getHourly(){
@@ -58,13 +54,14 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
       this.opServ.fetchOp(this.machine.currentOp + "&job=" + this.machine.currentJob).subscribe(
         (op)=>{
           this.cycleTime = +op.cycleTime;
+          //Sets numeric cycle time
           let date = this.dayServ.year +"-"+this.dayServ.stringMonth+"-"+this.dayServ.today;
+          //Sets format of date for hourly retrieval
           this.hourServ.fetchHourly("date="+date+"&"+"machine="+this.auth.splitJoin(this.machine.machine)).subscribe(
             hourly => {
               if (hourly.length > 0){
                 this.hourServ.canSetTime[this.index] = true;
                 if (hourly[0].startTime){
-                  this.hourServ.noStart[this.index] = false;
                   this.hourServ.startTimes[this.index] = hourly[0].startTime;
                 };
               };
@@ -128,7 +125,7 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(){
-    this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
+    this.hourServ.hourlyChanged.unsubscribe();
   }
 
   onEdit(set){

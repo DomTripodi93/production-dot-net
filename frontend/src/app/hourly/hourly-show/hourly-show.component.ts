@@ -71,14 +71,12 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
       this.hourServ.setTime = [];
       this.hourServ.canSetTime = [];
       this.hourServ.quick = [];
-      this.hourServ.noStart = [];
       this.hourServ.editMode = [];
       for (let i in machines){
         this.hourServ.isJob.push(false);
         this.hourServ.setTime.push(false);
         this.hourServ.canSetTime.push(false);
         this.hourServ.quick.push(false);
-        this.hourServ.noStart.push(true);
         this.hourServ.editMode.push(false);
         this.hourServ.startTimes.push(this.auth.defaultStartTime)
       }

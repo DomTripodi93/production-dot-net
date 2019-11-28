@@ -20,7 +20,6 @@ export class HourlyService {
     isJob: boolean[] = [];
     setTime: boolean[] = [];
     canSetTime: boolean[] = [];
-    noStart: boolean[] = [];
     editMode: boolean[] = [];
     startTimes: string[] = [];
 
