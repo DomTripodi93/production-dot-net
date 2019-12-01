@@ -36,7 +36,6 @@ export class RegisterComponent {
       this.isError = true
       this.error = "an account with that email already exists!";
     });
-    this.signupForm.reset();
   }
 
 }

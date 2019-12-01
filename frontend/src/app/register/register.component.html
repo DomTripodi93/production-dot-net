@@ -1,7 +1,8 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <div *ngIf="isError" class="danger"><h2>{{error}}</h2></div>
+      <div *ngIf="isError" class="error"><h2>{{error}}</h2></div>
+      <br>
       <form (ngSubmit)='onSubmit()' #data='ngForm'>
         <div class='form-group'>
           <div class="form-group">
