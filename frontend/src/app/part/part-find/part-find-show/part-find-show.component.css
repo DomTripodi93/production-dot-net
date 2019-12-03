@@ -12,8 +12,14 @@
 
 h3{
     text-align: center;
+    margin: auto;
 }
 
 h2{
     text-align: center;
+    margin: auto;
+}
+
+li{
+    height: 160px;
 }

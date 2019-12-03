@@ -11,14 +11,10 @@
         <div *ngIf="part.rev">
           <h3>Rev: <strong>{{part.rev}}</strong></h3>
         </div>
-        <div *ngIf="!part.rev">
-          <h3><br></h3>
-        </div>
-        <h4><br></h4>
-        <div class="grid">
-          <button class='btn btn-danger' (click)="onDelete(part.partNumber)">Delete Part</button>
-        </div>
       </li>
+      <div class="grid">
+        <button class='btn btn-danger' (click)="onDelete(part.partNumber)">Delete Part</button>
+      </div>
     </ul>
   </div>
 </div>
