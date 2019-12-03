@@ -1,41 +1,43 @@
 <div *ngIf="!canInput">
   <h1>You must be logged in to add a part lot!</h1>
+</div>
+
+<div *ngIf="isError">
+  <h3 class="error">{{error}}</h3>
+</div>
+<br>
+
+<form *ngIf="canInput && partForm" [formGroup]="partForm" (ngSubmit)='onSubmit()' >
+  <div class="form-group">
+    <label for="partNumber">Part</label>
+    <input 
+      formControlName='partNumber'
+      id="partNumber" 
+      class="form-control"
+    >
   </div>
-    <form *ngIf="canInput && partForm" [formGroup]="partForm" (ngSubmit)='onSubmit()' >
-      <div class="form-group">
-        <label for="partNumber">Part</label>
-        <input 
-          formControlName='partNumber'
-          id="partNumber" 
-          class="form-control"
-        >
-      </div>
-      <div class="form-group">
-        <label for="rev">Rev</label>
-        <input 
-          formControlName='rev'
-          id="rev" 
-          class="form-control"
-        >
-      </div>
-      <br><br>
-      <div class='grid'>
-        <button 
-          class="btn btn-success" 
-          type="submit"
-          [disabled]="!partForm.valid"
-        >
-          Add Part
-        </button>
-        <button 
-          type='button' 
-          class='btn btn-danger pull-right' 
-          (click)='onCancel()'
-        >
-          Cancel
-        </button>
-      </div>
-      <br><br>
-      <div *ngIf="isError">
-        <h3 class="danger">{{error}}</h3>
-      </div>
+  <div class="form-group">
+    <label for="rev">Rev</label>
+    <input 
+      formControlName='rev'
+      id="rev" 
+      class="form-control"
+    >
+  </div>
+  <br><br>
+  <div class='grid'>
+    <button 
+      class="btn btn-success" 
+      type="submit"
+      [disabled]="!partForm.valid"
+    >
+      Add Part
+    </button>
+    <button 
+      type='button' 
+      class='btn btn-danger pull-right' 
+      (click)='onCancel()'
+    >
+      Cancel
+    </button>
+  </div>
