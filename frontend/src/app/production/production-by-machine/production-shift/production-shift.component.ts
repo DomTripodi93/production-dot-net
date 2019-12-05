@@ -20,6 +20,9 @@ export class ProductionShiftComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.proServ.proChanged.subscribe(()=>{
+      this.editMode = false;
+    })
   }
 
 
@@ -38,7 +41,6 @@ export class ProductionShiftComponent implements OnInit {
   }
 
   updateProduction($event){
-    this.editMode = false;
     if (!this.prod){
       this.prod = $event;
     } else if ($event.quantity > 0){

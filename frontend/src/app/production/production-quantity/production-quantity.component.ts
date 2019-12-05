@@ -76,15 +76,15 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
         this.proServ.addProduction(this.production).subscribe((response: Production)=>{
           this.production = response;
           this.updatedProduction.emit(this.production);
-          this.proServ.proChanged.next();
         });
       })
     } 
   }
 
   submitAll(){
-    this.proServ.proSubmit.next();
-    setTimeout(()=>{this.proServ.proChanged.next();},200);
+    this.proServ.proSubmit.next(()=>{
+      this.proServ.proChanged.next()
+    });
   }
 
   ngOnDestroy(){
