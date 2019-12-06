@@ -12,7 +12,7 @@
                         Change Job
                     </button>
                     <button 
-                        *ngIf="!hourServ.quick[i] && !hourServ.noStart[i] && hourServ.canSetTime[i]" 
+                        *ngIf="!hourServ.quick[i] && hourServ.canSetTime[i]" 
                         class="btn btn-warning" 
                         (click)="quickTimeEdit(i)"
                     >
