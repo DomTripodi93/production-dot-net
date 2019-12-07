@@ -18,6 +18,7 @@ export class ProductionCalenderComponent implements OnInit {
   @Input() machine: Machine;
   @Input() month: number;
   @ViewChild('newMonth') newMonthForm: NgForm;
+  editJob = false;
   production: Production[];
   date = new Date();
   today = this.date.getDate();
