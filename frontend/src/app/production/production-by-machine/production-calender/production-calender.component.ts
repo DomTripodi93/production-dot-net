@@ -98,15 +98,18 @@ export class ProductionCalenderComponent implements OnInit {
       + "&job=" + this.machine.currentJob 
       + "&op=" + this.opServ.slashToDash(this.machine.currentOp);
     this.proServ.fetchProduction(search).subscribe(prod=>{
+      this.production = prod;
       if (prod.length > 0){
         this.firstProDay = +(prod[0].date.substring(8,10))
         this.firstProMonth = +(prod[0].date.substring(5,7))
+        this.setDate();
+        this.setAverage();
       } else {
         this.firstProDay = this.today
+        this.dayAvg = 0;
+        this.nightAvg = 0;
+        this.overNightAvg = 0;
       }
-      this.production = prod;
-      this.setDate();
-      this.setAverage();
     })
   }
 
