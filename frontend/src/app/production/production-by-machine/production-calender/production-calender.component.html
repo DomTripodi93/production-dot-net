@@ -1,7 +1,14 @@
-<div class="grid33">
+<div *ngIf="!editJob" class="grid33">
   <h2 class="centered">Machine<br><strong>{{machine.machine}}</strong></h2>
   <h2 class="centered">Job<br><strong>{{machine.currentJob}}</strong></h2>
   <h2 class="centered">Operation<br><strong>{{machine.currentOp}}</strong></h2>
+</div>
+<div *ngIf="!editJob" class="middle grid100">
+  <button (click)="jobEdit()" class="btn btn-primary bold">Edit Job and Operation</button>
+</div>
+<div *ngIf="editJob" class="grid3366">
+  <h2 class="centered">Machine<br><strong>{{machine.machine}}</strong></h2>
+  <app-machine-edit [machName]="machine.machine"></app-machine-edit>
 </div>
 <div class="grid25">
   <h3>Day Shift <br> Average: <br><strong>{{dayAvg}}</strong></h3>
@@ -25,7 +32,7 @@
     <h3>Parts Made To Operation: <br><strong>{{total}}</strong></h3>
 </div>
 <div class="middle grid100">
-  <button (click)="addOldWeek()" class="btn btn-primary">
+  <button (click)="addOldWeek()" class="btn bold btn-primary">
     Show Previous week
   </button>
 </div>
@@ -73,3 +80,4 @@
     </div>
   </div>
 </div>
+<br><br><br>

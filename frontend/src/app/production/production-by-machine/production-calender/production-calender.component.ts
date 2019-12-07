@@ -8,6 +8,8 @@ import { Production } from '../../production.model';
 import { ProductionService } from '../../production.service';
 import { Machine } from 'src/app/machine/machine.model';
 import { OpService } from 'src/app/job/job-ops/operation.service';
+import { HourlyService } from 'src/app/hourly/hourly.service';
+import { MachineService } from 'src/app/machine/machine.service';
 
 @Component({
   selector: 'app-production-calender',
@@ -58,7 +60,8 @@ export class ProductionCalenderComponent implements OnInit {
     private router: Router,
     public dayServ: DaysService,
     public proServ: ProductionService,
-    private opServ: OpService
+    private opServ: OpService,
+    private machServ: MachineService
   ) { }
 
   ngOnInit() {
@@ -84,6 +87,9 @@ export class ProductionCalenderComponent implements OnInit {
     this.proServ.proChangedAvg.subscribe(()=>{
       this.editMode = false;
       this.getProduction();
+    })
+    this.machServ.machChanged.subscribe(()=>{
+      this.editJob = false;
     })
   }
 
@@ -165,6 +171,10 @@ export class ProductionCalenderComponent implements OnInit {
 
   daysInMonth(year: number, month: number){
     this.numberOfDays = new Date(year, month, 0).getDate();
+  }
+
+  jobEdit(){
+    this.editJob = true;
   }
 
   addOldWeek(){
