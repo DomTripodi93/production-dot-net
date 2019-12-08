@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Job } from '../../job.model';
 import { Subscription } from 'rxjs';
 import { JobService } from '../../job.service';
@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/shared/auth.service';
   templateUrl: './job-find-show.component.html',
   styleUrls: ['./job-find-show.component.css']
 })
-export class JobFindShowComponent implements OnInit {
+export class JobFindShowComponent implements OnInit, OnDestroy {
   @Input() jobInput: Job;
   editJob = false
   isFetching = false;
@@ -29,11 +29,11 @@ export class JobFindShowComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.jobServ.jobChanged.subscribe(()=>{
+    this.subscriptions.push(this.jobServ.jobChanged.subscribe(()=>{
       if (!this.jobInput){
         this.getJob();
       }
-    }); 
+    })); 
     if (this.jobInput){
       this.job = ""+this.jobInput.id;
       this.oneJob = this.jobInput;
@@ -104,5 +104,10 @@ export class JobFindShowComponent implements OnInit {
   onEdit(){
     this.editJob = true;
   }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
+  }
+  //Removes observable subscriptions
   
 }

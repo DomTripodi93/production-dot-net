@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Part } from '../../part.model';
 import { Subscription } from 'rxjs';
 import { PartService } from '../../part.service';
@@ -11,7 +11,7 @@ import { DaysService } from '../../../shared/days/days.service';
   templateUrl: './part-find-show.component.html',
   styleUrls: ['./part-find-show.component.css']
 })
-export class PartFindShowComponent implements OnInit {
+export class PartFindShowComponent implements OnInit, OnDestroy {
   @Input() partInput: Part;
   isFetching = false;
   isError = false;
@@ -88,5 +88,10 @@ export class PartFindShowComponent implements OnInit {
       })
     }
   }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
+  }
+  //Removes observable subscriptions
 
 }

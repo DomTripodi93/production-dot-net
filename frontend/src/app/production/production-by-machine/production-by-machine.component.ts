@@ -72,4 +72,9 @@ export class ProductionByMachineComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(){
+    this.machServ.machChanged.unsubscribe();
+  }
+  //Removes observable subscriptions
+
 }

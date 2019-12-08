@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Hourly } from '../../hourly.model';
 import { Subscription } from 'rxjs';
 import { Params, ActivatedRoute } from '@angular/router';
@@ -11,7 +11,7 @@ import { DaysService } from 'src/app/shared/days/days.service';
   templateUrl: './hourly-find-show.component.html',
   styleUrls: ['./hourly-find-show.component.css']
 })
-export class HourlyFindShowComponent implements OnInit {
+export class HourlyFindShowComponent implements OnInit, OnDestroy {
   hourly: Hourly[] = [];
   splitLots: Hourly[][] = [];
   hourlyHold: Hourly[] = [];
@@ -165,5 +165,10 @@ export class HourlyFindShowComponent implements OnInit {
         this.error = error.message
       })
   }  
+
+  ngOnDestroy(){
+    this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
+  }
+  //Removes hourly changed subscription
 
 }

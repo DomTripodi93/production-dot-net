@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ProductionService } from 'src/app/production/production.service';
 import { Production } from '../production.model';
@@ -8,7 +8,7 @@ import { Production } from '../production.model';
   templateUrl: './production-single.component.html',
   styleUrls: ['./production-single.component.css']
 })
-export class ProductionSingleComponent implements OnInit {
+export class ProductionSingleComponent implements OnInit, OnDestroy {
   production: Production;
   deleted = false;
 
@@ -43,5 +43,10 @@ export class ProductionSingleComponent implements OnInit {
       this.router.navigate(["../.."], {relativeTo: this.route})
     }
   }
+
+  ngOnDestroy(){
+    this.pro.proChanged.unsubscribe();
+  }
+  //Removes observable subscriptions
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { OpService } from 'src/app/job/job-ops/operation.service';
 import { Job } from 'src/app/job/job.model';
 import { Operation } from 'src/app/job/job-ops/operation.model';
@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/shared/auth.service';
   templateUrl: './production-mill-job.component.html',
   styleUrls: ['./production-mill-job.component.css']
 })
-export class ProductionMillJobComponent implements OnInit {
+export class ProductionMillJobComponent implements OnInit, OnDestroy {
   @Input() machine: string;
   @Input() job: Job;
   ops: Operation[] = [];
@@ -72,5 +72,12 @@ export class ProductionMillJobComponent implements OnInit {
   catchRemains($event){
     this.job.remainingQuantity = $event;
   }
+
+
+
+  ngOnDestroy(){
+    this.opServ.opsChanged.unsubscribe();
+  }
+  //Removes observable subscriptions
 
 }

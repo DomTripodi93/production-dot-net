@@ -121,6 +121,8 @@ export class DaysHourlyComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.auth.showButton(0)
+    this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
   }
+  //Removes observable subscriptions
 
 }

@@ -66,9 +66,9 @@ export class MachineShowComponent implements OnInit, OnDestroy{
   }
   //Switches value to start editing selected machine in-page
 
+
   ngOnDestroy(){
-    this.subscriptions.forEach((sub)=>{
-      sub.unsubscribe();
-    });
+    this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
   }
+  //Removes observable subscriptions
 }

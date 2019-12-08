@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Production } from '../../production.model';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -12,7 +12,7 @@ import { OpService } from 'src/app/job/job-ops/operation.service';
   templateUrl: './production-find-show.component.html',
   styleUrls: ['./production-find-show.component.css']
 })
-export class ProductionFindShowComponent implements OnInit {
+export class ProductionFindShowComponent implements OnInit, OnDestroy {
   @Input() singleProd: Production;
   isFetching = false;
   isError = false;
@@ -114,5 +114,10 @@ export class ProductionFindShowComponent implements OnInit {
       this.pro.proChanged.next();
     })
   }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
+  }
+  //Removes observable subscriptions
 
 }

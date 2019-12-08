@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Operation } from 'src/app/job/job-ops/operation.model';
 import { OpService } from '../operation.service';
 import { DaysService } from 'src/app/shared/days/days.service';
@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/shared/auth.service';
   templateUrl: './job-ops-show.component.html',
   styleUrls: ['./job-ops-show.component.css']
 })
-export class JobOpsShowComponent implements OnInit {
+export class JobOpsShowComponent implements OnInit, OnDestroy {
   @Input() operation: string;
   isFetching = false;
   isError = false;
@@ -77,5 +77,9 @@ export class JobOpsShowComponent implements OnInit {
     this.showForm = true;
   }
 
+  ngOnDestroy(){
+    this.opServ.opsChanged.unsubscribe();
+  }
+  //Removes observable subscription
 
 }

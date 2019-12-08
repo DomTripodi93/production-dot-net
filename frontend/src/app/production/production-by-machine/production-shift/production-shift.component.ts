@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Production } from '../../production.model';
 import { ProductionService } from '../../production.service';
 import { Machine } from 'src/app/machine/machine.model';
@@ -8,7 +8,7 @@ import { Machine } from 'src/app/machine/machine.model';
   templateUrl: './production-shift.component.html',
   styleUrls: ['./production-shift.component.css']
 })
-export class ProductionShiftComponent implements OnInit {
+export class ProductionShiftComponent implements OnInit, OnDestroy {
   @Input() prod: Production;
   @Input() editMode: boolean;
   @Input() mach: Machine;
@@ -49,5 +49,10 @@ export class ProductionShiftComponent implements OnInit {
       this.prod = null;
     }
   }
+
+  ngOnDestroy(){
+    this.proServ.proChanged.unsubscribe();
+  }
+  //Removes observable subscriptions
 
 }

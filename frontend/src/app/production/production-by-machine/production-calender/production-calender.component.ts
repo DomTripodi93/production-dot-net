@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import _ from 'lodash';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -10,16 +10,18 @@ import { Machine } from 'src/app/machine/machine.model';
 import { OpService } from 'src/app/job/job-ops/operation.service';
 import { HourlyService } from 'src/app/hourly/hourly.service';
 import { MachineService } from 'src/app/machine/machine.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-production-calender',
   templateUrl: './production-calender.component.html',
   styleUrls: ['./production-calender.component.css']
 })
-export class ProductionCalenderComponent implements OnInit {
+export class ProductionCalenderComponent implements OnInit, OnDestroy {
   @Input() machine: Machine;
   @Input() month: number;
   @ViewChild('newMonth') newMonthForm: NgForm;
+  subscriptions: Subscription[] = [];
   editJob = false;
   production: Production[];
   date = new Date();
@@ -79,18 +81,18 @@ export class ProductionCalenderComponent implements OnInit {
     this.defaultMonth = this.year + "-" + this.monthHold;
     this.getProduction();
     this.getTotal();
-    this.proServ.proChanged.subscribe(()=>{
+    this.subscriptions.push(this.proServ.proChanged.subscribe(()=>{
       this.editMode = false;
       this.getProduction();
       this.getTotal();
-    })
-    this.proServ.proChangedAvg.subscribe(()=>{
+    }));
+    this.subscriptions.push(this.proServ.proChangedAvg.subscribe(()=>{
       this.editMode = false;
       this.getProduction();
-    })
-    this.machServ.machChanged.subscribe(()=>{
+    }));
+    this.subscriptions.push(this.machServ.machChanged.subscribe(()=>{
       this.editJob = false;
-    })
+    }));
   }
 
   getProduction(){
@@ -253,5 +255,10 @@ export class ProductionCalenderComponent implements OnInit {
     let path = "/"+arr.join("/");
     this.router.navigate([path])
   }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
+  }
+  //Removes observable subscriptions
 
 }

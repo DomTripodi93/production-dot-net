@@ -97,6 +97,6 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
   }
-  //Removes hourly changed subscription
+  //Removes observable subscriptions
 
 }
