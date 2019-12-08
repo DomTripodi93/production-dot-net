@@ -104,14 +104,12 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
       if (prod.length > 0){
         this.firstProDay = +(prod[0].date.substring(8,10))
         this.firstProMonth = +(prod[0].date.substring(5,7))
-        this.setDate();
-        this.setAverage();
       } else {
         this.firstProDay = this.today
-        this.dayAvg = 0;
-        this.nightAvg = 0;
-        this.overNightAvg = 0;
       }
+      this.setDate();
+      this.setAverage();
+      console.log(this.monthDays)
     })
   }
 
@@ -146,7 +144,7 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
     this.firstDayOfMonth = _.range(0, firstDay.getDay());
     this.displayMax = this.today+this.firstDayOfMonth.length
     if (this.displayMax%7 != 0){
-      let totalDays = ((Math.floor(this.displayMax/7) + 1)*7)- this.firstDayOfMonth.length
+      let totalDays = ((Math.floor(this.displayMax/7) + 1)*7) - this.firstDayOfMonth.length
       if (totalDays < this.numberOfDays){
         this.monthDays = _.range(1, totalDays + 1);
       } else {
@@ -164,6 +162,8 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
       }
     } else if (this.lastMonthDays.length > 0){
       this.firstDayOfMonth = [];
+    } else if (this.firstProDay > 7){
+      this.removeUnusedWeeksBeginning(this.firstDayOfMonth.length, 7)
     }
   }
 
@@ -249,6 +249,11 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
         }
       }
     })
+    if (this.production.length < 1){
+      this.dayAvg = 0;
+      this.nightAvg = 0;
+      this.overNightAvg = 0;
+    }
   }
 
   onViewDate(arr){
