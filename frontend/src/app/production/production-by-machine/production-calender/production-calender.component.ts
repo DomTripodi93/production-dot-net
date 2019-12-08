@@ -109,7 +109,6 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
       }
       this.setDate();
       this.setAverage();
-      console.log(this.monthDays)
     })
   }
 
@@ -162,7 +161,7 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
       }
     } else if (this.lastMonthDays.length > 0){
       this.firstDayOfMonth = [];
-    } else if (this.firstProDay > 7){
+    } else if (this.firstDayOfMonth.length + this.firstProDay > 7){
       this.removeUnusedWeeksBeginning(this.firstDayOfMonth.length, 7)
     }
   }
@@ -194,7 +193,12 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
       } else {
         let firstDay = new Date(this.year, this.month, 1).getDay();
         this.daysInMonth(this.year, this.month);
-        this.lastMonthDays = _.range(this.numberOfDays-firstDay, this.numberOfDays)
+        if (firstDay > 0)
+        {
+          this.lastMonthDays = _.range(this.numberOfDays-firstDay, this.numberOfDays)
+        } else {
+          this.lastMonthDays = _.range(this.numberOfDays-6, this.numberOfDays+1)
+        }
         let range = _.range(1, first);
         this.monthDays = range.concat(this.monthDays);
       }
