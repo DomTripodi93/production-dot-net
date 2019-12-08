@@ -82,9 +82,8 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
   }
 
   submitAll(){
-    this.proServ.proSubmit.next(()=>{
-      this.proServ.proChanged.next()
-    });
+    this.proServ.proSubmit.next();
+    setTimeout(()=>{this.proServ.proChanged.next();},200);
   }
 
   ngOnDestroy(){
