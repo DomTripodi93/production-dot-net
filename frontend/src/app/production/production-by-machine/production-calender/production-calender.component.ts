@@ -55,8 +55,6 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
   firstProMonth: number;
   displayMax: number;
 
-
-
   constructor(
     public auth: AuthService,
     private router: Router,

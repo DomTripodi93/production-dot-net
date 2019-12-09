@@ -3,6 +3,7 @@ import { Operation } from 'src/app/job/job-ops/operation.model';
 import { OpService } from '../operation.service';
 import { DaysService } from 'src/app/shared/days/days.service';
 import { AuthService } from 'src/app/shared/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-job-ops-show',
@@ -11,6 +12,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 })
 export class JobOpsShowComponent implements OnInit, OnDestroy {
   @Input() operation: string;
+  opSubscription: Subscription;
   isFetching = false;
   isError = false;
   error = '';
@@ -26,7 +28,7 @@ export class JobOpsShowComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getOps();
-    this.opServ.opsChanged.subscribe(()=>{
+    this.opSubscription = this.opServ.opsChanged.subscribe(()=>{
         this.getOps();
         this.showForm = false;
         for (let bool in this.editOp){
@@ -78,7 +80,7 @@ export class JobOpsShowComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.opServ.opsChanged.unsubscribe();
+    this.opSubscription.unsubscribe();
   }
   //Removes observable subscription
 

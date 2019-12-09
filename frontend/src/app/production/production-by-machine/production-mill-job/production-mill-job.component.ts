@@ -3,6 +3,7 @@ import { OpService } from 'src/app/job/job-ops/operation.service';
 import { Job } from 'src/app/job/job.model';
 import { Operation } from 'src/app/job/job-ops/operation.model';
 import { AuthService } from 'src/app/shared/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-production-mill-job',
@@ -17,6 +18,7 @@ export class ProductionMillJobComponent implements OnInit, OnDestroy {
   minutes = 0;
   minFormat = "Minutes"
   hourFormat = "Hours"
+  opSubscription: Subscription;
 
   constructor(
     private opServ: OpService,
@@ -25,7 +27,7 @@ export class ProductionMillJobComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.opServ.opsChanged.subscribe(()=>{
+    this.opSubscription = this.opServ.opsChanged.subscribe(()=>{
       this.hours = 0;
       this.minutes = 0;
       this.getOps();
@@ -76,7 +78,7 @@ export class ProductionMillJobComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(){
-    this.opServ.opsChanged.unsubscribe();
+    this.opSubscription.unsubscribe();
   }
   //Removes observable subscriptions
 

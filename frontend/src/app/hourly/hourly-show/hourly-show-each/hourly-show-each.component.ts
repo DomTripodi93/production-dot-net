@@ -17,7 +17,7 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
   @Input() index: number;
   @Input() startTime: string;
   hourly: Hourly[] = [];
-  subscriptions: Subscription[]=[];
+  hourlySubscription: Subscription;
   isFetching = false;
   isError = false;
   error = '';
@@ -40,7 +40,7 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getHourly();
-    this.hourServ.hourlyChanged.subscribe(
+    this.hourlySubscription = this.hourServ.hourlyChanged.subscribe(
       ()=>{
         this.getHourly();
     })
@@ -125,7 +125,7 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(){
-    this.hourServ.hourlyChanged.unsubscribe();
+    this.hourlySubscription.unsubscribe();
   }
 
   onEdit(set){

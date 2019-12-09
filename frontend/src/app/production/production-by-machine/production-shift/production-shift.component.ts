@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Production } from '../../production.model';
 import { ProductionService } from '../../production.service';
 import { Machine } from 'src/app/machine/machine.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-production-shift',
@@ -14,13 +15,14 @@ export class ProductionShiftComponent implements OnInit, OnDestroy {
   @Input() mach: Machine;
   @Input() date: string;
   @Input() shift: string;
+  proSubscription: Subscription;
 
   constructor(
     private proServ: ProductionService
   ) { }
 
   ngOnInit() {
-    this.proServ.proChanged.subscribe(()=>{
+    this.proSubscription = this.proServ.proChanged.subscribe(()=>{
       this.editMode = false;
     })
   }
@@ -51,7 +53,7 @@ export class ProductionShiftComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.proServ.proChanged.unsubscribe();
+    this.proSubscription.unsubscribe();
   }
   //Removes observable subscriptions
 

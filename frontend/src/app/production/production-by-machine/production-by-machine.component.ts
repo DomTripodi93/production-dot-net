@@ -9,6 +9,7 @@ import { ProductionService } from '../production.service';
 import { Machine } from 'src/app/machine/machine.model';
 import { OpService } from 'src/app/job/job-ops/operation.service';
 import { Production } from '../production.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-production-by-machine',
@@ -34,6 +35,7 @@ export class ProductionByMachineComponent implements OnInit {
   date = new Date();
   month = this.date.getMonth();
   ready = false;
+  machSubscription: Subscription;
 
 
   constructor(
@@ -43,7 +45,7 @@ export class ProductionByMachineComponent implements OnInit {
 
   ngOnInit() {
     this.setMachines();
-    this.machServ.machChanged.subscribe(()=>{
+    this.machSubscription = this.machServ.machChanged.subscribe(()=>{
       this.ready = false;
       this.setMachines();
     })
@@ -73,7 +75,7 @@ export class ProductionByMachineComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.machServ.machChanged.unsubscribe();
+    this.machSubscription.unsubscribe();
   }
   //Removes observable subscriptions
 

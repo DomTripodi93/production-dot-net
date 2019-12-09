@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ProductionService } from 'src/app/production/production.service';
 import { Production } from '../production.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-production-single',
@@ -11,6 +12,7 @@ import { Production } from '../production.model';
 export class ProductionSingleComponent implements OnInit, OnDestroy {
   production: Production;
   deleted = false;
+  proSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,7 +22,7 @@ export class ProductionSingleComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.deleted = false;
-    this.pro.proChanged.subscribe(()=>{
+    this.proSubscription = this.pro.proChanged.subscribe(()=>{
       if (!this.deleted){
         this.pro.fetchProductionById(this.production.id).subscribe(production=>{
           this.production = production;
@@ -45,7 +47,7 @@ export class ProductionSingleComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.pro.proChanged.unsubscribe();
+    this.proSubscription.unsubscribe();
   }
   //Removes observable subscriptions
 
