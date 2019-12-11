@@ -31,7 +31,15 @@ namespace BackEnd
                     opt.SerializerSettings.ReferenceLoopHandling = 
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyCors", 
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials() 
+                );
+            });
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IManagementRepository, ManagementRepository>();
@@ -52,7 +60,7 @@ namespace BackEnd
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseCors("MyCors");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
