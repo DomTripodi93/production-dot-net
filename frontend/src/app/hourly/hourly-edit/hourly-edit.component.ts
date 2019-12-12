@@ -14,14 +14,13 @@ import { DaysService } from 'src/app/shared/days/days.service';
   templateUrl: './hourly-edit.component.html',
   styleUrls: ['./hourly-edit.component.css']
 })
-export class HourlyEditComponent implements OnInit, OnDestroy {
+export class HourlyEditComponent implements OnInit {
   @Input() id: number;
   @Input() startTime: string;
   editHourlyForm: FormGroup;
   hourly: Hourly;
   canInput = false;
   machines: Machine[] = [];
-  subscriptions: Subscription[]=[];
   shifts = [
     "Day",
     "Night",
@@ -38,17 +37,16 @@ export class HourlyEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
-    this.subscriptions.push(this.mach.fetchMachinesByType("lathe")
-    .subscribe(machines => {
+    this.mach.fetchMachinesByType("lathe").subscribe(machines => {
       this.machines = machines;
-    }));
-    this.subscriptions.push(this.hourlyServ.fetchHourlyById(this.id)
+    });
+    this.hourlyServ.fetchHourlyById(this.id)
     .subscribe(lot => {
       let beginning = lot.date.substring(5,10);
       lot.date = beginning + "-" + lot.date.substring(0,4);
       this.hourly = lot;
       this.initForm();
-    }));
+    })
   }
 
 
@@ -100,12 +98,6 @@ export class HourlyEditComponent implements OnInit, OnDestroy {
         this.hourlyServ.hourlyChanged.next();
       }, 50)
     }
-  }
-
-  ngOnDestroy(){
-    this.subscriptions.forEach((sub)=>{
-      sub.unsubscribe()
-    });
   }
 
 }
