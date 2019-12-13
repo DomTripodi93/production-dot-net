@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/shared/auth.service';
   styleUrls: ['./part-find.component.css']
 })
 export class PartFindComponent implements OnInit, OnDestroy{
-  @ViewChild('data') jobForm: NgForm;
+  @ViewChild('data', {static:false}) jobForm: NgForm;
 
   constructor(
     private route: ActivatedRoute,

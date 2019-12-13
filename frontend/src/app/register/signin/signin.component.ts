@@ -12,7 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class SigninComponent {
   error = "";
   isError = false;
-  @ViewChild('data') signinForm: NgForm;
+  @ViewChild('data', {static:false}) signinForm: NgForm;
   user: Signin;
 
 

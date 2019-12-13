@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/shared/auth.service';
   styleUrls: ['./production-find.component.css']
 })
 export class ProductionFindComponent implements OnInit {
-  @ViewChild('data') jobForm: NgForm;
+  @ViewChild('data', {static:false}) jobForm: NgForm;
 
   constructor(
     private route: ActivatedRoute,

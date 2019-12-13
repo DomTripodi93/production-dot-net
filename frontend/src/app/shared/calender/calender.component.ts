@@ -11,7 +11,7 @@ import { DaysService } from '../days/days.service';
   styleUrls: ['./calender.component.css']
 })
 export class CalenderComponent implements OnInit {
-  @ViewChild('newMonth') newMonthForm: NgForm;
+  @ViewChild('newMonth', {static:false}) newMonthForm: NgForm;
   date = new Date();
   today = this.date.getDate();
   month = this.date.getMonth();

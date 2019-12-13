@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/shared/auth.service';
   styleUrls: ['./job-find.component.css']
 })
 export class JobFindComponent implements OnInit, OnDestroy{
-  @ViewChild('data') jobForm: NgForm;
+  @ViewChild('data', {static:false}) jobForm: NgForm;
 
   constructor(
     private route: ActivatedRoute,

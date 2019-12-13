@@ -12,7 +12,7 @@ import { Machine } from '../../machine/machine.model';
   styleUrls: ['./hourly-find.component.css']
 })
 export class HourlyFindComponent implements OnInit, OnDestroy{
-  @ViewChild('data') searchForm: NgForm;
+  @ViewChild('data', {static:false}) searchForm: NgForm;
   startDate = "";
   machines=[""];
 
