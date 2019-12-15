@@ -5,12 +5,14 @@
                 <div class="grid2 col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">    
                     <select 
                         id="model" 
-                        class="form-control"
+                        class="form-control input-center"
                         [(ngModel)]="defaultModel"
                         name="model">
-                        <option *ngFor = "let model of models">{{model}}</option>
+                        <option *ngFor="let model of models" class="input-center centered">
+                            {{model}}
+                        </option>
                     </select>
-                    <div clsas="grid">
+                    <div class="grid">
                         <button class="btn btn-primary"><strong>Select Change Set</strong></button>
                     </div>
                 </div>
