@@ -1,86 +1,23 @@
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-sm-10 col-md-12 col-sm-offset-1 col-md-offset-0">
-            <div class="grid">
-                <button 
-                    *ngIf="!isShown[0]" 
-                    class="btn btn-info" 
-                    (click)="showLog(0)"
-                >
-                    Show Machine <br>Changes
-                </button>
-                <button 
-                    *ngIf="isShown[0]" 
-                    class="btn btn-info" 
-                    (click)="hideLog(0)"
-                >
-                    Hide Machine <br>Changes
-                </button>
-                <button 
-                    *ngIf="!isShown[1]" 
-                    class="btn btn-info" 
-                    (click)="showLog(1)"
-                >
-                    Show Job <br>Changes
-                </button>
-                <button 
-                    *ngIf="isShown[1]" 
-                    class="btn btn-info" 
-                    (click)="hideLog(1)"
-                >
-                    Hide Job <br>Changes
-                </button>
-                <button 
-                    *ngIf="!isShown[2]" 
-                    class="btn btn-info" 
-                    (click)="showLog(2)"
-                >
-                    Show Hourly <br>Production Changes
-                </button>
-                <button 
-                    *ngIf="isShown[2]" 
-                    class="btn btn-info" 
-                    (click)="hideLog(2)"
-                >
-                    Hide Hourly <br>Production Changes
-                </button>
-                <button 
-                    *ngIf="!isShown[3]" 
-                    class="btn btn-info" 
-                    (click)="showLog(3)"
-                >
-                    Show Production <br> Changes
-                </button>
-                <button 
-                    *ngIf="isShown[3]" 
-                    class="btn btn-info" 
-                    (click)="hideLog(3)"
-                >
-                    Hide Production <br>Changes
-                </button>
-            </div>
-            <div class="grid">
-                <div *ngIf="isShown[0]">
-                    <app-change-log-set [model]="'Machine'"></app-change-log-set>
+        <div class="row">
+            <form (ngSubmit)='showLog()' #logSelect="ngForm">
+                <div class="grid2 col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">    
+                    <select 
+                        id="model" 
+                        class="form-control"
+                        [(ngModel)]="defaultModel"
+                        name="model">
+                        <option *ngFor = "let model of models">{{model}}</option>
+                    </select>
+                    <div clsas="grid">
+                        <button class="btn btn-primary"><strong>Select Change Set</strong></button>
+                    </div>
                 </div>
-                <div *ngIf="!isShown[0]">
-                </div>
-                <div *ngIf="isShown[1]">
-                    <app-change-log-set [model]="'Job'" [pageSize]="3"></app-change-log-set>
-                </div>
-                <div *ngIf="!isShown[1]">
-                </div>
-                <div *ngIf="isShown[2]">
-                    <app-change-log-set [model]="'Hourly'" [pageSize]="4"></app-change-log-set>
-                </div>
-                <div *ngIf="!isShown[2]">
-                </div>
-                <div *ngIf="isShown[3]">
-                    <app-change-log-set [model]="'Production'" [pageSize]="4"></app-change-log-set>
-                </div>
-                <div *ngIf="!isShown[3]">
-                </div>
-            </div>
+            </form>      
+        </div>
+        <div *ngIf="isShown">
+            <app-change-log-set [model]="currentModel"></app-change-log-set>
         </div>
     </div>
 </div>

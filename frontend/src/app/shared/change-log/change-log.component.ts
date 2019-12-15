@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-change-log',
@@ -6,19 +7,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./change-log.component.css']
 })
 export class ChangeLogComponent implements OnInit {
-  isShown =[false, false, false, false]
+  @ViewChild('logSelect', {static: false}) logSelectForm: NgForm;
+  isShown = false;
+  models = [
+    "Machine",
+    "Part",
+    "Job",
+    "Operation",
+    "Production",
+    "Hourly"
+  ];
+  defaultModel = "Machine";
+  currentModel = "";
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  showLog(i: number){
-    this.isShown[i]= true;
-  }
-
-  hideLog(i: number){
-    this.isShown[i]= false;
+  showLog(){
+    this.isShown = false;
+    this.currentModel = this.logSelectForm.value.model;
+    this.isShown = true;
   }
 
 }
