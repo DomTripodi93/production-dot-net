@@ -57,11 +57,14 @@ export class JobOpsShowComponent implements OnInit, OnDestroy {
   getOps() {
     this.isFetching = true;
       this.opServ.fetchOpByJob(this.operation)
-        .subscribe(operation => {
-          for (let i in operation){
+        .subscribe(ops => {
+          ops.forEach(op => {
             this.editOp.push(false)
-          }
-          this.operations = operation;
+            if (+op.remainingQuantity < 1){
+              op.remainingQuantity = "0";
+            }
+          });
+          this.operations = ops;
           this.dayServ.dates = [];
           this.isFetching = false;
         }, error => {
