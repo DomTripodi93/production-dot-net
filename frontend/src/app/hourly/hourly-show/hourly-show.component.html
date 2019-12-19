@@ -1,6 +1,6 @@
 <ul class='list-group'>
     <h1 *ngIf="machines.length === 0">Add Machines to status production on!</h1>
-    <div  *ngIf="machines" class="mach-grid">
+    <div *ngIf="machines" class="mach-grid">
         <li class ="list-group-item border" *ngFor="let mach of machines; let i=index">
             <ul class="list-group">
                 <div class="btn-grid">
