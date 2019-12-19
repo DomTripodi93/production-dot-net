@@ -61,6 +61,9 @@ export class ProductionTotalComponent implements OnInit {
                   remains = +op.remainingQuantity;
                 }
                 if (used == ops.length){
+                  if (remains < 1){
+                    remains = 0;
+                  }
                   let remainingData = {
                     remainingQuantity: remains
                   }
