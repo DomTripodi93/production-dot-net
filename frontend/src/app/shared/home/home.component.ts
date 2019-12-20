@@ -28,45 +28,19 @@ export class HomeComponent implements OnInit {
   }
 
   getLatheData(){
-    this.machServ.fetchMachinesByType("lathe").subscribe(machines => {
-      this.lathes = machines;
-      machines.forEach(mach=>{
-        if (mach.currentJob != "None"){
-          this.jobServ.fetchJob(mach.currentJob).subscribe(job=>{
-            this.currentLatheJobs.push(job);
-          })
-        }
-      })
-    })
-    this.jobServ.fetchJobsByType(1, 20, "lathe").subscribe(jobs => {
-      jobs.result.forEach(job=>{
-        if (!this.currentLatheJobs.includes(job)){
-          this.unusedLatheJobs.push(job);
-        }
-      })
-    })
+    this.getMachines("lathe");
   }
   //Sets values for Lathes and Lathe Jobs for home dashboard
 
   getMillData(){
-    this.machServ.fetchMachinesByType("mill").subscribe(machines => {
-      this.mills = machines;
-    })
-    this.jobServ.fetchJobsByType(1, 20, "mill").subscribe(jobs => {
-      jobs.result.forEach(job=>{
-        if (job.remainingQuantity != job.orderQuantity){
-          this.currentMillJobs.push(job);
-        } else {
-          this.unusedMillJobs.push(job);
-        }
-      })
-    })
+    this.getMachines("mill");
   }
   //Sets values for Mills and Mill Jobs for home dashboard
 
   getMachines(type: string){
     this.machServ.fetchMachinesByType(type).subscribe(machines => {
       if (type == "lathe"){
+        this.lathes = machines;
         machines.forEach(mach=>{
           if (mach.currentJob != "None"){
             this.jobServ.fetchJob(mach.currentJob).subscribe(job=>{
@@ -74,10 +48,13 @@ export class HomeComponent implements OnInit {
             })
           }
         })
+      } else {
+        this.mills = machines;
       }
-      return machines
+      this.getJobs(type);
     })
   }
+  //Sets values for machines based on type and calls function for job setting by type
 
   getJobs(type: string){
     this.jobServ.fetchJobsByType(1, 20, type).subscribe(jobs => {
@@ -96,5 +73,6 @@ export class HomeComponent implements OnInit {
       })
     })
   }
+  //Sets values for jobs by type
 
 }
