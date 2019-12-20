@@ -14,7 +14,8 @@ export class HomeComponent implements OnInit {
   mills: Machine[] = [];
   currentLatheJobs: Job[] = [];
   unusedLatheJobs: Job[] = [];
-  millJobs: Job[] = [];
+  currentMillJobs: Job[] = [];
+  unusedMillJobs: Job[] = [];
 
   constructor(
     private jobServ: JobService,
@@ -22,19 +23,75 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.machServ.fetchMachinesByType("Lathe").subscribe(machines => {
-      console.log(machines);
+    this.getLatheData();
+    this.getMillData();
+  }
+
+  getLatheData(){
+    this.machServ.fetchMachinesByType("lathe").subscribe(machines => {
       this.lathes = machines;
+      machines.forEach(mach=>{
+        if (mach.currentJob != "None"){
+          this.jobServ.fetchJob(mach.currentJob).subscribe(job=>{
+            this.currentLatheJobs.push(job);
+          })
+        }
+      })
     })
-    this.machServ.fetchMachinesByType("Mill").subscribe(machines => {
-      console.log(machines);
-      this.mills = machines;
-    })
-    this.jobServ.fetchJobsByType(1, 20, "Lathe").subscribe(jobs => {
-      console.log(jobs);
+    this.jobServ.fetchJobsByType(1, 20, "lathe").subscribe(jobs => {
       jobs.result.forEach(job=>{
         if (!this.currentLatheJobs.includes(job)){
           this.unusedLatheJobs.push(job);
+        }
+      })
+    })
+  }
+  //Sets values for Lathes and Lathe Jobs for home dashboard
+
+  getMillData(){
+    this.machServ.fetchMachinesByType("mill").subscribe(machines => {
+      this.mills = machines;
+    })
+    this.jobServ.fetchJobsByType(1, 20, "mill").subscribe(jobs => {
+      jobs.result.forEach(job=>{
+        if (job.remainingQuantity != job.orderQuantity){
+          this.currentMillJobs.push(job);
+        } else {
+          this.unusedMillJobs.push(job);
+        }
+      })
+    })
+  }
+  //Sets values for Mills and Mill Jobs for home dashboard
+
+  getMachines(type: string){
+    this.machServ.fetchMachinesByType(type).subscribe(machines => {
+      if (type == "lathe"){
+        machines.forEach(mach=>{
+          if (mach.currentJob != "None"){
+            this.jobServ.fetchJob(mach.currentJob).subscribe(job=>{
+              this.currentLatheJobs.push(job);
+            })
+          }
+        })
+      }
+      return machines
+    })
+  }
+
+  getJobs(type: string){
+    this.jobServ.fetchJobsByType(1, 20, type).subscribe(jobs => {
+      jobs.result.forEach(job=>{
+        if (type == "mill"){
+          if (job.remainingQuantity != job.orderQuantity){
+            this.currentMillJobs.push(job);
+          } else {
+            this.unusedMillJobs.push(job);
+          }
+        } else {
+          if (!this.currentLatheJobs.includes(job)){
+            this.unusedLatheJobs.push(job);
+          }
         }
       })
     })
