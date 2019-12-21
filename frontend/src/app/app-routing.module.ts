@@ -39,9 +39,10 @@ import { JobFindShowComponent } from './job/job-find/job-find-show/job-find-show
 import { ProductionFindComponent } from './production/production-find/production-find.component';
 import { ProductionFindShowComponent } from './production/production-find/production-find-show/production-find-show.component';
 import { ProductionByMachineComponent } from './production/production-by-machine/production-by-machine.component';
+import { HomeComponent } from './shared/home/home.component';
 
 const appRoutes: Routes = [
-    {path: '', component: CalenderComponent, pathMatch: 'full' },
+    {path: '', component: HomeComponent, pathMatch: 'full' },
     {path: 'register', component: RegisterComponent },
     {path: 'login', component: SigninComponent},
     {path: "", runGuardsAndResolvers: "always", canActivate: [AuthGuard], children: [
