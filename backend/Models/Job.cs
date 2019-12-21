@@ -26,6 +26,7 @@ namespace BackEnd.Models
         public string ScrapCount { get; set; }
         public string Active { get; set; }
         public string MonthReq { get; set; }
+        public string DeliveryDate { get; set; }
         public ICollection<Operation> Operation { get; set; }
         
     }

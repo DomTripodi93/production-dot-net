@@ -17,4 +17,5 @@ export interface Job{
     active: string;
     monthReq: string;
     scrapCount: string;
+    deliveryDate: string;
 }

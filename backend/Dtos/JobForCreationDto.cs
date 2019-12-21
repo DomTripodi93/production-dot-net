@@ -25,6 +25,7 @@ namespace BackEnd.Dtos
         public string ScrapCount { get; set; }
         public string Active { get; set; }
         public string MonthReq { get; set; }
+        public string DeliveryDate { get; set; }
         
     }
 }
