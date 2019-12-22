@@ -27,6 +27,14 @@
           id="orderQuantity" 
           class="form-control">
       </div>
+      <div class="form-group">
+        <label for="deliveryDate">Delivery Date (Optional)</label>
+        <input 
+          formControlName='deliveryDate'
+          type="date" 
+          id="deliveryDate" 
+          class="form-control">
+      </div>
       <div *ngIf="auth.machType == 'lathe'">
         <div class="form-group">
           <label for="weightRecieved">Weight Recieved (Optional)</label>

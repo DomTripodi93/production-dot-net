@@ -6,6 +6,7 @@ import { Subject, Observable } from 'rxjs';
 import { Job } from './job.model';
 import { PaginatedResult } from '../shared/pagination';
 import { Active } from '../shared/active.model';
+import { DaysService } from '../shared/days/days.service';
 
 @Injectable({providedIn: 'root'})
 export class JobService {
@@ -17,7 +18,8 @@ export class JobService {
 
   constructor(
       private http: HttpClient,
-      private auth: AuthService
+      private auth: AuthService,
+      private dayServ: DaysService
   ) {}
 
   fetchJob(search) {
@@ -26,7 +28,10 @@ export class JobService {
     )
     .pipe(
       map((responseData: Job) => {
-      return responseData;
+        if (responseData.deliveryDate){
+          responseData.deliveryDate = this.dayServ.dateForDisplay(responseData.deliveryDate);
+        }
+          return responseData;
       })
     )
   } 
@@ -37,7 +42,12 @@ export class JobService {
     )
     .pipe(
       map((responseData: Job[]) => {
-        return responseData;
+        responseData.forEach(job=>{
+          if (job.deliveryDate){
+            job.deliveryDate = this.dayServ.dateForDisplay(job.deliveryDate);
+          }
+        })
+          return responseData;
       })
     )
   } 
@@ -48,7 +58,12 @@ export class JobService {
     )
     .pipe(
       map((responseData: Job[]) => {
-        return responseData;
+        responseData.forEach(job=>{
+          if (job.deliveryDate){
+            job.deliveryDate = this.dayServ.dateForDisplay(job.deliveryDate);
+          }
+        })
+          return responseData;
       })
     )
   } 
@@ -74,6 +89,11 @@ export class JobService {
       )
       .pipe(
         map((responseData: any) => {
+          responseData.body.forEach(job=>{
+            if (job.deliveryDate){
+              job.deliveryDate = this.dayServ.dateForDisplay(job.deliveryDate);
+            }
+          })
           paginatedResult.result = responseData.body;
           if (responseData.headers.get("Pagination") != null){
             paginatedResult.pagination = JSON.parse(responseData.headers.get("Pagination"));
@@ -98,6 +118,11 @@ export class JobService {
       )
       .pipe(
         map((responseData: any) => {
+          responseData.body.forEach(job=>{
+            if (job.deliveryDate){
+              job.deliveryDate = this.dayServ.dateForDisplay(job.deliveryDate);
+            }
+          })
           paginatedResult.result = responseData.body;
           if (responseData.headers.get("Pagination") != null){
             paginatedResult.pagination = JSON.parse(responseData.headers.get("Pagination"));

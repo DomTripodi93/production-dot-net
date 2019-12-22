@@ -20,6 +20,9 @@
         <h4 *ngIf="!oneJob.possibleQuantity && !oneJob.weightQuantity && oneJob.orderQuantity">
           Order Quantity: <br class="mobile"> <strong>{{oneJob.orderQuantity}}</strong>
         </h4>
+        <h4 *ngIf="oneJob.deliveryDate">
+          Delivery Date: <br class="mobile"> <strong>{{oneJob.deliveryDate}}</strong>
+        </h4>
         <h4 *ngIf="!oneJob.possibleQuantity && oneJob.weightQuantity">
           Possible Quantity: <br class="mobile"> <strong>{{oneJob.weightQuantity}}</strong>
         </h4>

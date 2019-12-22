@@ -36,4 +36,10 @@ export class DaysService {
         date = dateHold[2] + "-" + dateHold[0] + "-" + dateHold[1];
           return date;
     }
+
+    dateForDisplay(date){
+        let dateHold = date.split("-");
+        date = dateHold[1] + "-" + dateHold[2] + "-" + dateHold[0];
+          return date;
+    }
 }

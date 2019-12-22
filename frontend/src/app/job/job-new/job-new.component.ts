@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Job } from '../job.model';
 import { PartService } from '../../part/part.service';
 import { Part } from 'src/app/part/part.model';
+import { DaysService } from 'src/app/shared/days/days.service';
 
 @Component({
   selector: 'app-job-new',
@@ -19,23 +20,30 @@ export class JobNewComponent implements OnInit {
   isError = false;
   parts: Part[] = []
   andCalculate = "None";
+  date = "";
   
   constructor(
     private jobServ: JobService,
     private auth: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private partServ: PartService
+    private partServ: PartService,
+    private dayServ: DaysService
   ){}
   
   ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
     this.auth.hideButton(0);
     this.partServ.fetchPartsByType()
-    .subscribe(parts => {
-      this.parts = parts;
-      this.initForm();
-    });
+      .subscribe(parts => {
+        this.parts = parts;
+        this.initForm();
+      });
+    this.dayServ.resetDate();
+    this.date = this.dayServ
+      .dateForForm(
+        this.dayServ.month+"-"+this.dayServ.today+"-"+this.dayServ.year
+      );
   }
     
   private initForm() {
@@ -59,7 +67,8 @@ export class JobNewComponent implements OnInit {
       "cutOff": new FormControl(cutOff),
       "mainFacing": new FormControl(mainFacing),
       "subFacing": new FormControl(subFacing),
-      "machType": new FormControl(this.auth.machType)
+      "machType": new FormControl(this.auth.machType),
+      "deliveryDate": new FormControl(this.date)
     });
   }
 

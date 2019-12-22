@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { PartService } from 'src/app/part/part.service';
 import { Part } from 'src/app/part/part.model';
 import { OpService } from '../job-ops/operation.service';
+import { DaysService } from 'src/app/shared/days/days.service';
 
 @Component({
   selector: 'app-job-edit',
@@ -20,25 +21,32 @@ export class JobEditComponent implements OnInit {
   isError = false;
   error = "";
   parts: Part[] = [];
+  date = "";
   
   constructor(
     private jobServ: JobService,
     private auth: AuthService,
     private partServ: PartService,
-    private opServ: OpService
+    private opServ: OpService,
+    private dayServ: DaysService
   ) { }
 
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
     this.jobServ.fetchJob(this.jobNum)
-    .subscribe(job => {
-      this.job = job;
-      this.partServ.fetchPartsByType()
-      .subscribe(parts => {
-        this.parts = parts;
-        this.initForm();
+      .subscribe(job => {
+        this.job = job;
+        this.partServ.fetchPartsByType()
+        .subscribe(parts => {
+          this.parts = parts;
+          this.initForm();
+        });
       });
-    });
+    this.dayServ.resetDate();
+    this.date = this.dayServ
+      .dateForForm(
+        this.dayServ.month+"-"+this.dayServ.today+"-"+this.dayServ.year
+      );
   }
 
 
@@ -57,7 +65,8 @@ export class JobEditComponent implements OnInit {
       "cutOff": new FormControl(cutOff),
       "mainFacing": new FormControl(mainFacing),
       "subFacing": new FormControl(subFacing),
-      "machType": new FormControl(this.auth.machType)
+      "machType": new FormControl(this.auth.machType),
+      "deliveryDate": new FormControl(this.date)
     });
   }
 
