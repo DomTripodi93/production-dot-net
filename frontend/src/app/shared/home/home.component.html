@@ -2,18 +2,30 @@
     <div *ngIf="auth.user" class="grid50">
         <div class="border">
             <h3>Lathes</h3>
-            <div class="border thin" *ngFor="let job of currentLatheJobs">
-                <h5>Job Number:<strong>{{job.jobNumber}}</strong></h5>
-                <h5 *ngIf="job.remainingQuantity">Production Remaining:<strong>{{job.remainingQuantity}}</strong></h5>
-                <h5 *ngIf="!job.remainingQuantity">Production Remaining:<strong>Unknown</strong></h5>
+            <div class="thin" *ngFor="let job of currentLatheJobs">
+                <div class="border grid50">
+                    <h6>Job Number:<br><strong>{{job.jobNumber}}</strong></h6>
+                    <h6 *ngIf="job.orderQuantity">Order Quantity:<br><strong>{{job.orderQuantity}}</strong></h6>
+                    <h6 *ngIf="!job.orderQuantity">Order Quantity:<br><strong>Unknown</strong></h6>
+                    <h6 *ngIf="job.remainingQuantity">Production Remaining:<br><strong>{{job.remainingQuantity}}</strong></h6>
+                    <h6 *ngIf="!job.remainingQuantity">Production Remaining:<br><strong>Unknown</strong></h6>
+                    <h6 *ngIf="job.deliveryDate">Delivery Date:<br><strong>{{job.deliveryDate}}</strong></h6>
+                </div>
+                <br>
             </div>
         </div>
         <div class="border">
             <h3>Mills</h3>
-            <div class="border thin" *ngFor="let job of currentMillJobs">
-                <h5>Job Number:<strong>{{job.jobNumber}}</strong></h5>
-                <h5 *ngIf="job.remainingQuantity">Production Remaining:<strong>{{job.remainingQuantity}}</strong></h5>
-                <h5 *ngIf="!job.remainingQuantity">Production Remaining:<strong>Unknown</strong></h5>
+            <div class="thin" *ngFor="let job of currentMillJobs">
+                <div class="border grid50">
+                    <h6>Job Number:<br><strong>{{job.jobNumber}}</strong></h6>
+                    <h6 *ngIf="job.orderQuantity">Order Quantity:<br><strong>{{job.orderQuantity}}</strong></h6>
+                    <h6 *ngIf="!job.orderQuantity">Order Quantity:<br><strong>Unknown</strong></h6>
+                    <h6 *ngIf="job.remainingQuantity">Production Remaining:<br><strong>{{job.remainingQuantity}}</strong></h6>
+                    <h6 *ngIf="!job.remainingQuantity">Production Remaining:<br><strong>Unknown</strong></h6>
+                    <h6 *ngIf="job.deliveryDate">Delivery Date:<br><strong>{{job.deliveryDate}}</strong></h6>
+                </div>
+                <br>
             </div>
         </div>
     </div>
