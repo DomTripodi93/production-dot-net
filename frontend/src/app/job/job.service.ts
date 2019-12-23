@@ -103,6 +103,41 @@ export class JobService {
       )
   }
 
+  fetchJobsByTypeAndDeliveryDate(page?, itemsPerPage?, type?): Observable<PaginatedResult<Job[]>>{
+    let mach = "";
+    if (type){
+      mach = type;
+    } else {
+      mach = this.auth.machType;
+    }
+    const paginatedResult: PaginatedResult<Job[]> = new PaginatedResult<Job[]>();
+
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null){
+      params = params.append("pageNumber", page);
+      params = params.append("pageSize", itemsPerPage);
+    }
+
+      return this.http.get(
+        this.auth.apiUrl + '/job/byDate/type=' + mach, {observe: "response", params}
+      )
+      .pipe(
+        map((responseData: any) => {
+          responseData.body.forEach(job=>{
+            if (job.deliveryDate){
+              job.deliveryDate = this.dayServ.dateForDisplay(job.deliveryDate);
+            }
+          })
+          paginatedResult.result = responseData.body;
+          if (responseData.headers.get("Pagination") != null){
+            paginatedResult.pagination = JSON.parse(responseData.headers.get("Pagination"));
+          }
+            return paginatedResult;
+        })
+      )
+  }
+
   fetchAllJobsByType(page?, itemsPerPage?): Observable<PaginatedResult<Job[]>> {
     const paginatedResult: PaginatedResult<Job[]> = new PaginatedResult<Job[]>();
 

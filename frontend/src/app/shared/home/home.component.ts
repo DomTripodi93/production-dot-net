@@ -3,6 +3,7 @@ import { JobService } from 'src/app/job/job.service';
 import { MachineService } from 'src/app/machine/machine.service';
 import { Machine } from 'src/app/machine/machine.model';
 import { Job } from 'src/app/job/job.model';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -19,12 +20,15 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private jobServ: JobService,
-    private machServ: MachineService
+    private machServ: MachineService,
+    public auth: AuthService
   ) { }
 
   ngOnInit() {
-    this.getLatheData();
-    this.getMillData();
+    if (this.auth.user){
+      this.getLatheData();
+      this.getMillData();
+    }
   }
 
   getLatheData(){
