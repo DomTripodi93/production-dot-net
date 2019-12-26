@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { CalenderComponent } from './shared/calender/calender.component';
 import { AppRouteModule } from './app-routing.module';
 import { DaysComponent } from './shared/days/days.component';
 import { ProductionComponent } from './production/production.component';
@@ -74,7 +73,6 @@ import { HomeComponent } from './shared/home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
-    CalenderComponent,
     DaysComponent,
     ProductionComponent,
     RegisterComponent,

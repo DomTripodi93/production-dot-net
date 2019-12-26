@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CalenderComponent } from './shared/calender/calender.component';
 import { DaysComponent } from './shared/days/days.component';
 import { RegisterComponent } from './register/register.component';
 import { SigninComponent } from './register/signin/signin.component';
