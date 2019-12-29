@@ -39,6 +39,4 @@
 /home/dominic/Code/Showcase/productiondotnet/backend/obj/Debug/netcoreapp2.2/backend.RazorTargetAssemblyInfo.cache
 /home/dominic/Code/Showcase/productiondotnet/backend/obj/Debug/netcoreapp2.2/backend.dll
 /home/dominic/Code/Showcase/productiondotnet/backend/obj/Debug/netcoreapp2.2/backend.pdb
-/home/dominic/Code/Showcase/productiondotnet/backend/bin/Debug/netcoreapp2.2/appsettings.Development.json
-/home/dominic/Code/Showcase/productiondotnet/backend/bin/Debug/netcoreapp2.2/appsettings.json
-/home/dominic/Code/Showcase/productiondotnet/backend/bin/Debug/netcoreapp2.2/Properties/launchSettings.json
+/home/dominic/Code/Showcase/ProductionDotNet/backend/obj/Debug/netcoreapp2.2/backend.csproj.CoreCompileInputs.cache

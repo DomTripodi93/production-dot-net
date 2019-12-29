@@ -15,15 +15,15 @@
           <li
             *ngIf="!auth.isAuthenticated" 
             routerLinkActive="active">
-            <a routerLink='/register'>Signup</a></li>
+            <a routerLink='/register'>Sign Up</a></li>
           <li
             *ngIf="!auth.isAuthenticated" 
             routerLinkActive="active">
-            <a routerLink='/login'>Signin</a></li>
+            <a routerLink='/login'>Log In</a></li>
           <li
             *ngIf="auth.isAuthenticated" 
             routerLinkActive="active">
-            <a routerLink='/logout'>Signout</a></li>
+            <a routerLink='/logout'>Log Out</a></li>
           <li class="dropdown" *ngIf="auth.isAuthenticated" appDropdown>
             <a
             style ='cursor: pointer;'
