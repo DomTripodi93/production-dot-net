@@ -36,17 +36,13 @@ export class JobEditComponent implements OnInit {
     this.jobServ.fetchJob(this.jobNum)
       .subscribe(job => {
         this.job = job;
+        this.date = this.dayServ.dateForForm(job.deliveryDate);
         this.partServ.fetchPartsByType()
         .subscribe(parts => {
           this.parts = parts;
           this.initForm();
         });
       });
-    this.dayServ.resetDate();
-    this.date = this.dayServ
-      .dateForForm(
-        this.dayServ.month+"-"+this.dayServ.today+"-"+this.dayServ.year
-      );
   }
 
 
