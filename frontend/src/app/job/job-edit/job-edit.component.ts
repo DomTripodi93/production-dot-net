@@ -93,7 +93,7 @@ export class JobEditComponent implements OnInit {
 
   editJob(data: Job) {
     this.isError = false;
-    this.jobServ.changeJob(data, this.jobNum).subscribe(()=>{},
+    this.jobServ.editJob(data, this.jobNum).subscribe(()=>{},
     () =>{
       this.isError = true;
     });

@@ -183,6 +183,16 @@ export class JobService {
       );
   }
 
+  editJob(data: Job, jobNum){
+    this.fetchJob(jobNum).subscribe((object)=>{
+      let oldValues = ""+JSON.stringify(object);
+      this.auth.logChanges(oldValues, this.model, "Edit", jobNum).subscribe();
+    })
+      return this.http.put(
+        this.auth.apiUrl + '/job/edit&' + jobNum + "/", data
+      );
+  }
+
   changeJobRemaining(data, jobNum){
     this.fetchJob(jobNum).subscribe((object)=>{
       let oldValues = ""+JSON.stringify(object);
