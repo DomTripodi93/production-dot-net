@@ -17,7 +17,7 @@
         <br>
         <h3>Job#: <strong>{{oneJob.jobNumber}}</strong></h3>
         <h4>Part#: <br class="mobile"> <strong>{{oneJob.partNumber}}</strong></h4>
-        <h4 *ngIf="!oneJob.possibleQuantity && !oneJob.weightQuantity && oneJob.orderQuantity">
+        <h4 *ngIf="oneJob.orderQuantity">
           Order Quantity: <br class="mobile"> <strong>{{oneJob.orderQuantity}}</strong>
         </h4>
         <h4 *ngIf="oneJob.deliveryDate">
@@ -67,20 +67,23 @@
         <br>
         <h3>Job#: <strong>{{job.jobNumber}}</strong></h3>
         <h4>Part#: <br> {{job.partNumber}}</h4>
+        <h4 *ngIf="job.orderQuantity">
+          Order Quantity: <br class="mobile"><strong>{{job.orderQuantity}}</strong>
+        </h4>
         <h4 *ngIf="!job.possibleQuantity && !job.weightQuantity && job.orderQuantity">
-          Possible Quantity: <strong>{{job.orderQuantity}}</strong>
+          Possible Quantity: <br class="mobile"><strong>{{job.orderQuantity}}</strong>
         </h4>
         <h4 *ngIf="!job.possibleQuantity && job.weightQuantity">
-          Possible Quantity: <strong>{{job.weightQuantity}}</strong>
+          Possible Quantity: <br class="mobile"><strong>{{job.weightQuantity}}</strong>
         </h4>
         <h4 *ngIf="job.possibleQuantity">
-          Possible Quantity: <strong>{{job.possibleQuantity}}</strong>
+          Possible Quantity: <br class="mobile"><strong>{{job.possibleQuantity}}</strong>
         </h4>
         <h4 *ngIf="job.remainingQuantity">
-          Remaining Quantity: <strong>{{job.remainingQuantity}}</strong>
+          Remaining Quantity: <br class="mobile"><strong>{{job.remainingQuantity}}</strong>
         </h4> 
         <h4 *ngIf="job.deliveryDate">
-          Delivery Date:<br><strong>{{job.deliveryDate}}</strong>
+          Delivery Date: <br class="mobile"><strong>{{job.deliveryDate}}</strong>
         </h4>
         <br><br>
       </div>
