@@ -1,7 +1,7 @@
-<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+<div class="col-xs-12 col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1">
     <div *ngIf="auth.user" class="grid50">
         <div class="border">
-            <h3>Lathes</h3>
+            <h4>Current Lathe Jobs</h4>
             <div class="thin" *ngFor="let set of currentLatheJobsWithMach">
                 <div class="border">
                     <h6>Machine:<br><strong>{{set.machine}}</strong></h6>
@@ -12,6 +12,20 @@
                         <h6 *ngIf="set.job.remainingQuantity">Production Remaining:<br><strong>{{set.job.remainingQuantity}}</strong></h6>
                         <h6 *ngIf="!set.job.remainingQuantity">Production Remaining:<br><strong>Unknown</strong></h6>
                         <h6 *ngIf="set.job.deliveryDate">Delivery Date:<br><strong>{{set.job.deliveryDate}}</strong></h6>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <h4>Unused Active Lathe Jobs</h4>
+            <div class="thin" *ngFor="let job of unusedLatheJobs">
+                <div class="border">
+                    <div class="grid50">
+                        <h6>Job Number:<br><strong>{{job.jobNumber}}</strong></h6>
+                        <h6 *ngIf="job.orderQuantity">Order Quantity:<br><strong>{{job.orderQuantity}}</strong></h6>
+                        <h6 *ngIf="!job.orderQuantity">Order Quantity:<br><strong>Unknown</strong></h6>
+                        <h6 *ngIf="job.remainingQuantity">Production Remaining:<br><strong>{{job.remainingQuantity}}</strong></h6>
+                        <h6 *ngIf="!job.remainingQuantity">Production Remaining:<br><strong>Unknown</strong></h6>
+                        <h6 *ngIf="job.deliveryDate">Delivery Date:<br><strong>{{job.deliveryDate}}</strong></h6>
                     </div>
                 </div>
                 <br>
