@@ -50,8 +50,16 @@ export class HomeComponent implements OnInit {
         machines.forEach(mach=>{
           if (mach.currentJob != "None"){
             this.jobServ.fetchJob(mach.currentJob).subscribe(job=>{
-              this.currentLatheJobs.push(job.jobNumber);
-              this.currentLatheJobsWithMach.push({job: job, machine: mach.machine});
+              if (!this.currentLatheJobs.includes(job.jobNumber)){
+                this.currentLatheJobs.push(job.jobNumber);
+                this.currentLatheJobsWithMach.push({job: job, machine: mach.machine});
+              } else {
+                this.currentLatheJobsWithMach.forEach(set => {
+                  if (set.job.jobNumber == job.jobNumber){
+                    set.machine = set.machine + " & " + mach.machine;
+                  }
+                })
+              }
             })
           }
         })
