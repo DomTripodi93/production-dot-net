@@ -14,7 +14,7 @@ import { JobWithMore } from './job-with-more.model';
 export class HomeComponent implements OnInit {
   lathes: Machine[] = [];
   mills: Machine[] = [];
-  currentLatheJobs: Job[] = [];
+  currentLatheJobs: string[] = [];
   currentLatheJobsWithMach: JobWithMore[] = [];
   unusedLatheJobs: Job[] = [];
   currentMillJobs: Job[] = [];
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
         machines.forEach(mach=>{
           if (mach.currentJob != "None"){
             this.jobServ.fetchJob(mach.currentJob).subscribe(job=>{
-              this.currentLatheJobs.push(job);
+              this.currentLatheJobs.push(job.jobNumber);
               this.currentLatheJobsWithMach.push({job: job, machine: mach.machine});
             })
           }
@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
             this.unusedMillJobs.push(job);
           }
         } else {
-          if (!this.currentLatheJobs.includes(job)){
+          if (!this.currentLatheJobs.includes(job.jobNumber)){
             this.unusedLatheJobs.push(job);
           }
         }
