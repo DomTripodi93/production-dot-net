@@ -4,6 +4,7 @@ import { CalculatorService } from '../calculator.service';
 import { JobService } from 'src/app/job/job.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
+import { DaysService } from 'src/app/shared/days/days.service';
 
 @Component({
   selector: 'app-remaining',
@@ -17,7 +18,8 @@ export class RemainingComponent implements OnInit, OnDestroy {
     public calc: CalculatorService,
     private jobServ: JobService,
     private route: ActivatedRoute,
-    private auth: AuthService
+    private auth: AuthService,
+    private dayServ: DaysService
   ){}
 
   ngOnInit(){
@@ -27,6 +29,7 @@ export class RemainingComponent implements OnInit, OnDestroy {
     setTimeout(()=>{
       this.jobServ.fetchJob(this.jobNum)
       .subscribe(job => {
+        job.deliveryDate = this.dayServ.dateForForm(job.deliveryDate);
         this.jobServ.jobHold = job;
         this.initForm();
         if (this.jobServ.jobHold){

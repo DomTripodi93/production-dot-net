@@ -4,6 +4,7 @@ import { JobService } from 'src/app/job/job.service';
 import { CalculatorService } from '../calculator.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
+import { DaysService } from '../../../shared/days/days.service';
 
 @Component({
   selector: 'app-by-weight',
@@ -18,13 +19,15 @@ export class ByWeightComponent implements OnInit, OnDestroy {
     public calc: CalculatorService,
     public jobServ: JobService,
     private route: ActivatedRoute,
-    private auth: AuthService
+    private auth: AuthService,
+    private dayServ: DaysService
   ){}
 
   ngOnInit(){
     this.route.params.subscribe((params: Params) =>{
       this.jobServ.fetchJob(params['jobNum'])
       .subscribe(job => {
+        job.deliveryDate = this.dayServ.dateForForm(job.deliveryDate);
         this.jobServ.jobHold = job;
         this.initForm();
       });
