@@ -4,6 +4,7 @@ import { MachineService } from 'src/app/machine/machine.service';
 import { Machine } from 'src/app/machine/machine.model';
 import { Job } from 'src/app/job/job.model';
 import { AuthService } from '../auth.service';
+import { JobWithMore } from './job-with-more.model';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ export class HomeComponent implements OnInit {
   lathes: Machine[] = [];
   mills: Machine[] = [];
   currentLatheJobs: Job[] = [];
+  currentLatheJobsWithMach: JobWithMore[] = [];
   unusedLatheJobs: Job[] = [];
   currentMillJobs: Job[] = [];
   unusedMillJobs: Job[] = [];
@@ -49,6 +51,7 @@ export class HomeComponent implements OnInit {
           if (mach.currentJob != "None"){
             this.jobServ.fetchJob(mach.currentJob).subscribe(job=>{
               this.currentLatheJobs.push(job);
+              this.currentLatheJobsWithMach.push({job: job, machine: mach.machine});
             })
           }
         })
