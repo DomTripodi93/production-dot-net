@@ -68,12 +68,16 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
     this.editMode = false;
     let monthNum = this.month + 1;
     this.monthHold = "" + monthNum;
-    let lastMonthNum = this.month;
-    this.lastMonthHold = "" + lastMonthNum;
+    if (this.month > 0){
+      let lastMonthNum = this.month;
+      this.lastMonthHold = "" + lastMonthNum;
+    } else {
+      this.lastMonthHold = "12";
+    }
     if (this.month < 9){
       this.monthHold ="0"+this.monthHold;
     }
-    if (this.month < 8){
+    if (this.month < 8 && this.month != 0){
       this.lastMonthHold ="0"+this.lastMonthHold;
     }
     this.defaultMonth = this.year + "-" + this.monthHold;
@@ -190,10 +194,14 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
         this.monthDays = range.concat(this.monthDays);
       } else {
         let firstDay = new Date(this.year, this.month, 1).getDay();
-        this.daysInMonth(this.year, this.month);
-        if (firstDay > 0)
-        {
-          this.lastMonthDays = _.range(this.numberOfDays-firstDay, this.numberOfDays)
+        if (this.month == 0){
+          this.daysInMonth(this.year-1, this.month+12);
+          console.log(this.numberOfDays);
+        } else {
+          this.daysInMonth(this.year, this.month);
+        }
+        if (firstDay > 0){
+          this.lastMonthDays = _.range(this.numberOfDays-firstDay+1, this.numberOfDays+1)
         } else {
           this.lastMonthDays = _.range(this.numberOfDays-6, this.numberOfDays+1)
         }
