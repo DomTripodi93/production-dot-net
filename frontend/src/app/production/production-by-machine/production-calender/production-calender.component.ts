@@ -104,10 +104,11 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
     this.proServ.fetchProduction(search).subscribe(prod=>{
       this.production = prod;
       if (prod.length > 0){
-        this.firstProDay = +(prod[0].date.substring(8,10))
-        this.firstProMonth = +(prod[0].date.substring(5,7))
+        this.firstProDay = +(prod[0].date.substring(8,10));
+        this.firstProMonth = +(prod[0].date.substring(5,7));
       } else {
-        this.firstProDay = this.today
+        this.firstProDay = this.today;
+        this.firstProMonth = +this.month + 1;
       }
       this.setDate();
       this.setAverage();
@@ -161,11 +162,15 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
         this.removeUnusedWeeksBeginning(this.firstDayOfMonth.length, 14)
         this.firstDayOfMonth = [];
       }
-    } else if (this.lastMonthDays.length > 0){
+    } else {
       this.firstDayOfMonth = [];
-    } else if (this.firstDayOfMonth.length + this.firstProDay > 7){
-      this.removeUnusedWeeksBeginning(this.firstDayOfMonth.length, 7)
+      this.addOldWeek();
     }
+    // } else if (this.lastMonthDays.length > 0){
+    //   this.firstDayOfMonth = [];
+    // } else if (this.firstDayOfMonth.length + this.firstProDay > 7){
+    //   this.removeUnusedWeeksBeginning(this.firstDayOfMonth.length, 7);
+    // }
   }
 
   removeUnusedWeeksBeginning(extra, start: number){
@@ -196,7 +201,6 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
         let firstDay = new Date(this.year, this.month, 1).getDay();
         if (this.month == 0){
           this.daysInMonth(this.year-1, this.month+12);
-          console.log(this.numberOfDays);
         } else {
           this.daysInMonth(this.year, this.month);
         }
