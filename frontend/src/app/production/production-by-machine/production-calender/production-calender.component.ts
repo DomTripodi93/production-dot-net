@@ -162,13 +162,13 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
         this.removeUnusedWeeksBeginning(this.firstDayOfMonth.length, 14)
         this.firstDayOfMonth = [];
       }
+    } else if (this.lastMonthDays.length > 0){
+      this.firstDayOfMonth = [];
     } else {
       this.firstDayOfMonth = [];
       this.addOldWeek();
     }
-    // } else if (this.lastMonthDays.length > 0){
-    //   this.firstDayOfMonth = [];
-    // } else if (this.firstDayOfMonth.length + this.firstProDay > 7){
+    // else if (this.firstDayOfMonth.length + this.firstProDay > 7){
     //   this.removeUnusedWeeksBeginning(this.firstDayOfMonth.length, 7);
     // }
   }

@@ -42,7 +42,6 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
     this.initForm();
   }
 
-
   private initForm() {
     this.editQuantityForm = new FormGroup({
       'quantity': new FormControl(this.quantity)
