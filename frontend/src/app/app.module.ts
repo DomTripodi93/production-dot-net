@@ -69,6 +69,7 @@ import { ProductionDayComponent } from './production/production-by-machine/produ
 import { ProductionQuantityComponent } from './production/production-quantity/production-quantity.component';
 import { ProductionShiftComponent } from './production/production-by-machine/production-shift/production-shift.component';
 import { HomeComponent } from './shared/home/home.component';
+import { HomeLineComponent } from './shared/home/home-line/home-line.component';
 
 @NgModule({
   declarations: [
@@ -136,6 +137,7 @@ import { HomeComponent } from './shared/home/home.component';
     ProductionQuantityComponent,
     ProductionShiftComponent,
     HomeComponent,
+    HomeLineComponent,
   ],
   imports: [
     BrowserModule,

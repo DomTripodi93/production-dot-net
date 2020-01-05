@@ -2,33 +2,27 @@
     <div *ngIf="auth.user" class="grid50">
         <div class="border">
             <h4>Current Lathe Jobs</h4>
-            <div class="thin" *ngFor="let set of currentLatheJobsWithMach">
-                <div class="border">
-                    <h6>Machine:<br><strong>{{set.machine}}</strong></h6>
-                    <div class="grid50">
-                        <h6>Job Number:<br><strong>{{set.job.jobNumber}}</strong></h6>
-                        <h6 *ngIf="set.job.orderQuantity">Order Quantity:<br><strong>{{set.job.orderQuantity}}</strong></h6>
-                        <h6 *ngIf="!set.job.orderQuantity">Order Quantity:<br><strong>Unknown</strong></h6>
-                        <h6 *ngIf="set.job.remainingQuantity">Production Remaining:<br><strong>{{set.job.remainingQuantity}}</strong></h6>
-                        <h6 *ngIf="!set.job.remainingQuantity">Production Remaining:<br><strong>Unknown</strong></h6>
-                        <h6 *ngIf="set.job.deliveryDate">Delivery Date:<br><strong>{{set.job.deliveryDate}}</strong></h6>
-                    </div>
+            <div *ngFor="let mach of lathes" class="thin">
+                <h6><strong>{{mach.machine}}</strong></h6>
+                <div class="grid25">
+                    <h6>Job<br>Number:</h6>
+                    <h6>Order<br>Quantity:</h6>
+                    <h6>Remaining<br>Production:</h6>
+                    <h6>Delivery<br>Date:</h6>
                 </div>
-                <br>
+                <app-home-line [mach]="mach"></app-home-line>
             </div>
             <h4>Unused Active Lathe Jobs</h4>
-            <div class="thin" *ngFor="let job of unusedLatheJobs">
-                <div class="border">
-                    <div class="grid50">
-                        <h6>Job Number:<br><strong>{{job.jobNumber}}</strong></h6>
-                        <h6 *ngIf="job.orderQuantity">Order Quantity:<br><strong>{{job.orderQuantity}}</strong></h6>
-                        <h6 *ngIf="!job.orderQuantity">Order Quantity:<br><strong>Unknown</strong></h6>
-                        <h6 *ngIf="job.remainingQuantity">Production Remaining:<br><strong>{{job.remainingQuantity}}</strong></h6>
-                        <h6 *ngIf="!job.remainingQuantity">Production Remaining:<br><strong>Unknown</strong></h6>
-                        <h6 *ngIf="job.deliveryDate">Delivery Date:<br><strong>{{job.deliveryDate}}</strong></h6>
-                    </div>
+            <div class="thin">
+                <div class="grid25">
+                    <h6>Job<br>Number:</h6>
+                    <h6>Order<br>Quantity:</h6>
+                    <h6>Remaining<br>Production:</h6>
+                    <h6>Delivery<br>Date:</h6>
                 </div>
-                <br>
+                <div *ngFor="let job of unusedLatheJobs">
+                    <app-home-line [job]="job"></app-home-line>
+                </div>
             </div>
         </div>
         <div class="border">

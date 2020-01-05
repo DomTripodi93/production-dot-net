@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit {
   lathes: Machine[] = [];
   mills: Machine[] = [];
   currentLatheJobs: string[] = [];
-  currentLatheJobsWithMach: JobWithMore[] = [];
   unusedLatheJobs: Job[] = [];
   currentMillJobs: Job[] = [];
   unusedMillJobs: Job[] = [];
@@ -49,18 +48,7 @@ export class HomeComponent implements OnInit {
         this.lathes = machines;
         machines.forEach(mach=>{
           if (mach.currentJob != "None"){
-            this.jobServ.fetchJob(mach.currentJob).subscribe(job=>{
-              if (!this.currentLatheJobs.includes(job.jobNumber)){
-                this.currentLatheJobs.push(job.jobNumber);
-                this.currentLatheJobsWithMach.push({job: job, machine: mach.machine});
-              } else {
-                this.currentLatheJobsWithMach.forEach(set => {
-                  if (set.job.jobNumber == job.jobNumber){
-                    set.machine = set.machine + " & " + mach.machine;
-                  }
-                })
-              }
-            })
+            this.currentLatheJobs.push(mach.currentJob);
           }
         })
       } else {

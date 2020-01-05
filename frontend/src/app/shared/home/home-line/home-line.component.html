@@ -1,0 +1,8 @@
+<div class="grid25">
+    <h6><strong>{{jobInUse.jobNumber}}</strong></h6>
+    <h6 *ngIf="jobInUse.orderQuantity"><strong>{{jobInUse.orderQuantity}}</strong></h6>
+    <h6 *ngIf="!jobInUse.orderQuantity"><strong>Unknown</strong></h6>
+    <h6 *ngIf="jobInUse.remainingQuantity"><strong>{{jobInUse.remainingQuantity}}</strong></h6>
+    <h6 *ngIf="!jobInUse.remainingQuantity"><strong>Unknown</strong></h6>
+    <h6><strong>{{jobInUse.deliveryDate}}</strong></h6>
+</div>

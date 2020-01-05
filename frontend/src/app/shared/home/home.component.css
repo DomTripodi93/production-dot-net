@@ -4,6 +4,12 @@
     text-align: center;
 }
 
+.grid25 { 
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    text-align: center;
+}
+
 .thin{
     width: 80%;
     margin: auto;
