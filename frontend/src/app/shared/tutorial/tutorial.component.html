@@ -155,18 +155,18 @@
     <strong>Skip Lathe Tutorials</strong>
   </button>
   <div *ngIf="auth.skipLathe"></div>
-  <div *ngIf="latheProduction && !auth.skipLathe"></div>
+  <div *ngIf="latheProductionMulti && !auth.skipLathe"></div>
   <button 
     (click)="notNew()"
     class="btn btn-warning">
     <strong>Hide Tutorial Messages</strong>
   </button>
   <button  
-    *ngIf="latheProduction && !millProduction && !auth.skipMill"
+    *ngIf="latheProductionMulti && !millProduction && !auth.skipMill"
     (click)="switchMill()"
     class="btn btn-danger">
     <strong>Skip Mill Tutorials</strong>
   </button>
   <div *ngIf="auth.skipMill"></div>
-  <div *ngIf="!latheProduction && auth.skipMill"></div>
+  <div *ngIf="!latheProductionMulti && auth.skipMill"></div>
 </div>

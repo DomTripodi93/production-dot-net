@@ -182,10 +182,12 @@ export class AuthService {
   changeLathe(){
     if (this.skipLathe == true){
       this.changeSetting("lathe", this.latheShow).subscribe(()=>{
+        this.skipLathe = !this.skipLathe;
         this.authChanged.next();
       });
     } else {
       this.changeSetting("lathe", this.latheHide).subscribe(()=>{
+        this.skipLathe = !this.skipLathe;
         this.authChanged.next();
       });
     }
@@ -196,10 +198,12 @@ export class AuthService {
   changeMill(){
     if (this.skipMill == true){
       this.changeSetting("mill", this.millShow).subscribe(()=>{
+        this.skipMill = !this.skipMill;
         this.authChanged.next();
       });
     } else {
       this.changeSetting("mill", this.millHide).subscribe(()=>{
+        this.skipMill = !this.skipMill;
         this.authChanged.next();
       });
     }

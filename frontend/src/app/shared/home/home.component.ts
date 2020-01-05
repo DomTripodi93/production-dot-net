@@ -4,7 +4,6 @@ import { MachineService } from 'src/app/machine/machine.service';
 import { Machine } from 'src/app/machine/machine.model';
 import { Job } from 'src/app/job/job.model';
 import { AuthService } from '../auth.service';
-import { JobWithMore } from './job-with-more.model';
 
 @Component({
   selector: 'app-home',

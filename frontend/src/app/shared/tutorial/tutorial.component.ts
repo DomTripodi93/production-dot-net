@@ -30,8 +30,8 @@ export class TutorialComponent implements OnInit, OnDestroy {
   millJob = "";
   latheJob = "";
   op = "";
-  subscriptions: Subscription[] = [];
   checking = "";
+  subscriptions: Subscription[] = [];
 
   constructor(
     private auth: AuthService,
@@ -44,6 +44,53 @@ export class TutorialComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.setBase();
+    this.checkMachines();
+    //Checks if user has created any machines, and starts a chain 
+    // reaction to check subsequent model creations to initially set
+    // tutorial display option
+    this.subscriptions.push(this.auth.authChanged.subscribe(()=>{
+      this.setBase();
+      this.checkMachines();
+    }))
+    this.subscriptions.push(this.mach.machChanged.subscribe(()=>{
+      setTimeout(()=>{this.checkMachines();},50)}
+    ));
+    this.subscriptions.push(this.partServ.partChanged.subscribe(()=>{
+      setTimeout(()=>{this.checkParts();},50)}
+    ));
+    this.subscriptions.push(this.jobServ.jobChanged.subscribe(()=>{
+      setTimeout(()=>{this.checkJobs();},50)}
+    ));
+    this.subscriptions.push(this.opServ.opsChanged.subscribe(()=>{
+      setTimeout(()=>{this.checkJobs();},50)}
+    ));
+    this.subscriptions.push(this.hourlyServ.hourlyChanged.subscribe(()=>{
+      setTimeout(()=>{this.checkHourly();},50)}
+    ));
+    this.subscriptions.push(this.prodServ.proChanged.subscribe(()=>{
+      setTimeout(()=>{this.checkJobs();},50)}
+    ));
+  }
+
+  setBase(){
+    this.lathes = false;
+    this.mills = false;
+    this.latheParts = false;
+    this.millParts = false;
+    this.latheJobs = false;
+    this.millJobs = false;
+    this.latheOps = false;
+    this.millOps = false;
+    this.hourly = false;
+    this.latheProduction = false;  
+    this.latheProductionMulti = false;  
+    this.millProduction = false;  
+    this.complete = false;
+    this.millJob = "";
+    this.latheJob = "";
+    this.op = "";
+    this.checking = "";
     if (this.auth.skipLathe){
       this.lathes = true;
       this.hourly = true;
@@ -63,28 +110,6 @@ export class TutorialComponent implements OnInit, OnDestroy {
     } else {
       this.checking = "lathe"
     }
-    this.checkMachines();
-    //Checks if user has created any machines, and starts a chain 
-    // reaction to check subsequent model creations to initially set
-    // tutorial display option
-    this.subscriptions.push(this.mach.machChanged.subscribe(()=>{
-      setTimeout(()=>{this.checkMachines();},50)}
-    ));
-    this.subscriptions.push(this.partServ.partChanged.subscribe(()=>{
-      setTimeout(()=>{this.checkParts();},50)}
-    ));
-    this.subscriptions.push(this.jobServ.jobChanged.subscribe(()=>{
-      setTimeout(()=>{this.checkJobs();},50)}
-    ));
-    this.subscriptions.push(this.opServ.opsChanged.subscribe(()=>{
-      setTimeout(()=>{this.checkJobs();},50)}
-    ));
-    this.subscriptions.push(this.hourlyServ.hourlyChanged.subscribe(()=>{
-      setTimeout(()=>{this.checkHourly();},50)}
-    ));
-    this.subscriptions.push(this.prodServ.proChanged.subscribe(()=>{
-      setTimeout(()=>{this.checkJobs();},50)}
-    ));
   }
 
   checkMachines(){
@@ -252,11 +277,14 @@ export class TutorialComponent implements OnInit, OnDestroy {
   //Confirms hiding of tutorials, and sets user settings for tutorial 
   // view on confirmation
 
-  switchLathe() {
-    if (!this.auth.skipLathe){
+  switchLathe(force?: boolean) {
+    if (force){
+      this.auth.changeLathe();
+      this.latheProductionMulti = true;
+    } else if (!this.auth.skipLathe){
       if (confirm("Are you sure you want to hide lathe tutorials?")){
         this.auth.changeLathe();
-        this.latheProduction = true;
+        this.latheProductionMulti = true;
       }
     }
   }
@@ -276,7 +304,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
 
   changeToMill(){
     this.checking = "mill";
-    this.switchLathe();
+    this.switchLathe(true);
   }
 
   ngOnDestroy(){

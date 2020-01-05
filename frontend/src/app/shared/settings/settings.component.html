@@ -33,13 +33,13 @@
       </div>
       <div></div>
       <button
-        *ngIf="auth.skipLathe" 
+        *ngIf="!auth.skipLathe" 
         (click)="changeLathe()"
         class="btn btn-primary">
         <strong>Hide Tutorial</strong>
       </button>
       <button
-        *ngIf="!auth.skipLathe" 
+        *ngIf="auth.skipLathe" 
         (click)="changeLathe()"
         class="btn btn-primary">
         <strong>Show Tutorial</strong>
@@ -55,13 +55,13 @@
       </div>
       <div></div>
       <button
-        *ngIf="auth.skipMill" 
+        *ngIf="!auth.skipMill" 
         (click)="changeMill()"
         class="btn btn-primary">
         <strong>Hide Tutorial</strong>
       </button>
       <button
-        *ngIf="!auth.skipMill" 
+        *ngIf="auth.skipMill" 
         (click)="changeMill()"
         class="btn btn-primary">
         <strong>Show Tutorial</strong>
