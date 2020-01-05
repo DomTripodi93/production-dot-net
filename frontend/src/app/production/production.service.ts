@@ -124,12 +124,14 @@ export class ProductionService {
           remaining = +op.remainingQuantity;
           if (opsUsed == ops.length){
             this.jobServ.fetchJob(jobNum).subscribe((job)=>{
+              job.deliveryDate = this.dayServ.dateForForm(job.deliveryDate);
               job.remainingQuantity = "" + remaining;
               this.jobServ.changeJob(job, jobNum).subscribe();
             })
           }
         } else if (opsUsed == ops.length){
           this.jobServ.fetchJob(jobNum).subscribe((job)=>{
+            job.deliveryDate = this.dayServ.dateForForm(job.deliveryDate);
             job.remainingQuantity = "" + remaining;
             this.jobServ.changeJob(job, jobNum).subscribe();
           })
