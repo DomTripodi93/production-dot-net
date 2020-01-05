@@ -11,12 +11,7 @@
     color: white;
 }
 
-h3{
-    text-align: center;
-    margin: auto;
-}
-
-h2{
+h5, h4, h2{
     text-align: center;
     margin: auto;
 }
