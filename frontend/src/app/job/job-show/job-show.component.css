@@ -1,6 +1,7 @@
 .grid { 
-    display: grid;
-    grid-template-columns: 33.3% 33.3% 33.3%;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 .grid2 { 
@@ -10,6 +11,12 @@
 
 .border{
     border: solid;
+}
+
+.set-width{
+    width: 233.3px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .white-text{
