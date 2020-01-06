@@ -16,6 +16,7 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .border-inner-left{
+    height: 100%;
     border-style: solid hidden solid solid;
     border-color: black;
     background-color: rgb(255, 255, 255);
@@ -23,6 +24,7 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .border-inner-right{
+    height: 100%;
     border-style: solid;
     border-color: black;
     background-color: rgb(255, 255, 255);
@@ -30,6 +32,7 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .border-inner-header-left{
+    height: 100%;
     border-style: solid hidden solid solid;
     border-color: black;
     background-color: rgb(225, 251, 226);
@@ -37,6 +40,7 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .border-inner-header-right{
+    height: 100%;
     border-style: solid;
     border-color: black;
     background-color: rgb(225, 251, 226);

@@ -5,11 +5,11 @@
                 <div class="thin">
                     <h4>Current Lathe Jobs</h4>
                     <div class="grid20">
-                        <h6 class="small border-inner-header-left">Current Machine:</h6>
-                        <h6 class="small border-inner-header-left">Job<br>Number:</h6>
-                        <h6 class="small border-inner-header-left">Order<br>Quantity:</h6>
-                        <h6 class="small border-inner-header-left">Remaining<br>Production:</h6>
-                        <h6 class="small border-inner-header-right">Delivery<br>Date:</h6>
+                        <h6 class="small border-inner-header-left"><br>Current Machine:</h6>
+                        <h6 class="small border-inner-header-left"><br>Job<br>Number:</h6>
+                        <h6 class="small border-inner-header-left"><br>Order<br>Quantity:</h6>
+                        <h6 class="small border-inner-header-left"><br>Remaining<br>Production:</h6>
+                        <h6 class="small border-inner-header-right"><br>Delivery<br>Date:</h6>
                     </div>
                     <div *ngFor="let mach of lathes">
                         <app-home-line [mach]="mach"></app-home-line>
@@ -22,10 +22,10 @@
                 <div class="thin">
                     <h4>Unused Active Lathe Jobs</h4>
                     <div class="grid25">
-                        <h6 class="border-inner-header-left">Job<br>Number:</h6>
-                        <h6 class="border-inner-header-left">Order<br>Quantity:</h6>
-                        <h6 class="border-inner-header-left">Remaining<br>Production:</h6>
-                        <h6 class="border-inner-header-right">Delivery<br>Date:</h6>
+                        <h6 class="border-inner-header-left"><br>Job<br>Number:</h6>
+                        <h6 class="border-inner-header-left"><br>Order<br>Quantity:</h6>
+                        <h6 class="border-inner-header-left"><br>Remaining<br>Production:</h6>
+                        <h6 class="border-inner-header-right"><br>Delivery<br>Date:</h6>
                     </div>
                     <div *ngFor="let job of unusedLatheJobs">
                         <app-home-line [job]="job"></app-home-line>
@@ -39,10 +39,10 @@
                 <div class="thin">
                     <h4>Current Mill Jobs</h4>
                     <div class="grid25">
-                        <h6 class="border-inner-header-left">Job<br>Number:</h6>
-                        <h6 class="border-inner-header-left">Order<br>Quantity:</h6>
-                        <h6 class="border-inner-header-left">Remaining<br>Production:</h6>
-                        <h6 class="border-inner-header-right">Delivery<br>Date:</h6>
+                        <h6 class="border-inner-header-left"><br>Job<br>Number:</h6>
+                        <h6 class="border-inner-header-left"><br>Order<br>Quantity:</h6>
+                        <h6 class="border-inner-header-left"><br>Remaining<br>Production:</h6>
+                        <h6 class="border-inner-header-right"><br>Delivery<br>Date:</h6>
                     </div>
                     <div *ngFor="let job of currentMillJobs">
                         <app-home-line [job]="job"></app-home-line>
