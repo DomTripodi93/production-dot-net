@@ -1,8 +1,17 @@
-<div class="grid25">
-    <h6><strong>{{jobInUse.jobNumber}}</strong></h6>
-    <h6 *ngIf="jobInUse.orderQuantity"><strong>{{jobInUse.orderQuantity}}</strong></h6>
-    <h6 *ngIf="!jobInUse.orderQuantity"><strong>Unknown</strong></h6>
-    <h6 *ngIf="jobInUse.remainingQuantity"><strong>{{jobInUse.remainingQuantity}}</strong></h6>
-    <h6 *ngIf="!jobInUse.remainingQuantity"><strong>Unknown</strong></h6>
-    <h6><strong>{{jobInUse.deliveryDate}}</strong></h6>
+<div *ngIf="jobInUse && !mach" class="grid25">
+    <h6 class="border-inner-left"><strong>{{jobInUse.jobNumber}}</strong></h6>
+    <h6 class="border-inner-left" *ngIf="jobInUse.orderQuantity"><strong>{{jobInUse.orderQuantity}}</strong></h6>
+    <h6 class="border-inner-left" *ngIf="!jobInUse.orderQuantity"><strong>Unknown</strong></h6>
+    <h6 class="border-inner-left" *ngIf="jobInUse.remainingQuantity"><strong>{{jobInUse.remainingQuantity}}</strong></h6>
+    <h6 class="border-inner-left" *ngIf="!jobInUse.remainingQuantity"><strong>Unknown</strong></h6>
+    <h6 class="border-inner-right"><strong>{{jobInUse.deliveryDate}}</strong></h6>
+</div>
+<div *ngIf="jobInUse && mach" class="grid20">
+    <h6 class="small border-inner-left"><strong>{{mach.machine}}</strong></h6>
+    <h6 class="small border-inner-left"><strong>{{jobInUse.jobNumber}}</strong></h6>
+    <h6 class="small border-inner-left" *ngIf="jobInUse.orderQuantity"><strong>{{jobInUse.orderQuantity}}</strong></h6>
+    <h6 class="small border-inner-left" *ngIf="!jobInUse.orderQuantity"><strong>Unknown</strong></h6>
+    <h6 class="small border-inner-left" *ngIf="jobInUse.remainingQuantity"><strong>{{jobInUse.remainingQuantity}}</strong></h6>
+    <h6 class="small border-inner-left" *ngIf="!jobInUse.remainingQuantity"><strong>Unknown</strong></h6>
+    <h6 class="small border-inner-right"><strong>{{jobInUse.deliveryDate}}</strong></h6>
 </div>

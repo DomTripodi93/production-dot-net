@@ -15,6 +15,34 @@ h1, h2, h3, h4, h5, h6{
     background-color: rgb(235, 235, 235);
 }
 
+.border-inner-left{
+    border-style: solid hidden solid solid;
+    border-color: black;
+    background-color: rgb(255, 255, 255);
+    border-width: 2px;
+}
+
+.border-inner-right{
+    border-style: solid;
+    border-color: black;
+    background-color: rgb(255, 255, 255);
+    border-width: 2px;
+}
+
+.border-inner-header-left{
+    border-style: solid hidden solid solid;
+    border-color: black;
+    background-color: rgb(225, 251, 226);
+    border-width: 2px;
+}
+
+.border-inner-header-right{
+    border-style: solid;
+    border-color: black;
+    background-color: rgb(225, 251, 226);
+    border-width: 2px;
+}
+
 .bold{
     font-weight: 700;
 }
@@ -34,8 +62,44 @@ h1, h2, h3, h4, h5, h6{
     margin: auto;
 }
 
+.grid25 { 
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    text-align: center;
+}
+
+.grid20 { 
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    text-align: center;
+}
+
+.small{
+    font-size: 70%;
+}
+
+.is-mobile{
+    visibility: hidden;
+}
+
+.not-mobile{
+    visibility: visible;
+}
+
 @media only screen and (max-width: 768px) {
     h2{
         word-wrap: break-word;
+    }
+    h6{
+        font-size: 75%;
+    }
+    .small{
+        font-size: 60%;
+    }
+    .is-mobile{
+        visibility: visible;
+    }
+    .not-mobile{
+        visibility: hidden;
     }
 }
