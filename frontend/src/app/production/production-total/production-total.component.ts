@@ -48,38 +48,39 @@ export class ProductionTotalComponent implements OnInit {
         ).subscribe()
       this.opServ.fetchOp(this.opNumber + "&job=" + this.jobNumber).subscribe(op=>{
         let rem = {remainingQuantity: +op.remainingQuantity - this.difference};
-        this.opServ.changeOpRemaining(
-          rem, 
-          this.opNumber + "&job=" + this.jobNumber
-          ).subscribe(()=>{
-            this.opServ.fetchOpByJob(this.jobNumber).subscribe(ops=>{
-              let remains = +ops[0].remainingQuantity;
-              let used = 0;
-              ops.forEach(op=>{
-                used ++
-                if (remains < +op.remainingQuantity){
-                  remains = +op.remainingQuantity;
+        let search = this.opNumber + "&job=" + this.jobNumber;
+        this.opServ.changeOpRemaining(rem, search).subscribe(()=>{
+          this.opServ.fetchOpByJob(this.jobNumber).subscribe(ops=>{
+            let remains = +ops[0].remainingQuantity;
+            let used = 0;
+            ops.forEach(op=>{
+              used ++
+              if (remains < +op.remainingQuantity){
+                remains = +op.remainingQuantity;
+              }
+              if (used == ops.length){
+                if (remains < 1){
+                  remains = 0;
                 }
-                if (used == ops.length){
-                  if (remains < 1){
-                    remains = 0;
-                  }
-                  let remainingData = {
-                    remainingQuantity: remains
-                  }
-                  this.jobServ.changeJobRemaining(remainingData, op.jobNumber).subscribe();
-                  this.remainingQ.emit(""+remains)
+                let remainingData = {
+                  remainingQuantity: remains
                 }
-              })
+                this.jobServ.changeJobRemaining(remainingData, op.jobNumber).subscribe(()=>{
+                  this.remainingQ.emit(""+remains);
+                  this.opServ.opsChanged.next();
+                });
+              }
             })
           })
+        })
       })
+    } else {
+      this.opServ.opsChanged.next();
     }
   }
 
   submitAll(){
     this.opServ.partsToDateSubmit.next();
-    setTimeout(()=>{this.opServ.opsChanged.next()}, 50);
   }
 
   onCancel(){

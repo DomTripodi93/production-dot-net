@@ -75,8 +75,6 @@ export class ProductionMillJobComponent implements OnInit, OnDestroy {
     this.job.remainingQuantity = $event;
   }
 
-
-
   ngOnDestroy(){
     this.opSubscription.unsubscribe();
   }
