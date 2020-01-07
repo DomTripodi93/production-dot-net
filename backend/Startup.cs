@@ -34,10 +34,13 @@ namespace BackEnd
             services.AddCors(options =>
             {
                 options.AddPolicy("MyCors", 
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials() 
+                    builder => 
+                    {
+                        builder.WithOrigins("http://localhost:4200", "https://www.MyProductionStatus.com")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    }
                 );
             });
             services.AddAutoMapper(typeof(Startup));

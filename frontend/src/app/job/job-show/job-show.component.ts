@@ -75,7 +75,7 @@ export class JobShowComponent implements OnInit {
     }, error => {
       this.isFetching = false;
       this.isError = true;
-      this.error = error.message
+      this.error = error.message;
     });
   }
 
