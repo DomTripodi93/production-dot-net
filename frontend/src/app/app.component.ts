@@ -11,8 +11,6 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'Production Management';
-  subscription = new Subscription;
-  id: number;
 
   public constructor(
     public auth: AuthService,
