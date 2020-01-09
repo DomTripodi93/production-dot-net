@@ -19,10 +19,10 @@
                         Edit Start Time
                     </button>
                 </div>
-                <h2>{{mach.machine}}</h2>
+                <h3>{{mach.machine}}</h3>
                 <h5 *ngIf="hourServ.startTimes[i].length > 0">Start Time: <strong>{{hourServ.startTimes[i]}}</strong></h5>
-                <h3>Job: <br><strong>{{mach.currentJob}}</strong>
-                <br>Op: <br><strong>{{mach.currentOp}}</strong></h3>
+                <h4>Job: <br><strong>{{mach.currentJob}}</strong>
+                <br>Op: <br><strong>{{mach.currentOp}}</strong></h4>
                 <div *ngIf="mach.currentOp !== 'None'" class="btn-grid">
                     <button 
                         *ngIf="!hourServ.quick[i]" 

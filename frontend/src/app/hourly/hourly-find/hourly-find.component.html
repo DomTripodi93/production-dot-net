@@ -1,45 +1,39 @@
 
-<form (ngSubmit)='onSubmit()' #data="ngForm"> 
-  <div class="form-group">
-    <label for="jobNumber">Job #:</label>
-    <input 
-      type="text" 
-      id="jobNumber" 
-      class="form-control"
-      ngModel
-      name='jobNumber'>
-    <br>
-    <label for="machine">Machine</label>
-    <select 
-      id="machine" 
-      class="form-control"
-      ngModel
-      name='machine'>
-      <option *ngFor = "let machine of machines">{{machine}}</option>
-    </select>
-    <br>
-    <label for="date">Date:</label>
-    <input 
-      type="date" 
-      id="date" 
-      class="form-control"
-      [ngModel]=[startDate]
-      name='date'
-      >
-  </div>
+<div *ngIf="auth.user" class="container">
+  <h3>{{welcome}}</h3><br>
   <br>
-  <button 
-    class="btn btn-primary" 
-    type="submit"
-    [disabled]="!data.valid"
-  >
-    Submit
-  </button>
-  <button 
-    type='button' 
-    class='btn btn-danger pull-right' 
-    (click)='onCancel()'
-  >
-    Cancel
-  </button>
-</form>
+  <div class="row">
+    <form (ngSubmit)='changeDate()' #newMonth="ngForm">
+      <div class="grid2 col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <input
+          id="date" 
+          class="form-control"
+          [(ngModel)]="defaultMonth"
+          name="date"
+          type="month">
+        <div></div>
+        <button class="btn btn-primary"><strong>Change Month</strong></button>
+      </div>
+    </form>      
+  </div>
+  <br><br>
+  <h1>{{months[month]}}</h1>
+  <br><br>
+  <div class="grid">
+    <div class="border"><h5 class="centered">{{days[0]}}</h5></div>
+    <div class="border"><h5 class="centered">{{days[1]}}</h5></div>
+    <div class="border"><h5 class="centered">{{days[2]}}</h5></div>
+    <div class="border"><h5 class="centered">{{days[3]}}</h5></div>
+    <div class="border"><h5 class="centered">{{days[4]}}</h5></div>
+    <div class="border"><h5 class="centered">{{days[5]}}</h5></div>
+    <div class="border"><h5 class="centered">{{days[6]}}</h5></div>
+    <div *ngFor="let date of firstDayOfMonth">
+      <div class="border padded"><h5 class="white-text">{{date}}</h5></div>
+    </div>  
+    <div *ngFor="let date of monthDays">
+      <div *ngIf="date !== today"  (click)="onViewDate(['day', year, month+1, date])" class="border padded"><h5>{{date}}</h5></div>
+      <div *ngIf="date == today && month == oldMonth" (click)="onViewDate(['day', year, month+1, date])" class="today-border padded"><h5>{{date}}</h5></div>
+      <div *ngIf="date == today && month != oldMonth" (click)="onViewDate(['day', year, month+1, date])" class="border padded"><h5>{{date}}</h5></div>
+    </div>  
+  </div>
+</div>

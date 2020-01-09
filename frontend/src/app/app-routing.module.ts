@@ -19,7 +19,6 @@ import { HourlyNewComponent } from './hourly/hourly-new/hourly-new.component';
 import { PartFindComponent } from './part/part-find/part-find.component';
 import { PartFindShowComponent } from './part/part-find/part-find-show/part-find-show.component';
 import { HourlyFindComponent } from './hourly/hourly-find/hourly-find.component';
-import { HourlyFindShowComponent } from './hourly/hourly-find/hourly-find-show/hourly-find-show.component';
 import { DaysHourlyComponent } from './shared/days/days-hourly/days-hourly.component';
 import { DaysFullComponent } from './shared/days/days-full/days-full.component';
 import { RemainingComponent } from './job/calculator/remaining/remaining.component';
@@ -54,7 +53,6 @@ const appRoutes: Routes = [
         {path: 'hourly', component: HourlyComponent, children:[
             {path: '', component: HourlyShowComponent},
             {path: 'find', component: HourlyFindComponent},
-            {path: 'find/:search', component: HourlyFindShowComponent},
             {path: 'new', component: HourlyNewComponent},
         ]},
         {path: 'changes', component: ChangeLogComponent},

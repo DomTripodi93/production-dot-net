@@ -28,7 +28,6 @@ import { PartNewComponent } from './part/part-new/part-new.component';
 import { PartFindComponent } from './part/part-find/part-find.component';
 import { PartFindShowComponent } from './part/part-find/part-find-show/part-find-show.component';
 import { HourlyFindComponent } from './hourly/hourly-find/hourly-find.component';
-import { HourlyFindShowComponent } from './hourly/hourly-find/hourly-find-show/hourly-find-show.component';
 import { ChangeLogComponent } from './shared/change-log/change-log.component';
 import { DaysHourlyComponent } from './shared/days/days-hourly/days-hourly.component';
 import { DaysFullComponent } from './shared/days/days-full/days-full.component';
@@ -97,7 +96,6 @@ import { HomeLineComponent } from './shared/home/home-line/home-line.component';
     PartFindComponent,
     PartFindShowComponent,
     HourlyFindComponent,
-    HourlyFindShowComponent,
     ChangeLogComponent,
     DaysHourlyComponent,
     DaysFullComponent,

@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import _ from 'lodash';
+import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/shared/auth.service';
 import { DaysService } from 'src/app/shared/days/days.service';
-import { MachineService } from 'src/app/machine/machine.service';
-import { Machine } from '../../machine/machine.model';
 
 @Component({
   selector: 'app-hourly-find',
@@ -12,61 +11,82 @@ import { Machine } from '../../machine/machine.model';
   styleUrls: ['./hourly-find.component.css']
 })
 export class HourlyFindComponent implements OnInit, OnDestroy{
-  @ViewChild('data', {static:false}) searchForm: NgForm;
-  startDate = "";
-  machines=[""];
+  @ViewChild('newMonth', {static:false}) newMonthForm: NgForm;
+  date = new Date();
+  today = this.date.getDate();
+  month = this.date.getMonth();
+  monthHold = ""+(this.month+1);
+  year = this.date.getFullYear();
+  day = this.date.getDay();
+  defaultMonth = ""; 
+  oldMonth: number = this.month;
+  days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ]
+  months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+  numberOfDays: number;
+  monthDays = []
+  firstDayOfMonth = []
+  firstDay: Date;
+  welcome = '';
+  set = "";
 
   constructor(
-    private route: ActivatedRoute,
+    public auth: AuthService,
     private router: Router,
-    private auth: AuthService,
-    private dayServe: DaysService,
-    private mach: MachineService
-  ) {}
+    public dayServ: DaysService
+  ) { }
 
-  onSubmit(){
-    let jobNumber = "";
-    let machine ="";
-    let date ="";
-    let searchHold = [];
-    if (this.searchForm.value.jobNumber){
-      jobNumber = this.searchForm.value.jobNumber;
-      searchHold.push("jobNumber="+jobNumber);
-    }
-    if (this.searchForm.value.date){
-      date = this.searchForm.value.date;
-      searchHold.push("date="+date);
-    }
-    if (this.searchForm.value.machine){
-      machine = this.searchForm.value.machine;
-      searchHold.push("machine="+this.auth.splitJoin(machine));
-    }
-    let search = searchHold.join("&");
-    if (!search){
-      search ="x";
-    }
-    this.router.navigate([search], {relativeTo: this.route})
+  daysInMonth(year: number, month: number){
+    this.numberOfDays = new Date(year, month, 0).getDate();
   }
 
-  onCancel(){
-    window.history.back();
+  ngOnInit() {
+    if (this.month < 9){
+      this.monthHold ="0"+this.monthHold
+    }
+    this.defaultMonth = this.year + "-" + this.monthHold
+    this.setDate()
   }
 
-  ngOnInit(){
-    if (+this.dayServe.today < 10 && this.dayServe.today.length <2){
-      this.dayServe.today = "0"+this.dayServe.today
-    };
-    if (+this.dayServe.month < 10 && this.dayServe.stringMonth.length <2){
-      this.dayServe.stringMonth = "0"+this.dayServe.month;
-    };
-    this.startDate = this.dayServe.year +"-"+this.dayServe.stringMonth+"-"+this.dayServe.today;  
-    this.auth.hideButton(1);
-    this.mach.fetchMachinesByType("lathe")
-    .subscribe(machines => {
-      machines.forEach((mach)=>{
-        this.machines.push(mach.machine);
-      });
-    });
+  setDate(){
+    this.daysInMonth(this.year, this.month+1);
+    this.monthDays = _.range(1, this.numberOfDays + 1);
+    this.firstDay = new Date(this.year, this.month, 1);
+    this.firstDayOfMonth = _.range(0, this.firstDay.getDay());
+    this.welcome = "Today is " + this.days[this.day] + " " + (this.month+1) + "-" + this.today + "-" + this.year;
+
+  }
+
+  changeDate(){
+    let hold = this.newMonthForm.value.date.split("-")
+    this.year = +hold[0];
+    this.month = +hold[1] - 1;
+    this.setDate();
+  }
+
+  onViewDate(arr){
+    let path = "/"+arr.join("/")+"/hourly";
+    this.router.navigate([path])
   }
 
   ngOnDestroy(){
