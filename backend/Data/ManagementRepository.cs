@@ -160,7 +160,6 @@ namespace BackEnd.Data
         public async Task<PagedList<Job>> GetJobs(int userId, PagingParams jobParams, string machType)
         {
             var jobs = _context.Jobs
-                .Include(x => x.Operation)
                 .Where(j => j.userId == userId)
                 .Where(j => j.Active == "Active")
                 .Where(j => j.MachType == machType);
@@ -173,7 +172,6 @@ namespace BackEnd.Data
         public async Task<PagedList<Job>> GetJobsByDate(int userId, PagingParams jobParams, string machType)
         {
             var jobs = _context.Jobs
-                .Include(x => x.Operation)
                 .Where(j => j.userId == userId)
                 .Where(j => j.Active == "Active")
                 .Where(j => j.MachType == machType);
@@ -186,7 +184,6 @@ namespace BackEnd.Data
         public async Task<PagedList<Job>> GetAllJobsByType(int userId, PagingParams jobParams, string machType)
         {
             var jobs = _context.Jobs
-                .Include(x => x.Operation)
                 .Where(j => j.userId == userId)
                 .Where(j => j.MachType == machType);
 
@@ -198,7 +195,6 @@ namespace BackEnd.Data
         public async Task<IEnumerable<Job>> GetJobsByPart(int userId, string partNumber)
         {
             var jobs = await _context.Jobs
-                .Include(x => x.Operation)
                 .Where(j => j.userId == userId)
                 .Where(p => p.PartNumber == partNumber)
                 .ToListAsync();

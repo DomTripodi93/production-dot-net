@@ -233,9 +233,7 @@ namespace BackEnd.Controllers
                 _repo.Delete(jobToDelete);
                 await _repo.SaveAll();
                 return Ok(
-                            "Operation "
-                            + jobToDelete.Operation
-                            + " for job# " 
+                            "Job# " 
                             + jobToDelete.JobNumber 
                             +" was deleted, along with related production lots and hourly counts!"
                         );
