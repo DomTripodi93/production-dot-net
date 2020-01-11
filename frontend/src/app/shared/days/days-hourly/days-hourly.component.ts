@@ -47,7 +47,7 @@ export class DaysHourlyComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private hourServ: HourlyService,
+    public hourServ: HourlyService,
     private dayServ: DaysService,
     private auth: AuthService,
     private mach: MachineService

@@ -25,7 +25,7 @@ export class MachineNewComponent implements OnInit {
   constructor(
     private mach: MachineService,
     private jobServ: JobService,
-    private auth: AuthService,
+    public auth: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private opServ: OpService

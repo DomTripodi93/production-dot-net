@@ -34,7 +34,7 @@ export class TutorialComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     private mach: MachineService,
     private partServ: PartService,
     private hourlyServ: HourlyService,

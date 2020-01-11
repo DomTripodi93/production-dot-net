@@ -14,7 +14,7 @@ export class JobComponent implements OnDestroy {
 
   constructor(
     public auth: AuthService,
-    private jobServ: JobService,
+    public jobServ: JobService,
     private route: ActivatedRoute
   ) {
     this.subscriptions.push(

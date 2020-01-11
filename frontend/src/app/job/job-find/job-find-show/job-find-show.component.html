@@ -36,7 +36,7 @@
       </div>
       <div class="grid">
           <button class='btn btn-primary' (click)="onEdit()">Edit Job</button>
-          <button class='btn btn-danger' (click)="onDelete(oneJob.jobNumber, oneJob.id)">Delete Job</button>
+          <button class='btn btn-danger' (click)="onDelete(oneJob.jobNumber)">Delete Job</button>
       </div>
     </div>
 
@@ -90,7 +90,7 @@
       </div>
       <div class="grid">
           <button class='btn btn-primary' routerLink="edit/{{job.jobNumber}}">Edit Job</button>
-          <button class='btn btn-danger' (click)="onDelete(job.jobNumber, job.id)">Delete Job</button>
+          <button class='btn btn-danger' (click)="onDelete(job.jobNumber)">Delete Job</button>
       </div>
       <div>
         <h4> Operations </h4>

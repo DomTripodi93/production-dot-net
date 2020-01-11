@@ -28,7 +28,7 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private hourServ: HourlyService,
+    public hourServ: HourlyService,
     private dayServ: DaysService,
     private mach: MachineService,
     private auth: AuthService

@@ -19,7 +19,7 @@
         class="form-control"
         formControlName='date'>
     </div>
-    <div *ngIf="!notRunning" class="form-group">
+    <div class="form-group">
       <label for="machine">Machine</label>
       <select 
         formControlName='machine'
@@ -30,15 +30,6 @@
           [selected]="machine === myMach" >
           {{machine}}
         </option>
-      </select>
-    </div>
-    <div *ngIf="notRunning" class="form-group">
-      <label for="machine">Machine</label>
-      <select 
-        formControlName='machine'
-        id="machine" 
-        class="form-control">
-        <option *ngFor = "let mach of fullMach">{{mach.machine}}</option>
       </select>
     </div>
     <div class="form-group">

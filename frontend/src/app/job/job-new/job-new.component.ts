@@ -24,7 +24,7 @@ export class JobNewComponent implements OnInit {
   
   constructor(
     private jobServ: JobService,
-    private auth: AuthService,
+    public auth: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private partServ: PartService,
