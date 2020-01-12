@@ -10,3 +10,22 @@ What
 - A Lathe Production suite that tracks production per operation for multiple jobs, that run different parts on multiple machines.
 - Hourly Tracking for current production per operation on multiple lathes 
 - A Mill Production suite for tracking current totals in all operations for multiple jobs, that run different parts on multiple machines.
+
+How
+    Base Modules:
+        - Registration
+        - Login
+        - Settings
+        - Tutorial
+        - Days
+        - Home / Welcome
+        - Change Log
+        - Auth Service
+    
+    App Modules:
+        - Machine
+        - Part
+        - Job
+        - Op
+        - Production
+        - Hourly
