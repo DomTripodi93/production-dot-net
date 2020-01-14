@@ -16,6 +16,7 @@ export class PartFindShowComponent implements OnInit, OnDestroy {
   isFetching = false;
   isError = false;
   error = '';
+  editMode = false;
   part: Part;
   partNumber = "";
   id = '';
@@ -46,6 +47,14 @@ export class PartFindShowComponent implements OnInit, OnDestroy {
         }
       })
     )
+    this.subscriptions.push(
+      this.partServ.partUpdated.subscribe(()=>{
+        this.editMode = false;
+        if (!this.partInput){
+          this.getPart();
+        }
+      })
+    )
   }
 
   onDelete(part){
@@ -54,6 +63,10 @@ export class PartFindShowComponent implements OnInit, OnDestroy {
         setTimeout(()=>{this.partServ.partChanged.next()},)}
       );
     }
+  }
+
+  onEdit(){
+    this.editMode = true;
   }
 
   getPart() {

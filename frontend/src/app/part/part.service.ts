@@ -9,6 +9,7 @@ import { Active } from '../shared/active.model';
 @Injectable({providedIn: 'root'})
 export class PartService {
   partChanged = new Subject();
+  partUpdated = new Subject();
   partHold: Part;
   model = "Part";
   onlyActive = true;
