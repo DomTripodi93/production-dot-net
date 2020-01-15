@@ -1,5 +1,10 @@
 .grid { 
     display: grid;
+    grid-template-columns: 100%;
+}
+
+.grid50 { 
+    display: grid;
     grid-template-columns: 50% 50%;
 }
 

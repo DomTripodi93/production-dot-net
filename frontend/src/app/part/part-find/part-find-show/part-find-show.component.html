@@ -13,11 +13,11 @@
         <h5>Rev:</h5>
         <h5 class="bold">{{part.rev}}</h5>
       </li>
-      <div *ngIf="!editMode" class="grid">
-        <div>
+      <div *ngIf="!editMode" class="grid50">
+        <div class="grid">
           <button class='btn btn-danger' (click)="onDelete(part.partNumber)">Delete Part</button>
         </div>
-        <div>
+        <div class="grid">
           <button class='btn btn-info' (click)="onEdit()">Edit Part</button>
         </div>
       </div>

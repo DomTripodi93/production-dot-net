@@ -150,6 +150,27 @@ namespace BackEnd.Controllers
             throw new Exception($"Updating job lot {partNum} failed on save");
         }
 
+        [HttpPut("rev&{partNum}")]
+        public async Task<IActionResult> UpdateRevPart(int userId, string partNum, PartForRevDto partForRevDto)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var partFromRepo = await _repo.GetPart(userId, partNum);
+
+            _mapper.Map(partForRevDto, partFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetPart", new {part = partFromRepo.PartNumber}, partForRevDto);
+
+            var newData = _mapper.Map(partForRevDto, partFromRepo);
+
+            if (partFromRepo == newData)
+                return Ok(partForRevDto);
+
+            throw new Exception($"Updating job lot {partNum} failed on save");
+        }
+
         [HttpDelete("{part}")]
         public async Task<IActionResult> DeletePart(int userId, string part)
         {
