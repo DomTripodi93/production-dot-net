@@ -15,6 +15,26 @@ h1, h2, h3, h4, h5, h6{
     background-color: rgb(235, 235, 235);
 }
 
+.grid25 { 
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+
+.grid33 { 
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+}
+
+.grid50 { 
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.grid100 { 
+    display: grid;
+    grid-template-columns: 100%;
+}
+
 .border-inner-left{
     height: 100%;
     border-style: solid hidden solid solid;
@@ -53,6 +73,10 @@ h1, h2, h3, h4, h5, h6{
 
 .centered{
     text-align: center;
+}
+
+.middle{
+    margin:auto;
 }
 
 .error{

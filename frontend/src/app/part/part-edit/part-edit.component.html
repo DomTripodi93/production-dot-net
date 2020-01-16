@@ -1,1 +1,24 @@
-<p>part-edit works!</p>
+<form *ngIf="editRevForm" [formGroup]="editRevForm" (ngSubmit)='submitAll()'>
+  <div class='form-group'>
+    <div class="form-group field-set">
+      <input 
+        formControlName='rev'
+        type="text" 
+        id="rev" 
+        class="form-control short">
+    </div>
+    <div class='grid50'>
+        <button 
+        class="btn btn-success" 
+        type="submit"
+        [disabled]="!editRevForm.valid">
+            Update
+        </button>
+        <button 
+        type='button' 
+        class='btn btn-danger' 
+        (click)='onCancel()'>
+            Cancel
+        </button>
+    </div>
+  </div>

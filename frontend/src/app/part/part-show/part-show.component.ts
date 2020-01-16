@@ -30,7 +30,6 @@ export class PartShowComponent implements OnInit, OnDestroy{
     }
     this.subscriptions.push(this.partServ.partChanged.subscribe(()=>{
       setTimeout(()=>{
-        console.log("Changed")
         if (this.partServ.onlyActive == true){
           this.getParts();
         } else {

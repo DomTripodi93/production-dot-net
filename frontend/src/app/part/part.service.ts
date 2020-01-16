@@ -118,10 +118,20 @@ export class PartService {
     );
   }
 
+  changeRev(data, partNum){
+    this.fetchPart(partNum).subscribe((object)=>{
+      let oldValues = ""+JSON.stringify(object);
+      this.auth.logChanges(oldValues, this.model, "Rev Change", partNum).subscribe();
+    })
+      return this.http.put(
+        this.auth.apiUrl + '/part/rev&' + partNum + "/", data
+      );
+  }
+
   changeActive(data: Active, partNum){
     this.fetchPart(partNum).subscribe((object)=>{
       let oldValues = ""+JSON.stringify(object);
-      this.auth.logChanges(oldValues, this.model, "Update", partNum).subscribe();
+      this.auth.logChanges(oldValues, this.model, "Active", partNum).subscribe();
     })
       return this.http.put(
         this.auth.apiUrl + '/part/active&' + partNum + "/", data

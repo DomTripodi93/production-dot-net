@@ -3,18 +3,18 @@
     grid-template-columns: 100%;
 }
 
-.grid50 { 
-    display: grid;
-    grid-template-columns: 50% 50%;
+.border{
+    height: 177px;
 }
 
-.border{
-    border: solid;
+.spaced{
+    margin: 15px 10px 10px 10px;
 }
 
 .white-text{
     color: white;
 }
+
 
 h5, h4, h2{
     text-align: center;
