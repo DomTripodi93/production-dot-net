@@ -12,7 +12,7 @@
       <h5>Rev: <strong>{{part.rev}}</strong></h5>
     </div>
     <div *ngIf="editMode">
-      <app-part-edit [part]="part"></app-part-edit>
+      <app-part-edit (cancel)="cancelRevEdit($event)" [part]="part"></app-part-edit>
     </div>
     <div *ngIf="!editMode" class="grid50">
       <div class="grid">

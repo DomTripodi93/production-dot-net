@@ -102,6 +102,10 @@ export class PartFindShowComponent implements OnInit, OnDestroy {
     }
   }
 
+  cancelRevEdit($event){
+    this.editMode = $event;
+  }
+
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PartService } from '../part.service';
 import { OpService } from '../../job/job-ops/operation.service';
 import { Part } from '../part.model';
@@ -10,6 +10,7 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./part-edit.component.css']
 })
 export class PartEditComponent implements OnInit {
+  @Output() cancel = new EventEmitter<boolean>();
   @Input() part: Part;
   editRevForm: FormGroup;
   difference: number;
@@ -40,9 +41,7 @@ export class PartEditComponent implements OnInit {
     if (+this.part.rev != this.editRevForm.value.rev){
       this.partServ.changeRev(this.editRevForm.value, this.part.partNumber).subscribe();
       this.partServ.partChanged.next();
-    } else {
-      this.partServ.partChanged.next();
-    }
+    } 
   }
 
   submitAll(){
@@ -50,7 +49,7 @@ export class PartEditComponent implements OnInit {
   }
 
   onCancel(){
-    this.partServ.partChanged.next();
+    this.cancel.emit(false);
   }
 
 }
