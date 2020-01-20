@@ -16,7 +16,7 @@ export class HourlyService {
     jobNumber ="";
     opNumber ="";
     machine: Machine;
-    model = "Hourly"
+    model = "Hourly";
     isJob: boolean[] = [];
     setTime: boolean[] = [];
     canSetTime: boolean[] = [];
@@ -28,7 +28,15 @@ export class HourlyService {
         private auth: AuthService,
         private opServ: OpService,
         private dayServ: DaysService
-        ) {}
+    ) {}
+
+    addHourly(data: Hourly){
+      data.opNumber = this.opServ.slashToDash(data.opNumber);
+      data.machine = this.auth.splitJoin(data.machine);
+        return this.http.post(
+          this.auth.apiUrl + '/hourly/', data
+        );
+    }
 
     fetchHourly(search) {
         return this.http.get(
@@ -68,15 +76,6 @@ export class HourlyService {
           })
         )
       }
-
-    addHourly(data: Hourly){
-      data.opNumber = this.opServ.slashToDash(data.opNumber);
-      data.machine = this.auth.splitJoin(data.machine);
-        return this.http.post(
-          this.auth.apiUrl + '/hourly/', data
-        );
-    }
-
 
     changeHourly(data: Hourly, id){
       this.fetchHourlyById(id).subscribe((object)=>{
