@@ -125,5 +125,42 @@ describe('HourlyService testing', () => {
       }
     );
   })
+
+  it('can return hourly with display values by id', (done)=>{
+    const postStubHourly2: Hourly = {
+      id: 2,
+      quantity: 54,
+      counterQuantity: 57,
+      jobNumber: "1234",
+      opNumber: "2-3",
+      date: "2020-07-20",
+      time: "10:15PM",
+      machine: "something-random",
+      shift: "day",
+      startTime: "10:00PM"
+    }
+
+    const getStubHourly: Hourly = {
+      id: 2,
+      quantity: 54,
+      counterQuantity: 57,
+      jobNumber: "1234",
+      opNumber: "2/3",
+      date: "2020-07-20",
+      time: "10:15PM",
+      machine: "something random",
+      shift: "day",
+      startTime: "10:00PM"
+    }
+
+    clientSpy.get.and.returnValue(asyncData(postStubHourly2));
+    hourServ.fetchHourlyById(2).subscribe(
+      hourly =>{
+        expect(!isNotEqual(hourly, getStubHourly)).toBeTruthy(), 
+        fail;
+        done();
+      }
+    );
+  })
   
 });

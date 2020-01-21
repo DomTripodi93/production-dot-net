@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace backend.Migrations
@@ -13,7 +12,7 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Email = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<byte[]>(nullable: true),
@@ -29,7 +28,7 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
                     ChangedModel = table.Column<string>(nullable: true),
                     ChangeType = table.Column<string>(nullable: true),
@@ -75,7 +74,9 @@ namespace backend.Migrations
                 {
                     userId = table.Column<int>(nullable: false),
                     PartNumber = table.Column<string>(nullable: false),
-                    MachType = table.Column<string>(nullable: true)
+                    MachType = table.Column<string>(nullable: true),
+                    Active = table.Column<string>(nullable: true),
+                    Rev = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,6 +95,8 @@ namespace backend.Migrations
                 {
                     userId = table.Column<int>(nullable: false),
                     IsNew = table.Column<bool>(nullable: false),
+                    SkipLathe = table.Column<bool>(nullable: false),
+                    SkipMill = table.Column<bool>(nullable: false),
                     DefaultStartTime = table.Column<string>(nullable: true),
                     DefaultBarEnd = table.Column<string>(nullable: true),
                     DefaultBarCut = table.Column<string>(nullable: true)
@@ -132,7 +135,8 @@ namespace backend.Migrations
                     MachType = table.Column<string>(nullable: true),
                     ScrapCount = table.Column<string>(nullable: true),
                     Active = table.Column<string>(nullable: true),
-                    MonthReq = table.Column<string>(nullable: true)
+                    MonthReq = table.Column<string>(nullable: true),
+                    DeliveryDate = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -185,7 +189,7 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
                     OpId = table.Column<int>(nullable: false),
                     OpNumber = table.Column<string>(nullable: true),
@@ -219,7 +223,7 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
                     OpNumber = table.Column<string>(nullable: true),
                     JobNumber = table.Column<string>(nullable: true),
@@ -229,6 +233,7 @@ namespace backend.Migrations
                     Quantity = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
                     InQuestion = table.Column<bool>(nullable: false),
+                    Average = table.Column<bool>(nullable: false),
                     MachType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
