@@ -7,7 +7,6 @@ import { AuthService } from '../shared/auth.service';
 import { OpService } from '../job/job-ops/operation.service';
 import { Hourly } from './hourly.model';
 import { defer } from 'rxjs';
-import {_} from 'lodash';
 
   
 function isNotEqual(set1, set2){

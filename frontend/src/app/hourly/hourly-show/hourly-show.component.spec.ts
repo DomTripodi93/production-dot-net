@@ -66,4 +66,24 @@ describe('HourlyShowComponent', () => {
         && hourServ.machine == fakeMach
     ).toBeTruthy();
   });
+
+  it('should change quick[0] to false', () => {
+    let fakeMach: Machine = {
+        id: 1,
+        machine: "something",
+        currentJob: "12412",
+        currentOp: "15125"
+    }
+    component.machines.push(fakeMach);
+    component.quickInput(0);
+    component.onCancel(0);
+    hourServ = TestBed.get(HourlyService);
+    expect(
+        hourServ.quick[0] == false 
+        && hourServ.jobNumber == fakeMach.currentJob
+        && hourServ.opNumber == fakeMach.currentOp
+        && hourServ.machine == fakeMach
+    ).toBeTruthy();
+  });
+
 });
