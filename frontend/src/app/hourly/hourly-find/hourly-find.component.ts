@@ -48,7 +48,6 @@ export class HourlyFindComponent implements OnInit, OnDestroy{
   firstDayOfMonth = []
   firstDay: Date;
   welcome = '';
-  set = "";
 
   constructor(
     public auth: AuthService,
@@ -56,29 +55,28 @@ export class HourlyFindComponent implements OnInit, OnDestroy{
     public dayServ: DaysService
   ) { }
 
-  daysInMonth(year: number, month: number){
-    this.numberOfDays = new Date(year, month, 0).getDate();
-  }
-
   ngOnInit() {
-    if (this.month < 9){
-      this.monthHold ="0"+this.monthHold
-    }
-    this.defaultMonth = this.year + "-" + this.monthHold
     this.setDate()
   }
 
   setDate(){
+    if (this.month < 9){
+      this.monthHold ="0"+this.monthHold;
+    }
+    this.defaultMonth = this.year + "-" + this.monthHold;
     this.daysInMonth(this.year, this.month+1);
     this.monthDays = _.range(1, this.numberOfDays + 1);
     this.firstDay = new Date(this.year, this.month, 1);
     this.firstDayOfMonth = _.range(0, this.firstDay.getDay());
     this.welcome = "Today is " + this.days[this.day] + " " + (this.month+1) + "-" + this.today + "-" + this.year;
+  }
 
+  daysInMonth(year: number, month: number){
+    this.numberOfDays = new Date(year, month, 0).getDate();
   }
 
   changeDate(){
-    let hold = this.newMonthForm.value.date.split("-")
+    let hold = this.newMonthForm.value.date.split("-");
     this.year = +hold[0];
     this.month = +hold[1] - 1;
     this.setDate();
