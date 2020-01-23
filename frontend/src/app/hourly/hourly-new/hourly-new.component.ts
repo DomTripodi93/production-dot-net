@@ -36,26 +36,38 @@ export class HourlyNewComponent implements OnInit {
   
   ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
-    this.mach. fetchMachinesByType('lathe')
+    this.setMachines();
+    this.auth.hideButton(0);
+    this.changeOps("None");
+  }
+
+  setMachines(){
+    this.mach.fetchMachinesByType('lathe')
     .subscribe(machines => {
       this.machines = machines;
-      this.jobServ.fetchAllJobs().subscribe(response =>{
-        let goneThrough = 1;
-        if (response.length==0){
-          this.initForm();
-        } else {
-          response.forEach(job => {
-            this.jobs.push(job.jobNumber);
-            goneThrough++;
-            if (goneThrough == response.length+1){
-              this.changeOps("None");
-              this.initForm();
-            }
-          });
-        }
-      });
+      this.getJobs();
     });
-    this.auth.hideButton(0);
+  }
+
+  getJobs(){
+    this.jobServ.fetchAllJobs().subscribe(jobs =>{
+      if (jobs.length==0){
+        this.initForm();
+      } else {
+        this.setJobs(jobs);
+      }
+    });    
+  }
+
+  setJobs(jobs){
+    let goneThrough = 1;
+    jobs.forEach(job => {
+      this.jobs.push(job.jobNumber);
+      goneThrough++;
+      if (goneThrough == jobs.length+1){
+        this.initForm();
+      }
+    });
   }
     
   private initForm() {
@@ -106,15 +118,19 @@ export class HourlyNewComponent implements OnInit {
     },10);
   }
 
-  changeOps(option: String){
+  changeOps(job: String){
     this.ops = ["None"]
-    if (option != "None"){
-      this.opServ.fetchOpByJob(option).subscribe((ops)=>{
-        ops.forEach((op)=>{
-          this.ops.push(op.opNumber);
-        })
-      })
+    if (job != "None"){
+      this.setOps(job);
     }
+  }
+  
+  setOps(job){
+    this.opServ.fetchOpByJob(job).subscribe((ops)=>{
+      ops.forEach((op)=>{
+        this.ops.push(op.opNumber);
+      })
+    })
   }
 
   onCancel(){
