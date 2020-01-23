@@ -37,16 +37,28 @@ export class HourlyEditComponent implements OnInit {
 
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
+    this.setMachines();
+    this.setHourly();
+  }
+
+  setMachines(){
     this.mach.fetchMachinesByType("lathe").subscribe(machines => {
       this.machines = machines;
     });
+  }
+
+  setHourly(){
     this.hourlyServ.fetchHourlyById(this.id)
     .subscribe(lot => {
-      let beginning = lot.date.substring(5,10);
-      lot.date = beginning + "-" + lot.date.substring(0,4);
-      this.hourly = lot;
-      this.initForm();
+      this.initializeValues(lot);
     })
+  }
+
+  initializeValues(lot){
+    let beginning = lot.date.substring(5,10);
+    lot.date = beginning + "-" + lot.date.substring(0,4);
+    this.hourly = lot;
+    this.initForm();
   }
 
 
@@ -67,7 +79,7 @@ export class HourlyEditComponent implements OnInit {
     if (this.hourly.quantity == this.editHourlyForm.value.quantity){
       if (this.hourly.time == this.editHourlyForm.value.time){
         if (this.hourly.counterQuantity == this.editHourlyForm.value.counterQuantity){
-          this.hourlyServ.hourlyChanged.next();
+          this.onCancel();
         } else {
           this.editHourly(this.editHourlyForm.value);
         }
@@ -83,7 +95,7 @@ export class HourlyEditComponent implements OnInit {
     this.hourlyServ.changeHourly(data, this.id).subscribe();
     setTimeout(
       ()=>{
-        this.hourlyServ.hourlyChanged.next();
+        this.onCancel();
       },50);
   }
 
@@ -95,7 +107,7 @@ export class HourlyEditComponent implements OnInit {
     if (confirm("Are you sure you want to delete this hourly production?")){
       this.hourlyServ.deleteHourly(this.id).subscribe()
       setTimeout(()=>{
-        this.hourlyServ.hourlyChanged.next();
+        this.onCancel();
       }, 50)
     }
   }
