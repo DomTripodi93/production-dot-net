@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 })
 export class HourlySetTimeComponent implements OnInit {
   @Input() index: number;
+  @Input() startTime: string;
   @Input() machName: string;
   hourlyForm: FormGroup;
 
@@ -25,18 +26,11 @@ export class HourlySetTimeComponent implements OnInit {
   }
 
   initForm(){
-    if (this.hourServ.editMode[this.index]){
-      let date = this.dayServ.stringMonth+"-"+this.dayServ.today+"-"+this.dayServ.year;
-      this.hourServ.fetchHourly("date="+date+"&"+"machine="+this.auth.splitJoin(this.machName)).subscribe(
-        hourly => {
-          this.hourlyForm = new FormGroup({
-            'startTime': new FormControl(hourly[0].startTime, Validators.required)
-          });
-        }
-      );
-    }
+    this.hourlyForm = new FormGroup({
+      'startTime': new FormControl(this.startTime, Validators.required)
+    });
   }
-  //Initialized form for start time with default value as first hourly start time value 
+  //Initialized form for start time
 
   onSubmit(){
     let date = this.dayServ.stringMonth+"-"+this.dayServ.today+"-"+this.dayServ.year;
