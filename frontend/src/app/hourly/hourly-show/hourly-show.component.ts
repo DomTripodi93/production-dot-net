@@ -19,9 +19,6 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
   splitLots: Hourly[][]=[];
   lastMachine = "";
   subscriptions: Subscription[]=[];
-  isFetching = false;
-  isError = false;
-  error = '';
   machines: Machine[] = [];
   jobNumber="";
   nothing = [];
@@ -67,26 +64,25 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
   getMachines(){
     this.subscriptions.push(this.mach.fetchMachinesByType('lathe')
     .subscribe(machines => {
-      this.hourServ.isJob = [];
-      this.hourServ.setTime = [];
-      this.hourServ.canSetTime = [];
-      this.hourServ.quick = [];
-      this.hourServ.editMode = [];
-      for (let i in machines){
-        this.hourServ.isJob.push(false);
-        this.hourServ.setTime.push(false);
-        this.hourServ.canSetTime.push(false);
-        this.hourServ.quick.push(false);
-        this.hourServ.editMode.push(false);
-        this.hourServ.startTimes.push(this.auth.defaultStartTime)
-      }
+      this.setDefaults(machines);
       this.machines = machines;
-      this.isFetching = false;
-    }, error => {
-      this.isFetching = false;
-      this.isError = true;
-      this.error = error.message
     }));
+  }
+
+  setDefaults(machines){
+    this.hourServ.isJob = [];
+    this.hourServ.setTime = [];
+    this.hourServ.canSetTime = [];
+    this.hourServ.quick = [];
+    this.hourServ.editMode = [];
+    for (let i in machines){
+      this.hourServ.isJob.push(false);
+      this.hourServ.setTime.push(false);
+      this.hourServ.canSetTime.push(false);
+      this.hourServ.quick.push(false);
+      this.hourServ.editMode.push(false);
+      this.hourServ.startTimes.push(this.auth.defaultStartTime)
+    }
   }
 
   onCancel(i){

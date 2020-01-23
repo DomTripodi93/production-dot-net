@@ -59,6 +59,7 @@ export class HourlyShowEachComponent implements OnInit, OnDestroy {
   }
 
   setHourly(){
+    this.editMulti = [];
     let date = this.dayServ.year +"-"+this.dayServ.stringMonth+"-"+this.dayServ.today;
     //Sets format of date for hourly retrieval
     this.hourServ.fetchHourly("date="+date+"&"+"machine="+this.auth.splitJoin(this.machine.machine)).subscribe(
