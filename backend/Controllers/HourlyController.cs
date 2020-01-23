@@ -118,6 +118,20 @@ namespace BackEnd.Controllers
             return Ok(hourlySet);
         }
 
+
+        [HttpGet("job={job}&op={op}&date={date}&machine={mach}")]
+        public async Task<IActionResult> GetHourlySetByDateMachineAndJob(int userId, string date, string mach, string job, string op)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            IEnumerable<Hourly> directHourlySet = await _repo.GetHourlySetByDateMachineJobAndOp(userId, date, mach, job, op);
+
+            var hourlySet = _mapper.Map<IEnumerable<HourlyForReturnDto>>(directHourlySet);
+
+            return Ok(hourlySet);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHourly(int userId, int id)
         {

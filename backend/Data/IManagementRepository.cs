@@ -42,5 +42,6 @@ namespace BackEnd.Data
         Task<Hourly> GetAnyHourly(int userId);
         Task<Hourly> GetHourly(int id);
         Task<IEnumerable<Hourly>> GetHourlySetByDateAndMachine(int userId, string date, string mach);
+        Task<IEnumerable<Hourly>> GetHourlySetByDateMachineJobAndOp(int userId, string date, string mach, string job, string op);
     }
 }

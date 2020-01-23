@@ -370,5 +370,21 @@ namespace BackEnd.Data
             return hourlyForReturn.OrderBy(o => o.Time);
         }
 
+        public async Task<IEnumerable<Hourly>> GetHourlySetByDateMachineJobAndOp(int userId, string date, string mach, string job, string op)
+        {
+
+            DateTime dateAsDate = DateTime.Parse(date);
+
+            var hourlyForReturn = await _context.Hourlys
+                .Where(j => j.userId == userId)
+                .Where(p => p.Date.Date == dateAsDate.Date)
+                .Where(p => p.Machine == mach)
+                .Where(h => h.JobNumber == job)
+                .Where(h => h.OpNumber == op)
+                .ToListAsync();
+
+            return hourlyForReturn.OrderBy(o => o.Time);
+        }
+
     }
 }
