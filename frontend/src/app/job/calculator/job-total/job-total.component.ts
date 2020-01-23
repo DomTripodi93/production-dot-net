@@ -36,24 +36,29 @@ export class JobTotalComponent implements OnInit, OnDestroy {
         this.initForm();
         if (this.jobServ.jobHold){
           if (this.jobServ.jobHold.bars){
-            let i = 0
-            let barValues = this.jobServ.jobHold.bars.split(" ")
-            for (let bar in barValues){
-              if ((i+2)%2 == 0){
-                (<FormArray>this.calc.latheForm.get('bars')).push(
-                  new FormGroup({
-                    'noBars': new FormControl(barValues[i], Validators.required),
-                    'barLength': new FormControl(barValues[i+1], Validators.required)
-                  })
-                )};
-              i++
-              }
-            }else{
-              this.calc.newBars();
+            this.setBars(this.jobServ.jobHold.bars);
+          }else{
+            this.calc.newBars();
           }
         } 
       });
     },20);
+  }
+
+  setBars(bars: string){
+    let i=0;
+    let barValues = bars.split(" ")
+    for (let bar in barValues){
+      if ((i+2)%2 == 0){
+        (<FormArray>this.calc.latheForm.get('bars')).push(
+          new FormGroup({
+            'noBars': new FormControl(barValues[i], Validators.required),
+            'barLength': new FormControl(barValues[i+1], Validators.required)
+          })
+        )
+      };
+      i++
+    }
   }
   
   private initForm() {
