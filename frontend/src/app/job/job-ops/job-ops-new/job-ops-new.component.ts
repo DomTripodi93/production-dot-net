@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Machine } from 'src/app/machine/machine.model';
 import { OpService } from '../operation.service';
 import { AuthService } from 'src/app/shared/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import { MachineService } from 'src/app/machine/machine.service';
 import { JobService } from '../../job.service';
 import { Operation } from 'src/app/job/job-ops/operation.model';
@@ -31,15 +30,23 @@ export class JobOpsNewComponent implements OnInit {
   ){}
   
   ngOnInit(){
+    this.canInput = this.auth.isAuthenticated;
+    this.getJob();
+  }
+
+  getJob(){
     this.jobServ.fetchJob(this.jobNumber).subscribe((job)=>{
       this.jobInUse = job;
-      this.mach.fetchMachinesByType()
-      .subscribe(machines => {
-        this.machines = machines;
-        this.initForm();
-      });
+      this.getMachines();
     })
-    this.canInput = this.auth.isAuthenticated;
+  }
+
+  getMachines(){
+    this.mach.fetchMachinesByType()
+    .subscribe(machines => {
+      this.machines = machines;
+      this.initForm();
+    });
   }
     
   private initForm() {
@@ -67,7 +74,6 @@ export class JobOpsNewComponent implements OnInit {
     });
   }
 
-  
   onSubmit(){
     this.newOp(this.operationForm.value);
   }

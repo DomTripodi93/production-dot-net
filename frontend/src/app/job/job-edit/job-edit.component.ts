@@ -33,16 +33,22 @@ export class JobEditComponent implements OnInit {
 
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
-    this.jobServ.fetchJob(this.jobNum)
-      .subscribe(job => {
-        this.job = job;
-        this.date = this.dayServ.dateForForm(job.deliveryDate);
-        this.partServ.fetchPartsByType()
-        .subscribe(parts => {
-          this.parts = parts;
-          this.initForm();
-        });
-      });
+    this.getJob();
+  }
+
+  getJob(){
+    this.jobServ.fetchJob(this.jobNum).subscribe(job => {
+      this.job = job;
+      this.date = this.dayServ.dateForForm(job.deliveryDate);
+      this.getParts();
+    });
+  }
+
+  getParts(){
+    this.partServ.fetchPartsByType().subscribe(parts => {
+      this.parts = parts;
+      this.initForm();
+    });
   }
 
 
@@ -71,20 +77,28 @@ export class JobEditComponent implements OnInit {
     this.editJob(this.job);
     if (this.auth.machType == "mill"){
       if (this.editJobForm.value.orderQuantity > 0){
-        this.opServ.fetchOpByJob(this.jobNum).subscribe(ops=>{
-          ops.forEach(op=>{
-            if (op.partsToDate){
-              let rem = {remainingQuantity: this.editJobForm.value.orderQuantity - +op.partsToDate};
-              this.opServ.changeOpRemaining(rem, op.opNumber + "&job=" + op.jobNumber).subscribe();
-            } else {
-              let rem = {remainingQuantity: this.editJobForm.value.orderQuantity};
-              this.opServ.changeOpRemaining(rem, op.opNumber + "&job=" + op.jobNumber).subscribe();
-            }
-            this.opServ.opsChanged.next();
-          })
-        })
+        this.getOpForChange();
       }
     }
+  }
+
+  getOpForChange(){
+    this.opServ.fetchOpByJob(this.jobNum).subscribe(ops=>{
+      ops.forEach(op=>{
+        if (op.partsToDate){
+          let rem = {remainingQuantity: this.editJobForm.value.orderQuantity - +op.partsToDate};
+          this.updateOpRemaining(rem, op);
+        } else {
+          let rem = {remainingQuantity: this.editJobForm.value.orderQuantity};
+          this.updateOpRemaining(rem, op);
+        }
+        this.opServ.opsChanged.next();
+      })
+    })
+  }
+
+  updateOpRemaining(rem, op){
+    this.opServ.changeOpRemaining(rem, op.opNumber + "&job=" + op.jobNumber).subscribe();
   }
 
   editJob(data: Job) {
@@ -94,7 +108,7 @@ export class JobEditComponent implements OnInit {
       this.isError = true;
     });
     if (this.isError){
-      this.error = "That job already exists on that machine!";
+      this.error = "Please submit valad parameters for update";
     }else{
       setTimeout(
         ()=>{

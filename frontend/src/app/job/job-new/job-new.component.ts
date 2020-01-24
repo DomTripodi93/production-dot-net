@@ -18,7 +18,7 @@ export class JobNewComponent implements OnInit {
   canInput= false;
   jobForm: FormGroup;
   isError = false;
-  parts: Part[] = []
+  parts: Part[] = [];
   andCalculate = "None";
   date = "";
   
@@ -34,16 +34,22 @@ export class JobNewComponent implements OnInit {
   ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
     this.auth.hideButton(0);
-    this.partServ.fetchPartsByType()
-      .subscribe(parts => {
-        this.parts = parts;
-        this.initForm();
-      });
+    this.getParts();
     this.dayServ.resetDate();
-    this.date = this.dayServ
-      .dateForForm(
-        this.dayServ.month+"-"+this.dayServ.today+"-"+this.dayServ.year
-      );
+    this.setDate();
+  }
+
+  getParts(){
+    this.partServ.fetchPartsByType().subscribe(parts => {
+      this.parts = parts;
+      this.initForm();
+    });
+  }
+
+  setDate(){
+    this.date = this.dayServ.dateForForm(
+      this.dayServ.month+"-"+this.dayServ.today+"-"+this.dayServ.year
+    );
   }
     
   private initForm() {
@@ -78,6 +84,16 @@ export class JobNewComponent implements OnInit {
     this.newJob(this.jobForm.value);
   }
 
+  onAddThenCalcByLength(){
+    this.andCalculate = "length";
+    this.newJob(this.jobForm.value);
+  }
+
+  onAddThenCalcByWeight(){
+    this.andCalculate = "weight";
+    this.newJob(this.jobForm.value);
+  }
+
   newJob(data: Job) {
     this.error= null;
     this.isError = false;
@@ -98,16 +114,6 @@ export class JobNewComponent implements OnInit {
         this.router.navigate([".."], {relativeTo: this.route})
       }
     }, 50);
-  }
-
-  onAddThenCalcByLength(){
-    this.andCalculate = "length";
-    this.newJob(this.jobForm.value);
-  }
-
-  onAddThenCalcByWeight(){
-    this.andCalculate = "weight";
-    this.newJob(this.jobForm.value);
   }
 
   onCancel(){

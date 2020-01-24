@@ -30,17 +30,24 @@ export class JobOpsEditComponent implements OnInit {
   ngOnInit() {
     this.search = this.operationServ.slashToDash(this.search);
     this.canInput = this.auth.isAuthenticated;
+    this.getMachines();
+  }
+
+  getMachines(){
     this.mach.fetchMachinesByType()
     .subscribe(machines => {
       this.machines = machines;
-      this.operationServ.fetchOp(this.search)
-      .subscribe(operation => {
-        this.operation = operation;
-        this.initForm();
-      });
+      this.getOp();
     });
   }
 
+  getOp(){
+    this.operationServ.fetchOp(this.search)
+    .subscribe(operation => {
+      this.operation = operation;
+      this.initForm();
+    });
+  }
 
   private initForm() {
     let machine = this.operation.machine;

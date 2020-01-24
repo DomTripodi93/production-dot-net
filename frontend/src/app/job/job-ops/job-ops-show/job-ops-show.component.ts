@@ -13,9 +13,6 @@ import { Subscription } from 'rxjs';
 export class JobOpsShowComponent implements OnInit, OnDestroy {
   @Input() operation: string;
   opSubscription: Subscription;
-  isFetching = false;
-  isError = false;
-  error = '';
   operations: Operation[] = [];
   id = '';
   showForm = false;
@@ -55,7 +52,6 @@ export class JobOpsShowComponent implements OnInit, OnDestroy {
   }
 
   getOps() {
-    this.isFetching = true;
       this.opServ.fetchOpByJob(this.operation)
         .subscribe(ops => {
           ops.forEach(op => {
@@ -66,12 +62,7 @@ export class JobOpsShowComponent implements OnInit, OnDestroy {
           });
           this.operations = ops;
           this.dayServ.dates = [];
-          this.isFetching = false;
-        }, error => {
-          this.isFetching = false;
-          this.isError = true;
-          this.error = error.message
-        })
+        });
   }
 
   opEdit(index: number){

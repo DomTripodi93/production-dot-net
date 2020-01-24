@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 })
 export class JobFindShowComponent implements OnInit, OnDestroy {
   @Input() jobInput: Job;
-  editJob = false
+  editJob = false;
   isFetching = false;
   isError = false;
   error = '';
@@ -34,6 +34,10 @@ export class JobFindShowComponent implements OnInit, OnDestroy {
         this.getJob();
       }
     })); 
+    this.setJobs();
+  }
+
+  setJobs(){
     if (this.jobInput){
       this.job = ""+this.jobInput.id;
       this.oneJob = this.jobInput;
