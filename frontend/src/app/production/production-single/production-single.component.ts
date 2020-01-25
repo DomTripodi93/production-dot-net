@@ -38,7 +38,7 @@ export class ProductionSingleComponent implements OnInit, OnDestroy {
 
   onDelete(){
     if (confirm("Are you sure you want to delete this lot?")){
-      this.pro.deleteProduction(this.production.id).subscribe(()=>{
+      this.pro.deleteProduction(this.production.id, this.production.quantity).subscribe(()=>{
         this.deleted = true;
         this.pro.proChanged.next();
       });

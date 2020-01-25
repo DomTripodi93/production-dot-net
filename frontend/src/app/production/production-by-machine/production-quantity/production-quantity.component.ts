@@ -71,7 +71,7 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
           this.machEditCount(false);
         });        
       } else if (this.editQuantityForm.value.quantity != this.quantity) {
-        this.proServ.deleteProduction(this.id).subscribe();
+        this.proServ.deleteProduction(this.id, +this.quantity).subscribe();
         this.updatedProduction.emit(this.editQuantityForm.value);
         this.notEdit.emit(false);
         this.machEditCount(false);

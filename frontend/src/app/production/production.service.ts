@@ -183,8 +183,16 @@ export class ProductionService {
       );
   }
 
-  deleteProduction(id){
+  deleteProduction(id, originalQuantity){
     this.fetchProductionById(id).subscribe((object)=>{
+      let opSearch = this.opServ.slashToDash(object.opNumber) + "&job=" + object.jobNumber;
+      this.opServ.fetchOp(opSearch).subscribe((op)=>{
+        op.remainingQuantity = "" + (+op.remainingQuantity + originalQuantity);
+        let setValue = {remainingQuantity: op.remainingQuantity};
+        this.opServ.changeOpRemaining(setValue, opSearch).subscribe(()=>{
+          this.changeJobInfo(object.jobNumber);
+        });
+      })
       let oldValues = JSON.stringify(object);
       this.auth.logChanges(oldValues, this.model, "Delete", id).subscribe();
     })
@@ -194,4 +202,5 @@ export class ProductionService {
         }
       )
   }
+
 }
