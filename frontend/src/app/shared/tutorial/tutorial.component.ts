@@ -240,7 +240,6 @@ export class TutorialComponent implements OnInit, OnDestroy {
         if (prod.length > 0){
           if (prod.length > 1){
             this.latheProductionMulti = true;
-            this.checkMachines();
           } else {
             this.latheProductionMulti = false;
           }
