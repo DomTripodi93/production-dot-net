@@ -18,6 +18,7 @@ export class ProductionService {
   setMach = "";
   editMach = "";
   openEdit = true;
+  deleted = 0;
 
   constructor(
       private http: HttpClient,
@@ -93,22 +94,26 @@ export class ProductionService {
 
   addProduction(data: Production){
     let search = this.opServ.slashToDash(data.opNumber) + "&job=" + data.jobNumber;
-    this.opServ.fetchOp(search).subscribe((op)=>{
-      if (+op.remainingQuantity > 0){
-        let value = +op.remainingQuantity - data.quantity;
-        if (value >= 0){
-          let setValue = {remainingQuantity: "" + value};
-          this.opServ.changeOpRemaining(setValue, search).subscribe(()=>{
-            this.changeJobInfo(data.jobNumber);
-          });
-        } else {
-          let setValue = {remainingQuantity: "" + 0};
-          this.opServ.changeOpRemaining(setValue, search).subscribe(()=>{
-            this.changeJobInfo(data.jobNumber);
-          });
+    if (this.openEdit){
+      this.deleted -= data.quantity;
+    } else {
+      this.opServ.fetchOp(search).subscribe((op)=>{
+        if (+op.remainingQuantity > 0){
+          let value = +op.remainingQuantity - data.quantity;
+          if (value >= 0){
+            let setValue = {remainingQuantity: "" + value};
+            this.opServ.changeOpRemaining(setValue, search).subscribe(()=>{
+              this.changeJobInfo(data.jobNumber);
+            });
+          } else {
+            let setValue = {remainingQuantity: "" + 0};
+            this.opServ.changeOpRemaining(setValue, search).subscribe(()=>{
+              this.changeJobInfo(data.jobNumber);
+            });
+          }
         }
-      }
-    })
+      })
+    }
     data.machine = this.auth.splitJoin(data.machine);
     data.opNumber = this.opServ.slashToDash(data.opNumber);
       return this.http.post(
@@ -173,7 +178,8 @@ export class ProductionService {
       );
   }
 
-  setQuantity(data, id){
+  setQuantity(data, id, difference){
+    this.deleted += difference;
     this.fetchProductionById(id).subscribe((object)=>{
       let oldValues = JSON.stringify(object);
       this.auth.logChanges(oldValues, this.model, "Average", id).subscribe();
@@ -185,14 +191,18 @@ export class ProductionService {
 
   deleteProduction(id, originalQuantity){
     this.fetchProductionById(id).subscribe((object)=>{
-      let opSearch = this.opServ.slashToDash(object.opNumber) + "&job=" + object.jobNumber;
-      this.opServ.fetchOp(opSearch).subscribe((op)=>{
-        op.remainingQuantity = "" + (+op.remainingQuantity + originalQuantity);
-        let setValue = {remainingQuantity: op.remainingQuantity};
-        this.opServ.changeOpRemaining(setValue, opSearch).subscribe(()=>{
-          this.changeJobInfo(object.jobNumber);
-        });
-      })
+      if (this.openEdit){
+        this.deleted += originalQuantity;
+      } else {
+        let opSearch = this.opServ.slashToDash(object.opNumber) + "&job=" + object.jobNumber;
+        this.opServ.fetchOp(opSearch).subscribe((op)=>{
+          op.remainingQuantity = "" + (+op.remainingQuantity + originalQuantity);
+          let setValue = {remainingQuantity: op.remainingQuantity};
+          this.opServ.changeOpRemaining(setValue, opSearch).subscribe(()=>{
+            this.changeJobInfo(object.jobNumber);
+          });
+        })
+      }
       let oldValues = JSON.stringify(object);
       this.auth.logChanges(oldValues, this.model, "Delete", id).subscribe();
     })

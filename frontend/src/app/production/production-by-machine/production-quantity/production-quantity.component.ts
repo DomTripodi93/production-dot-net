@@ -45,9 +45,11 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
   }
 
   machEditCount(isOpen: boolean){
-    this.proServ.openEdit = isOpen;
-    this.proServ.editMach = this.mach.machine;
-    this.proServ.checkEdits.next();
+    setTimeout(()=>{
+      this.proServ.openEdit = isOpen;
+      this.proServ.editMach = this.mach.machine;
+      this.proServ.checkEdits.next();
+    }, 1000)
   }
 
   private initForm() {
@@ -66,8 +68,9 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
     }
     if (this.id){
       if (this.editQuantityForm.value.quantity != this.quantity && this.editQuantityForm.value.quantity != 0){
+        let difference = +this.editQuantityForm.value.quantity - +this.quantity;
         this.quantity = this.editQuantityForm.value.quantity;
-        this.proServ.setQuantity(this.editQuantityForm.value, this.id).subscribe(()=>{
+        this.proServ.setQuantity(this.editQuantityForm.value, this.id, difference).subscribe(()=>{
           this.updatedProduction.emit(this.editQuantityForm.value);
           this.notEdit.emit(false);
           this.machEditCount(false);

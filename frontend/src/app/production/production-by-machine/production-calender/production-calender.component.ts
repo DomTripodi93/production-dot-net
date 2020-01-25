@@ -55,6 +55,7 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
   firstProMonth: number;
   displayMax: number;
   editCount = 0;
+  remaining = 0;
 
   constructor(
     public auth: AuthService,
@@ -89,16 +90,38 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
   editsOpen(){
     if (this.proServ.editMach == this.machine.machine){
       if (this.proServ.openEdit){
+        if(this.editCount == 0){
+          this.setRemaining();
+        }
         this.editCount += 1;
       } else {
         this.editCount -= 1;
         if (this.editCount == 0){
           this.getProduction();
           this.getTotal();
+          
+          this.updateRemaining();
           this.editMode = false;
         }
       }
     }
+  }
+
+  setRemaining(){
+    let opSearch = this.opServ.slashToDash(this.machine.currentOp) + "&job=" + this.machine.currentJob;
+    this.opServ.fetchOp(opSearch).subscribe((op)=>{
+      this.remaining = +op.remainingQuantity;
+    })    
+  }
+
+  updateRemaining(){
+    let opSearch = this.opServ.slashToDash(this.machine.currentOp) + "&job=" + this.machine.currentJob;
+    let remainingQuantity = "" + (this.remaining + this.proServ.deleted);
+    let setValue = {remainingQuantity: remainingQuantity};
+    this.opServ.changeOpRemaining(setValue, opSearch).subscribe(()=>{
+      this.proServ.changeJobInfo(this.machine.currentJob);
+      this.proServ.deleted = 0;
+    });
   }
 
   setMonths(){
