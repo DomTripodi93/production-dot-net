@@ -1,12 +1,10 @@
-import { Injectable, Output } from '@angular/core';
-import { map, tap } from "rxjs/operators";
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map } from "rxjs/operators";
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../shared/auth.service';
 import { Subject } from 'rxjs';
 import { Production } from './production.model';
-import { Part } from '../part/part.model';
 import { JobService } from '../job/job.service';
-import { Job } from '../job/job.model';
 import { OpService } from '../job/job-ops/operation.service';
 import { DaysService } from '../shared/days/days.service';
 
@@ -15,8 +13,11 @@ export class ProductionService {
   proChanged = new Subject();
   proChangedAvg = new Subject();
   proSubmit = new Subject();
+  checkEdits = new Subject();
   model = "Production"
   setMach = "";
+  editMach = "";
+  openEdit = true;
 
   constructor(
       private http: HttpClient,
@@ -192,16 +193,5 @@ export class ProductionService {
         responseType: 'text'
         }
       )
-    .pipe(
-        tap(event => {
-            console.log(event);
-            if (event.type === HttpEventType.Sent){
-                console.log('control')
-            }
-            if (event.type === HttpEventType.Response) {
-                console.log(event.body);
-            }
-        })
-    );
   }
 }

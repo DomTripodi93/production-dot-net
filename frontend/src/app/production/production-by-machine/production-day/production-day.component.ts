@@ -41,6 +41,7 @@ export class ProductionDayComponent implements OnInit {
   }
 
   getProduction(){
+    this.production = [];
     let search = "formach=" + this.auth.splitJoin(this.mach.machine) 
       + "&job=" + this.mach.currentJob 
       + "&op=" + this.opServ.slashToDash(this.mach.currentOp) 

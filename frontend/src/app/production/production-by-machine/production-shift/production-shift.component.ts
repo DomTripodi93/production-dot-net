@@ -52,6 +52,10 @@ export class ProductionShiftComponent implements OnInit, OnDestroy {
     }
   }
 
+  notEdit(){
+    this.editMode = false;
+  }
+
   ngOnDestroy(){
     this.proSubscription.unsubscribe();
   }

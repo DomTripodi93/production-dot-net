@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ProductionService } from '../production.service';
+import { ProductionService } from '../../production.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
 import { JobService } from 'src/app/job/job.service';
 import { Machine } from 'src/app/machine/machine.model';
 import { OpService } from 'src/app/job/job-ops/operation.service';
-import { Production } from '../production.model';
+import { Production } from '../../production.model';
 
 @Component({
   selector: 'app-production-quantity',
@@ -15,6 +15,7 @@ import { Production } from '../production.model';
 })
 export class ProductionQuantityComponent implements OnInit, OnDestroy {
   @Output() updatedProduction = new EventEmitter<Production>();
+  @Output() notEdit = new EventEmitter<boolean>();
   @Input() quantity: string;
   @Input() id: string;
   @Input() mach: Machine;
@@ -34,6 +35,7 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.machEditCount(true);
     this.subscriptions.push(
       this.proServ.proSubmit.subscribe(()=>{
         this.onSubmit();
@@ -42,10 +44,21 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
     this.initForm();
   }
 
+  machEditCount(isOpen: boolean){
+    this.proServ.openEdit = isOpen;
+    this.proServ.editMach = this.mach.machine;
+    this.proServ.checkEdits.next();
+  }
+
   private initForm() {
     this.editQuantityForm = new FormGroup({
       'quantity': new FormControl(this.quantity)
     });
+  }
+
+  submitAll(){
+    this.proServ.proSubmit.next();
+    setTimeout(()=>{this.proServ.proChanged.next();}, 1000);
   }
 
   onSubmit(){
@@ -54,10 +67,17 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
         this.quantity = this.editQuantityForm.value.quantity;
         this.proServ.setQuantity(this.editQuantityForm.value, this.id).subscribe(()=>{
           this.updatedProduction.emit(this.editQuantityForm.value);
+          this.notEdit.emit(false);
+          this.machEditCount(false);
         });        
       } else if (this.editQuantityForm.value.quantity != this.quantity) {
         this.proServ.deleteProduction(this.id).subscribe();
         this.updatedProduction.emit(this.editQuantityForm.value);
+        this.notEdit.emit(false);
+        this.machEditCount(false);
+      } else {
+        this.notEdit.emit(false);
+        this.machEditCount(false);
       }
     } else if (this.editQuantityForm.value.quantity != 0) {
       this.quantity = this.editQuantityForm.value.quantity;
@@ -75,14 +95,14 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
         this.proServ.addProduction(this.production).subscribe((response: Production)=>{
           this.production = response;
           this.updatedProduction.emit(this.production);
+          this.notEdit.emit(false);
+          this.machEditCount(false);
         });
       })
-    } 
-  }
-
-  submitAll(){
-    this.proServ.proSubmit.next();
-    setTimeout(()=>{this.proServ.proChanged.next();},200);
+    } else {
+      this.notEdit.emit(false);
+      this.machEditCount(false);
+    }
   }
 
   ngOnDestroy(){

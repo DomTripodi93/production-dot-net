@@ -54,6 +54,7 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
   firstProDay: number;
   firstProMonth: number;
   displayMax: number;
+  editCount = 0;
 
   constructor(
     public auth: AuthService,
@@ -66,6 +67,41 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.editMode = false;
+    this.setMonths();
+    this.getProduction();
+    this.getTotal();
+    this.subscriptions.push(this.proServ.proChanged.subscribe(()=>{
+      this.getProduction();
+      this.getTotal();
+    }));
+    this.subscriptions.push(this.proServ.proChangedAvg.subscribe(()=>{
+      this.editMode = false;
+      this.getProduction();
+    }));
+    this.subscriptions.push(this.machServ.machChanged.subscribe(()=>{
+      this.editJob = false;
+    }));
+    this.subscriptions.push(this.proServ.checkEdits.subscribe(()=>{
+      this.editsOpen();
+    }));
+  }
+
+  editsOpen(){
+    if (this.proServ.editMach == this.machine.machine){
+      if (this.proServ.openEdit){
+        this.editCount += 1;
+      } else {
+        this.editCount -= 1;
+        if (this.editCount == 0){
+          this.getProduction();
+          this.getTotal();
+          this.editMode = false;
+        }
+      }
+    }
+  }
+
+  setMonths(){
     let monthNum = this.month + 1;
     this.monthHold = "" + monthNum;
     if (this.month > 0){
@@ -81,20 +117,6 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
       this.lastMonthHold ="0"+this.lastMonthHold;
     }
     this.defaultMonth = this.year + "-" + this.monthHold;
-    this.getProduction();
-    this.getTotal();
-    this.subscriptions.push(this.proServ.proChanged.subscribe(()=>{
-      this.editMode = false;
-      this.getProduction();
-      this.getTotal();
-    }));
-    this.subscriptions.push(this.proServ.proChangedAvg.subscribe(()=>{
-      this.editMode = false;
-      this.getProduction();
-    }));
-    this.subscriptions.push(this.machServ.machChanged.subscribe(()=>{
-      this.editJob = false;
-    }));
   }
 
   getProduction(){
@@ -133,7 +155,6 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
 
   submitAll(){
     this.proServ.proSubmit.next();
-    setTimeout(()=>{this.proServ.proChanged.next();},200);
   }
 
   cancel(){
