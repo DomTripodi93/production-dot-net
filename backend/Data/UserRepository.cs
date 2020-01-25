@@ -52,7 +52,8 @@ namespace BackEnd.Data
         {
             var changes = _context.ChangeLogs
                 .Where(m => m.userId == userId)
-                .Where(c => c.ChangedModel == model);
+                .Where(c => c.ChangedModel == model)
+                .OrderByDescending(c => c.TimeStamp);
 
             return await PagedList<ChangeLog>.CreateAsync(changes, changeLogParams.PageNumber, changeLogParams.PageSize);
         }
