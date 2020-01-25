@@ -15,7 +15,7 @@
 </h5>
 <div *ngIf="editMode && prod">
     <p class="small-break"></p>
-  <app-production-quantity (notEdit)="notEdit()" (updatedProduction)="updateProduction($event)" [quantity]="prod.quantity" [mach]="mach" [id]="prod.id"></app-production-quantity>
+  <app-production-quantity (notEdit)="notEdit()" (updatedProduction)="updateProduction($event)" [quantity]="prod.quantity" [mach]="mach" [date]="date" [id]="prod.id"></app-production-quantity>
 </div>
 <div *ngIf="editMode && !prod">
     <p class="small-break"></p>

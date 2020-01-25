@@ -58,10 +58,12 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
 
   submitAll(){
     this.proServ.proSubmit.next();
-    setTimeout(()=>{this.proServ.proChanged.next();}, 1000);
   }
 
   onSubmit(){
+    if (this.editQuantityForm.value.quantity == null){
+      this.editQuantityForm.value.quantity = 0;
+    }
     if (this.id){
       if (this.editQuantityForm.value.quantity != this.quantity && this.editQuantityForm.value.quantity != 0){
         this.quantity = this.editQuantityForm.value.quantity;
@@ -71,10 +73,11 @@ export class ProductionQuantityComponent implements OnInit, OnDestroy {
           this.machEditCount(false);
         });        
       } else if (this.editQuantityForm.value.quantity != this.quantity) {
-        this.proServ.deleteProduction(this.id, +this.quantity).subscribe();
-        this.updatedProduction.emit(this.editQuantityForm.value);
-        this.notEdit.emit(false);
-        this.machEditCount(false);
+        this.proServ.deleteProduction(this.id, +this.quantity).subscribe(()=>{
+          this.updatedProduction.emit(this.editQuantityForm.value);
+          this.notEdit.emit(false);
+          this.machEditCount(false);
+        });
       } else {
         this.notEdit.emit(false);
         this.machEditCount(false);

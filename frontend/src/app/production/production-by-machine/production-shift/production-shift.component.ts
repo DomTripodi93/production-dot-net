@@ -46,7 +46,7 @@ export class ProductionShiftComponent implements OnInit, OnDestroy {
     if (!this.prod){
       this.prod = $event;
     } else if ($event.quantity > 0){
-      this.prod.quantity = $event.quantity;
+      this.prod = $event;
     } else {
       this.prod = null;
     }
