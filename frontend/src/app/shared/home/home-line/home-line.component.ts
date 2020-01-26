@@ -22,8 +22,14 @@ export class HomeLineComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.setJob();
+  }
+
+  setJob(){
     if (this.mach){
-      this.getJobFromMach();
+      if (this.mach.currentJob != "None"){
+        this.getJobFromMach();
+      }
     } else {
       this.jobInUse = this.job;
     }

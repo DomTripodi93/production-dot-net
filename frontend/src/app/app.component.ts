@@ -21,21 +21,25 @@ export class AppComponent implements OnInit {
   ngOnInit(){
     this.auth.authChanged.subscribe(()=>{
       this.auth.apiUrl = this.auth.authApiUrl + "/" + this.auth.user;
-      setTimeout(()=>{
-        if (this.auth.isAuthenticated){
-          this.auth.checkSettings().subscribe(()=>{},()=>{
-            this.auth.logout();
-          })
-        }
-      }, 50);
+      if (this.auth.isAuthenticated){
+        this.auth.checkSettings().subscribe(()=>{},()=>{
+          this.auth.logout();
+        });
+      };
     });
     //Subscription to logging in and out to check user token against the backend, if 
     // the token fails, there will be an error, triggering the logout function in 
     // the auth service
     
+    this.checkUser();
+    //Sets initial base user values, and settings
+
     this.setTitle(this.title)
     //Sets the page title to the app title, as opposed to the app identifier "frontend"
-    
+
+  }
+
+  checkUser(){    
     this.auth.user = localStorage.getItem('id'),
     //Sets user id number to a stored value from login
     

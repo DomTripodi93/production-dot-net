@@ -26,37 +26,42 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     if (this.auth.user){
-      this.getLatheData();
-      this.getMillData();
+      this.getMachines("mill");
+      this.getMachines("lathe");
     }
   }
 
-  getLatheData(){
-    this.getMachines("lathe");
-  }
-  //Sets values for Lathes and Lathe Jobs for home dashboard
-
-  getMillData(){
-    this.getMachines("mill");
-  }
-  //Sets values for Mills and Mill Jobs for home dashboard
-
   getMachines(type: string){
     this.machServ.fetchMachinesByType(type).subscribe(machines => {
-      if (type == "lathe"){
-        this.lathes = machines;
-        machines.forEach(mach=>{
-          if (mach.currentJob != "None"){
-            this.currentLatheJobs.push(mach.currentJob);
-          }
-        })
-      } else {
-        this.mills = machines;
+      if (machines.length > 0){
+        if (type == "lathe"){
+          this.lathes = machines;
+          machines.forEach(mach=>{
+            if (mach.currentJob != "None"){
+              this.currentLatheJobs.push(mach.currentJob);
+            }
+          })
+        } else {
+          this.mills = machines;
+        }
+        this.checkJobs(type);
       }
-      this.getJobs(type);
     })
   }
   //Sets values for machines based on type and calls function for job setting by type
+
+  checkJobs(type: string){
+    this.jobServ.fetchJobsByType(1, 6, type)
+      .subscribe(jobs => {
+        if (jobs.result.length > 0){
+          this.getJobs(type);
+        } else {
+          return false;
+        }
+      }
+    )
+  }
+
 
   getJobs(type: string){
     this.jobServ.fetchJobsByType(1, 20, type).subscribe(jobs => {

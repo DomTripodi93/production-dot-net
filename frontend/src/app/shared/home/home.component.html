@@ -1,7 +1,7 @@
 <div class="col-xs-12 col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1">
     <div *ngIf="auth.user" class="grid50">
         <div>
-            <div class="border">
+            <div *ngIf="currentLatheJobs.length > 0" class="border">
                 <div class="thin">
                     <h4>Current Lathe Jobs</h4>
                     <div class="grid20">
@@ -38,7 +38,7 @@
         </div>
         <div></div>
         <div>
-            <div class="border">
+            <div *ngIf="currentMillJobs.length > 0" class="border">
                 <div class="thin">
                     <h4>Current Mill Jobs</h4>
                     <div class="grid25">
@@ -59,10 +59,10 @@
                 <div class="thin">
                     <h4>Unused Active Mill Jobs</h4>
                     <div class="grid25">
-                        <h6>Job<br>Number:</h6>
-                        <h6>Order<br>Quantity:</h6>
-                        <h6>Remaining<br>Production:</h6>
-                        <h6>Delivery<br>Date:</h6>
+                        <h6 class="border-inner-header-left"><br>Job<br>Number:</h6>
+                        <h6 class="border-inner-header-left"><br>Order<br>Quantity:</h6>
+                        <h6 class="border-inner-header-left"><br>Remaining<br>Production:</h6>
+                        <h6 class="border-inner-header-right"><br>Delivery<br>Date:</h6>
                     </div>
                     <div *ngFor="let job of unusedMillJobs">
                         <app-home-line [job]="job"></app-home-line>
@@ -71,6 +71,14 @@
                 <br>
                 <br>
             </div>
+        </div>
+    </div>
+    <div *ngIf="auth.user && currentMillJobs.length == 0 && unusedMillJobs.length == 0 && currentLatheJobs.length == 0 && unusedLatheJobs.length == 0">
+        <div class="border centered middle">
+            <h3>You don't have any jobs to display progress on your dashboard yet!</h3>
+            <h4>Follow the tutorial above, or add a Machine, and Parts so that you can 
+            create your first Job, and Operations of the job to track the progress of.</h4>
+            <h4>Once you add a job, its progress will be displayed here on your dashboard!</h4>
         </div>
     </div>
     <div class="border" *ngIf="!auth.user">

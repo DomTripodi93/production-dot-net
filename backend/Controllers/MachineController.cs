@@ -127,8 +127,6 @@ namespace BackEnd.Controllers
                 _repo.Delete(machToDelete);
                 await _repo.SaveAll();
                 return Ok(machToDelete.Machine +" was deleted!");
-            
-
         }
         
     }
