@@ -43,41 +43,57 @@ export class MachineEditComponent implements OnInit {
     this.mach.fetchMachineByName(this.machName)
     .subscribe(machine => {
       this.machine = machine;
+      this.checkMachType();
       this.getJobs();
     });
   }
   //Gets machine to set current values for form defaults
 
   getJobs(){
+    this.jobServ.fetchJobsByType(this.page, 6, this.machType).subscribe(paginatedResponse =>{
+      let response = paginatedResponse.result;
+      this.checkMoreJobs(paginatedResponse.pagination.totalPages, paginatedResponse.pagination.currentPage);
+      if (response.length==0){
+        this.initForm();
+      } else {
+        this.addJobOptions(response);
+      }
+    });    
+  }
+  //Gets a set of 6 active jobs based on the current results page
+
+  checkMachType(){
     if (this.auth.machType){
       this.machType = this.auth.machType;
     } else {
       this.machType = "lathe";
     }
-    //Checks if machine type is set, and explicitly specifies it for hourly job/op 
-    // editing access
-    this.jobServ.fetchJobsByType(this.page, 6, this.machType).subscribe(paginatedResponse =>{
-      let goneThrough = 0;
-      let response = paginatedResponse.result;
-      if (paginatedResponse.pagination.totalPages == paginatedResponse.pagination.currentPage){
-        this.moreJobs = false;
-      }
-      if (response.length==0){
-        this.initForm();
-      } else {
-        response.forEach(job => {
-          this.jobs.push(job.jobNumber);
-          goneThrough++;
-          if (goneThrough == response.length){
-            this.changeOps(this.machine.currentJob);
-            this.initForm();
-          }
-        });
-      }
-    });    
   }
-  //Gets a set of 6 active jobs based on the current page
+  //Checks if machine type is set, and explicitly specifies it to "lathe" 
+  // when called from the hourly component editing access
 
+  checkMoreJobs(total, current){
+    if (total == current){
+      this.moreJobs = false;
+    }
+  }
+  //Checks if the current page of paginated results is the last page, if it is the last page
+  // it will also set the boolean value that controls the ability to call more jobs to false
+
+  addJobOptions(jobs){
+    jobs.forEach(job => {
+      let goneThrough = 0;
+      this.jobs.push(job.jobNumber);
+      goneThrough++;
+      if (goneThrough == jobs.length){
+        this.changeOps(this.machine.currentJob);
+        this.initForm();
+      }
+    });
+  }
+  //Adds job number for each job related to the machine type to an array of options 
+  // for the currentJob field 
+  
 
   private initForm() {
     this.editMachineForm = new FormGroup({
@@ -108,10 +124,20 @@ export class MachineEditComponent implements OnInit {
   // selected job
 
   onSubmit(){
-    this.mach.setCurrentJob(this.editMachineForm.value, this.machName).subscribe(()=>{
+    if (this.editMachineForm.value.currentJob != this.machine.currentJob){
+      this.updateMachine();
+    } else if (this.editMachineForm.value.currentOp != this.machine.currentOp) {
+      this.updateMachine();
+    } else{
       this.mach.machChanged.next();
       this.hourServ.hourlyChanged.next();
-    },()=>{
+    }
+  }
+  //Checks if values have been changed, and calls the update method if they are,
+  // and closes the form without updating if they have not changed"
+
+  updateMachine(){
+    this.mach.setCurrentJob(this.editMachineForm.value, this.machName).subscribe(()=>{
       this.mach.machChanged.next();
       this.hourServ.hourlyChanged.next();
     });

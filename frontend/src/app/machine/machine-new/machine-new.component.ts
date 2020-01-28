@@ -66,7 +66,7 @@ export class MachineNewComponent implements OnInit {
       "machType": new FormControl(this.auth.machType)
     });
   }
-  //initializes
+  //initializes new machine form
   
   onSubmit(){
     this.mach.addMachine(this.machineForm.value).subscribe(()=>{
