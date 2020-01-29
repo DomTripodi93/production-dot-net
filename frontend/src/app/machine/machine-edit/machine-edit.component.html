@@ -4,7 +4,10 @@
 <div *ngIf="noJobs">
   <h3>Please add jobs to use for machine editing</h3>
 </div>
-<form *ngIf="canInput && editMachineForm && ops" [formGroup]="editMachineForm" (ngSubmit)='onSubmit()' >
+<div *ngIf="fetching">
+  <h3>Please wait while we populate the job options</h3>
+</div>
+<form *ngIf="canInput && editMachineForm && jobs.length > 1" [formGroup]="editMachineForm" (ngSubmit)='onSubmit()' >
 <div class="form-group">
   <label for="currentJob">Job</label>
   <select

@@ -74,7 +74,7 @@ export class JobNewComponent implements OnInit {
       "mainFacing": new FormControl(mainFacing),
       "subFacing": new FormControl(subFacing),
       "machType": new FormControl(this.auth.machType),
-      "deliveryDate": new FormControl(this.date)
+      "deliveryDate": new FormControl(this.date, Validators.required)
     });
   }
 

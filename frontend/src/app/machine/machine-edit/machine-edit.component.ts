@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { MachineService } from '../machine.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -26,13 +26,15 @@ export class MachineEditComponent implements OnInit {
   moreJobs: boolean = true;
   machType: string;
   noJobs = false;
+  fetching = false;
   
   constructor(
     private mach: MachineService,
     private jobServ: JobService,
     private auth: AuthService,
     private opServ: OpService,
-    private hourServ: HourlyService
+    private hourServ: HourlyService,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -60,6 +62,7 @@ export class MachineEditComponent implements OnInit {
       this.checkMoreJobs(paginatedResponse.pagination.totalPages, paginatedResponse.pagination.currentPage);
       if (response.length == 0){
         this.noJobs = true;
+        this.fetching = false;
       } else {
         this.addJobOptions(response);
       }
@@ -73,6 +76,7 @@ export class MachineEditComponent implements OnInit {
     } else {
       this.machType = "lathe";
     }
+    this.initForm();
   }
   //Checks if machine type is set, and explicitly specifies it to "lathe" 
   // when called from the hourly component editing access
@@ -92,7 +96,7 @@ export class MachineEditComponent implements OnInit {
       goneThrough++;
       if (goneThrough == jobs.length){
         this.changeOps(this.machine.currentJob);
-        this.initForm();
+        this.cdRef.detectChanges();
       }
     });
   }
@@ -104,7 +108,7 @@ export class MachineEditComponent implements OnInit {
     this.editMachineForm = new FormGroup({
       'currentJob': new FormControl(this.machine.currentJob),
       'currentOp': new FormControl(this.machine.currentOp),
-      "machType": new FormControl(this.auth.machType)
+      'machType': new FormControl(this.machType)
     });
   }
   //Initializes form and sets default values for editing

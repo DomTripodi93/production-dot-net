@@ -35,7 +35,7 @@ export class PartShowComponent implements OnInit, OnDestroy{
         } else {
           this.getAllParts();
         }
-      }, 50);
+      }, 500);
     }));
   }
 
