@@ -30,3 +30,47 @@
     Cancel</button>
   </div>
   <br>
+</form>
+
+<form *ngIf="editHourlyForm" [formGroup]="editHourlyForm" (ngSubmit)='onSubmitEdit()'>
+  <div class='form-group'>
+    <div class="form-group">
+      <h5 for="quantity">Hard Quantity</h5>
+      <input 
+        formControlName = 'quantity'
+        type = "number" 
+        id = "quantity" 
+        class = "form-control">
+    </div>
+    <div class="form-group">
+      <h5 for="counterQuantity">Counter Quantity</h5>
+      <input 
+        formControlName='counterQuantity'
+        id="counterQuantity" 
+        class="form-control">
+    </div>
+    <div class="form-group">
+      <h5 for="time">Time</h5>
+      <input 
+        type="time" 
+        id="time" 
+        class="form-control"
+        formControlName='time'>
+    </div>
+    <br>
+    <div class="grid">
+      <button 
+        class="btn btn-success" 
+        type="submit"
+        [disabled]="!editHourlyForm.valid"
+      >
+      Edit</button>
+      <button 
+        type='button' 
+        class='btn btn-danger pull-right' 
+        (click)='onCancel()'
+      >
+      Cancel</button>
+    </div>
+  </div>
+</form>
