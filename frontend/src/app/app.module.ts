@@ -58,7 +58,7 @@ import { ProductionFindShowComponent } from './production/production-find/produc
 import { HourlySetTimeComponent } from './hourly/hourly-set-time/hourly-set-time.component';
 import { ChangeValueComponent } from './shared/settings/change-value/change-value.component';
 import { FooterComponent } from './shared/footer/footer.component';
-import { ProductionTotalComponent } from './production/production-total/production-total.component';
+import { ProductionTotalComponent } from './production/production-by-machine/production-total/production-total.component';
 import { ProductionMillMachComponent } from './production/production-by-machine/production-mill-mach/production-mill-mach.component';
 import { ProductionMillJobComponent } from './production/production-by-machine/production-mill-job/production-mill-job.component';
 import { ProductionMillOpComponent } from './production/production-by-machine/production-mill-op/production-mill-op.component';
