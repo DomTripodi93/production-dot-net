@@ -14,9 +14,8 @@ import { DaysService } from 'src/app/shared/days/days.service';
   styleUrls: ['./job-edit.component.css']
 })
 export class JobEditComponent implements OnInit {
-  @Input() jobNum: string;
+  @Input() job: Job;
   editJobForm: FormGroup;
-  job: Job;
   canInput = false;
   isError = false;
   error = "";
@@ -33,26 +32,23 @@ export class JobEditComponent implements OnInit {
 
   ngOnInit() {
     this.canInput = this.auth.isAuthenticated;
-    this.getJob();
+    this.setDate();
   }
 
-  getJob(){
-    this.jobServ.fetchJob(this.jobNum).subscribe(job => {
-      this.job = job;
-      this.date = this.dayServ.dateForForm(job.deliveryDate);
-      this.getParts();
-    });
+  setDate(){
+    this.date = this.dayServ.dateForForm(this.job.deliveryDate);
+    this.getParts();
   }
 
   getParts(){
     this.partServ.fetchPartsByType().subscribe(parts => {
       this.parts = parts;
-      this.initForm();
+      this.initEditForm();
     });
   }
 
 
-  private initForm() {
+  private initEditForm() {
     let orderQuantity = this.job.orderQuantity;
     let weightRecieved = this.job.weightRecieved;
     let oal = this.job.oal;
@@ -72,7 +68,7 @@ export class JobEditComponent implements OnInit {
     });
   }
 
-  onSubmit(){
+  onSubmitEdit(){
     this.job = this.editJobForm.value;
     this.editJob(this.job);
     if (this.auth.machType == "mill"){
@@ -83,7 +79,7 @@ export class JobEditComponent implements OnInit {
   }
 
   getOpForChange(){
-    this.opServ.fetchOpByJob(this.jobNum).subscribe(ops=>{
+    this.opServ.fetchOpByJob(this.job.jobNumber).subscribe(ops=>{
       ops.forEach(op=>{
         if (op.partsToDate){
           let rem = {remainingQuantity: this.editJobForm.value.orderQuantity - +op.partsToDate};
@@ -103,32 +99,19 @@ export class JobEditComponent implements OnInit {
 
   editJob(data: Job) {
     this.isError = false;
-    this.jobServ.editJob(data, this.jobNum).subscribe(()=>{},
+    this.jobServ.editJob(data, this.job.jobNumber).subscribe(()=>{
+      this.onCancel();
+    },
     () =>{
       this.isError = true;
     });
     if (this.isError){
       this.error = "Please submit valad parameters for update";
-    }else{
-      setTimeout(
-        ()=>{
-          this.jobServ.jobChanged.next();
-        }, 100
-      );
     }
   }
 
   onCancel(){
     this.jobServ.jobChanged.next();
-  }
-
-  onDelete(){
-    if (confirm("Are you sure you want to delete " +this.job.jobNumber+ "?")){
-      this.jobServ.deleteJob(this.jobNum).subscribe();
-      setTimeout(()=>{
-        this.jobServ.jobChanged.next();
-      }, 100)
-    }
   }
 
 }

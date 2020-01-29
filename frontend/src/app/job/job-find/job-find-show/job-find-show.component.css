@@ -8,12 +8,24 @@
     grid-template-columns: 100%;
 }
 
+.flex { 
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
 .border{
     border: solid;
 }
 
 .white-text{
     color: white;
+}
+
+.set-width{
+    width: 233.3px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 h3{
