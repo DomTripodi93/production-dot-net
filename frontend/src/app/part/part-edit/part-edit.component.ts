@@ -39,8 +39,9 @@ export class PartEditComponent implements OnInit {
       this.editRevForm.value.rev = this.opServ.slashToDash(this.editRevForm.value.rev);
     }
     if (+this.part.rev != this.editRevForm.value.rev){
-      this.partServ.changeRev(this.editRevForm.value, this.part.partNumber).subscribe();
-      this.partServ.partChanged.next();
+      this.partServ.changeRev(this.editRevForm.value, this.part.partNumber).subscribe(()=>{
+        this.partServ.partChanged.next();
+      });
     } 
   }
 
