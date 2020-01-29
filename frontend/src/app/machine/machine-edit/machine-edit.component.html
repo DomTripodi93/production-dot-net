@@ -1,68 +1,71 @@
 <div *ngIf="!canInput">
-  <h1>You must be logged in to add a machine lot!</h1>
+  <h3>You must be logged in to add a machine lot!</h3>
+</div>
+<div *ngIf="noJobs">
+  <h3>Please add jobs to use for machine editing</h3>
+</div>
+<form *ngIf="canInput && editMachineForm && ops" [formGroup]="editMachineForm" (ngSubmit)='onSubmit()' >
+<div class="form-group">
+  <label for="currentJob">Job</label>
+  <select
+    formControlName='currentJob'
+    type="text" 
+    id="currentJob" 
+    class="form-control"
+    (change)="changeOps($event.target.value)">
+    <option 
+      *ngFor = "let job of jobs" 
+      [selected]="job === machine.currentJob">
+        {{job}}
+      </option>
+  </select>     
+  <a *ngIf="moreJobs" (click)="addJobs()">Show More Jobs</a>
+</div>
+<div class="form-group">
+  <label for="currentOp">Op</label>
+  <select
+    formControlName='currentOp'
+    type="text" 
+    id="currentOp" 
+    class="form-control">
+    <option 
+      *ngFor = "let op of ops"
+      [selected]="op === machine.currentOp"
+      >
+        {{op}}
+      </option>
+  </select>        
+</div>
+  <div class="grid separator">
+    <div><br></div><div></div>
+    <button 
+      class="btn btn-success" 
+      type="submit"
+      [disabled]="!editMachineForm.valid"
+    >
+      Update
+    </button>
+    <button 
+      type='button' 
+      class='btn btn-danger pull-right' 
+      (click)='onCancel()'
+    >
+      Cancel
+    </button>
   </div>
-    <form *ngIf="canInput && editMachineForm && ops" [formGroup]="editMachineForm" (ngSubmit)='onSubmit()' >
-    <div class="form-group">
-      <label for="currentJob">Job</label>
-      <select
-        formControlName='currentJob'
-        type="text" 
-        id="currentJob" 
-        class="form-control"
-        (change)="changeOps($event.target.value)">
-        <option 
-          *ngFor = "let job of jobs" 
-          [selected]="job === machine.currentJob">
-            {{job}}
-          </option>
-      </select>     
-      <a *ngIf="moreJobs" (click)="addJobs()">Show More Jobs</a>
-    </div>
-    <div class="form-group">
-      <label for="currentOp">Op</label>
-      <select
-        formControlName='currentOp'
-        type="text" 
-        id="currentOp" 
-        class="form-control">
-        <option 
-          *ngFor = "let op of ops"
-          [selected]="op === machine.currentOp"
-          >
-            {{op}}
-          </option>
-      </select>        
-    </div>
-      <div class="grid separator">
-        <div><br></div><div></div>
-        <button 
-          class="btn btn-success" 
-          type="submit"
-          [disabled]="!editMachineForm.valid"
-        >
-          Update
-        </button>
-        <button 
-          type='button' 
-          class='btn btn-danger pull-right' 
-          (click)='onCancel()'
-        >
-          Cancel
-        </button>
-      </div>
-      <div class="grid2">
-        <button 
-          class="btn btn-success mobile" 
-          type="submit"
-          [disabled]="!editMachineForm.valid"
-        >
-          Update
-        </button>
-        <button 
-          type='button' 
-          class='btn btn-danger mobile' 
-          (click)='onCancel()'
-        >
-          Cancel
-        </button>
-      </div>
+  <div class="grid2">
+    <button 
+      class="btn btn-success mobile" 
+      type="submit"
+      [disabled]="!editMachineForm.valid"
+    >
+      Update
+    </button>
+    <button 
+      type='button' 
+      class='btn btn-danger mobile' 
+      (click)='onCancel()'
+    >
+      Cancel
+    </button>
+  </div>

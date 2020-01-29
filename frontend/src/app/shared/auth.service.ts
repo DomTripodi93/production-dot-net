@@ -22,8 +22,8 @@ export class AuthService {
   defaultBarEnd = "3";
   defaultBarCut = "48";
   isAuthenticated = true;
-  authApiUrl = 'https://prodstatbackend.azurewebsites.net/api';
-  apiUrl = 'https://prodstatbackend.azurewebsites.net/api/' + localStorage.getItem('id');
+  authApiUrl = 'http://localhost:5000/api';
+  apiUrl = 'http://localhost:5000/api/' + localStorage.getItem('id');
   authChanged = new Subject();
   machTypeChanged = new Subject();
   machType = "";  

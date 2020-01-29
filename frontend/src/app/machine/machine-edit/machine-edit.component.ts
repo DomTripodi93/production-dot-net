@@ -25,6 +25,7 @@ export class MachineEditComponent implements OnInit {
   page: number = 1;
   moreJobs: boolean = true;
   machType: string;
+  noJobs = false;
   
   constructor(
     private mach: MachineService,
@@ -57,8 +58,8 @@ export class MachineEditComponent implements OnInit {
     this.jobServ.fetchJobsByType(this.page, 6, this.machType).subscribe(paginatedResponse =>{
       let response = paginatedResponse.result;
       this.checkMoreJobs(paginatedResponse.pagination.totalPages, paginatedResponse.pagination.currentPage);
-      if (response.length != 0){
-        this.initForm();
+      if (response.length == 0){
+        this.noJobs = true;
       } else {
         this.addJobOptions(response);
       }
@@ -86,7 +87,7 @@ export class MachineEditComponent implements OnInit {
 
   addJobOptions(jobs){
     jobs.forEach(job => {
-      let goneThrough = 0;
+      let goneThrough = 1;
       this.jobs.push(job.jobNumber);
       goneThrough++;
       if (goneThrough == jobs.length){
