@@ -28,7 +28,7 @@
         </div>
       </div>
       <div *ngIf="editOp[i]">
-        <app-job-ops-edit [search]="operation.opNumber + '&job=' + operation.jobNumber"> </app-job-ops-edit>
+        <app-job-ops-edit [op]="operation" [search]="operation.opNumber + '&job=' + operation.jobNumber"> </app-job-ops-edit>
       </div>
     </div>
   </div>

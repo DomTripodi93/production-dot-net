@@ -1,120 +1,121 @@
 <div *ngIf="!canInput">
   <h1>You must be logged in to add a job lot!</h1>
+</div>
+<form *ngIf="canInput && jobForm" [formGroup]="jobForm" (ngSubmit)='onSubmit()' >
+  <div class="form-group">
+    <label for="jobNumber">Job#</label>
+    <input 
+      formControlName='jobNumber'
+      id="jobNumber" 
+      class="form-control"
+    >
   </div>
-    <form *ngIf="canInput && jobForm" [formGroup]="jobForm" (ngSubmit)='onSubmit()' >
-      <div class="form-group">
-        <label for="jobNumber">Job#</label>
-        <input 
-          formControlName='jobNumber'
-          id="jobNumber" 
-          class="form-control"
-        >
-      </div>
-      <div *ngIf="parts" class="form-group">
-        <label for="partNumber">Part#</label>
-        <select
-          formControlName='partNumber'
-          id="partNumber" 
-          class="form-control">
-          <option *ngFor = "let part of parts">{{part.partNumber}}</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="orderQuantity">Order Quantity (Optional)</label>
-        <input 
-          formControlName='orderQuantity'
-          type="number" 
-          id="orderQuantity" 
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="deliveryDate">Delivery Date</label>
-        <input 
-          formControlName='deliveryDate'
-          type="date" 
-          id="deliveryDate" 
-          class="form-control">
-      </div>
-      <div *ngIf="auth.machType == 'lathe'">
-        <div class="form-group">
-          <label for="weightRecieved">Weight Recieved (Optional)</label>
-          <input 
-            formControlName='weightRecieved'
-            type="number" 
-            id="weightRecieved" 
-            class="form-control">
-        </div>
-        <div class="form-group">
-          <label for="oal">Overall Length of Part (Optional)</label>
-          <input 
-            formControlName='oal'
-            type="number" 
-            id="oal" 
-            class="form-control">
-        </div>
-        <div class="form-group">
-          <label for="cutOff">Cut Off Size (Optional)</label>
-          <input 
-            formControlName='cutOff'
-            type="number" 
-            id="cutOff" 
-            class="form-control">
-        </div>
-        <div class="form-group">
-          <label for="mainFacing">Amount Faced on Main Spindle (Optional)</label>
-          <input 
-            formControlName='mainFacing'
-            type="number" 
-            id="mainFacing" 
-            class="form-control">
-        </div>
-        <div class="form-group">
-          <label for="subFacing">Amount Faced on Sub Spindle (Optional)</label>
-          <input 
-            formControlName='subFacing'
-            type="number" 
-            id="subFacing" 
-            class="form-control">
-        </div>
-      </div>
+  <div *ngIf="parts" class="form-group">
+    <label for="partNumber">Part#</label>
+    <select
+      formControlName='partNumber'
+      id="partNumber" 
+      class="form-control">
+      <option *ngFor = "let part of parts">{{part.partNumber}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="orderQuantity">Order Quantity (Optional)</label>
+    <input 
+      formControlName='orderQuantity'
+      type="number" 
+      id="orderQuantity" 
+      class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="deliveryDate">Delivery Date</label>
+    <input 
+      formControlName='deliveryDate'
+      type="date" 
+      id="deliveryDate" 
+      class="form-control">
+  </div>
+  <div *ngIf="auth.machType == 'lathe'">
+    <div class="form-group">
+      <label for="weightRecieved">Weight Recieved (Optional)</label>
+      <input 
+        formControlName='weightRecieved'
+        type="number" 
+        id="weightRecieved" 
+        class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="oal">Overall Length of Part (Optional)</label>
+      <input 
+        formControlName='oal'
+        type="number" 
+        id="oal" 
+        class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="cutOff">Cut Off Size (Optional)</label>
+      <input 
+        formControlName='cutOff'
+        type="number" 
+        id="cutOff" 
+        class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="mainFacing">Amount Faced on Main Spindle (Optional)</label>
+      <input 
+        formControlName='mainFacing'
+        type="number" 
+        id="mainFacing" 
+        class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="subFacing">Amount Faced on Sub Spindle (Optional)</label>
+      <input 
+        formControlName='subFacing'
+        type="number" 
+        id="subFacing" 
+        class="form-control">
+    </div>
+  </div>
+  <br><br>
+  <div class='grid'>
+    <button 
+      class="btn btn-success" 
+      type="submit"
+      [disabled]="!jobForm.valid"
+    >
+      Add Job
+    </button>
+    <button 
+      type='button' 
+      class='btn btn-danger pull-right' 
+      (click)='onCancel()'
+    >
+      Cancel
+    </button>
+    <br><br>
+    <div *ngIf="auth.machType == 'lathe'">
+      <button 
+        class="btn btn-success" 
+        type="button"
+        [disabled]="!jobForm.valid"
+        (click)='onAddThenCalcByLength()'
+      >
+        Add Job and Calculate Production by Length
+      </button>
       <br><br>
-      <div class='grid'>
-        <button 
-          class="btn btn-success" 
-          type="submit"
-          [disabled]="!jobForm.valid"
-        >
-          Add Job
-        </button>
-        <button 
-          type='button' 
-          class='btn btn-danger pull-right' 
-          (click)='onCancel()'
-        >
-          Cancel
-        </button>
-        <br><br>
-        <div *ngIf="auth.machType == 'lathe'">
-          <button 
-            class="btn btn-success" 
-            type="button"
-            [disabled]="!jobForm.valid"
-            (click)='onAddThenCalcByLength()'
-          >
-            Add Job and Calculate Production by Length
-          </button>
-          <br><br>
-          <button 
-            class="btn btn-success" 
-            type="button"
-            [disabled]="!jobForm.valid"
-            (click)='onAddThenCalcByWeight()'
-          >
-            Add Job and Calculate Production by Weight
-          </button>
-        </div>
-      </div>
-      <br><br>
-      <div *ngIf="isError">
-        <h3 class="danger">{{error}}</h3>
-      </div>
+      <button 
+        class="btn btn-success" 
+        type="button"
+        [disabled]="!jobForm.valid"
+        (click)='onAddThenCalcByWeight()'
+      >
+        Add Job and Calculate Production by Weight
+      </button>
+    </div>
+  </div>
+  <br><br>
+  <div *ngIf="isError">
+    <h3 class="danger">{{error}}</h3>
+  </div>
+</form>

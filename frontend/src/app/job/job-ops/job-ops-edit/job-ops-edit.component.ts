@@ -14,6 +14,7 @@ import { MachineService } from 'src/app/machine/machine.service';
 })
 export class JobOpsEditComponent implements OnInit {
   @Input() search: string;
+  @Input() op: Operation;
   editOpForm: FormGroup;
   operation: Operation;
   canInput = false;
@@ -28,7 +29,7 @@ export class JobOpsEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.search = this.operationServ.slashToDash(this.search);
+    console.log(this.op)
     this.canInput = this.auth.isAuthenticated;
     this.getMachines();
   }
@@ -37,25 +38,15 @@ export class JobOpsEditComponent implements OnInit {
     this.mach.fetchMachinesByType()
     .subscribe(machines => {
       this.machines = machines;
-      this.getOp();
-    });
-  }
-
-  getOp(){
-    this.operationServ.fetchOp(this.search)
-    .subscribe(operation => {
-      this.operation = operation;
+      this.search = this.operationServ.slashToDash(this.search);
       this.initForm();
     });
   }
 
   private initForm() {
-    let machine = this.operation.machine;
-    let cycleTime = this.operation.cycleTime;
-
     this.editOpForm = new FormGroup({
-      'cycleTime': new FormControl(cycleTime),
-      'machine': new FormControl(machine)
+      'cycleTime': new FormControl(this.op.cycleTime),
+      'machine': new FormControl(this.op.machine)
     });
   }
 
@@ -66,11 +57,7 @@ export class JobOpsEditComponent implements OnInit {
   editOp(data: Operation) {
     this.isError = false;
     this.operationServ.changeOp(data, this.search).subscribe(()=>{
-      setTimeout(
-        ()=>{
-          this.operationServ.opsChanged.next();
-        }, 100
-      );
+      this.onCancel();
     });
   }
 

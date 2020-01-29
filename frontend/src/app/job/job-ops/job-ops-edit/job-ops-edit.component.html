@@ -4,7 +4,7 @@
 </div>
   <form *ngIf="canInput && editOpForm" [formGroup]="editOpForm" (ngSubmit)='onSubmit()' >
     <h4>
-      <label for="jobNumber">Operation# {{operation.opNumber}}</label>
+      <label for="jobNumber">Operation# {{op.opNumber}}</label>
     </h4>
     <div *ngIf="machines" class="form-group">
       <h6 for="machine">Machine</h6>
@@ -14,7 +14,7 @@
         class="form-control"
         >
         <option *ngFor = "let machine of machines"
-        [selected]="machine === operation.machine" 
+        [selected]="machine === op.machine" 
         [value]="machine.machine">
           {{machine.machine}}
         </option>
