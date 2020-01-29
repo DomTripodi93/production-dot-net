@@ -35,8 +35,12 @@ export class MachineEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.canInput = this.auth.isAuthenticated;
+    this.checkAuth();
     this.pickMachine();
+  }
+
+  checkAuth(){
+    this.canInput = this.auth.isAuthenticated;
   }
 
   pickMachine(){
@@ -53,7 +57,7 @@ export class MachineEditComponent implements OnInit {
     this.jobServ.fetchJobsByType(this.page, 6, this.machType).subscribe(paginatedResponse =>{
       let response = paginatedResponse.result;
       this.checkMoreJobs(paginatedResponse.pagination.totalPages, paginatedResponse.pagination.currentPage);
-      if (response.length==0){
+      if (response.length != 0){
         this.initForm();
       } else {
         this.addJobOptions(response);

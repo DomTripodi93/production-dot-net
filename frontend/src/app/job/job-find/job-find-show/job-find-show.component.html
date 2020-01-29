@@ -3,7 +3,7 @@
     <div *ngIf="!editJob">
       <div class="grid" *ngIf="auth.machType == 'lathe'">
         <button *ngIf="!oneJob.possibleQuantity" class='btn btn-primary' routerLink="/{{auth.machType}}/jobs/calculator/job/{{oneJob.jobNumber}}">Length Calc</button>
-        <button *ngIf="oneJob.possibleQuantity" class='btn btn-info' routerLink="/{{auth.machType}}/jobs/calculator/{{oneJob.jobNumber}}">Remaining Bars</button>
+        <button *ngIf="oneJob.possibleQuantity" class='btn btn-info' routerLink="/{{auth.machType}}/jobs/calculator/{{oneJob.jobNumber}}">Remaining</button>
         <button *ngIf="!oneJob.weightQuantity" class='btn btn-success' routerLink="/{{auth.machType}}/jobs/calculator/weight/{{oneJob.jobNumber}}">Weight Calc</button>
       </div>
       <div class="grid2" *ngIf="auth.machType == 'mill'">
@@ -58,7 +58,7 @@
     <div class="border">
       <div class="grid" *ngIf="auth.machType == 'lathe'">
         <button *ngIf="!job.possibleQuantity" class='btn btn-primary' routerLink="/{{auth.machType}}/jobs/calculator/job/{{job.jobNumber}}">Length Calc</button>
-        <button *ngIf="job.possibleQuantity" class='btn btn-info' routerLink="/{{auth.machType}}/jobs/calculator/{{job.jobNumber}}">Remaining Bars</button>
+        <button *ngIf="job.possibleQuantity" class='btn btn-info' routerLink="/{{auth.machType}}/jobs/calculator/{{job.jobNumber}}">Remaining</button>
         <button *ngIf="!job.weightQuantity" class='btn btn-success' routerLink="/{{auth.machType}}/jobs/calculator/weight/{{job.jobNumber}}">Weight Calc</button>
       </div>
       <div class="grid2" *ngIf="auth.machType == 'mill'">

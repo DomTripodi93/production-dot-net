@@ -5,7 +5,7 @@
             <ul class="list-group">
                 <div class="btn-grid">
                     <button 
-                        *ngIf="!hourServ.quick[i]" 
+                        *ngIf="!hourServ.quick[i] && mach.currentJob != 'None' && mach.currentJob != 'None'" 
                         class="btn btn-primary" 
                         (click)="quickPlus(i)"
                     >
