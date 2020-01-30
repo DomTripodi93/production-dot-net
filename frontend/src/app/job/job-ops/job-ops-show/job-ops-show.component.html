@@ -7,10 +7,8 @@
   >
       Add New Operation   &#9776;
   </button>
-  <div
-      *ngIf="showForm"
-  >
-      <app-job-ops-new [jobNumber]="operation"></app-job-ops-new>
+  <div *ngIf="showForm">
+      <app-job-ops-new [jobInUse]="job"></app-job-ops-new>
   </div>
 </div>
 <div *ngIf='operations.length > 0'>

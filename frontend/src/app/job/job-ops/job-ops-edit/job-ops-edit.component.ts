@@ -29,7 +29,6 @@ export class JobOpsEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.op)
     this.canInput = this.auth.isAuthenticated;
     this.getMachines();
   }

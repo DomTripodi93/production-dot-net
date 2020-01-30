@@ -1,5 +1,5 @@
 <form *ngIf="canInput && editJobForm" [formGroup]="editJobForm" (ngSubmit)='onSubmit()' >
-  <h4><strong>Job# {{jobNum}}, Part# {{job.partNumber}}</strong></h4>
+  <h4><strong>Job# {{job.jobNumber}}, Part# {{job.partNumber}}</strong></h4>
   <div class="form-group">
     <h6 for="orderQuantity">Order Quantity (Optional)</h6>
     <input 

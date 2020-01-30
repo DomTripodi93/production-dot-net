@@ -4,6 +4,7 @@ import { OpService } from '../operation.service';
 import { DaysService } from 'src/app/shared/days/days.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Subscription } from 'rxjs';
+import { Job } from 'src/app/job/job.model';
 
 @Component({
   selector: 'app-job-ops-show',
@@ -11,7 +12,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./job-ops-show.component.css']
 })
 export class JobOpsShowComponent implements OnInit, OnDestroy {
-  @Input() operation: string;
+  @Input() job: Job;
   opSubscription: Subscription;
   operations: Operation[] = [];
   id = '';
@@ -52,17 +53,18 @@ export class JobOpsShowComponent implements OnInit, OnDestroy {
   }
 
   getOps() {
-      this.opServ.fetchOpByJob(this.operation)
-        .subscribe(ops => {
-          ops.forEach(op => {
-            this.editOp.push(false)
-            if (+op.remainingQuantity < 1){
-              op.remainingQuantity = "0";
-            }
-          });
-          this.operations = ops;
-          this.dayServ.dates = [];
+    this.opServ.fetchOpByJob(this.job.jobNumber)
+      .subscribe(ops => {
+        ops.forEach(op => {
+          this.editOp.push(false)
+          if (+op.remainingQuantity < 1){
+            op.remainingQuantity = "0";
+          }
         });
+        this.operations = ops;
+        this.dayServ.dates = [];
+      }
+    );
   }
 
   opEdit(index: number){

@@ -14,31 +14,22 @@ import { Job } from '../../job.model';
   styleUrls: ['./job-ops-new.component.css']
 })
 export class JobOpsNewComponent implements OnInit {
-  @Input() jobNumber: string;
+  @Input() jobInUse: Job;
   error = '';
   canInput= false;
   operationForm: FormGroup;
   isError = false;
   machines: Machine[] = [];
-  jobInUse: Job;
   
   constructor(
     private opServ: OpService,
     private auth: AuthService,
-    private mach: MachineService,
-    private jobServ: JobService
+    private mach: MachineService
   ){}
   
   ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
-    this.getJob();
-  }
-
-  getJob(){
-    this.jobServ.fetchJob(this.jobNumber).subscribe((job)=>{
-      this.jobInUse = job;
-      this.getMachines();
-    })
+    this.getMachines();
   }
 
   getMachines(){
@@ -66,7 +57,7 @@ export class JobOpsNewComponent implements OnInit {
     let cycleTime: string;
 
     this.operationForm = new FormGroup({
-      'jobNumber': new FormControl(this.jobNumber, Validators.required),
+      'jobNumber': new FormControl(this.jobInUse.jobNumber, Validators.required),
       'opNumber': new FormControl(operation, Validators.required),
       'cycleTime': new FormControl(cycleTime),
       'remainingQuantity': new FormControl(remainingQuantity),
