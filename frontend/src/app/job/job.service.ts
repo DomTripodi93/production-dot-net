@@ -7,6 +7,7 @@ import { Job } from './job.model';
 import { PaginatedResult } from '../shared/pagination';
 import { Active } from '../shared/active.model';
 import { DaysService } from '../shared/days/days.service';
+import { Machine } from '../machine/machine.model';
 
 @Injectable({providedIn: 'root'})
 export class JobService {
@@ -15,6 +16,7 @@ export class JobService {
   jobsHold: Job[];
   model = "Job";
   onlyActive = true;
+  machines: Machine[] = [];
 
   constructor(
       private http: HttpClient,

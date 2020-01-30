@@ -24,7 +24,7 @@ export class JobOpsNewComponent implements OnInit {
   constructor(
     private opServ: OpService,
     private auth: AuthService,
-    private mach: MachineService
+    private jobServ: JobService
   ){}
   
   ngOnInit(){
@@ -33,11 +33,8 @@ export class JobOpsNewComponent implements OnInit {
   }
 
   getMachines(){
-    this.mach.fetchMachinesByType()
-    .subscribe(machines => {
-      this.machines = machines;
-      this.initForm();
-    });
+    this.machines = this.jobServ.machines;
+    this.initForm();
   }
     
   private initForm() {

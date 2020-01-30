@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { JobService } from './job.service';
+import { MachineService } from 'src/app/machine/machine.service';
 
 @Component({
   selector: 'app-job',
@@ -15,16 +16,24 @@ export class JobComponent implements OnInit, OnDestroy {
   constructor(
     public auth: AuthService,
     public jobServ: JobService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private machServ: MachineService
   ) {}
 
   ngOnInit() {
     this.subscriptions.push(
       this.route.params.subscribe((params: Params) => {
         this.auth.machType = params["machType"];
+        this.setMachines(params["machType"]);
         this.jobServ.jobChanged.next()
       })
     ) 
+  }
+
+  setMachines(type: string){
+    this.machServ.fetchMachinesByType(type).subscribe(machines =>{
+      this.jobServ.machines = machines;
+    })
   }
 
   switchActive(){

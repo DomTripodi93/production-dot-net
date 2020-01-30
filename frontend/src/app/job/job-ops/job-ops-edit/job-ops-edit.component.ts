@@ -6,6 +6,7 @@ import { OpService } from '../operation.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
 import { MachineService } from 'src/app/machine/machine.service';
+import { JobService } from 'src/app/job/job.service';
 
 @Component({
   selector: 'app-job-ops-edit',
@@ -18,13 +19,11 @@ export class JobOpsEditComponent implements OnInit {
   editOpForm: FormGroup;
   operation: Operation;
   canInput = false;
-  isError = false;
-  error = "";
   machines: Machine[] = [];
   
   constructor(
     private operationServ: OpService,
-    private mach: MachineService,
+    private jobServ: JobService,
     private auth: AuthService
   ) { }
 
@@ -34,12 +33,8 @@ export class JobOpsEditComponent implements OnInit {
   }
 
   getMachines(){
-    this.mach.fetchMachinesByType()
-    .subscribe(machines => {
-      this.machines = machines;
-      this.search = this.operationServ.slashToDash(this.search);
-      this.initForm();
-    });
+    this.machines = this.jobServ.machines;
+    this.initForm();
   }
 
   private initForm() {
@@ -54,7 +49,7 @@ export class JobOpsEditComponent implements OnInit {
   }
 
   editOp(data: Operation) {
-    this.isError = false;
+    this.search = this.operationServ.slashToDash(this.search);
     this.operationServ.changeOp(data, this.search).subscribe(()=>{
       this.onCancel();
     });
