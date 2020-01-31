@@ -9,7 +9,6 @@ import { Operation } from 'src/app/job/job-ops/operation.model';
 export class ProductionMillOpComponent implements OnInit {
   @Output() hour = new EventEmitter<number>();
   @Output() minute = new EventEmitter<number>();
-  @Output() remains = new EventEmitter<string>();
   @Input() op: Operation
   @Input() jobNumber: string;
   editMode = false;
@@ -35,10 +34,6 @@ export class ProductionMillOpComponent implements OnInit {
     } else {
       this.hourFormat = "Hours"
     }
-  }
-
-  emitRemains($event){
-    this.remains.emit($event)
   }
 
   changeEdit(){

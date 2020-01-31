@@ -12,6 +12,8 @@ export class OpService {
     model = "Operation";
     public opsChanged = new Subject;
     public partsToDateSubmit = new Subject;
+    holdRem: string;
+    holdJob: string;
 
     constructor(
       private http: HttpClient,

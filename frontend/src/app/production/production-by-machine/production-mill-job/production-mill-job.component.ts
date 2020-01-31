@@ -31,6 +31,7 @@ export class ProductionMillJobComponent implements OnInit, OnDestroy {
       this.hours = 0;
       this.minutes = 0;
       this.getOps();
+      this.changeRem();
     })
     this.getOps();
   }
@@ -71,8 +72,10 @@ export class ProductionMillJobComponent implements OnInit, OnDestroy {
     this.cdRef.detectChanges();
   }
 
-  catchRemains($event){
-    this.job.remainingQuantity = $event;
+  changeRem(){
+    if (this.opServ.holdJob == this.job.jobNumber){
+      this.job.remainingQuantity = this.opServ.holdRem;
+    }
   }
 
   ngOnDestroy(){

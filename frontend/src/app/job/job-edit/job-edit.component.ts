@@ -69,8 +69,7 @@ export class JobEditComponent implements OnInit {
   }
 
   onSubmit(){
-    this.job = this.editJobForm.value;
-    this.editJob(this.job);
+    this.editJob(this.editJobForm.value);
     if (this.auth.machType == "mill"){
       if (this.editJobForm.value.orderQuantity > 0){
         this.getOpForChange();
