@@ -16,8 +16,13 @@
 .border{
     border: solid;
 }
+
 .white-text{
     color: rgb(235, 235, 235);
+}
+
+.bottom-marg{
+    margin-bottom: 20px;
 }
 
 h3{

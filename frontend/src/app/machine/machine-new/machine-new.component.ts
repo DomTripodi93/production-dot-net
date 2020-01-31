@@ -23,7 +23,7 @@ export class MachineNewComponent implements OnInit {
   ops = ["None"];
 
   constructor(
-    private mach: MachineService,
+    private machServ: MachineService,
     private jobServ: JobService,
     public auth: AuthService,
     private router: Router,
@@ -38,22 +38,9 @@ export class MachineNewComponent implements OnInit {
   }
 
   getJobs(){
-    this.jobServ.fetchJobsByType().subscribe(paginatedResponse =>{
-      let goneThrough = 1;
-      let response = paginatedResponse.result;
-      if (response.length==0){
-        this.initForm();
-      } else {
-        response.forEach(job => {
-          this.jobs.push(job.jobNumber);
-          goneThrough++;
-          if (goneThrough == response.length+1){
-            this.changeOps("None");
-            this.initForm();
-          }
-        });
-      }
-    });
+    this.jobs = Object.keys(this.machServ.jobOp);
+    this.changeOps(this.jobs[0]);
+    this.initForm();
   }
   //Gets Jobs for current job and op selection, and initializes form
     
@@ -69,8 +56,8 @@ export class MachineNewComponent implements OnInit {
   //initializes new machine form
   
   onSubmit(){
-    this.mach.addMachine(this.machineForm.value).subscribe(()=>{
-      this.mach.machChanged.next();
+    this.machServ.addMachine(this.machineForm.value).subscribe(()=>{
+      this.machServ.machChanged.next();
       setTimeout(()=>{this.router.navigate([".."], {relativeTo: this.route})},50);
     }, () =>{
       this.error = "This machine already exists!";
@@ -80,20 +67,13 @@ export class MachineNewComponent implements OnInit {
   //Submits new machine to API and sends update signal to machine components
   // sets, and displays message if there is an error
 
-  changeOps(option: String){
-    this.ops = ["None"]
-    if (option != "None"){
-      this.opServ.fetchOpByJob(option).subscribe((ops)=>{
-        ops.forEach((op)=>{
-          this.ops.push(op.opNumber);
-        })
-      })
-    }
+  changeOps(option: string){
+    this.ops = this.machServ.jobOp[option];
   }
   //Sets values for operation based on selected job
 
   onCancel(){
-    window.history.back();
+    this.machServ.machCancel.next();
   }
   //Returns to previous page when new machine addition is cancelled
 

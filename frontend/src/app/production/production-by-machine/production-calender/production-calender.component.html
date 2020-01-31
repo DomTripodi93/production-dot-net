@@ -8,7 +8,7 @@
 </div>
 <div *ngIf="editJob" class="grid3366">
   <h2 class="centered">Machine<br><strong>{{machine.machine}}</strong></h2>
-  <app-machine-edit [machName]="machine.machine"></app-machine-edit>
+  <app-machine-edit [machine]="machine"></app-machine-edit>
 </div>
 <div class="grid25">
   <h3>Day Shift <br> Average: <br><strong>{{dayAvg}}</strong></h3>

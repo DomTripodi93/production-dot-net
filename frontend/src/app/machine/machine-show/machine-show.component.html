@@ -1,3 +1,10 @@
+<button *ngIf="!addNew" class="btn btn-primary bottom-marg" (click)="newMachine()">
+  Add New Machine
+</button>
+<div *ngIf="addNew">
+  <app-machine-new></app-machine-new>
+</div>
+<br><br>
 <div class='grid' >
   <div *ngFor="let machine of machines; let i=index"> 
     <div class="border">
@@ -14,7 +21,7 @@
           </div>
         </div>
         <div *ngIf="editMode[i]">
-          <app-machine-edit [machName]="machine.machine"></app-machine-edit>
+          <app-machine-edit [machine]="machine"></app-machine-edit>
         </div>
       </div>
       <div class="grid3" *ngIf="auth.machType == 'mill'">

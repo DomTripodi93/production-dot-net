@@ -9,7 +9,10 @@ import { Change } from '../shared/change.model';
 @Injectable({providedIn: 'root'})
 export class MachineService {
   machChanged = new Subject();
-  model = "Machine"
+  machCancel = new Subject();
+  model = "Machine";
+  jobOp = {};
+  addNew = false;
 
   constructor(
     private http: HttpClient,

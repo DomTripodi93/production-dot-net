@@ -15,10 +15,9 @@ import { HourlyService } from '../../hourly/hourly.service';
   styleUrls: ['./machine-edit.component.css']
 })
 export class MachineEditComponent implements OnInit {
-  @Input() machName: string;
+  @Input() machine: Machine;
   @Input() id: number;
   editMachineForm: FormGroup;
-  machine: Machine;
   canInput: boolean = false;
   jobs = ["None"];
   ops = ["None"];
@@ -29,7 +28,7 @@ export class MachineEditComponent implements OnInit {
   fetching = false;
   
   constructor(
-    private mach: MachineService,
+    private machServ: MachineService,
     private jobServ: JobService,
     private auth: AuthService,
     private opServ: OpService,
@@ -39,22 +38,13 @@ export class MachineEditComponent implements OnInit {
 
   ngOnInit() {
     this.checkAuth();
-    this.pickMachine();
+    this.checkMachType();
+    this.getJobs();
   }
 
   checkAuth(){
     this.canInput = this.auth.isAuthenticated;
   }
-
-  pickMachine(){
-    this.mach.fetchMachineByName(this.machName)
-    .subscribe(machine => {
-      this.machine = machine;
-      this.checkMachType();
-      this.getJobs();
-    });
-  }
-  //Gets machine to set current values for form defaults
 
   getJobs(){
     this.jobServ.fetchJobsByType(this.page, 6, this.machType).subscribe(paginatedResponse =>{
@@ -138,7 +128,7 @@ export class MachineEditComponent implements OnInit {
     } else if (this.editMachineForm.value.currentOp != this.machine.currentOp) {
       this.updateMachine();
     } else{
-      this.mach.machChanged.next();
+      this.machServ.machChanged.next();
       this.hourServ.hourlyChanged.next();
     }
   }
@@ -146,8 +136,8 @@ export class MachineEditComponent implements OnInit {
   // and closes the form without updating if they have not changed"
 
   updateMachine(){
-    this.mach.setCurrentJob(this.editMachineForm.value, this.machName).subscribe(()=>{
-      this.mach.machChanged.next();
+    this.machServ.setCurrentJob(this.editMachineForm.value, this.machine.machine).subscribe(()=>{
+      this.machServ.machChanged.next();
       this.hourServ.hourlyChanged.next();
     });
   }
@@ -155,21 +145,11 @@ export class MachineEditComponent implements OnInit {
   // relevant components
 
   onCancel(){
-    this.mach.machChanged.next();
+    this.machServ.machCancel.next();
     if (this.id > -1){
       this.hourServ.isJob[this.id] = false;
       this.hourServ.quick[this.id] = false;
     }
   }
   //Turns off editing in related components
-
-  onDelete(){
-    if (confirm("Are you sure you want to delete " +this.machine.machine+ "?")){
-      this.mach.deleteMachine(this.machName).subscribe();
-      setTimeout(()=>{
-        this.mach.machChanged.next();
-      }, 50)
-    }
-  }
-  //Deletes specified machines upon verification, and updates from machine view
 }

@@ -21,25 +21,13 @@ export class JobShowComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.jobServ.onlyActive == true){
-      this.getActiveJobs();
-    } else {
-      this.getAllJobs();
-    }
+    this.showMore();
     this.subscriptions.push(
-      this.jobServ.jobChanged.subscribe(
-        ()=>{
-          this.pageNum = 1;
-          this.jobs = [];
-          setTimeout(()=>{
-            if (this.jobServ.onlyActive == true){
-              this.getActiveJobs();
-            } else {
-              this.getAllJobs();
-            }
-          }, 50);
-        }
-      )
+      this.jobServ.jobChanged.subscribe(()=>{
+        this.pageNum = 1;
+        this.jobs = [];
+        this.showMore();
+      })
     );
   }
 

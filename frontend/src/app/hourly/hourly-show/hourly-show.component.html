@@ -46,7 +46,7 @@
                     </app-hourly-new-short>     
                 </div>
                 <div *ngIf="hourServ.quick[i] && hourServ.isJob[i]" class="list-group-item">
-                    <app-machine-edit [machName]="mach.machine" [id]="i">
+                    <app-machine-edit [machine]="mach" [id]="i">
                     </app-machine-edit>     
                 </div>
                 <div *ngIf="hourServ.quick[i] && hourServ.setTime[i]" class="list-group-item">

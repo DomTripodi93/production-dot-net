@@ -16,6 +16,7 @@ export class MachineShowComponent implements OnInit, OnDestroy{
   isError = false;
   error = '';
   editMode: boolean[] = [];
+  addNew = false;
 
   constructor(
     private mach: MachineService,
@@ -26,9 +27,18 @@ export class MachineShowComponent implements OnInit, OnDestroy{
     this.getMachines();
     this.subscriptions.push(
       this.mach.machChanged.subscribe(()=>{
-        setTimeout(()=>{this.getMachines();}, 50);
+        this.addNew = false;
+        this.getMachines();
       })
     );
+    this.subscriptions.push(
+      this.mach.machCancel.subscribe(()=>{
+        this.addNew = false;
+        this.editMode.forEach(condition=>{
+          condition = false;
+        })
+      })
+    )
   }
 
   getMachines(){
@@ -66,6 +76,9 @@ export class MachineShowComponent implements OnInit, OnDestroy{
   }
   //Switches value to start editing selected machine in-page
 
+  newMachine(){
+    this.addNew = true;
+  }
 
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{sub.unsubscribe()})
