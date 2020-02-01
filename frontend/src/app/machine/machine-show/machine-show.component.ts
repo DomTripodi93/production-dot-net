@@ -34,9 +34,9 @@ export class MachineShowComponent implements OnInit, OnDestroy{
     this.subscriptions.push(
       this.mach.machCancel.subscribe(()=>{
         this.addNew = false;
-        this.editMode.forEach(condition=>{
-          condition = false;
-        })
+        for (let index in this.editMode){
+          this.editMode[index] = false;
+        }
       })
     )
   }

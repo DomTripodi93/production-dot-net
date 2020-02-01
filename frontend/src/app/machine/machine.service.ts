@@ -5,6 +5,8 @@ import { AuthService } from '../shared/auth.service';
 import { Subject } from 'rxjs';
 import { Machine } from './machine.model';
 import { Change } from '../shared/change.model';
+import { OpService } from 'src/app/job/job-ops/operation.service';
+import { JobService } from 'src/app/job/job.service';
 
 @Injectable({providedIn: 'root'})
 export class MachineService {
@@ -13,10 +15,13 @@ export class MachineService {
   model = "Machine";
   jobOp = {};
   addNew = false;
+  page: number = 1;
 
   constructor(
     private http: HttpClient,
-    private auth: AuthService
+    private auth: AuthService,
+    private opServ: OpService,
+    private jobServ: JobService
   ) {}
 
   fetchMachineByName(name) {
@@ -92,4 +97,42 @@ export class MachineService {
     );
   }
   //Deletes selected machine, and returns successful deletion message
+
+  getJobs(){
+    this.jobServ.fetchJobsByType(this.page, 10).subscribe(paginatedResponse =>{
+      let goneThrough = 0;
+      let response = paginatedResponse.result;
+      let allResults = (paginatedResponse.pagination.currentPage != paginatedResponse.pagination.totalPages);
+      if (response.length > 0) {
+        this.jobOp["None"] = ["None"];
+        response.forEach(job => {
+          goneThrough += 1;
+          this.getOps(job.jobNumber);
+          if (response.length == goneThrough && allResults){
+            this.page += 1;
+            this.getJobs();
+          }
+        });
+      }
+    });
+  }
+
+  getOps(job: string){
+    let jobOps: string[] = [];
+    this.opServ.fetchOpByJob(job).subscribe((ops)=>{
+      let goneThrough = 0;
+      jobOps.push("None")
+      if (ops.length > 0){
+        ops.forEach((op)=>{
+          jobOps.push(op.opNumber);
+          goneThrough += 1;
+          if (ops.length == goneThrough){
+            this.jobOp[job] = jobOps;
+          }
+        })
+      } else {
+        this.jobOp[job] = jobOps;
+      }
+    })
+  }
 }

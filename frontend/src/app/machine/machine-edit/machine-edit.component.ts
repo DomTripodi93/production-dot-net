@@ -22,16 +22,13 @@ export class MachineEditComponent implements OnInit {
   jobs = ["None"];
   ops = ["None"];
   page: number = 1;
-  moreJobs: boolean = true;
   machType: string;
   noJobs = false;
   fetching = false;
   
   constructor(
     private machServ: MachineService,
-    private jobServ: JobService,
     private auth: AuthService,
-    private opServ: OpService,
     private hourServ: HourlyService,
     private cdRef: ChangeDetectorRef
   ) { }
@@ -46,19 +43,12 @@ export class MachineEditComponent implements OnInit {
     this.canInput = this.auth.isAuthenticated;
   }
 
+
   getJobs(){
-    this.jobServ.fetchJobsByType(this.page, 6, this.machType).subscribe(paginatedResponse =>{
-      let response = paginatedResponse.result;
-      this.checkMoreJobs(paginatedResponse.pagination.totalPages, paginatedResponse.pagination.currentPage);
-      if (response.length == 0){
-        this.noJobs = true;
-        this.fetching = false;
-      } else {
-        this.addJobOptions(response);
-      }
-    });    
+    this.jobs = Object.keys(this.machServ.jobOp);
+    this.changeOps(this.jobs[0]);
+    this.initForm();
   }
-  //Gets a set of 6 active jobs based on the current results page
 
   checkMachType(){
     if (this.auth.machType){
@@ -70,14 +60,6 @@ export class MachineEditComponent implements OnInit {
   }
   //Checks if machine type is set, and explicitly specifies it to "lathe" 
   // when called from the hourly component editing access
-
-  checkMoreJobs(total, current){
-    if (total == current){
-      this.moreJobs = false;
-    }
-  }
-  //Checks if the current page of paginated results is the last page, if it is the last page
-  // it will also set the boolean value that controls the ability to call more jobs to false
 
   addJobOptions(jobs){
     jobs.forEach(job => {
@@ -103,24 +85,11 @@ export class MachineEditComponent implements OnInit {
   }
   //Initializes form and sets default values for editing
 
-  addJobs(){
-    this.page = this.page + 1;
-    this.getJobs();
-  }
-  //Changes current page to get the next set of 6 active jobs
 
-  changeOps(option: String){
-    this.ops = ["None"]
-    if (option != "None"){
-      this.opServ.fetchOpByJob(option).subscribe((ops)=>{
-        ops.forEach((op)=>{
-          this.ops.push(op.opNumber);
-        })
-      })
-    }
+  changeOps(option: string){
+    this.ops = this.machServ.jobOp[option];
   }
-  //Sets options for operation input selector based on the ops for the currently 
-  // selected job
+  //Sets values for operation based on selected job
 
   onSubmit(){
     if (this.editMachineForm.value.currentJob != this.machine.currentJob){

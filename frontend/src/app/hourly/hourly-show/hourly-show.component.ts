@@ -27,12 +27,13 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
   constructor(
     public hourServ: HourlyService,
     private dayServ: DaysService,
-    private mach: MachineService,
+    private machServ: MachineService,
     private auth: AuthService
   ) { }
 
   ngOnInit() {
     this.dayServ.resetDate();
+    this.machServ.getJobs();
     this.getMachines();
     this.subscriptions.push(this.hourServ.hourlyChanged.subscribe(()=>{
       setTimeout(()=>{this.getMachines()},50)}
@@ -62,7 +63,7 @@ export class HourlyShowComponent implements OnInit, OnDestroy {
   //Activates form for changeing start time for hourly counts on machine
 
   getMachines(){
-    this.subscriptions.push(this.mach.fetchMachinesByType('lathe')
+    this.subscriptions.push(this.machServ.fetchMachinesByType('lathe')
     .subscribe(machines => {
       this.setDefaults(machines);
       this.machines = machines;

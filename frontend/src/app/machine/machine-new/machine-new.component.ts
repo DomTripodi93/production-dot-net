@@ -24,11 +24,9 @@ export class MachineNewComponent implements OnInit {
 
   constructor(
     private machServ: MachineService,
-    private jobServ: JobService,
     public auth: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
-    private opServ: OpService
+    private route: ActivatedRoute
   ){}
   
   ngOnInit(){

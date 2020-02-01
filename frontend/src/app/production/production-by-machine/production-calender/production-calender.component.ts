@@ -71,6 +71,7 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
     this.setMonths();
     this.getProduction();
     this.getTotal();
+    this.machServ.getJobs();
     this.subscriptions.push(this.proServ.proChanged.subscribe(()=>{
       this.getProduction();
       this.getTotal();
@@ -79,7 +80,7 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
       this.editMode = false;
       this.getProduction();
     }));
-    this.subscriptions.push(this.machServ.machChanged.subscribe(()=>{
+    this.subscriptions.push(this.machServ.machCancel.subscribe(()=>{
       this.editJob = false;
     }));
     this.subscriptions.push(this.proServ.checkEdits.subscribe(()=>{
