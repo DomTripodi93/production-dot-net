@@ -1,8 +1,10 @@
 <meta name="viewport" content="width=700">
-<app-header></app-header>
-<div class="border" *ngIf="auth.isNew">
-    <app-tutorial></app-tutorial>
+<div id="page">
+    <app-header></app-header>
+    <div class="border" *ngIf="auth.isNew">
+        <app-tutorial></app-tutorial>
+    </div>
+    <br>
+    <router-outlet id="main"></router-outlet>
+    <app-footer id="footer"></app-footer>
 </div>
-<br>
-<router-outlet></router-outlet>
-<app-footer></app-footer>

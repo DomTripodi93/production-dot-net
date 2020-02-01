@@ -6,3 +6,20 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+#page{
+    position: relative;
+    min-height: 100vh;
+}
+
+#main{
+    padding-bottom: 2.5rem;
+}
+
+#footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2.5rem;
+}

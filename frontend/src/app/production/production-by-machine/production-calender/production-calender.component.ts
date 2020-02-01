@@ -100,7 +100,6 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
         if (this.editCount == 0){
           this.getProduction();
           this.getTotal();
-          
           this.updateRemaining();
           this.editMode = false;
         }
