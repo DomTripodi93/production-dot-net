@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace backend.Migrations
+namespace ProBackend.Migrations
 {
     public partial class initial : Migration
     {
@@ -12,7 +12,7 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<byte[]>(nullable: true),
@@ -28,7 +28,7 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     userId = table.Column<int>(nullable: false),
                     ChangedModel = table.Column<string>(nullable: true),
                     ChangeType = table.Column<string>(nullable: true),
@@ -118,6 +118,8 @@ namespace backend.Migrations
                 {
                     userId = table.Column<int>(nullable: false),
                     JobNumber = table.Column<string>(nullable: false),
+                    PartuserId = table.Column<int>(nullable: true),
+                    PartNumber1 = table.Column<string>(nullable: true),
                     PartNumber = table.Column<string>(nullable: true),
                     OrderQuantity = table.Column<string>(nullable: true),
                     PossibleQuantity = table.Column<string>(nullable: true),
@@ -148,8 +150,8 @@ namespace backend.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Jobs_Parts_userId_PartNumber",
-                        columns: x => new { x.userId, x.PartNumber },
+                        name: "FK_Jobs_Parts_PartuserId_PartNumber1",
+                        columns: x => new { x.PartuserId, x.PartNumber1 },
                         principalTable: "Parts",
                         principalColumns: new[] { "userId", "PartNumber" },
                         onDelete: ReferentialAction.Restrict);
@@ -175,7 +177,7 @@ namespace backend.Migrations
                         column: x => x.userId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Operations_Jobs_userId_JobNumber",
                         columns: x => new { x.userId, x.JobNumber },
@@ -189,8 +191,11 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     userId = table.Column<int>(nullable: false),
+                    OperationuserId = table.Column<int>(nullable: true),
+                    OperationJobNumber = table.Column<string>(nullable: true),
+                    OperationOpNumber = table.Column<string>(nullable: true),
                     OpId = table.Column<int>(nullable: false),
                     OpNumber = table.Column<string>(nullable: true),
                     JobNumber = table.Column<string>(nullable: true),
@@ -211,8 +216,8 @@ namespace backend.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Hourlys_Operations_userId_JobNumber_OpNumber",
-                        columns: x => new { x.userId, x.JobNumber, x.OpNumber },
+                        name: "FK_Hourlys_Operations_OperationuserId_OperationJobNumber_OperationOpNumber",
+                        columns: x => new { x.OperationuserId, x.OperationJobNumber, x.OperationOpNumber },
                         principalTable: "Operations",
                         principalColumns: new[] { "userId", "JobNumber", "OpNumber" },
                         onDelete: ReferentialAction.Restrict);
@@ -223,8 +228,11 @@ namespace backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     userId = table.Column<int>(nullable: false),
+                    OperationuserId = table.Column<int>(nullable: true),
+                    OperationJobNumber = table.Column<string>(nullable: true),
+                    OperationOpNumber = table.Column<string>(nullable: true),
                     OpNumber = table.Column<string>(nullable: true),
                     JobNumber = table.Column<string>(nullable: true),
                     PartNumber = table.Column<string>(nullable: true),
@@ -246,8 +254,8 @@ namespace backend.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Production_Operations_userId_JobNumber_OpNumber",
-                        columns: x => new { x.userId, x.JobNumber, x.OpNumber },
+                        name: "FK_Production_Operations_OperationuserId_OperationJobNumber_OperationOpNumber",
+                        columns: x => new { x.OperationuserId, x.OperationJobNumber, x.OperationOpNumber },
                         principalTable: "Operations",
                         principalColumns: new[] { "userId", "JobNumber", "OpNumber" },
                         onDelete: ReferentialAction.Restrict);
@@ -259,19 +267,29 @@ namespace backend.Migrations
                 column: "userId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Hourlys_userId_JobNumber_OpNumber",
+                name: "IX_Hourlys_userId",
                 table: "Hourlys",
-                columns: new[] { "userId", "JobNumber", "OpNumber" });
+                column: "userId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jobs_userId_PartNumber",
+                name: "IX_Hourlys_OperationuserId_OperationJobNumber_OperationOpNumber",
+                table: "Hourlys",
+                columns: new[] { "OperationuserId", "OperationJobNumber", "OperationOpNumber" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Jobs_PartuserId_PartNumber1",
                 table: "Jobs",
-                columns: new[] { "userId", "PartNumber" });
+                columns: new[] { "PartuserId", "PartNumber1" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Production_userId_JobNumber_OpNumber",
+                name: "IX_Production_userId",
                 table: "Production",
-                columns: new[] { "userId", "JobNumber", "OpNumber" });
+                column: "userId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Production_OperationuserId_OperationJobNumber_OperationOpNumber",
+                table: "Production",
+                columns: new[] { "OperationuserId", "OperationJobNumber", "OperationOpNumber" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

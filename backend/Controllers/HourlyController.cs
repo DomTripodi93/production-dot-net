@@ -44,7 +44,7 @@ namespace BackEnd.Controllers
             if (await _repo.SaveAll())
             {
                 var hourlyToReturn = _mapper.Map<HourlyForCreationDto>(hourly);
-                return CreatedAtRoute("GetHourly", new {id = hourly.Id}, hourlyToReturn);
+                return CreatedAtRoute("GetHourly", new {id = hourly.Id, userId = userId }, hourlyToReturn);
             }
                 
             throw new Exception("Creation of hourly count failed on save");
@@ -61,7 +61,7 @@ namespace BackEnd.Controllers
             _mapper.Map(hourlyForUpdateDto, hourlyFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetHourly", new {id = hourlyFromRepo.Id}, hourlyForUpdateDto);
+                return CreatedAtRoute("GetHourly", new {id = hourlyFromRepo.Id, userId = userId }, hourlyForUpdateDto);
 
             throw new Exception($"Updating hourly count {id} failed on save");
         }
@@ -77,7 +77,7 @@ namespace BackEnd.Controllers
             _mapper.Map(hourlyForUpdateDto, hourlyFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetHourly", new {id = hourlyFromRepo.Id}, hourlyForUpdateDto);
+                return CreatedAtRoute("GetHourly", new {id = hourlyFromRepo.Id, userId = userId }, hourlyForUpdateDto);
 
             throw new Exception($"Updating hourly count {id} failed on save");
         }

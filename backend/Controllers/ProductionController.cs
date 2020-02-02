@@ -48,7 +48,7 @@ namespace BackEnd.Controllers
             if (await _repo.SaveAll())
             {
                 var prodToReturn = _mapper.Map<ProdForReturnDto>(production);
-                return CreatedAtRoute("GetProd", new {id = production.Id}, prodToReturn);
+                return CreatedAtRoute("GetProd", new {id = production.Id, userId = userId }, prodToReturn);
             }
                 
             throw new Exception("Creation of production lot failed on save");
@@ -65,7 +65,7 @@ namespace BackEnd.Controllers
             _mapper.Map(prodForUpdateDto, prodFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetProd", new {id = prodFromRepo.Id}, prodForUpdateDto);
+                return CreatedAtRoute("GetProd", new {id = prodFromRepo.Id, userId = userId }, prodForUpdateDto);
 
             throw new Exception($"Updating production lot {id} failed on save");
         }
@@ -81,7 +81,7 @@ namespace BackEnd.Controllers
             _mapper.Map(prodForUpdateDto, prodFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetProd", new {id = prodFromRepo.Id}, prodForUpdateDto);
+                return CreatedAtRoute("GetProd", new {id = prodFromRepo.Id, userId = userId }, prodForUpdateDto);
 
             throw new Exception($"Updating production lot {id} failed on save");
         }
@@ -97,7 +97,7 @@ namespace BackEnd.Controllers
             _mapper.Map(prodForUpdateDto, prodFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetProd", new {id = prodFromRepo.Id}, prodForUpdateDto);
+                return CreatedAtRoute("GetProd", new {id = prodFromRepo.Id, userId = userId }, prodForUpdateDto);
 
             throw new Exception($"Updating production lot {id} failed on save");
         }
@@ -113,7 +113,7 @@ namespace BackEnd.Controllers
             _mapper.Map(prodForUpdateDto, prodFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetProd", new {id = prodFromRepo.Id}, prodForUpdateDto);
+                return CreatedAtRoute("GetProd", new {id = prodFromRepo.Id, userId = userId }, prodForUpdateDto);
 
             throw new Exception($"Updating production lot {id} failed on save");
         }

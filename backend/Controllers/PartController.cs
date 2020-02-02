@@ -44,10 +44,52 @@ namespace BackEnd.Controllers
             if (await _repo.SaveAll())
             {
                 var partToReturn = _mapper.Map<PartForCreationDto>(part);
-                return CreatedAtRoute("GetPart", new {part = part.PartNumber}, partToReturn);
+                return CreatedAtRoute("GetPart", new {part = part.PartNumber, userId = userId }, partToReturn);
             }
                 
             throw new Exception("Creation of part lot failed on save");
+        }
+
+        [HttpPut("active&{partNum}")]
+        public async Task<IActionResult> UpdateActivePart(int userId, string partNum, UpdateActiveDto partForUpdateDto)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var partFromRepo = await _repo.GetPart(userId, partNum);
+
+            _mapper.Map(partForUpdateDto, partFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetPart", new { part = partFromRepo.PartNumber, userId = userId }, partForUpdateDto);
+
+            var newData = _mapper.Map(partForUpdateDto, partFromRepo);
+
+            if (partFromRepo == newData)
+                return Ok(partForUpdateDto);
+
+            throw new Exception($"Updating job lot {partNum} failed on save");
+        }
+
+        [HttpPut("rev&{partNum}")]
+        public async Task<IActionResult> UpdateRevPart(int userId, string partNum, PartForRevDto partForRevDto)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var partFromRepo = await _repo.GetPart(userId, partNum);
+
+            _mapper.Map(partForRevDto, partFromRepo);
+
+            if (await _repo.SaveAll())
+                return CreatedAtRoute("GetPart", new { part = partFromRepo.PartNumber, userId = userId }, partForRevDto);
+
+            var newData = _mapper.Map(partForRevDto, partFromRepo);
+
+            if (partFromRepo == newData)
+                return Ok(partForRevDto);
+
+            throw new Exception($"Updating job lot {partNum} failed on save");
         }
 
         [HttpGet("{part}", Name = "GetPart")]
@@ -127,48 +169,6 @@ namespace BackEnd.Controllers
             var part = _mapper.Map<PartForReturnDto>(directPart);
 
             return Ok(part);
-        }
-
-        [HttpPut("active&{partNum}")]
-        public async Task<IActionResult> UpdateActivePart(int userId, string partNum, UpdateActiveDto partForUpdateDto)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            var partFromRepo = await _repo.GetPart(userId, partNum);
-
-            _mapper.Map(partForUpdateDto, partFromRepo);
-
-            if (await _repo.SaveAll())
-                return CreatedAtRoute("GetPart", new {part = partFromRepo.PartNumber}, partForUpdateDto);
-
-            var newData = _mapper.Map(partForUpdateDto, partFromRepo);
-
-            if (partFromRepo == newData)
-                return Ok(partForUpdateDto);
-
-            throw new Exception($"Updating job lot {partNum} failed on save");
-        }
-
-        [HttpPut("rev&{partNum}")]
-        public async Task<IActionResult> UpdateRevPart(int userId, string partNum, PartForRevDto partForRevDto)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            var partFromRepo = await _repo.GetPart(userId, partNum);
-
-            _mapper.Map(partForRevDto, partFromRepo);
-
-            if (await _repo.SaveAll())
-                return CreatedAtRoute("GetPart", new {part = partFromRepo.PartNumber}, partForRevDto);
-
-            var newData = _mapper.Map(partForRevDto, partFromRepo);
-
-            if (partFromRepo == newData)
-                return Ok(partForRevDto);
-
-            throw new Exception($"Updating job lot {partNum} failed on save");
         }
 
         [HttpDelete("{part}")]

@@ -48,7 +48,7 @@ namespace BackEnd.Controllers
             if (await _repo.SaveAll())
             {
                 var jobToReturn = _mapper.Map<JobForReturnDto>(job);
-                return CreatedAtRoute("GetJob", new {jobNum = job.JobNumber}, jobToReturn);
+                return CreatedAtRoute("GetJob", new {jobNum = job.JobNumber, userId = userId }, jobToReturn);
             }
                 
             throw new Exception("Creation of job lot failed on save");
@@ -65,7 +65,7 @@ namespace BackEnd.Controllers
             _mapper.Map(jobForUpdateDto, jobFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetJob", new {jobNum = jobFromRepo.JobNumber}, jobForUpdateDto);
+                return CreatedAtRoute("GetJob", new {jobNum = jobFromRepo.JobNumber, userId = userId }, jobForUpdateDto);
 
             var newData = _mapper.Map(jobForUpdateDto, jobFromRepo);
 
@@ -86,7 +86,7 @@ namespace BackEnd.Controllers
             _mapper.Map(jobForEditDto, jobFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetJob", new {jobNum = jobFromRepo.JobNumber}, jobForEditDto);
+                return CreatedAtRoute("GetJob", new {jobNum = jobFromRepo.JobNumber, userId = userId }, jobForEditDto);
 
             var newData = _mapper.Map(jobForEditDto, jobFromRepo);
 
@@ -108,7 +108,7 @@ namespace BackEnd.Controllers
             _mapper.Map(jobForRemainingDto, jobFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetJob", new {jobNum = jobFromRepo.JobNumber}, jobForRemainingDto);
+                return CreatedAtRoute("GetJob", new {jobNum = jobFromRepo.JobNumber, userId = userId }, jobForRemainingDto);
 
             var newData = _mapper.Map(jobForRemainingDto, jobFromRepo);
 
@@ -129,7 +129,7 @@ namespace BackEnd.Controllers
             _mapper.Map(jobForUpdateDto, jobFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetJob", new {jobNum = jobFromRepo.JobNumber}, jobForUpdateDto);
+                return CreatedAtRoute("GetJob", new {jobNum = jobFromRepo.JobNumber, userId = userId }, jobForUpdateDto);
 
             var newData = _mapper.Map(jobForUpdateDto, jobFromRepo);
 

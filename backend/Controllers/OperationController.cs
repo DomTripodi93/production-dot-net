@@ -44,7 +44,7 @@ namespace BackEnd.Controllers
             if (await _repo.SaveAll())
             {
                 var opToReturn = _mapper.Map<OperationForReturnDto>(op);
-                return CreatedAtRoute("GetOp", new {jobNum = op.JobNumber, opNum = op.OpNumber}, opToReturn);
+                return CreatedAtRoute("GetOp", new {jobNum = op.JobNumber, opNum = op.OpNumber, userId = userId }, opToReturn);
             }
                 
             throw new Exception("Creation of op lot failed on save");
@@ -61,7 +61,7 @@ namespace BackEnd.Controllers
             _mapper.Map(opForUpdateDto, opFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetOp", new {jobNum = opFromRepo.JobNumber, opNum = opFromRepo.OpNumber}, opForUpdateDto);
+                return CreatedAtRoute("GetOp", new {jobNum = opFromRepo.JobNumber, opNum = opFromRepo.OpNumber, userId = userId }, opForUpdateDto);
 
             throw new Exception($"Updating op operation {opNum} for {jobNum} failed on save");
         }
@@ -77,7 +77,7 @@ namespace BackEnd.Controllers
             _mapper.Map(opForRemainingDto, opFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetOp", new {jobNum = opFromRepo.JobNumber, opNum = opFromRepo.OpNumber}, opForRemainingDto);
+                return CreatedAtRoute("GetOp", new {jobNum = opFromRepo.JobNumber, opNum = opFromRepo.OpNumber, userId = userId }, opForRemainingDto);
 
             throw new Exception($"Updating op operation {opNum} for {jobNum} failed on save");
         }
@@ -93,7 +93,7 @@ namespace BackEnd.Controllers
             _mapper.Map(opPartsToDateDto, opFromRepo);
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetOp", new {jobNum = opFromRepo.JobNumber, opNum = opFromRepo.OpNumber}, opPartsToDateDto);
+                return CreatedAtRoute("GetOp", new {jobNum = opFromRepo.JobNumber, opNum = opFromRepo.OpNumber, userId = userId }, opPartsToDateDto);
 
             throw new Exception($"Updating op operation {opNum} for {jobNum} failed on save");
         }

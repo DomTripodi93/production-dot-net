@@ -40,7 +40,7 @@ namespace BackEnd.Controllers
             if (await _repo.SaveAll())
             {
                 var machToReturn = _mapper.Map<MachForCreationDto>(mach);
-                return CreatedAtRoute("GetMach", new {mach = mach.Machine}, machToReturn);
+                return CreatedAtRoute("GetMach", new {mach = mach.Machine, userId = userId}, machToReturn);
             }
                 
             throw new Exception("Creation of machine failed on save");
@@ -58,7 +58,7 @@ namespace BackEnd.Controllers
             machFromRepo.CurrentOp = machForUpdateDto.CurrentOp;
 
             if (await _repo.SaveAll())
-                return CreatedAtRoute("GetMach", new {mach = machFromRepo.Machine}, machForUpdateDto);
+                return CreatedAtRoute("GetMach", new {mach = machFromRepo.Machine, userId = userId }, machForUpdateDto);
 
             throw new Exception($"Updating machine {mach} failed on save");
         }
@@ -127,6 +127,8 @@ namespace BackEnd.Controllers
                 _repo.Delete(machToDelete);
                 await _repo.SaveAll();
                 return Ok(machToDelete.Machine +" was deleted!");
+            
+
         }
         
     }
