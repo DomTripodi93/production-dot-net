@@ -113,6 +113,8 @@ export class MachineService {
             this.getJobs();
           }
         });
+      } else {
+        this.jobOp = {None: ["None"]}
       }
     });
   }
