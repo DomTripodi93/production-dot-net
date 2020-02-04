@@ -210,7 +210,7 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
       this.firstDayOfMonth = [];
     } else {
       this.firstDayOfMonth = [];
-      this.addOldWeek();
+      this.addOldWeeks();
     }
     // else if (this.firstDayOfMonth.length + this.firstProDay > 7){
     //   this.removeUnusedWeeksBeginning(this.firstDayOfMonth.length, 7);
@@ -230,6 +230,13 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
 
   jobEdit(){
     this.editJob = true;
+  }
+
+  async addOldWeeks(){
+    await this.addOldWeek();
+    if (this.lastMonthDays[0] > this.firstProDay){
+      this.addOldWeeks();
+    }
   }
 
   addOldWeek(){
