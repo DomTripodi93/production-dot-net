@@ -49,7 +49,6 @@ export class HourlyNewShortComponent implements OnInit {
 
 
   private initEditForm() {
-    console.log(this.hourly)
     this.editHourlyForm = new FormGroup({
       'quantity': new FormControl(this.hourly.quantity),
       'counterQuantity': new FormControl(this.hourly.counterQuantity),

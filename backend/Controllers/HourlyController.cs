@@ -35,8 +35,6 @@ namespace BackEnd.Controllers
 
             var hourly = _mapper.Map<Hourly>(hourlyForCreationDto);
 
-            var opInfo = await _repo.GetOp(userId, hourly.JobNumber, hourly.OpNumber);
-
             hourly.userId = userId;
 
             _repo.Add(hourly);
