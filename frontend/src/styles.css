@@ -12,6 +12,8 @@ h1, h2, h3, h4, h5, h6{
 .border{
     border-style: solid;
     border-color: black;
+    margin: auto;
+    max-width: 1150px;
     background-color: rgb(235, 235, 235);
 }
 
