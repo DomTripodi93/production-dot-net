@@ -1,5 +1,9 @@
 .navbar {
-    background: rgb(111, 21, 255);
+    background: rgb(74, 2, 188);
+}
+
+.size-hold{
+    max-width: 950px;
 }
 
 li{

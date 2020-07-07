@@ -26,7 +26,7 @@ export class AuthService {
   apiUrl = 'http://localhost:5000/api/' + localStorage.getItem('id');
   authChanged = new Subject();
   machTypeChanged = new Subject();
-  machType = "";  
+  machType = "";
   skipLathe = false;
   skipMill = false;
   makeOld = {

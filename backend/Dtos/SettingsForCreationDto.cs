@@ -1,5 +1,3 @@
-using BackEnd.Models;
-
 namespace BackEnd.Dtos
 {
     public class SettingsForCreationDto
