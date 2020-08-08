@@ -45,36 +45,36 @@ export class ProductionByMachineComponent implements OnInit {
 
   ngOnInit() {
     this.setMachines();
-    this.machSubscription = this.machServ.machChanged.subscribe(()=>{
+    this.machSubscription = this.machServ.machChanged.subscribe(() => {
       this.ready = false;
       this.setMachines();
     })
   }
 
 
-  setMachines(){
+  setMachines() {
     this.machServ.fetchMachinesByType()
-    .subscribe((machines: Machine[]) => {
-      if (this.auth.machType == "lathe"){
-        this.fullMach = [];
-        let used = 0;
-        machines.forEach((mach)=>{
-          if (mach.currentOp !== "None"){
-            this.fullMach.push(mach);
-          }
-          used += 1;
-          if (used == machines.length){
-            this.ready = true;
-          }
-        });
-      } else {
-        this.fullMach = machines;
-        this.ready = true;
-      }
-    });
+      .subscribe((machines: Machine[]) => {
+        if (this.auth.machType == "lathe") {
+          this.fullMach = [];
+          let used = 0;
+          machines.forEach((mach) => {
+            if (mach.currentOp !== "None") {
+              this.fullMach.push(mach);
+            }
+            used += 1;
+            if (used == machines.length) {
+              this.ready = true;
+            }
+          });
+        } else {
+          this.fullMach = machines;
+          this.ready = true;
+        }
+      });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.machSubscription.unsubscribe();
   }
   //Removes observable subscriptions

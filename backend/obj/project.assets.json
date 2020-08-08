@@ -5785,23 +5785,19 @@
     ]
   },
   "packageFolders": {
-    "/home/dominic/.nuget/packages/": {},
-    "/usr/share/dotnet/sdk/NuGetFallbackFolder": {}
+    "/home/dom/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/dominic/Code/Showcase/ProductionDotNet/backend/ProBackend.csproj",
+      "projectUniqueName": "/home/dom/Code/Personal/production-dot-net/backend/ProBackend.csproj",
       "projectName": "ProBackend",
-      "projectPath": "/home/dominic/Code/Showcase/ProductionDotNet/backend/ProBackend.csproj",
-      "packagesPath": "/home/dominic/.nuget/packages/",
-      "outputPath": "/home/dominic/Code/Showcase/ProductionDotNet/backend/obj/",
+      "projectPath": "/home/dom/Code/Personal/production-dot-net/backend/ProBackend.csproj",
+      "packagesPath": "/home/dom/.nuget/packages/",
+      "outputPath": "/home/dom/Code/Personal/production-dot-net/backend/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "/usr/share/dotnet/sdk/NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "/home/dominic/.nuget/NuGet/NuGet.Config"
+        "/home/dom/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -5872,7 +5868,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.201/RuntimeIdentifierGraph.json"
       }
     }
   }
