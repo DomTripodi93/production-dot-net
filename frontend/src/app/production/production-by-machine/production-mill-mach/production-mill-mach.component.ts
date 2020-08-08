@@ -20,7 +20,7 @@ export class ProductionMillMachComponent implements OnInit {
   }
 
   getJobs(){
-    this.jobServ.fetchJobsByType().subscribe(jobs=>{
+    this.jobServ.fetchJobsByType(1, 100).subscribe(jobs=>{
       this.jobs = jobs.result;
     })
   }

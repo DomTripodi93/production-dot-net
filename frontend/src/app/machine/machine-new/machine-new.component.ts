@@ -16,7 +16,7 @@ import { JobInfo } from '../jobInfo.interface';
 })
 export class MachineNewComponent implements OnInit {
   error = '';
-  canInput = false;
+  canInput= false;
   machineForm: FormGroup;
   isError = false;
   jobs = ["None"];
@@ -27,44 +27,41 @@ export class MachineNewComponent implements OnInit {
     public auth: AuthService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
-
-  ngOnInit() {
+  ){}
+  
+  ngOnInit(){
     this.canInput = this.auth.isAuthenticated;
     this.auth.hideButton(0);
     this.getJobs();
   }
 
-  getJobs() {
+  getJobs(){
     this.jobs = Object.keys(this.machServ.jobOp);
     this.changeOps(this.jobs[0]);
     this.initForm();
   }
   //Gets Jobs for current job and op selection, and initializes form
-
+    
   private initForm() {
     let machine = '';
-    if (this.auth.machType === "lathe") {
-      this.machineForm = new FormGroup({
-        'machine': new FormControl(machine, Validators.required),
-        'currentJob': new FormControl(this.jobs[0]),
-        'currentOp': new FormControl(this.ops[0]),
-        "machType": new FormControl(this.auth.machType)
-      });
-    } else {
-      this.machineForm = new FormGroup({
-        'machine': new FormControl(machine, Validators.required),
-        "machType": new FormControl(this.auth.machType)
-      });
+    this.machineForm = new FormGroup({
+      'machine': new FormControl(machine, Validators.required),
+      "machType": new FormControl(this.auth.machType)
+    });
+    if (this.auth.machType === "lathe"){
+      let opControl = new FormControl(this.ops[0]);
+      let jobControl = new FormControl(this.jobs[0]);
+      this.machineForm.addControl('currentJob', jobControl);
+      this.machineForm.addControl('currentOp', opControl);
     }
   }
   //initializes new machine form
-
-  onSubmit() {
-    this.machServ.addMachine(this.machineForm.value).subscribe(() => {
+  
+  onSubmit(){
+    this.machServ.addMachine(this.machineForm.value).subscribe(()=>{
       this.machServ.machChanged.next();
-      setTimeout(() => { this.router.navigate([".."], { relativeTo: this.route }) }, 50);
-    }, () => {
+      setTimeout(()=>{this.router.navigate([".."], {relativeTo: this.route})},50);
+    }, () =>{
       this.error = "This machine already exists!";
       this.isError = true;
     });
@@ -72,17 +69,17 @@ export class MachineNewComponent implements OnInit {
   //Submits new machine to API and sends update signal to machine components
   // sets, and displays message if there is an error
 
-  changeOps(option: string) {
+  changeOps(option: string){
     this.ops = this.machServ.jobOp[option];
   }
   //Sets values for operation based on selected job
 
-  onCancel() {
+  onCancel(){
     this.machServ.machCancel.next();
   }
   //Returns to previous page when new machine addition is cancelled
 
-  ngOnDestroy() {
+  ngOnDestroy(){
     this.auth.showButton(0);
   }
   //Shows 'add new machine' button when component is destroyed
