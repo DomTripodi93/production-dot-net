@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import _ from 'lodash';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -65,9 +64,9 @@ export class HourlyFindComponent implements OnInit, OnDestroy{
     }
     this.defaultMonth = this.year + "-" + this.monthHold;
     this.daysInMonth(this.year, this.month+1);
-    this.monthDays = _.range(1, this.numberOfDays + 1);
+    this.monthDays = [...Array(this.numberOfDays).keys()].map(day => day + 1);
     this.firstDay = new Date(this.year, this.month, 1);
-    this.firstDayOfMonth = _.range(0, this.firstDay.getDay());
+    this.firstDayOfMonth = [...Array(this.firstDay.getDay()).keys()];
     this.welcome = "Today is " + this.days[this.day] + " " + (this.month+1) + "-" + this.today + "-" + this.year;
   }
 
