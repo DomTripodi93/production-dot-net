@@ -13,7 +13,7 @@
 *.user
 *.sln.docstates
 *.db
-.firebase
+.firebase/
 .firebaserc
 firebase.json
 
