@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import _ from 'lodash';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Router } from '@angular/router';
 import { DaysService } from 'src/app/shared/days/days.service';

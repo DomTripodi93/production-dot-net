@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import _ from 'lodash';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Router } from '@angular/router';
 import { DaysService } from 'src/app/shared/days/days.service';
@@ -8,7 +7,6 @@ import { Production } from '../../production.model';
 import { ProductionService } from '../../production.service';
 import { Machine } from 'src/app/machine/machine.model';
 import { OpService } from 'src/app/job/job-ops/operation.service';
-import { HourlyService } from 'src/app/hourly/hourly.service';
 import { MachineService } from 'src/app/machine/machine.service';
 import { Subscription } from 'rxjs';
 
@@ -187,17 +185,17 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
   setDate(){
     this.daysInMonth(this.year, this.month+1);
     let firstDay = new Date(this.year, this.month, 1);
-    this.firstDayOfMonth = _.range(0, firstDay.getDay());
+    this.firstDayOfMonth = [...Array(firstDay.getDay()).keys()];
     this.displayMax = this.today+this.firstDayOfMonth.length
     if (this.displayMax%7 != 0){
       let totalDays = ((Math.floor(this.displayMax/7) + 1)*7) - this.firstDayOfMonth.length
       if (totalDays < this.numberOfDays){
-        this.monthDays = _.range(1, totalDays + 1);
+        this.monthDays = [...Array(totalDays).keys()].map(day => day + 1);
       } else {
-        this.monthDays = _.range(1, this.numberOfDays + 1);
+        this.monthDays = [...Array(this.numberOfDays).keys()].map(day => day + 1);
       }
     } else {
-      this.monthDays = _.range(1, this.today+ 1);
+      this.monthDays = [...Array(this.today).keys()].map(day => day + 1);
     }
     if (this.firstProMonth == this.month + 1){
       this.lastMonthDays = [];
@@ -246,7 +244,7 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
     if (this.lastMonthDays.length == 0){
       let first = this.monthDays[0];
       if (first - 7 > 0){
-        let range = _.range(first - 7, first);
+        let range = [...Array(7).keys()].map(day => day + first-7);
         this.monthDays = range.concat(this.monthDays);
       } else {
         let firstDay = new Date(this.year, this.month, 1).getDay();
@@ -256,17 +254,18 @@ export class ProductionCalenderComponent implements OnInit, OnDestroy {
           this.daysInMonth(this.year, this.month);
         }
         if (firstDay > 0){
-          this.lastMonthDays = _.range(this.numberOfDays-firstDay+1, this.numberOfDays+1)
+          this.lastMonthDays = [...Array(firstDay).keys()].map(day => day + this.numberOfDays - firstDay + 1)
         } else {
-          this.lastMonthDays = _.range(this.numberOfDays-6, this.numberOfDays+1)
+          this.lastMonthDays = [...Array(7).keys()].map(day => day + this.numberOfDays - 6);
         }
-        let range = _.range(1, first);
+        let range = [...Array(first - 1).keys()].map(day => day + 1)
+        console.log(range)
         this.monthDays = range.concat(this.monthDays);
       }
     } else {
       let first = this.lastMonthDays[0];
       if (first - 7 > 0){
-        let range = _.range(first - 7, first);
+        let range = [...Array(7).keys()].map(day => day + first-7);
         this.lastMonthDays = range.concat(this.lastMonthDays);
       }
     }
