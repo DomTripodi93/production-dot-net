@@ -13,6 +13,9 @@
 *.user
 *.sln.docstates
 *.db
+.firebase
+.firebaserc
+firebase.json
 
 # Build results
 [Dd]ebug/

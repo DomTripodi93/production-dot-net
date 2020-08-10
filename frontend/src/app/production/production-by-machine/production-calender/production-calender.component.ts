@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
 export class ProductionCalenderComponent implements OnInit, OnDestroy {
   @Input() machine: Machine;
   @Input() month: number;
-  @ViewChild('newMonth', {static:false}) newMonthForm: NgForm;
+  @ViewChild('newMonth') newMonthForm: NgForm;
   subscriptions: Subscription[] = [];
   editJob = false;
   production: Production[];

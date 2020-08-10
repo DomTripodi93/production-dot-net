@@ -11,7 +11,7 @@ import { DaysService } from 'src/app/shared/days/days.service';
   styleUrls: ['./hourly-find.component.css']
 })
 export class HourlyFindComponent implements OnInit, OnDestroy{
-  @ViewChild('newMonth', {static:false}) newMonthForm: NgForm;
+  @ViewChild('newMonth') newMonthForm: NgForm;
   date = new Date();
   today = this.date.getDate();
   month = this.date.getMonth();

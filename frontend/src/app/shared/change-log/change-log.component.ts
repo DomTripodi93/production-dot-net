@@ -7,7 +7,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./change-log.component.css']
 })
 export class ChangeLogComponent implements OnInit {
-  @ViewChild('logSelect', {static: false}) logSelectForm: NgForm;
+  @ViewChild('logSelect') logSelectForm: NgForm;
   isShown = false;
   models = [
     "Machine",
