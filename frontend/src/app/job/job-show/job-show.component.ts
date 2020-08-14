@@ -36,9 +36,7 @@ export class JobShowComponent implements OnInit {
     .subscribe(jobs => {
       this.pageNum++
       this.pagination = jobs.pagination;
-      jobs.result.forEach((job)=>{
-        this.jobs.push(job);
-      })
+      this.jobs.push(...jobs.result);
     });
   }
 
