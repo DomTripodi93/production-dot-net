@@ -1,17 +1,29 @@
 <div *ngIf="ops.length > 0">
   <h3 class="bold">Part Number: {{job.partNumber}}</h3>
-  <div class="grid">
-    <div>
+  <div class="grid-outer">
+    <div class="size90">
       <div class="border">
-        <h5>Job #:</h5>
-        <h5 class="bold">{{job.jobNumber}}</h5>
+        <h5>
+          Job #:
+          <strong>
+            {{job.jobNumber}}
+          </strong>
+        </h5>
         <div *ngIf="job.orderQuantity">
-            <h5>Ordered:</h5>
-            <h5 class="bold">{{job.orderQuantity}}</h5>
+            <h5>
+              Ordered:
+              <strong>
+                {{job.orderQuantity}}
+              </strong>
+            </h5>
         </div>
         <div *ngIf="job.remainingQuantity">
-            <h5>Remaining:</h5>
-            <h5 class="bold">{{job.remainingQuantity}}</h5>
+            <h5>
+              Remaining:
+              <strong>
+                {{job.remainingQuantity}}
+              </strong>
+            </h5>
         </div>
         <h4><br></h4>
         <div *ngIf="hours + minutes > 0">
@@ -19,12 +31,16 @@
         </div>
       </div>
     </div>
-    <div class="border" *ngFor="let op of ops">
-      <app-production-mill-op
-        (hour)="hourAdder($event)"
-        (minute)="minuteAdder($event)"
-        [op]="op" 
-        jobNumber="{{job.jobNumber}}"></app-production-mill-op>
+    <div class="grid-inner">
+        <div class="size90" *ngFor="let op of ops">
+          <div class="border">
+            <app-production-mill-op
+              (hour)="hourAdder($event)"
+              (minute)="minuteAdder($event)"
+              [op]="op" 
+              jobNumber="{{job.jobNumber}}"></app-production-mill-op>
+          </div>
+        </div>
     </div>
   </div>
 </div>

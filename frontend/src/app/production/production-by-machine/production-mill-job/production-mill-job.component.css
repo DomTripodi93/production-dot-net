@@ -1,6 +1,16 @@
-.grid { 
+.grid-outer { 
     display: grid;
-    grid-template-columns: 14.2% 14.2% 14.2% 14.2% 14.2% 14.2% 14.2%;
+    grid-template-columns: 25% 75%;
+}
+
+.grid-inner { 
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+}
+
+.size90{
+    margin: auto;
+    width: 90%;
 }
 
 h3, h5, h5, h6{
