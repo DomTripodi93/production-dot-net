@@ -16,10 +16,14 @@ export class ProductionMillOpComponent implements OnInit {
   minutes: number;
   minFormat = "Minutes"
   hourFormat = "Hours"
+  cycleTime: number = 0;
 
   constructor() { }
 
   ngOnInit() {
+    if (this.op && this.op.cycleTime) {
+      this.cycleTime = +this.op.cycleTime
+    }
     this.hours = Math.floor((+this.op.remainingQuantity*+this.op.cycleTime)/3600)
     this.minutes = Math.floor((+this.op.remainingQuantity*+this.op.cycleTime)/60%60)
     this.hour.emit(this.hours);

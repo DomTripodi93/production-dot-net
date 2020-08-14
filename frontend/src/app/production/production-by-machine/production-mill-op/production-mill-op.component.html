@@ -1,18 +1,27 @@
 <h5>
-  Op #:
+  Op#:
   <strong>
     {{op.opNumber}}
   </strong>
 </h5>
-<h5>Parts To Date:</h5>
-<div *ngIf="!editMode">
-  <div *ngIf="op.partsToDate">
-    <h5 class="bold">{{op.partsToDate}}</h5>
-  </div>
-  <div *ngIf="!op.partsToDate">
-    <h5 class="bold">0</h5>
-  </div>
-</div>
+<h5 *ngIf="op.cycleTime">
+  Cycle Time:
+  <br>
+  <strong>
+    {{(cycleTime/60).toFixed(1)}} minutes
+  </strong>
+</h5>
+<h5>
+  Parts To Date:
+  <strong *ngIf="!editMode && op.partsToDate" class="bold"> 
+    <br>
+    {{op.partsToDate}}
+  </strong>
+  <strong *ngIf="!editMode && !op.partsToDate" class="bold"> 
+    <br>
+    0
+  </strong>
+</h5>
 <div *ngIf="editMode">
   <app-production-total partsToDate="{{op.partsToDate}}" opNumber="{{op.opNumber}}" jobNumber="{{jobNumber}}"></app-production-total>
 </div>
