@@ -24,9 +24,8 @@ export class JobShowComponent implements OnInit {
     this.showMore();
     this.subscriptions.push(
       this.jobServ.jobChanged.subscribe(()=>{
-        this.pageNum = 1;
-        this.jobs = [];
-        this.showMore();
+        this.jobs = this.jobServ.updateEntry(this.jobs);
+        console.log(this.jobs)
       })
     );
   }

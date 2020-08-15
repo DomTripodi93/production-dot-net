@@ -21,7 +21,7 @@ export class JobEditComponent implements OnInit {
   error = "";
   parts: Part[] = [];
   date = "";
-  
+
   constructor(
     private jobServ: JobService,
     private auth: AuthService,
@@ -35,12 +35,12 @@ export class JobEditComponent implements OnInit {
     this.setDate();
   }
 
-  setDate(){
+  setDate() {
     this.date = this.dayServ.dateForForm(this.job.deliveryDate);
     this.getParts();
   }
 
-  getParts(){
+  getParts() {
     this.partServ.fetchPartsByType().subscribe(parts => {
       this.parts = parts;
       this.initEditForm();
@@ -68,23 +68,28 @@ export class JobEditComponent implements OnInit {
     });
   }
 
-  onSubmit(){
+  onSubmit() {
+    let jobForUpdate = {
+      ...this.job,
+      ...this.editJobForm.value
+    }
+    this.jobServ.updatedJob = jobForUpdate;
     this.editJob(this.editJobForm.value);
-    if (this.auth.machType == "mill"){
-      if (this.editJobForm.value.orderQuantity > 0){
+    if (this.auth.machType == "mill") {
+      if (this.editJobForm.value.orderQuantity > 0) {
         this.getOpForChange();
       }
     }
   }
 
-  getOpForChange(){
-    this.opServ.fetchOpByJob(this.job.jobNumber).subscribe(ops=>{
-      ops.forEach(op=>{
-        if (op.partsToDate){
-          let rem = {remainingQuantity: this.editJobForm.value.orderQuantity - +op.partsToDate};
+  getOpForChange() {
+    this.opServ.fetchOpByJob(this.job.jobNumber).subscribe(ops => {
+      ops.forEach(op => {
+        if (op.partsToDate) {
+          let rem = { remainingQuantity: this.editJobForm.value.orderQuantity - +op.partsToDate };
           this.updateOpRemaining(rem, op);
         } else {
-          let rem = {remainingQuantity: this.editJobForm.value.orderQuantity};
+          let rem = { remainingQuantity: this.editJobForm.value.orderQuantity };
           this.updateOpRemaining(rem, op);
         }
         this.opServ.opsChanged.next();
@@ -92,24 +97,24 @@ export class JobEditComponent implements OnInit {
     })
   }
 
-  updateOpRemaining(rem, op){
+  updateOpRemaining(rem, op) {
     this.opServ.changeOpRemaining(rem, op.opNumber + "&job=" + op.jobNumber).subscribe();
   }
 
   editJob(data: Job) {
     this.isError = false;
-    this.jobServ.editJob(data, this.job.jobNumber).subscribe(()=>{
+    this.jobServ.editJob(data, this.job.jobNumber).subscribe(() => {
       this.onCancel();
     },
-    () =>{
-      this.isError = true;
-    });
-    if (this.isError){
+      () => {
+        this.isError = true;
+      });
+    if (this.isError) {
       this.error = "Please submit valad parameters for update";
     }
   }
 
-  onCancel(){
+  onCancel() {
     this.jobServ.jobChanged.next();
   }
 

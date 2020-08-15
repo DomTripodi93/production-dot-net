@@ -33,6 +33,7 @@ export class JobFindShowComponent implements OnInit, OnDestroy {
       if (!this.jobInput){
         this.getJob();
       }
+      this.editJob = false;
     })); 
     this.setJobs();
   }

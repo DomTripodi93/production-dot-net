@@ -1,6 +1,6 @@
 <div class='grid' >
   <div class="set-width" *ngFor="let job of jobs"> 
-    <app-job-find-show [jobInput]="job"> </app-job-find-show>
+    <app-job-find-show [jobInput]="job" [callback]="updateEntry"> </app-job-find-show>
   </div>
 </div>
 <br>

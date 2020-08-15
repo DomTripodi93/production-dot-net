@@ -13,6 +13,7 @@ import { Machine } from '../machine/machine.model';
 export class JobService {
   jobChanged = new Subject();
   jobHold: Job;
+  updatedJob: Job;
   jobsHold: Job[];
   model = "Job";
   onlyActive = true;
@@ -23,6 +24,20 @@ export class JobService {
       private auth: AuthService,
       private dayServ: DaysService
   ) {}
+
+  updateEntry(jobs){
+    jobs.filter(job => {
+      return job.jobNumber !== this.updatedJob.jobNumber;
+    }).push(this.updatedJob)
+    jobs.sort((first, second) =>{
+      if (first.jobNumber > second.jobNumber){
+        return 1
+      } else {
+        return -1
+      }
+    });
+    return jobs;
+  }
 
   fetchJob(search) {
     return this.http.get(
