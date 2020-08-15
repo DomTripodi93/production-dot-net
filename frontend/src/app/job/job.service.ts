@@ -26,17 +26,18 @@ export class JobService {
   ) {}
 
   updateEntry(jobs){
-    jobs.filter(job => {
+    let jobsForReturn = jobs.filter(job => {
       return job.jobNumber !== this.updatedJob.jobNumber;
-    }).push(this.updatedJob)
-    jobs.sort((first, second) =>{
-      if (first.jobNumber > second.jobNumber){
+    })
+    jobsForReturn.push(this.updatedJob);
+    jobsForReturn.sort((first, second) =>{
+      if (first.jobNumber < second.jobNumber){
         return 1
       } else {
         return -1
       }
     });
-    return jobs;
+    return jobsForReturn;
   }
 
   fetchJob(search) {
